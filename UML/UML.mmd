@@ -1,0 +1,410 @@
+---
+title: CS202 - BTD4
+theme: default
+---
+
+classDiagram
+    %% Interfaces
+    class Drawable {
+        <<interface>>
+        +draw()
+    }
+
+    class Updatable {
+        <<interface>>
+        +update()
+    }
+
+    %% Interfaces relationships
+    Drawable <|-- Screen
+    Drawable <|-- Panel
+    Drawable <|-- PanelElement
+    Drawable <|-- GameObject
+
+    Updatable <|-- Screen
+    Updatable <|-- Panel
+    Updatable <|-- PanelElement
+    Updatable <|-- GameLogic
+    Updatable <|-- GameObject
+
+    %% Core Classes
+    class Game {
+        -gameLogic: GameLogic
+        -inputManager: InputManager
+        -soundManager: SoundManager
+        -screenManager: ScreenManager
+        -spriteManager: SpriteManager
+        -screenList: vector~Screen~
+
+        +Game()
+        +LoadContent()
+        +Initialize()
+        +UnloadContent()
+        +render()
+        +update()
+    }
+
+    %% Game Relationships
+    Game -- FileManager
+    Game -- GameLogic
+    Game -- InputManager
+    Game -- SoundManager
+    Game -- ScreenManager
+    Game -- SpriteManager
+    Game -- Screen
+
+    class GameLogic {
+        -levels: Levels
+        -settings: Settings
+        -logicManager: LogicManager
+
+        +GetDrawable()
+        +Init()
+        +Update()
+    }
+
+    GameLogic -- Map
+    GameLogic -- Settings
+    GameLogic -- Levels
+    GameLogic -- LogicManager
+
+    class Map {
+        name: string
+        path: vector~Vector2~
+
+        +Map(name, path)
+    }
+
+    class Settings {
+        -resolution: Vector2
+        -fullscreen: bool
+        -volume: float
+        -difficulty: int
+
+        +Settings()
+        +applySettings()
+    }
+
+    class Levels {
+        -currentLevel: int
+        -levelList: vector~Level~
+
+        +Levels()
+        +loadLevel(levelName)
+        +getCurrentLevel()
+    }
+
+    class LogicManager {
+        +GetDrawable()
+        +Update()
+    }
+
+    LogicManager <|-- BulletManager
+    LogicManager <|-- EffectManager
+    LogicManager <|-- EnemyManager
+    LogicManager <|-- TowerManager
+
+    class BulletManager {
+        -bulletList: vector~Bullet~
+
+        +BulletManager()
+        +addBullet(Bullet)
+        +removeBullet(Bullet)
+        +update()
+    }
+
+    BulletManager -- Bullet
+
+    class EffectManager {
+        -effectList: vector~Effect~
+
+        +EffectManager()
+        +addEffect(Effect)
+        +removeEffect(Effect)
+        +update()
+    }
+
+    EffectManager -- Effect
+
+    class EnemyManager {
+        -enemyList: vector~Enemy~
+
+        +EnemyManager()
+        +addEnemy(Enemy)
+        +removeEnemy(Enemy)
+        +update()
+    }
+
+    EnemyManager -- Enemy
+
+    class TowerManager {
+        -towerList: vector~Tower~
+
+        +TowerManager()
+        +addTower(Tower)
+        +removeTower(Tower)
+        +update()
+    }
+
+    TowerManager -- Tower
+
+    class GameObject {
+        -name: string
+        -position: Vector2
+
+        +GameObject(name, position)
+        +draw()
+        +update()
+    }
+
+    GameObject <|-- Bullet
+    GameObject <|-- Effect
+    GameObject <|-- Enemy
+    GameObject <|-- Tower
+
+    class Bullet {
+        -type: enum
+        -velocity: Vector2
+        -damage: int
+        -timeFired: int
+
+        +Bullet(type, position, velocity, damage, timeFired)
+        +hit()
+        +miss()
+        +remove()
+    }
+
+    class Effect {
+        -startFrame: int
+        -animSpeed: int
+
+        +Effect()
+        +play()
+        +stop()
+        +remove()
+    }
+
+    class Enemy {
+        -type: enum
+        -velocity: Vector2
+        -hp: int
+        -reward: int
+
+        +Enemy(type, position, velocity, hp, reward)
+        +run()
+        +hit()
+        +die()
+        +remove()
+    }
+
+    class Tower {
+        -type: enum
+        -position: Vector2
+        -range: int
+        -damage: int
+        -fireRate: int
+        -cost: int
+        -tier: int
+
+        +Tower(type, position, range, damage, fireRate, cost)
+        +attack(Enemy)
+        +upgrade()
+        +checkRange()
+        +remove()
+    }
+
+    class InputManager {
+        -mouseState: int
+        -keyboardState: int
+        -mousePosition: Vector2
+
+        +getMouseState()
+        +getKeyboardState()
+        +getMousePosition()
+    }
+
+    class SoundManager {
+        -volume: float
+        -isMuted: bool
+        -sounds: map~soundType, SoundChannel~
+
+        +SoundManager()
+        +setVolume(volume)
+        +toggleMute()
+        +playSound(soundType, soundName)
+    }
+
+    SoundManager -- SoundChannel
+    SoundChannel -- Sound
+
+    class SoundChannel {
+        -volume: float
+        -isMuted: bool
+        -soundList: vector~Sound~
+
+        +SoundChannel()
+        +setVolume(volume)
+        +toggleMute()
+        +playSound(soundName)
+    }
+
+    class Sound {
+        -file: file
+
+        +start()
+        +stop()
+    }
+
+    class ScreenManager {
+        -currentScreen: int
+        -screenStack: vector~Screen~
+
+        +ScreenManager()
+        +drawScreen()
+        +changeScreen(screen)
+    }
+
+    class Screen {
+        -height: int
+        -width: int
+        -background: Texture
+
+        +Screen()
+        +onButtonClick(Button)
+        +draw()
+        +update()
+    }
+
+    Screen *-- Panel
+    Screen <|-- MainMenuScreen
+    Screen <|-- OptionsScreen
+    Screen <|-- GameScreen
+    Screen <|-- MapScreen
+
+    class MainMenuScreen {
+        -mainMenu: Panel
+
+        +MainMenuScreen()
+    }
+
+    class OptionsScreen {
+        -optionsPanel: Panel
+
+        +OptionsScreen()
+    }
+
+    class GameScreen {
+        -gamePanel: Panel
+
+        +GameScreen()
+    }
+
+    class MapScreen {
+        -mapPanel: Panel
+
+        +MapScreen()
+    }
+
+    class Panel {
+        -elements: vector~PanelElement~
+        -height: int
+        -width: int
+        -title: string
+        -position: Vector2
+
+        +Panel()
+        +addPanelElement(PanelElement)
+        +removePanelElement(PanelElement)
+        +draw()
+        +update()
+    }
+
+    Panel o-- PanelElement
+
+    class PanelElement {
+        -index: int
+        -height: int
+        -width: int
+        -position: Vector2
+
+        +PanelElement()
+        +draw()
+    }
+
+    PanelElement <|-- Button
+    PanelElement <|-- TextureField
+    PanelElement <|-- TextField
+    PanelElement <|-- InputField
+
+    class Button {
+        -texture: Texture
+        -title: string
+
+        +Button(title)
+        +onClick()
+    }
+
+    class TextureField {
+        -textureList: vector~Texture~
+        -height: int
+        -width: int
+        -position: Vector2
+
+        +TextureField()
+        +addTexture(Texture)
+        +removeTexture(Texture)
+    }
+
+    class TextField {
+        -text: string
+        -font: Font
+        -color: Color
+        -height: int
+        -width: int
+        -position: Vector2
+
+        +TextField()
+        +setText()
+    }
+
+    class InputField {
+        -maxLength: int 
+        -text: string
+        -height: int
+        -width: int
+        -position: Vector2
+
+        +InputField()
+        +setText(string)
+        +getText()
+    }
+
+    class SpriteManager {
+        +loadSprite(spriteName)
+        +unloadSprite(spriteName)
+        +drawSprite(spriteName, position)
+    }
+
+    class FileManager {
+        +importFile(filePath)
+        +exportFile(filePath)
+    }
+
+    FileManager <|-- EnemyImport
+    FileManager <|-- TowerImport
+    FileManager <|-- MapImport
+
+    class EnemyImport {
+    }
+
+    EnemyImport -- Enemy
+
+    class TowerImport {
+    }
+
+    TowerImport -- Tower
+
+    class MapImport {
+    }
+
+    MapImport -- Map
