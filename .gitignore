@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+
+# ignore folder asset due to large files
+/assets/

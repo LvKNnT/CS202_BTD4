@@ -1,12 +1,3 @@
-# CS202_BTD4
-This is my game for OOP course in HCMUS
-
-# Build
-
-Click at the build.bat in the folder `build`.
-
-Just in case, this is the `build.bat`
-```
 @echo off
 setlocal enabledelayedexpansion
 
@@ -31,6 +22,3 @@ if exist Game.exe (
 
 :: Pause to see errors (if any)
 :: pause
-```
-
-
