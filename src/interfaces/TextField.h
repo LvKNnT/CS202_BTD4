@@ -11,7 +11,7 @@ private:
     Color color;
 
 public:
-    TextField(const std::string& initialText, const Font& font, const Color& color);
+    TextField(const std::string& _text, const Font& _font, const Color& _color, int _index, int _height, int _width, Vector2 _position);
     void setText(const std::string& newText);
 };
 

@@ -12,7 +12,7 @@ protected:
     Vector2 position;
 
 public:
-    PanelElement();
+    PanelElement(int _index, int _height, int _width, Vector2 _position);
     void draw() const override = 0;
 };
 

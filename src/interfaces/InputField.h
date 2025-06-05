@@ -11,7 +11,7 @@ private:
     std::string text;
 
 public:
-    InputField(const int _maxLength, const std::string &_text);
+    InputField(int _maxLength, const std::string &_text, int _index, int _height, int _width, Vector2 _position);
     void setText(const std::string &newText);
     std::string getText() const;
 };

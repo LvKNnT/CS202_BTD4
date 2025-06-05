@@ -12,7 +12,7 @@ private:
     std::vector<MyTexture> textureList;
 
 public:
-    TextureField();
+    TextureField(int _index, int _height, int _width, Vector2 _position);
     void addTexture(const MyTexture &mTexture);
     void removeTexture(const MyTexture &mTexture);
     void draw() const override;

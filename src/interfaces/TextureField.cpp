@@ -1,7 +1,7 @@
 #include "TextureField.h"
 
-void TextureField::addTexture(const MyTexture &mTexture) {
-    textureList.push_back(mTexture);
+TextureField::TextureField(int _index, int _height, int _width, Vector2 _position)
+    : PanelElement(_index, _height, _width, _position) { 
 }
 
 void TextureField::removeTexture(const MyTexture &mTexture) {
