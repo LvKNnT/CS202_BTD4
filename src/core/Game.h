@@ -1,8 +1,12 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "../managers/TextureManager.h"
+
 class Game {
 public:
+    static Game& Instance();
+
     Game();
     ~Game();
 
@@ -12,8 +16,12 @@ public:
     void initialize();
     void render();
     void update(float deltaTime);
-private:
 
+    TextureMananger &getTextureManager();
+
+private:
+    TextureMananger textureMananger;
+    
 };
 
 #endif // GAME_H

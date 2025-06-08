@@ -12,8 +12,10 @@ protected:
     Vector2 position;
 
 public:
-    PanelElement(int _index, int _height, int _width, Vector2 _position);
-    void draw() const override = 0;
+    PanelElement(int _height, int _width, Vector2 _position);
+    void draw() const override;
+    int getIndex() const;
+    void setIndex(int _index);
 };
 
 #endif // PANELELEMENT_H

@@ -3,7 +3,7 @@
 Map::Map(Type _type) : type(_type) {
     switch (type) {
         case MonkeyLane:
-            texture = LoadTexture("assets/map/Monkey_lane_thumb.png");
+            texture = Game::Instance().getTextureManager().getTexture("MonkeyLaneThumb");
             mapImage = LoadImage("assets/map/Monkey_lane_path_mask.png");
             enemyPath.push_back(Point(-50, 400, Point::Type::SpawnEnenmy)); // enemy goes from there
             enemyPath.push_back(Point(0, 390));
@@ -34,12 +34,11 @@ Map::Map(Type _type) : type(_type) {
 }
 
 Map::~Map() {
-    UnloadTexture(texture);
     UnloadImage(mapImage);
 }
 
-Texture Map::getTexture() const {
-    return texture;
+void Map::draw() const {
+    DrawTextureEx(texture, {0, 0}, 0.0f, 1.0f, WHITE);
 }
 
 Point::Type Map::getPointType(Vector2 position) const {
