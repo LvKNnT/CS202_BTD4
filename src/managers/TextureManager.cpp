@@ -16,6 +16,10 @@ void TextureMananger::loadTexture(std::string name, std::string path) {
     textures[name] = newTexture;
 }
 
-Texture TextureMananger::getTexture(std::string name) {
-    return textures[name];
+Texture &TextureMananger::getTexture(std::string name) {
+    auto it = textures.find(name);
+    if (it != textures.end()) return it->second;
+    static Texture empty = { 0 };
+    std::cerr << "Warning: Texture " << name << " not found!\n";
+    return empty;
 }

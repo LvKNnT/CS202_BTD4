@@ -1,10 +1,13 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include "Point.h"
 #include <vector>
 #include <iostream>
 #include <math.h>
+
+#include "../../Properties.h"
+#include "../../core/Game.h"
+#include "Point.h"
 
 class Map {
 public:
@@ -22,7 +25,7 @@ private:
 public:
     Map(Type _type);
     ~Map();
-    Texture getTexture () const;
+    void draw() const;
     Point::Type getPointType(Vector2 position) const;
     Vector2 getCurrentPoint(int index) const;
     Vector2 getNextPoint(int index) const;

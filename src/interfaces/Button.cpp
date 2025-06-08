@@ -1,7 +1,7 @@
 #include "Button.h"
 
 Button::Button(const Texture &_texture, std::string _title, int _fontSize, int _index, int _height, int _width, Vector2 _position)
-    : PanelElement(_index, _height, _width, _position), texture(_texture), title(_title), fontSize(_fontSize) {
+    : PanelElement(_height, _width, _position), texture(_texture), title(_title), fontSize(_fontSize) {
 
     if (texture.id == 0) {
         std::cerr << "Error:Cannot load Texture\n";
