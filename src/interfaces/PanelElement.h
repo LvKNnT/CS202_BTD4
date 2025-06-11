@@ -1,6 +1,8 @@
 #ifndef PANELELEMENT_H
 #define PANELELEMENT_H
 
+#include <algorithm>
+
 #include "raylib.h"
 #include "Drawable.h"
 
@@ -16,6 +18,7 @@ public:
     void draw() const override;
     int getIndex() const;
     void setIndex(int _index);
+    virtual void handleInput() = 0;
 };
 
 #endif // PANELELEMENT_H

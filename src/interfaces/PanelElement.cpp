@@ -15,3 +15,4 @@ int PanelElement::getIndex() const {
 void PanelElement::setIndex(int _index) {
     index = _index;
 }
+

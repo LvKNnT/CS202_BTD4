@@ -1,7 +1,14 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <memory>
+
 #include "../managers/TextureManager.h"
+#include "../managers/StateManager.h"
+#include "../interfaces/states/StateStack.h"
+#include "../interfaces/states/MainMenuState.h"
+#include "../interfaces/states/LoadingState.h"
+#include "IObserver.h"
 
 class Game {
 public:
@@ -17,11 +24,13 @@ public:
     void render();
     void update(float deltaTime);
 
-    TextureMananger &getTextureManager();
+    TextureManager &getTextureManager();
+    std::shared_ptr<IObserver> getStateManager();
 
 private:
-    TextureMananger textureMananger;
-    
+    // Managers
+    TextureManager textureManager;
+    std::shared_ptr<IObserver> stateManager;    
 };
 
 #endif // GAME_H
