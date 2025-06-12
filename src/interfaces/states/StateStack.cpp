@@ -13,12 +13,12 @@ std::unique_ptr<State> StateStack::popState() {
     return std::move(top);
 }
 
-State* StateStack::currentState() {
-    if (!states.empty()) {
-        return states.back().get();
-    }
-    return nullptr;
-}
+// State* StateStack::currentState() {
+//     if (!states.empty()) {
+//         return states.back().get();
+//     }
+//     return nullptr;
+// }
 
 void StateStack::clear() {
     states.clear();
@@ -29,9 +29,9 @@ void StateStack::setdrawPreviousState(bool _drawPreviousState) {
     drawPreviousState = _drawPreviousState;
 }
 
-void StateStack::update() {
+void StateStack::update(Event::Type event) {
     if (!states.empty()) {
-        states.back()->update();
+        states.back()->update(event);
     }
 }
 

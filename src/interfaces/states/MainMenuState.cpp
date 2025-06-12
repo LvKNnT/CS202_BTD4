@@ -6,8 +6,8 @@ MainMenuState::MainMenuState()
     panel = std::make_unique<Panel>();
     
     Texture buttonTex = Game::Instance().getTextureManager().getTexture("MainMenuButton");
-    int buttonWidth = buttonTex.width * 2;
-    int buttonHeight = buttonTex.height * 2;
+    int buttonWidth = buttonTex.width;
+    int buttonHeight = buttonTex.height;
     Vector2 firstButtonPos = {static_cast<float>((Properties::screenWidth - buttonWidth) / 2), 300};
     int spacingY = 50;
     

@@ -6,6 +6,7 @@
 #include "../interfaces/states/StateStack.h"
 #include "../interfaces/states/MainMenuState.h"
 #include "../interfaces/states/MapSelectionState.h"
+#include "../interfaces/states/GameState.h"
 #include "../core/IObserver.h"
 #include "../core/Event.h"
 
@@ -14,6 +15,7 @@ private:
     StateStack stateStack;
     std::unique_ptr<State> mainMenuState;
     std::unique_ptr<State> mapSelectionState;
+    std::unique_ptr<State> gameState;
 
 public:
     void initialize() override;

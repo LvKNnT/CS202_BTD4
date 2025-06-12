@@ -19,13 +19,16 @@ public:
         CancelMapSelection,
         PreviousMap, 
         NextMap, 
-        Exit
+        Exit, 
+        ChooseMonkeyLane, 
+        ChooseJungle, 
+        CommingSoon
     };
 
     enum State {
         None, 
         Hovering,
-        Clicked 
+        Clicked
     };
 
 private:

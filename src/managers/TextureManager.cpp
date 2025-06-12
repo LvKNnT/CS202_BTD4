@@ -13,6 +13,7 @@ void TextureManager::loadTexture(std::string name, std::string path) {
         std::cerr<<"Error: Failed to load texture from "<<path<<"\n";
         return;
     }
+    SetTextureFilter(newTexture, TEXTURE_FILTER_POINT);
     textures[name] = newTexture;
 }
 
@@ -21,5 +22,5 @@ Texture &TextureManager::getTexture(std::string name) {
     if (it != textures.end()) return it->second;
     static Texture empty = { 0 };
     std::cerr << "Warning: Texture " << name << " not found!\n";
-    return empty;
+    return empty; 
 }

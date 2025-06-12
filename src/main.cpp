@@ -15,9 +15,9 @@ int main() {
     
     while (!WindowShouldClose())    
     {
+        if(game.isExit()) break;
         float deltaTime = GetFrameTime();
         game.update(deltaTime);
-        
         BeginDrawing();
             ClearBackground(RAYWHITE);
             game.render();

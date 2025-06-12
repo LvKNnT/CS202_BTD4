@@ -33,3 +33,6 @@
 
 # ignore folder asset due to large files
 /assets/
+
+# ignore vscode settings
+.vscode/

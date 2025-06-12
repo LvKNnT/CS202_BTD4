@@ -2,7 +2,6 @@
 
 State::State(int _height, int _width, const Texture &_background)
     : height(_height), width(_width), background(_background) {
-
 }
 
 void State::onButtonClick(std::shared_ptr<Button> button) {
@@ -15,7 +14,7 @@ void State::draw() const {
     }
 }
 
-void State::update() {
+void State::update(Event::Type event) {
 }
 
 void State::handleInput() {

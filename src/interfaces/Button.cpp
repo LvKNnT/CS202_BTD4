@@ -34,6 +34,18 @@ Button::Button(Type _type, const Texture &_texture, int _fontSize, int _height, 
             title = "";
             attach(Game::Instance().getStateManager());
             break;
+        case ChooseMonkeyLane:
+            title = "";
+            attach(Game::Instance().getStateManager());
+            break;
+        case ChooseJungle:
+            title = "";
+            attach(Game::Instance().getStateManager());
+            break;
+        case CommingSoon:
+            title = "";
+            attach(Game::Instance().getStateManager());
+            break;
     }
 }
 
@@ -42,9 +54,10 @@ void Button::onClick() {
 }
 
 void Button::draw() const {
-    float scale = std::max(static_cast<float>(width / texture.width), static_cast<float>(height / texture.height));
+    if(!isAvailable) return;
     
-    // Draw texture
+    float scale = std::max(((float) width / texture.width), ( (float) height / texture.height));
+    // Draw texture 
     DrawTextureEx(texture, position, 0.0f, scale, state == Button::State::Hovering ? (Color) {200, 200, 200, 255}:WHITE);
 
     // Draw text
@@ -75,6 +88,8 @@ void Button::notify(Event::Type event) {
 }
 
 void Button::handleInput() {
+    if(!isAvailable) return;
+
     if(CheckCollisionPointRec(GetMousePosition(), {position.x, position.y, (float) width, (float) height})) {
         state = (title == "" ? Button::State::None:Button::State::Hovering);
         if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) state = Button::State::Clicked;
@@ -91,17 +106,23 @@ void Button::handleInput() {
         case Options:
             break;
         case Exit:
-            Game::Instance().UnloadContent();
-            CloseWindow();
+            Game::Instance().requestExit();
             break;
         case CancelMapSelection:
-            notify(Event::Type::CancleMapSelection);
+            notify(Event::Type::CancelMapSelection);
             break;
         case NextMap:
-            // later
+            notify(Event::Type::MoveNext);
             break;
         case PreviousMap:
-            // later
+            notify(Event::Type::MovePrevious);
+            break;
+        case ChooseMonkeyLane:
+            notify(Event::Type::MapSelectionToMonkeyLane);
+            break;
+        default:
+            notify(Event::Type::None);
             break;
     }
 }
+

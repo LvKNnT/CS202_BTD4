@@ -7,8 +7,11 @@ public:
         None, 
         // UI
         MainMenuToMapSelection, 
-        CancleMapSelection,
+        CancelMapSelection,
         Exit,
+        MoveNext,
+        MovePrevious,
+        MapSelectionToMonkeyLane
         // Logic
 
     };

@@ -6,7 +6,7 @@
 class GameState : public State {
 public:
     GameState();
-    void handleInput() override;
+    void draw() const override;
 };
 
 #endif // GAME_STATE_H

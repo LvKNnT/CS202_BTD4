@@ -15,11 +15,11 @@ public:
     StateStack() : drawPreviousState(false) {}
     void pushState(std::unique_ptr<State> state);
     std::unique_ptr<State> popState();
-    State* currentState();
+    //State* currentState();
     void clear();
     void setdrawPreviousState(bool _drawPreviousState);
 
-    void update();
+    void update(Event::Type event);
     void draw() const;
     void handleInput();
 };
