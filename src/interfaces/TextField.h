@@ -11,9 +11,11 @@ private:
     Color color;
 
 public:
-    TextField(const std::string& _text, const Font& _font, const Color& _color, int _index, int _height, int _width, Vector2 _position);
+    TextField(const std::string& _text, const Font& _font, const Color& _color, int _height, int _width, Vector2 _position);
     void setText(const std::string& newText);
-    void draw() const override; 
+    void draw() const override;
+    void handleInput() override; 
+    void getBoundingBox(float& x, float& y, float& width, float& height) const override;
 };
 
 #endif // TEXTFIELD_H

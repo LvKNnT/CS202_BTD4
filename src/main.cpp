@@ -9,19 +9,18 @@ int main() {
     InitWindow(Properties::screenWidth, Properties::screenHeight, "BTD4");
     SetTargetFPS(60);         
 
-    Game game;
-    game.initialize();
+    Game &game = Game::Instance();
     game.LoadContent();
+    game.initialize();
     
-    // just for easy coding, will be removed later when GameLogic is finished
-    Map map(Map::Type::MonkeyLane);
     while (!WindowShouldClose())    
     {
+        if(game.isExit()) break;
+        float deltaTime = GetFrameTime();
+        game.update(deltaTime);
         BeginDrawing();
             ClearBackground(RAYWHITE);
             game.render();
-
-            map.draw();
         EndDrawing();
     }
 

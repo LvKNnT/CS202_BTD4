@@ -9,15 +9,18 @@
 class StateStack {
 private:
     std::vector<std::unique_ptr<State>> states;
+    bool drawPreviousState;
 
 public:
+    StateStack() : drawPreviousState(false) {}
     void pushState(std::unique_ptr<State> state);
-    void popState();
-    std::unique_ptr<State> currentState();
+    std::unique_ptr<State> popState();
+    //State* currentState();
     void clear();
+    void setdrawPreviousState(bool _drawPreviousState);
 
-    void update();
-    void draw();
+    void update(Event::Type event);
+    void draw() const;
     void handleInput();
 };
 

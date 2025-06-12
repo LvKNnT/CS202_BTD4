@@ -7,12 +7,12 @@
 
 #include "raylib.h"
 
-class TextureMananger {
+class TextureManager {
 private:
     std::unordered_map<std::string, Texture> textures;
 
 public:
-    ~TextureMananger();
+    ~TextureManager();
     void loadTexture(std::string name, std::string path);
     Texture &getTexture(std::string name);
 };
