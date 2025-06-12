@@ -1,9 +1,16 @@
 #include "raylib.h"
 #include <iostream>
 
-#include "Properties.h"
+#include "utils/Properties.h"
+#include "utils/Timer.h"
+
 #include "core/Game.h"
+
+// testing..
 #include "logic/map/Map.h"
+#include "logic/GameLogic.h"
+#include "logic/GameObjectManager.h"
+#include "logic/enemy/Red.h"
 
 int main() {
     InitWindow(Properties::screenWidth, Properties::screenHeight, "BTD4");
@@ -15,13 +22,24 @@ int main() {
     
     // just for easy coding, will be removed later when GameLogic is finished
     Map map(Map::Type::MonkeyLane);
-    while (!WindowShouldClose())    
-    {
-        BeginDrawing();
-            ClearBackground(RAYWHITE);
-            game.render();
+    
+    // same here lmao
+    Timer timer;
+    LogicManager logicManager;
+    logicManager.Init();
+    
 
-            map.draw();
+    timer.reset();
+    while (!WindowShouldClose())  
+    {
+        logicManager.Update();
+        
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        game.render();
+        
+        map.draw();
+        logicManager.Draw();
         EndDrawing();
     }
 

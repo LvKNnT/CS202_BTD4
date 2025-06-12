@@ -1,9 +1,12 @@
 #include "Map.h"
 
+// Should fix this later.
 Map::Map(Type _type) : type(_type) {
     switch (type) {
         case MonkeyLane:
+            Game::Instance().getTextureManager().loadTexture("MonkeyLaneThumb", "assets/map/Monkey_lane_thumb.png");
             texture = Game::Instance().getTextureManager().getTexture("MonkeyLaneThumb");
+
             mapImage = LoadImage("assets/map/Monkey_lane_path_mask.png");
             enemyPath.push_back(Point(-50, 400, Point::Type::SpawnEnenmy)); // enemy goes from there
             enemyPath.push_back(Point(0, 390));
@@ -54,11 +57,20 @@ Point::Type Map::getPointType(Vector2 position) const {
     return Point::Type::None; // can place tower here
 }
 
+Point::Type Map::getPointType(int index) const {
+    if(index < 0 || index >= (int) enemyPath.size()) return Point::Type::None;
+    return enemyPath[index].getType();
+}
+
 Vector2 Map::getCurrentPoint(int index) const {
     return enemyPath[index].position;
 }
 
 Vector2 Map::getNextPoint(int index) const {
-    if(index + 1 >= (int) enemyPath.size()) return enemyPath.back().position; 
+    if(index + 1 >= (int) enemyPath.size()) return enemyPath.back().position;
     return enemyPath[index + 1].position;
+}
+
+bool Map::isLastPoint(int index) const {
+    return index + 1 >= (int) enemyPath.size();
 }

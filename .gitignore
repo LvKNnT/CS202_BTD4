@@ -31,5 +31,7 @@
 *.out
 *.app
 
-# ignore folder asset due to large files
+# just some other junk files
 /assets/
+/.vscode/
+/raw/
