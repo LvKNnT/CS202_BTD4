@@ -1,10 +1,11 @@
 #include "StateManager.h"
 
 void StateManager::initialize() {
-    mainMenuState = std::make_unique<MainMenuState>();
-    mapSelectionState = std::make_unique<MapSelectionState>();
-    gameState = std::make_unique<GameState>();
-    stateStack.pushState(std::move(mainMenuState));
+    mainMenuState = std::make_shared<MainMenuState>();
+    mapSelectionState = std::make_shared<MapSelectionState>();
+    optionsState = std::make_shared<OptionsState>();
+    gameState = std::make_shared<GameState>();
+    stateStack.pushState(mainMenuState);
 }
 
 void StateManager::draw() const {
@@ -18,11 +19,15 @@ void StateManager::handleInput() {
 void StateManager::update(Event::Type event) {
     switch(event) {
         case Event::Type::MainMenuToMapSelection:
-            stateStack.pushState(std::move(mapSelectionState));
+            stateStack.pushState(mapSelectionState);
             stateStack.setdrawPreviousState(true);
             break;
-        case Event::Type::CancelMapSelection:
-            mapSelectionState = stateStack.popState();
+        case Event::Type::ToOptions:
+            stateStack.pushState(optionsState);
+            stateStack.setdrawPreviousState(true);
+            break;
+        case Event::Type::CancelCurrentState:
+            stateStack.popState();
             break;
         case Event::Type::MoveNext:
             stateStack.update(event);
@@ -31,8 +36,8 @@ void StateManager::update(Event::Type event) {
             stateStack.update(event);
             break;
         case Event::Type::MapSelectionToMonkeyLane:
-            mapSelectionState = stateStack.popState();
-            stateStack.pushState(std::move(gameState));
+            stateStack.popState();
+            stateStack.pushState(gameState);
             break;
     }
 }

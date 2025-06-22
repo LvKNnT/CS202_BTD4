@@ -12,10 +12,13 @@ private:
     std::vector<MyTexture> textureList;
 
 public:
-    TextureField(int _index, int _height, int _width, Vector2 _position);
+    TextureField(int _height, int _width, Vector2 _position);
+    TextureField(const Texture &texture, int _height, int _width, Vector2 _position); 
     void addTexture(const MyTexture &mTexture);
     void removeTexture(const MyTexture &mTexture);
     void draw() const override;
+    void handleInput() override; 
+    void getBoundingBox(float& x, float& y, float& width, float& height) const override;
 };
 
 #endif // TEXTUREFIELD_H

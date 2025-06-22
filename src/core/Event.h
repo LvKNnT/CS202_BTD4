@@ -7,7 +7,8 @@ public:
         None, 
         // UI
         MainMenuToMapSelection, 
-        CancelMapSelection,
+        ToOptions, 
+        CancelCurrentState,
         Exit,
         MoveNext,
         MovePrevious,

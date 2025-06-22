@@ -14,7 +14,7 @@ private:
 public:
     ~FontManager();
     void loadFont(std::string name, std::string path, int fontSize);
-    Font &getFront(std::string name);
+    Font &getFont(std::string name);
 };
 
 #endif // FONT_MANAGER_H

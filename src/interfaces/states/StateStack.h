@@ -8,13 +8,13 @@
 
 class StateStack {
 private:
-    std::vector<std::unique_ptr<State>> states;
+    std::vector<std::shared_ptr<State>> states;
     bool drawPreviousState;
 
 public:
     StateStack() : drawPreviousState(false) {}
-    void pushState(std::unique_ptr<State> state);
-    std::unique_ptr<State> popState();
+    void pushState(std::shared_ptr<State> state);
+    void popState();
     //State* currentState();
     void clear();
     void setdrawPreviousState(bool _drawPreviousState);

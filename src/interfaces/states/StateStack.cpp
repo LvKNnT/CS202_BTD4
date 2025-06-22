@@ -1,16 +1,14 @@
 #include "StateStack.h"
 
-void StateStack::pushState(std::unique_ptr<State> state) {
+void StateStack::pushState(std::shared_ptr<State> state) {
     states.push_back(std::move(state));
     drawPreviousState = false;
 }
 
-std::unique_ptr<State> StateStack::popState() {
-    if(states.empty()) return nullptr;
+void StateStack::popState() {
+    if(states.empty()) return;
     drawPreviousState = false;
-    auto top = std::move(states.back());
     states.pop_back();
-    return std::move(top);
 }
 
 // State* StateStack::currentState() {
