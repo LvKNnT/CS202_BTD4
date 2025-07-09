@@ -2,12 +2,12 @@
 
 void StateStack::pushState(std::shared_ptr<State> state) {
     states.push_back(std::move(state));
-    drawPreviousState = false;
+    drawPreviousStates = false;
 }
 
 void StateStack::popState() {
     if(states.empty()) return;
-    drawPreviousState = false;
+    drawPreviousStates = false;
     states.pop_back();
 }
 
@@ -20,11 +20,11 @@ void StateStack::popState() {
 
 void StateStack::clear() {
     states.clear();
-    drawPreviousState = false;
+    drawPreviousStates = false;
 }
 
-void StateStack::setdrawPreviousState(bool _drawPreviousState) {
-    drawPreviousState = _drawPreviousState;
+void StateStack::setdrawPreviousStates(bool _drawPreviousStates) {
+    drawPreviousStates = _drawPreviousStates;
 }
 
 void StateStack::update(Event::Type event) {
@@ -35,9 +35,11 @@ void StateStack::update(Event::Type event) {
 
 void StateStack::draw() const {
     if (!states.empty()) {
-        if(drawPreviousState && (int) states.size() >= 2) {
-            states[(int) states.size() - 2]->draw();
-        } 
+        if(drawPreviousStates) {
+            for(int i = 0; i < (int) states.size() - 1; i++) {
+                states[i]->draw();
+            }
+        }
         if(states.back()) states.back()->draw();
     }
 }

@@ -6,11 +6,10 @@
 class MapSelectionState : public State {
 private:
     int curMap;
-    PanelElement* nextMapButtonPtr;
-    PanelElement* previousMapButtonPtr;
-    PanelElement* ChooseMonkeyLaneButtonPtr;
-    PanelElement* ChooseJungleButtonPtr;
-    PanelElement* CommingSoonButtonPtr;
+    static const int maxMap = 3;
+    std::shared_ptr<PanelElement> nextMapButton;
+    std::shared_ptr<PanelElement> previousMapButton;
+    std::shared_ptr<PanelElement> ChooseMapButton[maxMap];
 public:
     MapSelectionState();
     void draw() const override;

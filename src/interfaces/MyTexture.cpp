@@ -5,11 +5,25 @@ MyTexture::MyTexture(const Texture &_texture, Vector2 _position) {
     position = _position;
 }
 
-void MyTexture::draw(int height, int width) const {
+void MyTexture::draw(int height, int width, float rotation) const {
     float scale = std::min(((float) width / texture.width), ( (float) height / texture.height));
-    float textWidth = texture.width * scale;
+    float texWidth = texture.width * scale;
     float texHeight = texture.height * scale;
-    DrawTextureEx(texture, (Vector2) {position.x + std::max((float) width - textWidth, 0.f) / 2, position.y + std::max((float) height - texHeight, 0.f) / 2}, 0.0f, scale, WHITE);
+    DrawTextureEx(texture, (Vector2) {position.x + std::max((float) width - texWidth, 0.f) / 2, position.y + std::max((float) height - texHeight, 0.f) / 2}, rotation, scale, WHITE);
+}
+
+void MyTexture::followMouse(int height, int width) {
+    Vector2 mousePos = GetMousePosition();
+    position = {mousePos.x - width / 2, mousePos.y - height / 2};
+}
+
+void MyTexture::setTexture(const Texture &_texture) {
+    texture = _texture;
+}
+
+void MyTexture::drawRangeCircle(float range, Color color) {
+    Vector2 mousePos = GetMousePosition();
+    DrawCircle(mousePos.x, mousePos.y, range, color);
 }
 
 void MyTexture::draw() const {

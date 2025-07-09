@@ -13,5 +13,5 @@ std::string InputField::getText() const {
 }
 
 void InputField::draw() const {
-    
+    if(!isAvailable) return;
 }

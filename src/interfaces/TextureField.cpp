@@ -21,15 +21,43 @@ void TextureField::removeTexture(const MyTexture &mTexture) {
 }
 
 void TextureField::draw() const {
+    if(!isAvailable) return;
     for(auto &mTexture:textureList) {
         mTexture.draw(height, width);
     }
 }
 
-void TextureField::handleInput() {
+void TextureField::draw(int idx, float rotation) const {
+    if(!isAvailable) return;
+    textureList[idx].draw(height, width, rotation);
+}
 
+void TextureField::handleInput() {
+    if(!isAvailable) return;
 }
 
 void TextureField::getBoundingBox(float& x, float& y, float& width, float& height) const {
 
+}
+
+MovableTextureField::MovableTextureField(const Texture &texture, int _height, int _width)
+    : TextureField(texture, _height, _width, GetMousePosition()) {
+}
+
+void MovableTextureField::handleInput() {
+    if(!isAvailable) return;
+    for(auto &mTexture:textureList) {
+        mTexture.followMouse(height, width);
+    }
+}
+
+void MovableTextureField::setTexture(const Texture &_texture, int idx) {
+    textureList[idx].setTexture(_texture);
+}
+
+void MovableTextureField::drawRangeCircle(float range, Color color) {
+    if(!isAvailable) return;
+    for(auto &mTexture:textureList) {
+        mTexture.drawRangeCircle(range, color);
+    }
 }

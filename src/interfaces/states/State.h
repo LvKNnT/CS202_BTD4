@@ -9,6 +9,7 @@
 #include "../TextureField.h"
 #include "../Panel.h"
 #include "../../Properties.h"
+#include "../../core/Event.h"
 
 class State {
 protected:

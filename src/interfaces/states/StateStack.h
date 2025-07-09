@@ -9,15 +9,15 @@
 class StateStack {
 private:
     std::vector<std::shared_ptr<State>> states;
-    bool drawPreviousState;
+    bool drawPreviousStates;
 
 public:
-    StateStack() : drawPreviousState(false) {}
+    StateStack() : drawPreviousStates(false) {}
     void pushState(std::shared_ptr<State> state);
     void popState();
     //State* currentState();
     void clear();
-    void setdrawPreviousState(bool _drawPreviousState);
+    void setdrawPreviousStates(bool _drawPreviousStates);
 
     void update(Event::Type event);
     void draw() const;

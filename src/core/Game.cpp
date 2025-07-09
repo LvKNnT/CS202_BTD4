@@ -31,12 +31,13 @@ void Game::LoadContent() {
     textureManager.loadTexture("Tick", "assets/UI/Tick.png");
     textureManager.loadTexture("Untick", "assets/UI/Untick.png");
     textureManager.loadTexture("FastForward", "assets/UI/FastForward.png");
+    textureManager.loadTexture("OkButton", "assets/UI/OkButton.png");
     //Sound
-    textureManager.loadTexture("Volume5", "assets/UI/Volume5.png");
-    textureManager.loadTexture("Volume4", "assets/UI/Volume4.png");
-    textureManager.loadTexture("Volume3", "assets/UI/Volume3.png");
-    textureManager.loadTexture("Volume2", "assets/UI/Volume2.png");
-    textureManager.loadTexture("Volume1", "assets/UI/Volume1.png");
+    textureManager.loadTexture("Volume100", "assets/UI/Volume100.png");
+    textureManager.loadTexture("Volume80", "assets/UI/Volume80.png");
+    textureManager.loadTexture("Volume60", "assets/UI/Volume60.png");
+    textureManager.loadTexture("Volume40", "assets/UI/Volume40.png");
+    textureManager.loadTexture("Volume20", "assets/UI/Volume20.png");
     textureManager.loadTexture("Volume0", "assets/UI/Volume0.png");
     
     // Load maps
@@ -57,15 +58,36 @@ void Game::LoadContent() {
     // Load tower
     textureManager.loadTexture("DartMonkeyIcon", "assets/tower/Dart_Monkey_Mobile.png");
     textureManager.loadTexture("BombTowerIcon", "assets/tower/Bomb_Tower_2.png");
+
+    // Load mode icons
+    textureManager.loadTexture("Easy", "assets/mode/Easy.png");
+    textureManager.loadTexture("Medium", "assets/mode/Medium.png");
+    textureManager.loadTexture("Hard", "assets/mode/Hard.png");
+    textureManager.loadTexture("Standard", "assets/mode/Standard.png");
+    textureManager.loadTexture("PrimaryOnly", "assets/mode/PrimaryOnly.png");
+    textureManager.loadTexture("Deflation", "assets/mode/Deflation.png");
+    textureManager.loadTexture("Sandbox", "assets/mode/Sandbox.png");
+    textureManager.loadTexture("MilitaryOnly", "assets/mode/MilitaryOnly.png");
+    textureManager.loadTexture("Reverse", "assets/mode/Reverse.png");
+    textureManager.loadTexture("Apopalypse", "assets/mode/Apopalypse.png");
+    textureManager.loadTexture("MagicMonkeysOnly", "assets/mode/MagicMonkeysOnly.png");
+    textureManager.loadTexture("AlternateBloons", "assets/mode/AlternateBloons.png");
+    textureManager.loadTexture("DoubleHpMoabs", "assets/mode/DoubleHpMoabs.png");
+    textureManager.loadTexture("Impoppable", "assets/mode/Impoppable.png");
+    textureManager.loadTexture("HalfCash", "assets/mode/HalfCash.png");
+    textureManager.loadTexture("CHIMPS", "assets/mode/CHIMPS.png");
 }
 
 void Game::UnloadContent() {
-    
+    textureManager.unloadContent();
+    fontManager.unloadContent();
 }
 
 void Game::initialize() {
     stateManager = std::make_shared<StateManager>();
+    soundManager = std::make_shared<SoundManager>();
     stateManager->initialize();
+    soundManager->initialize();
 }
 
 void Game::render() {
@@ -92,6 +114,15 @@ FontManager &Game::getFontManager() {
     return fontManager;
 }
 
+SoundLoader &Game::getSoundLoader() {
+    return soundLoader;
+}
+
+std::shared_ptr<IObserver> Game::getSoundManager() {
+    return soundManager;
+}
+
 std::shared_ptr<IObserver> Game::getStateManager() {
     return stateManager;
 }
+

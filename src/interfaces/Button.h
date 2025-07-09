@@ -164,4 +164,85 @@ public:
     FastForward(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
     void handleInput() override;
 };
+
+class BackHome : public Button {
+public:
+    BackHome(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+    void handleInput() override;
+};
+
+class ToAreYouSure : public Button {
+public:
+    ToAreYouSure(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+    void handleInput() override;
+};
+
+class ToSpecificModeSelection : public Button {
+public:
+    ToSpecificModeSelection(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+    void handleInput() override;
+protected:
+    Event::Type modeSelectionEvent;
+};
+
+class ToEasyModeSelection : public ToSpecificModeSelection {
+public:
+    ToEasyModeSelection(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class ToMediumModeSelection : public ToSpecificModeSelection {
+public:
+    ToMediumModeSelection(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class ToHardModeSelection : public ToSpecificModeSelection {
+public:
+    ToHardModeSelection(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class ToEasyStandardMode : public ToSpecificModeSelection {
+public:
+    ToEasyStandardMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class ToEasyPrimaryOnlyMode : public ToSpecificModeSelection {
+public:
+    ToEasyPrimaryOnlyMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class ToEasyDeflationdMode : public ToSpecificModeSelection {
+public:
+    ToEasyDeflationdMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class ToEasySandboxMode : public ToSpecificModeSelection {
+public:
+    ToEasySandboxMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class ChooseTower : public Button{ 
+    // deal hover effect(show infor, texture) 
+    // deal select event -> move the texture need a circle around show range, check whether placable, show cancel by option 
+    // deal cancel click -> press esc or move out the screen 
+public:
+    ChooseTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+    void handleInput() override;
+
+protected:
+    Event::Type hoveringEvent;
+    Event::Type clickedEvent; // or select
+};
+
+class ChooseBombTower : public ChooseTower {
+public:
+    ChooseBombTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+// class Tower : public Button {
+//     // deal select tower -> show infor, upgrade, sell 
+//     // cancel select by clicking out of range, or press esc key
+// public:
+//     Tower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+//     void handleInput() override;
+// };
 #endif // BUTTON_H

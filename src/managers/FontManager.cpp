@@ -1,12 +1,5 @@
 #include "FontManager.h"
 
-FontManager::~FontManager() {
-    for(auto &font:fonts) {
-        UnloadFont(font.second);
-    }
-    fonts.clear();
-}
-
 void FontManager::loadFont(std::string name, std::string path, int fontSize) {
     Font newFont = LoadFontEx(path.c_str(), fontSize, 0, 0);
     if(newFont.texture.id == 0) {
@@ -23,4 +16,11 @@ Font &FontManager::getFont(std::string name) {
     static Font empty = {0};
     std::cerr<<"Warning: Font "<<name<<" not found!\n";
     return empty;
+}
+
+void FontManager::unloadContent() {
+    for(auto &font:fonts) {
+        UnloadFont(font.second);
+    }
+    fonts.clear();
 }

@@ -8,7 +8,7 @@
 #include "MyTexture.h"
 
 class TextureField : public PanelElement {
-private:
+protected:
     std::vector<MyTexture> textureList;
 
 public:
@@ -17,8 +17,18 @@ public:
     void addTexture(const MyTexture &mTexture);
     void removeTexture(const MyTexture &mTexture);
     void draw() const override;
+    void draw(int idx, float rotation) const;
     void handleInput() override; 
     void getBoundingBox(float& x, float& y, float& width, float& height) const override;
+};
+
+class MovableTextureField : public TextureField {
+public:
+    MovableTextureField(const Texture &texture, int _height, int _width);
+    void handleInput() override;
+    void setTexture(const Texture &_texture, int idx);
+    void drawRangeCircle(float range, Color color);
+
 };
 
 #endif // TEXTUREFIELD_H

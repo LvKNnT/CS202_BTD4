@@ -13,7 +13,10 @@ private:
 public:
     MyTexture(const Texture &_texture, Vector2 _position);
     void draw() const;
-    void draw(int height, int width) const;
+    void draw(int height, int width, float rotation = 0.0f) const;
+    void followMouse(int height, int width);
+    void setTexture(const Texture &_texture);
+    void drawRangeCircle(float range, Color color);
 
     bool operator == (const MyTexture &other);
 };

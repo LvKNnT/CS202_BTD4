@@ -8,7 +8,8 @@
 int main() {
     InitWindow(Properties::screenWidth, Properties::screenHeight, "BTD4");
     SetTargetFPS(60);         
-
+    SetExitKey(0);
+    
     Game &game = Game::Instance();
     game.LoadContent();
     game.initialize();
