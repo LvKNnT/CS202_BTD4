@@ -7,38 +7,36 @@
 
 // Include the necessary headers for enemy types
 #include "Enemy.h"
-#include "Red.h"
-#include "../map/Map.h"
+#include "EnemySpawner.h"
+#include "../level/EnemyModifies.h"
 
+// This class manages all enemies in the game
 class EnemyManager {
+    friend class LogicManager; // Allow LogicManager to access private members
+
 public:
-    EnemyManager() = default;
+    EnemyManager(EnemyModifies modifies = EnemyModifies());
     EnemyManager(const EnemyManager& other); 
     ~EnemyManager() = default;
 
     EnemyManager& operator=(const EnemyManager& other); 
 
-    // Method to spawn enemies
+    // Methods
     void spawnEnemy(BloonType type, Vector2 position);
-
-    // Method to draw enemies
-    void drawEnemies(const Map& map) const;
-
-    // Method to update all enemies
-    void updateEnemies(const Map& map);
+    std::vector<std::unique_ptr<Enemy> > spawnChildrenEnemies(BloonType type, Vector2 position);
+    void drawEnemies() const;
+    void unLoad();
 
 private:
-    // Collection to hold all active enemies
-    std::vector<std::unique_ptr<Enemy> > enemyList; 
-    std::unique_ptr<Enemy> createEnemy(BloonType type, Vector2 position);
+    // Current enemy modifies
+    // Note that enemyModifies is constant and should not be modified for each enemyManager instance.
+    EnemyModifies currentModifies;
+ 
+    // Instances
+    std::unique_ptr<EnemySpawner> enemySpawner; // Factory to create enemies based on type
 
-    // Function 
-    // Move should be used the same logic for all enemies
-    /**
-     * @return -1 if the enemy has reached the end of the path, otherwise returns 0
-     */
-    int run(Enemy& enemy, const Map& map);
-    void updateActiveEnemies(Enemy& enemy, const Map& map); // Update the visibility of enemy
+    // Collection to hold all active enemies
+    std::vector<std::unique_ptr<Enemy> > enemyList;
 };
 
 #endif // ENEMYMANAGER_H

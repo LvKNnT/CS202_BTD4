@@ -31,7 +31,7 @@
 *.out
 *.app
 
-# just some other junk files
-/assets/
+# ignore vscode settings
 /.vscode/
 /raw/
+.gitignore

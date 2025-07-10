@@ -4,31 +4,33 @@
 #include "raylib.h"
 #include "EnemyUnits.h"
 #include "../GameObject.h"
+#include "../level/EnemyModifies.h"
+
 #include <memory>
 #include <string>
 
-// We use design pattern Abstract Factory to create enemies
+// We use design pattern Template Method Pattern to create enemies
 
 class Enemy : public GameObject {
+// should be only accessible by LogicManager and Spawner
+    friend class LogicManager; 
+    friend class EnemySpawner;
+
 public:
     Enemy(Vector2 position, Vector2 size, float rotation, BloonType type, int health, int speed, int reward, int livesLost);
     virtual std::unique_ptr<Enemy> clone() const = 0;
-    virtual ~Enemy();
+    virtual ~Enemy() = default;
 
-    // Basic getters
-    BloonType getType() const;
-    int getHealth() const;
-
-    // getters and setters for running
-    Vector2 getPosition() const;
-    int getSpeed() const;
-    int getTrackIndex() const;
-    void setTrackIndex(int index);
-    void setPosition(Vector2 position);
+    // Basic loaders
+    virtual void loadTexture() = 0;
+    void unLoad();
     
     // Different enemies can have different behaviors when taking damage
     virtual bool hit(int damage) = 0; // Pure virtual function for handling damage
     virtual void die() = 0; // Pure virtual function for handling death by end of track
+    virtual void setRotation(float rotation) = 0; // Pure virtual function for setting rotation
+    virtual void setModifies(const EnemyModifies& modifies) = 0; // Pure virtual function for setting enemy modifiers
+
 protected:
     BloonType type;
     int health;

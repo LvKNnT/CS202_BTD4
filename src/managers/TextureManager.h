@@ -1,19 +1,21 @@
 #ifndef TEXTUREMANAGER_H
 #define TEXTUREMANAGER_H
 
-#include <unordered_map>
+#include <map>
+#include <set>
 #include <string>
 #include <iostream>
 
 #include "raylib.h"
 
-class TextureMananger {
+class TextureManager {
 private:
-    std::unordered_map<std::string, Texture> textures;
+    std::map<std::string, Texture> textures;
 
 public:
-    ~TextureMananger();
+    ~TextureManager();
     void loadTexture(std::string name, std::string path);
+    void unloadAllTextures();
     Texture &getTexture(std::string name);
 };
 

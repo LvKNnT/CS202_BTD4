@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 #include <algorithm>
+#include <iostream>
 
 #include "raylib.h"
 #include "Drawable.h"
@@ -12,7 +13,7 @@
 
 class Panel : public Drawable {
 private:
-    std::vector<std::shared_ptr<PanelElement>> elements;
+    std::vector<std::unique_ptr<PanelElement>> elements;
     int height;
     int width;
     std::string title;
@@ -20,10 +21,11 @@ private:
 
 public:
     Panel();
-    void addPanelElement(std::shared_ptr<PanelElement> newPanelElement);
+    void addPanelElement(std::unique_ptr<PanelElement> newPanelElement);
     void removePanelElement(int index);
     void draw() const override;
     void update();
+    void handleInput();
 
 };
 

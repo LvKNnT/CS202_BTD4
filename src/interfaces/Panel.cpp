@@ -1,8 +1,12 @@
 #include "Panel.h"
 
-void Panel::addPanelElement(std::shared_ptr<PanelElement> newPanelElement) {
+Panel::Panel()
+{
+}
+
+void Panel::addPanelElement(std::unique_ptr<PanelElement> newPanelElement) {
     newPanelElement->setIndex((int) elements.size());
-    elements.push_back(newPanelElement);
+    elements.push_back(std::move(newPanelElement));
 }
 
 void Panel::removePanelElement(int index) {
@@ -21,4 +25,10 @@ void Panel::draw() const {
 
 void Panel::update() {
 
+}
+
+void Panel::handleInput() {
+    for(auto &element:elements) {
+        element->handleInput();
+    }
 }

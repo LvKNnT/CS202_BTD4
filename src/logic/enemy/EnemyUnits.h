@@ -10,8 +10,11 @@ enum class BloonType {
     Pink,
     Black,
     White,
-    Zebra,
+    Purple,
     Lead,
+    Zebra,
+    Rainbow,
+    Ceramic,
     Moab, // Massive Object Air Blimp
     Bfb,  // Big Floating Blimp
     Zomg, // Zeppelins of Mighty Gargantuaness

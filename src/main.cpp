@@ -10,36 +10,24 @@
 #include "logic/map/Map.h"
 #include "logic/GameLogic.h"
 #include "logic/GameObjectManager.h"
-#include "logic/enemy/Red.h"
+#include "logic/enemy/Enemy.h"
 
 int main() {
     InitWindow(Properties::screenWidth, Properties::screenHeight, "BTD4");
-    SetTargetFPS(60);         
+    SetTargetFPS(60);
 
-    Game game;
-    game.initialize();
+    Game &game = Game::Instance();
     game.LoadContent();
-    
-    // just for easy coding, will be removed later when GameLogic is finished
-    Map map(Map::Type::MonkeyLane);
-    
-    // same here lmao
-    Timer timer;
-    LogicManager logicManager;
-    logicManager.Init();
-    
-
-    timer.reset();
-    while (!WindowShouldClose())  
+    game.initialize();
+        
+    while (!WindowShouldClose())    
     {
-        logicManager.Update();
-        
+        if(game.isExit()) break;
+        float deltaTime = GetFrameTime();
+        game.update(deltaTime);
         BeginDrawing();
-        ClearBackground(RAYWHITE);
-        game.render();
-        
-        map.draw();
-        logicManager.Draw();
+            ClearBackground(RAYWHITE);
+            game.render();
         EndDrawing();
     }
 

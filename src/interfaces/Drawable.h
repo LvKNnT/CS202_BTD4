@@ -1,6 +1,8 @@
 #ifndef DRAWABLE_H
 #define DRAWABLE_H
 
+#include "raylib.h"
+
 class Drawable {
 public:
     virtual ~Drawable() = default;
@@ -9,9 +11,9 @@ public:
 
 };
 
-class Hixbox {
+class Hitbox {
 public:
-    virtual Rectangle getBoundingBox(float& x, float& y, float& width, float& height) const = 0;
+    virtual Rectangle getBoundingBox() const = 0;
 };
 
 #endif // DRAWABLE_H
