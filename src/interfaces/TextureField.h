@@ -19,7 +19,6 @@ public:
     void draw() const override;
     void draw(int idx, float rotation) const;
     void handleInput() override; 
-    void getBoundingBox(float& x, float& y, float& width, float& height) const override;
 };
 
 class MovableTextureField : public TextureField {

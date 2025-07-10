@@ -36,10 +36,6 @@ void TextureField::handleInput() {
     if(!isAvailable) return;
 }
 
-void TextureField::getBoundingBox(float& x, float& y, float& width, float& height) const {
-
-}
-
 MovableTextureField::MovableTextureField(const Texture &texture, int _height, int _width)
     : TextureField(texture, _height, _width, GetMousePosition()) {
 }

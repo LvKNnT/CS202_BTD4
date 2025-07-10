@@ -16,7 +16,3 @@ void TextField::draw() const {
 void TextField::handleInput() {
     if(!isAvailable) return;
 }
-
-void TextField::getBoundingBox(float& x, float& y, float& width, float& height) const {
-
-}
