@@ -14,7 +14,6 @@ private:
 
 public:
     void loadTexture(std::string name, std::string path);
-    void unloadAllTextures();
     Texture &getTexture(std::string name);
     void unloadContent();
 };
