@@ -6,15 +6,36 @@ public:
     enum class Type {
         None, 
         // UI
-        MainMenuToMapSelection, 
-        CancelMapSelection,
+        ToMapSelection, 
+        ToOptions, 
+        CancelCurrentState,
         Exit,
         MoveNext,
         MovePrevious,
-        MapSelectionToMonkeyLane
+        ToMonkeyLane,
+        HigherSound,
+        LowerSound,
+        HigherMusic,
+        LowerMusic,
+        ToAreYouSure,
+        BackHome,
+        ToEasyModeSelection,
+        ToMediumModeSelection, 
+        ToHardModeSelection,
+        ToEasyStandardMode, 
+        ToEasyPrimaryOnlyMode, 
+        ToEasyDeflationdMode, 
+        ToEasySandboxMode, 
+
+        //UI towers
+        //Hovering
+        HoveringChooseBomb,
+        //Clicked
+        ClickedChooseBomb
         // Logic
 
     };
+
 };
 
 #endif // EVENT_H

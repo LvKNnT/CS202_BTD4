@@ -16,19 +16,31 @@ public:
         MonkeyLane
     };
 
-private:
+protected:
     Texture texture;
-    std::vector<Point> enemyPath;
+    static const int MAXPATHS = 2;
+    std::vector<Point> enemyPath[MAXPATHS]; // use vector<vector cause now we have 2 paths for jungle
     Type type;
-    Image mapImage;
+    Image mapImage; 
 
 public:
-    Map(Type _type);
-    ~Map();
+    //Map(Type _type);
+    ~Map(); 
     void draw() const;
     Point::Type getPointType(Vector2 position) const;
-    Vector2 getCurrentPoint(int index) const;
-    Vector2 getNextPoint(int index) const;
+    // only pass pathIdx when we are in jungle_lane
+    Vector2 getCurrentPoint(int index, int pathIdx = 0) const;
+    Vector2 getNextPoint(int index, int pathIdx = 0) const;
+};
+
+class MonkeyLane: public Map {
+public:
+    MonkeyLane();
+};
+
+class Jungle: public Map {
+public:
+    Jungle();
 };
 
 #endif // MAP_H

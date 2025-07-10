@@ -9,11 +9,12 @@ void TextField::setText(const std::string &newText) {
 }
 
 void TextField::draw() const {
+    if(!isAvailable) return;
     DrawTextEx(font, text.c_str(), position, height, 1, color);
 }
 
 void TextField::handleInput() {
-
+    if(!isAvailable) return;
 }
 
 void TextField::getBoundingBox(float& x, float& y, float& width, float& height) const {

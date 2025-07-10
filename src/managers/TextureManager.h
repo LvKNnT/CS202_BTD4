@@ -12,9 +12,9 @@ private:
     std::unordered_map<std::string, Texture> textures;
 
 public:
-    ~TextureManager();
     void loadTexture(std::string name, std::string path);
     Texture &getTexture(std::string name);
+    void unloadContent();
 };
 
 #endif // TEXTUREMANAGER_H

@@ -1,16 +1,14 @@
 #include "StateStack.h"
 
-void StateStack::pushState(std::unique_ptr<State> state) {
+void StateStack::pushState(std::shared_ptr<State> state) {
     states.push_back(std::move(state));
-    drawPreviousState = false;
+    drawPreviousStates = false;
 }
 
-std::unique_ptr<State> StateStack::popState() {
-    if(states.empty()) return nullptr;
-    drawPreviousState = false;
-    auto top = std::move(states.back());
+void StateStack::popState() {
+    if(states.empty()) return;
+    drawPreviousStates = false;
     states.pop_back();
-    return std::move(top);
 }
 
 // State* StateStack::currentState() {
@@ -22,11 +20,11 @@ std::unique_ptr<State> StateStack::popState() {
 
 void StateStack::clear() {
     states.clear();
-    drawPreviousState = false;
+    drawPreviousStates = false;
 }
 
-void StateStack::setdrawPreviousState(bool _drawPreviousState) {
-    drawPreviousState = _drawPreviousState;
+void StateStack::setdrawPreviousStates(bool _drawPreviousStates) {
+    drawPreviousStates = _drawPreviousStates;
 }
 
 void StateStack::update(Event::Type event) {
@@ -37,9 +35,11 @@ void StateStack::update(Event::Type event) {
 
 void StateStack::draw() const {
     if (!states.empty()) {
-        if(drawPreviousState && (int) states.size() >= 2) {
-            states[(int) states.size() - 2]->draw();
-        } 
+        if(drawPreviousStates) {
+            for(int i = 0; i < (int) states.size() - 1; i++) {
+                states[i]->draw();
+            }
+        }
         if(states.back()) states.back()->draw();
     }
 }

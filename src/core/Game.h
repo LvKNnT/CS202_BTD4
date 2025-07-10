@@ -6,6 +6,8 @@
 #include "../managers/TextureManager.h"
 #include "../managers/FontManager.h"
 #include "../managers/StateManager.h"
+#include "../managers/SoundLoader.h"
+#include "../managers/SoundManager.h"
 #include "../interfaces/states/StateStack.h"
 #include "../interfaces/states/MainMenuState.h"
 #include "../interfaces/states/LoadingState.h"
@@ -29,6 +31,8 @@ public:
 
     TextureManager &getTextureManager();
     FontManager &getFontManager();
+    SoundLoader &getSoundLoader();
+    std::shared_ptr<IObserver> getSoundManager();
     std::shared_ptr<IObserver> getStateManager();
 private:
     bool exit; // for exit 
@@ -36,7 +40,9 @@ private:
     // Managers
     TextureManager textureManager;
     FontManager fontManager;
+    SoundLoader soundLoader;
     // pointer for observer pattern
+    std::shared_ptr<IObserver> soundManager;
     std::shared_ptr<IObserver> stateManager;    
 };
 

@@ -1,12 +1,5 @@
 #include "TextureManager.h"
 
-TextureManager::~TextureManager(){
-    for(auto &texture:textures) {
-        UnloadTexture(texture.second);
-    }
-    textures.clear();
-}
-
 void TextureManager::loadTexture(std::string name, std::string path) {
     Texture newTexture = LoadTexture(path.c_str());
     if(newTexture.id == 0) {
@@ -23,4 +16,11 @@ Texture &TextureManager::getTexture(std::string name) {
     static Texture empty = { 0 };
     std::cerr << "Warning: Texture " << name << " not found!\n";
     return empty; 
+}
+
+void TextureManager::unloadContent() {
+    for(auto &texture:textures) {
+        UnloadTexture(texture.second);
+    }
+    textures.clear();
 }

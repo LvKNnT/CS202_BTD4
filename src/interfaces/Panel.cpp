@@ -4,9 +4,9 @@ Panel::Panel()
 {
 }
 
-void Panel::addPanelElement(std::unique_ptr<PanelElement> newPanelElement) {
+void Panel::addPanelElement(std::shared_ptr<PanelElement> newPanelElement) {
     newPanelElement->setIndex((int) elements.size());
-    elements.push_back(std::move(newPanelElement));
+    elements.push_back(newPanelElement);
 }
 
 void Panel::removePanelElement(int index) {

@@ -6,8 +6,10 @@
 #include "raylib.h"
 #include "../Button.h"
 #include "../TextField.h"
+#include "../TextureField.h"
 #include "../Panel.h"
 #include "../../Properties.h"
+#include "../../core/Event.h"
 
 class State {
 protected:
@@ -18,6 +20,7 @@ protected:
 
 public:
     State(int _height, int _width, const Texture& _texture);
+    virtual ~State() = default;
     void onButtonClick(std::shared_ptr<Button> button);
     virtual void draw() const;
     virtual void update(Event::Type event);
