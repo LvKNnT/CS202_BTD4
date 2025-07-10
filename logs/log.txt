@@ -1,1 +1,212 @@
 Game Logic Initialized
+Enemy PinkBloon hit with damage: 1
+Pink bloon popped!
+Enemy YellowBloon hit with damage: 1
+Yellow bloon popped!
+Enemy PurpleBloon hit with damage: 1
+Purple bloon popped!
+Enemy CeramicBloon hit with damage: 1
+Enemy CeramicBloon is still alive with health: 9
+Enemy CeramicBloon hit with damage: 1
+Enemy CeramicBloon is still alive with health: 8
+Enemy RainbowBloon hit with damage: 1
+Rainbow bloon popped!
+Enemy DdtBloon hit with damage: 1
+Enemy DdtBloon is still alive with health: 399
+Enemy DdtBloon hit with damage: 1
+Enemy DdtBloon is still alive with health: 398
+Enemy GreenBloon hit with damage: 1
+Green bloon popped!
+Enemy DdtBloon hit with damage: 1
+Enemy DdtBloon is still alive with health: 397
+Enemy DdtBloon hit with damage: 1
+Enemy DdtBloon is still alive with health: 396
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 199
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 198
+Enemy LeadBloon hit with damage: 1
+Lead bloon popped!
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 197
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 196
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 195
+Enemy PinkBloon hit with damage: 1
+Pink bloon popped!
+Enemy YellowBloon hit with damage: 1
+Yellow bloon popped!
+Enemy YellowBloon hit with damage: 1
+Yellow bloon popped!
+Enemy GreenBloon hit with damage: 1
+Green bloon popped!
+Enemy BlueBloon hit with damage: 1
+Blue bloon popped!
+Enemy RedBloon hit with damage: 1
+Red bloon popped!
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 699
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 698
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 697
+Enemy CeramicBloon hit with damage: 1
+Enemy CeramicBloon is still alive with health: 7
+Enemy CeramicBloon hit with damage: 1
+Enemy CeramicBloon is still alive with health: 6
+Enemy CeramicBloon hit with damage: 1
+Enemy CeramicBloon is still alive with health: 5
+Enemy CeramicBloon hit with damage: 1
+Enemy CeramicBloon is still alive with health: 4
+Enemy CeramicBloon hit with damage: 1
+Enemy CeramicBloon is still alive with health: 3
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 696
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 695
+Enemy GreenBloon hit with damage: 1
+Green bloon popped!
+Enemy BlueBloon hit with damage: 1
+Blue bloon popped!
+Enemy RedBloon hit with damage: 1
+Red bloon popped!
+Enemy WhiteBloon hit with damage: 1
+White bloon popped!
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 694
+Enemy ZebraBloon hit with damage: 1
+Zebra bloon popped!
+Enemy BlackBloon hit with damage: 1
+Black bloon popped!
+Enemy PinkBloon hit with damage: 1
+Pink bloon popped!
+Enemy ZebraBloon hit with damage: 1
+Zebra bloon popped!
+Enemy BlackBloon hit with damage: 1
+Black bloon popped!
+Enemy PinkBloon hit with damage: 1
+Pink bloon popped!
+Enemy YellowBloon hit with damage: 1
+Yellow bloon popped!
+Enemy BlackBloon hit with damage: 1
+Black bloon popped!
+Bloon reached the end of the track!
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 693
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 692
+Enemy BlackBloon hit with damage: 1
+Black bloon popped!
+Enemy PinkBloon hit with damage: 1
+Pink bloon popped!
+Enemy YellowBloon hit with damage: 1
+Yellow bloon popped!
+Enemy BlackBloon hit with damage: 1
+Black bloon popped!
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 691
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 690
+Enemy BlueBloon hit with damage: 1
+Blue bloon popped!
+Enemy RedBloon hit with damage: 1
+Red bloon popped!
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 689
+Enemy BlueBloon hit with damage: 1
+Blue bloon popped!
+Enemy RedBloon hit with damage: 1
+Red bloon popped!
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 688
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 687
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 686
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 685
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 684
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 683
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 682
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 681
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 680
+Bloon reached the end of the track!
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 679
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 678
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 677
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 676
+Bloon reached the end of the track!
+Bloon reached the end of the track!
+Bloon reached the end of the track!
+Bloon reached the end of the track!
+Bloon reached the end of the track!
+Bloon reached the end of the track!
+Bloon reached the end of the track!
+Bloon reached the end of the track!
+Bloon reached the end of the track!
+Bloon reached the end of the track!
+Bloon reached the end of the track!
+Bloon reached the end of the track!
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 194
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 193
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 192
+Enemy RedBloon hit with damage: 1
+Red bloon popped!
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 191
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 190
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 189
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 188
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 187
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 186
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 185
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 184
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 183
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 182
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 181
+Enemy MoabBloon hit with damage: 1
+Enemy MoabBloon is still alive with health: 180
+Bloon reached the end of the track!
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 675
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 674
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 673
+Bloon reached the end of the track!
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 672
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 671
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 670
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 669
+Enemy BfbBloon hit with damage: 1
+Enemy BfbBloon is still alive with health: 668
+Bloon reached the end of the track!
+Bloon reached the end of the track!
+Bloon reached the end of the track!
