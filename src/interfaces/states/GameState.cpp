@@ -85,6 +85,10 @@ void GameState::draw() const {
     DrawTextureEx(Game::Instance().getTextureManager().getTexture("MonkeyLaneThumb"), (Vector2) {0, 0}, 0.0, 1.0, WHITE);
     std::dynamic_pointer_cast<MovableTextureField>(movableTowerTexture)->drawRangeCircle(100, {255, 255, 255, 128});
     panel->draw();
+
+    // Temporary only
+    Game::Instance().getGameLogic().update();
+    Game::Instance().getGameLogic().draw();
 }
 
 void GameState::update(Event::Type event) {
@@ -123,10 +127,4 @@ void GameState::handleInput() {
     if(IsKeyPressed(KEY_ESCAPE)) {
         std::dynamic_pointer_cast<MovableTextureField>(movableTowerTexture)->setAvailable(false);
     }
-}
-
-void GameState::draw() const {
-    // Temporary only
-    Game::Instance().getGameLogic().update();
-    Game::Instance().getGameLogic().draw();
 }

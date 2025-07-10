@@ -17,7 +17,6 @@ protected:
     Texture texture;
     static const int MAXPATHS = 2;
     std::vector<Point> enemyPath[MAXPATHS]; // use vector<vector cause now we have 2 paths for jungle
-    Type type;
     Image mapImage; 
 
 public:
@@ -31,8 +30,6 @@ public:
     virtual void update() = 0;
     void unLoad();
 
-    void draw() const;
-
     // These functions should be the same for all maps
     Point::Type getPointType(Vector2 position) const; // For towers
     Point::Type getPointType(int index, int pathIdx = 0) const; // For enemies
@@ -43,16 +40,6 @@ public:
     bool isLastPoint(int index, int pathIdx = 0) const;
 
     bool isWithinBounds(Vector2 position) const;
-};
-
-class MonkeyLane: public Map {
-public:
-    MonkeyLane();
-};
-
-class Jungle: public Map {
-public:
-    Jungle();
 };
 
 #endif // MAP_H
