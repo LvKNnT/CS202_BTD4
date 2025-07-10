@@ -1,6 +1,11 @@
 #include "TextureManager.h"
 
 void TextureManager::loadTexture(std::string name, std::string path) {
+    if(textures.find(name) != textures.end()) {
+        std::cerr << "Warning: Texture " << name << " already loaded!\n";
+        return;
+    }
+
     Texture newTexture = LoadTexture(path.c_str());
     if(newTexture.id == 0) {
         std::cerr<<"Error: Failed to load texture from "<<path<<"\n";

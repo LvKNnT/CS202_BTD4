@@ -1,22 +1,17 @@
 #include "Map.h"
 
-// Map::Map(Type _type) : type(_type) {
-//     switch (type) {
-//         case MonkeyLane:
-            
-//             break;
-        
-//         case Jungle:
-//             break;
-//     }   
-// }
-
 Map::~Map() {
-    UnloadImage(mapImage);
+    
 }
 
 void Map::draw() const {
     DrawTextureEx(texture, {0, 0}, 0.0f, 1.0f, WHITE);
+}
+
+void Map::unLoad() {
+    // Need to unload before closeWindow()
+    UnloadImage(mapImage);
+    UnloadTexture(texture);
 }
 
 Point::Type Map::getPointType(Vector2 position) const {
@@ -33,6 +28,11 @@ Point::Type Map::getPointType(Vector2 position) const {
     }
 
     return Point::Type::None; // can place tower here
+}
+
+Point::Type Map::getPointType(int index, int pathIdx) const {
+    if(index < 0 || index >= (int) enemyPath[pathIdx].size()) return Point::Type::None;
+    return enemyPath[pathIdx][index].getType();
 }
 
 Vector2 Map::getCurrentPoint(int index, int pathIdx) const {
@@ -136,5 +136,14 @@ Jungle::Jungle() {
     enemyPath[1].push_back(Point(481, 537));
     enemyPath[1].push_back(Point(980, 549));
     enemyPath[1].push_back(Point(1050, 545, Point::Type::Exit));
+}
+
+bool Map::isLastPoint(int index, int pathIdx) const {
+    return index + 1 >= (int) enemyPath[pathIdx].size();
+}
+
+bool Map::isWithinBounds(Vector2 position) const {
+    return position.x >= 0 && position.x < static_cast<float>(mapImage.width) &&
+           position.y >= 0 && position.y < static_cast<float>(mapImage.height);
 }
 

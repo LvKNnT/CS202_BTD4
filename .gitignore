@@ -31,8 +31,7 @@
 *.out
 *.app
 
-# ignore folder asset due to large files
-/assets/
-
 # ignore vscode settings
-.vscode/
+/.vscode/
+/raw/
+.gitignore

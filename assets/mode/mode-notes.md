@@ -65,4 +65,3 @@ Hard mode starting at Round 6 with special rules: No Continues, Hearts Lost, Inc
 
 ## Sandbox
 Test towers and bloons in a safe environment, on Hard Difficulty settings (requires Standard to be completed)
-

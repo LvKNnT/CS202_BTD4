@@ -81,6 +81,8 @@ void Game::LoadContent() {
 void Game::UnloadContent() {
     textureManager.unloadContent();
     fontManager.unloadContent();
+
+    gameLogic.unLoad();
 }
 
 void Game::initialize() {
@@ -126,3 +128,6 @@ std::shared_ptr<IObserver> Game::getStateManager() {
     return stateManager;
 }
 
+GameLogic &Game::getGameLogic() {
+    return gameLogic;
+}

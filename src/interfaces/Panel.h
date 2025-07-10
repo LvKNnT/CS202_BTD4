@@ -25,7 +25,6 @@ public:
     void removePanelElement(int index);
     void draw() const override;
     void update();
-    void getBoundingBox(float& x, float& y, float& width, float& height) const override;
     void handleInput();
 
 };

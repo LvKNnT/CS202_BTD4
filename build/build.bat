@@ -14,7 +14,6 @@ g++ !sources! -o Game.exe -O -I ../include/ -L ../lib/ -lraylib -lgdi32 -lwinmm
 if exist Game.exe (
     echo Running Game.exe...
     Game.exe
-    pause
 ) else (
     echo Compilation failed. Game.exe not found.
     pause

@@ -1,5 +1,6 @@
 #include "GameState.h"
 #include "../../core/Game.h"
+#include <fstream>
 
 GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth, Game::Instance().getTextureManager().getTexture("GameStateBackground")) { 
     curTowerType = 0;
@@ -74,6 +75,9 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
     movableTowerTexture = std::make_shared<MovableTextureField>(Game::Instance().getTextureManager().getTexture("BombTowerIcon"), 100, 103);
     panel->addPanelElement(movableTowerTexture);
     movableTowerTexture->setAvailable(false);
+
+    // Temporary only
+    Game::Instance().getGameLogic().init();
 }
 
 void GameState::draw() const {
@@ -119,4 +123,10 @@ void GameState::handleInput() {
     if(IsKeyPressed(KEY_ESCAPE)) {
         std::dynamic_pointer_cast<MovableTextureField>(movableTowerTexture)->setAvailable(false);
     }
+}
+
+void GameState::draw() const {
+    // Temporary only
+    Game::Instance().getGameLogic().update();
+    Game::Instance().getGameLogic().draw();
 }

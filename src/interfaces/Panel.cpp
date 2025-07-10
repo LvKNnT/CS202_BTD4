@@ -27,10 +27,6 @@ void Panel::update() {
 
 }
 
-void Panel::getBoundingBox(float& x, float& y, float& width, float& height) const {
-    
-}
-
 void Panel::handleInput() {
     for(auto &element:elements) {
         element->handleInput();

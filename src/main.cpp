@@ -1,9 +1,16 @@
 #include "raylib.h"
 #include <iostream>
 
-#include "Properties.h"
+#include "utils/Properties.h"
+#include "utils/Timer.h"
+
 #include "core/Game.h"
+
+// testing..
 #include "logic/map/Map.h"
+#include "logic/GameLogic.h"
+#include "logic/GameObjectManager.h"
+#include "logic/enemy/Enemy.h"
 
 int main() {
     InitWindow(Properties::screenWidth, Properties::screenHeight, "BTD4");
@@ -13,7 +20,7 @@ int main() {
     Game &game = Game::Instance();
     game.LoadContent();
     game.initialize();
-    
+        
     while (!WindowShouldClose())    
     {
         if(game.isExit()) break;

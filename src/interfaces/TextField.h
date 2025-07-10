@@ -15,7 +15,6 @@ public:
     void setText(const std::string& newText);
     void draw() const override;
     void handleInput() override; 
-    void getBoundingBox(float& x, float& y, float& width, float& height) const override;
 };
 
 #endif // TEXTFIELD_H

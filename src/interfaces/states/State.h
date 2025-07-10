@@ -8,8 +8,8 @@
 #include "../TextField.h"
 #include "../TextureField.h"
 #include "../Panel.h"
-#include "../../Properties.h"
 #include "../../core/Event.h"
+#include "../../utils/Properties.h"
 
 class State {
 protected:
@@ -23,7 +23,7 @@ public:
     virtual ~State() = default;
     void onButtonClick(std::shared_ptr<Button> button);
     virtual void draw() const;
-    virtual void update(Event::Type event);
+    virtual void update(Event::Type event); // updated by on-click event
     virtual void handleInput();
 };
 

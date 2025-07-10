@@ -3,6 +3,7 @@
 
 #include <memory>
 
+// UI/UX
 #include "../managers/TextureManager.h"
 #include "../managers/FontManager.h"
 #include "../managers/StateManager.h"
@@ -12,6 +13,9 @@
 #include "../interfaces/states/MainMenuState.h"
 #include "../interfaces/states/LoadingState.h"
 #include "IObserver.h"
+
+// Logic
+#include "../logic/GameLogic.h"
 
 class Game {
 public:
@@ -34,6 +38,8 @@ public:
     SoundLoader &getSoundLoader();
     std::shared_ptr<IObserver> getSoundManager();
     std::shared_ptr<IObserver> getStateManager();
+
+    GameLogic &getGameLogic();
 private:
     bool exit; // for exit 
 
@@ -44,6 +50,8 @@ private:
     // pointer for observer pattern
     std::shared_ptr<IObserver> soundManager;
     std::shared_ptr<IObserver> stateManager;    
+
+    GameLogic gameLogic;
 };
 
 #endif // GAME_H
