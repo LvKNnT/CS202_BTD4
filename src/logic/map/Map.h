@@ -5,6 +5,7 @@
 #include <iostream>
 #include <memory>
 #include <math.h>
+#include <vector>
 
 #include "../../interfaces/Drawable.h"
 #include "Point.h"
@@ -16,13 +17,13 @@ class Map : public Drawable {
 protected:
     Texture texture;
     static const int MAXPATHS = 2;
-    std::vector<Point> enemyPath[MAXPATHS]; // use vector<vector cause now we have 2 paths for jungle
+    std::vector<std::vector<Point> > enemyPath; // use vector<vector cause now we have 2 paths for jungle
     Image mapImage; 
 
 public:
-    Map() = default;
+    Map();
     virtual std::unique_ptr<Map> clone() const = 0; 
-    ~Map(); 
+    ~Map() = default; 
 
     // Basics settings
     virtual void loadTexture() = 0;

@@ -7,6 +7,8 @@
 
 class TowerManager {
     friend class LogicManager; // Allow LogicManager to access private members
+    friend LogicInfo;
+
 public:
     TowerManager(TowerModifies modifies = TowerModifies());
     TowerManager(const TowerManager& other); 
@@ -26,6 +28,8 @@ private:
     std::vector<std::unique_ptr<Tower>> towerList; // Collection to hold all active towers
 
     std::unique_ptr<TowerSpawner> towerSpawner; // Factory to create towers based on type
+
+    int towerIDCounter; // Counter for ID tower
 };
 
 #endif // TOWER_MANAGER_H

@@ -2,12 +2,12 @@
 #include <iostream>
 
 Tower::Tower(Vector2 position, Vector2 size, float rotation, TowerType type, int cost)
-    : GameObject(position, size, rotation, "Tower"), type(type), cost(cost), targetPriority(TargetPriority::First) {
+    : GameObject(position, size, rotation, "Tower"), type(type), cost(cost), targetPriority(TargetPriority::First), towerId(-1), popCount(0) {
     // Constructor implementation can be extended if needed
 }
 
 Tower::Tower(const Tower& other)
-    : GameObject(other), type(other.type), cost(other.cost), upgradeCost(other.upgradeCost), targetPriority(other.targetPriority) {
+    : GameObject(other), type(other.type), cost(other.cost), upgradeCost(other.upgradeCost), targetPriority(other.targetPriority), towerId(other.towerId), popCount(other.popCount), info(other.info) {
     // Copy the attacks
     attacks.clear(); 
     for(const auto& attack : other.attacks) {

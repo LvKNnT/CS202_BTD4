@@ -39,6 +39,7 @@ protected:
     int livesLost; // Number of lives lost due to this bloon reaching the end
 
     int trackIndex; // Index of the current point in the enemy path
+    int pathIndex; // Index of the path this enemy is following
 };
 
 #endif // ENEMY_H

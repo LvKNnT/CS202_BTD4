@@ -20,6 +20,7 @@ EnemyManager::EnemyManager(const EnemyManager& other) {
     }
     else {
         // should not be here
+        std::cerr << "Error: Attempted to copy EnemyManager to itself." << std::endl;
     }
 }
 
@@ -35,12 +36,13 @@ EnemyManager& EnemyManager::operator=(const EnemyManager& other) {
     }
     else {
         // should not be here
+        std::cerr << "Error: Attempted to assign EnemyManager to itself." << std::endl;
     }
     return *this;
 }
 
-void EnemyManager::spawnEnemy(BloonType type, Vector2 position) {
-    std::unique_ptr<Enemy> enemy = enemySpawner->getEnemy(type, position, currentModifies);
+void EnemyManager::spawnEnemy(BloonType type, Vector2 position, int pathIndex) {
+    std::unique_ptr<Enemy> enemy = enemySpawner->getEnemy(type, position, pathIndex, currentModifies);
     
     if (enemy) {
         enemyList.push_back(std::move(enemy));

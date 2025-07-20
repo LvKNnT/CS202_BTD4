@@ -48,7 +48,7 @@ bool Purple::hit(int damage) {
 
 void Purple::die() {
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::app);
-    flog << "Bloon reached the end of the track!" << std::endl;
+    flog << tag << " reached the end of the track!" << std::endl;
     flog.close();
 }
 

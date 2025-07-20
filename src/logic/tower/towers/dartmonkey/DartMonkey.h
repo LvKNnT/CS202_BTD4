@@ -19,6 +19,7 @@ public:
     void setRotation(float rotation) override;
     void setModifies(const TowerModifies& modifies) override;
     void upgrade(const UpgradeUnits& upgradeUnits, int& currentCash) override;
+    LogicInfo getInfo() override;
 
     Rectangle getBoundingBox() const override;
     bool isActive() const override;

@@ -5,6 +5,7 @@
 #include "map/MapManager.h"
 #include "bullet/BulletManager.h"
 #include "tower/TowerManager.h"
+#include "resource/Resource.h"
 
 // This class handles the iteration between different game Logic managers
 class LogicManager {
@@ -16,9 +17,10 @@ public:
     void updateEnemies(EnemyManager& enemyManager, MapManager& mapManager);
     void updateBullets(BulletManager& bulletManager, MapManager& mapManager);
     void updateTowers(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager);
+    bool isPutTower(const TowerManager& towerManager, const MapManager& mapManager, TowerType type, Vector2 position) const; 
 
     // Update methods for interactions between game objects
-    void updateBulletsHitEnemies(BulletManager& bulletManager, EnemyManager& enemyManager, MapManager& mapManager);
+    void updateBulletsHitEnemies(BulletManager& bulletManager, EnemyManager& enemyManager, TowerManager& towerManager, MapManager& mapManager);
 private:
     // Move should be used the same logic for all enemies
     /**
@@ -27,10 +29,10 @@ private:
     int runEnemy(Enemy& enemy, const Map& map);
     int runBullet(Bullet& bullet, const Map& map);
     bool checkCollision(const Bullet& bullet, const Enemy& enemy) const;
-    std::vector<std::unique_ptr<Enemy>> getChildrenEnemies(EnemyManager& enemyManager, Enemy& enemy, int damage);
+    std::vector<std::unique_ptr<Enemy>> getChildrenEnemies(EnemyManager& enemyManager, Enemy& enemy, int damage, int& popCount);
 
-    // Support methods
-    float Vector2Distance(Vector2& a, Vector2& b) const;
+    // sub-methods
+    float distancePointLine(Vector2 point, Vector2 lineStart, Vector2 lineEnd) const;
 };
 
 #endif // LOGICMANAGER_H

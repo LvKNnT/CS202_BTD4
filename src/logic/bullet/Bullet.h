@@ -15,7 +15,7 @@ class Bullet : public GameObject {
     friend class BulletSpawner;
 
 public:
-    Bullet(Vector2 position, Vector2 size, float rotation, BulletType type, int damage, int speed, int pierce, float lifeSpan);
+    Bullet(BulletType type);
     virtual std::unique_ptr<Bullet> clone() const = 0;
     virtual ~Bullet() = default;
 
@@ -38,6 +38,8 @@ protected:
     // Position and rotation for movement
     Vector2 position; // Position of the bullet
     float rotation; // Rotation angle for the bullet
+
+    int towerId; // ID of the tower that created this bullet, if applicable
 };
 
 #endif  // BULLET_H

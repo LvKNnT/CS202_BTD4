@@ -4,6 +4,9 @@
 #include "raylib.h"
 
 class Point {
+    friend class Map; // Allow Map to access private members
+    friend class LogicManager; // Allow LogicManager to access private members
+
 public:
     enum Type {
         None = 0,
@@ -23,7 +26,6 @@ public:
 
     Type getType() const;
     bool canGetType(Vector2 curPoint, Point nextPoint) const;
-    friend class Map;
 };
 
 #endif // POINT_H

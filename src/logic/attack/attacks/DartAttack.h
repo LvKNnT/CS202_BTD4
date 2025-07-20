@@ -6,12 +6,12 @@
 
 class DartAttack : public Attack {
 public:
-    DartAttack(float range, float cooldown, Vector2 position, int damage, int speed, int pierce, float lifeSpan);
+    DartAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan);
     ~DartAttack() override = default;
 
     std::unique_ptr<Attack> clone() const override;
 
-    bool isInRange(const Vector2& targetPosition) const override;
+    bool isInRange(const Rectangle& rec, const float rotation) const override;
     void update(BulletManager& bulletManager, const Vector2& targetPosition) override;
 };
 

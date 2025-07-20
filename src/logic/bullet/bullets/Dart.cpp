@@ -2,8 +2,8 @@
 
 #include <fstream>
 
-Dart::Dart(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan)
-    : Bullet(position, size, rotation, BulletType::Dart, damage, speed, pierce, lifeSpan) {
+Dart::Dart()
+    : Bullet(BulletType::Dart) {
     tag = "Dart";
 }
 

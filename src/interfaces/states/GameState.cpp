@@ -80,15 +80,15 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
     Game::Instance().getGameLogic().init();
 }
 
-void GameState::draw() const {
-    DrawTextureEx(background, (Vector2) {0, 0}, 0.0, 1.0, (Color) {140, 140, 140, 255});
-    DrawTextureEx(Game::Instance().getTextureManager().getTexture("MonkeyLaneThumb"), (Vector2) {0, 0}, 0.0, 1.0, WHITE);
-    std::dynamic_pointer_cast<MovableTextureField>(movableTowerTexture)->drawRangeCircle(100, {255, 255, 255, 128});
-    panel->draw();
-
-    // Temporary only
+void GameState::draw() const {    
+    // Update session 
     Game::Instance().getGameLogic().update();
+    
+    // Draw
+    DrawTextureEx(background, (Vector2) {0, 0}, 0.0, 1.0, (Color) {140, 140, 140, 255});
     Game::Instance().getGameLogic().draw();
+    panel->draw();
+    std::dynamic_pointer_cast<MovableTextureField>(movableTowerTexture)->drawRangeCircle(100, {255, 255, 255, 128});
 }
 
 void GameState::update(Event::Type event) {

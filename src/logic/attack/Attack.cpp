@@ -1,7 +1,7 @@
 #include "Attack.h"
 
-Attack::Attack(float range, float cooldown, Vector2 position, int damage, int speed, int pierce, float lifeSpan)
-    : range(range), cooldown(cooldown), timer(0.0f), position(position), damage(damage), speed(speed), pierce(pierce), lifeSpan(lifeSpan) {
+Attack::Attack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan)
+    : range(range), cooldown(cooldown), timer(0.0f), position(position), towerId(towerId), damage(damage), speed(speed), pierce(pierce), lifeSpan(lifeSpan){
     // Constructor implementation can be extended if needed
 }
 
