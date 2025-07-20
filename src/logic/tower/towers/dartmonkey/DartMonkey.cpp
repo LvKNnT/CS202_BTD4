@@ -22,12 +22,49 @@ DartMonkey::DartMonkey(Vector2 position)
      * * * pierce = 1
      * * * lifeSpan = 60.0f
      */
-    attacks.push_back(std::make_unique<DartAttack>(100.0f, 0.1f, position, 1, 200, 1, 5.0f));
+    attacks.push_back(std::make_unique<DartAttack>(100.0f, 0.1f, position, towerId, 1, 200, 1, 5.0f));
 
     // Upgrade Path
     upgradeTop = std::make_unique<SharpShots>();
     upgradeMiddle = std::make_unique<Upgrade>();
     upgradeBottom = std::make_unique<Upgrade>();
+
+    // Info section
+    info["name"] = "Dart Monkey";
+    info["description"] = "Throw a single dart at nearby Bloons. Short range and low pierce but cheap";
+    info["cost"] = std::to_string(cost);
+    info["popCount"] = std::to_string(popCount);
+    info["sellPrice"] = std::to_string(static_cast<int>(cost * 0.75f));
+
+    switch (targetPriority) {
+        case TargetPriority::First:
+            info["targetPriority"] = "First";
+            break;
+        case TargetPriority::Last:
+            info["targetPriority"] = "Last";
+            break;
+        case TargetPriority::Close:
+            info["targetPriority"] = "Close";
+            break;
+        case TargetPriority::Strong:
+            info["targetPriority"] = "Strong";
+            break;
+        default:
+            info["targetPriority"] = "Unknown";
+            break;
+    }
+
+    // At the beginning, no upgrades are available
+    info["descriptionTop"] = "";
+    info["descriptionMiddle"] = "";
+    info["descriptionBottom"] = "";
+
+    info["upgradeCostTop"] = std::to_string(upgradeTop->getCost());
+    info["upgradeDescriptionTop"] = upgradeTop->getDescription();
+    info["upgradeCostMiddle"] = std::to_string(upgradeMiddle->getCost());
+    info["upgradeDescriptionMiddle"] = upgradeMiddle->getDescription();
+    info["upgradeCostBottom"] = std::to_string(upgradeBottom->getCost());
+    info["upgradeDescriptionBottom"] = upgradeBottom->getDescription();
 }
 
 DartMonkey::DartMonkey(const DartMonkey& other)
@@ -92,7 +129,13 @@ void DartMonkey::draw() const {
 void DartMonkey::setModifies(const TowerModifies& modifies) {
     // Set the tower modifies for the Dart Monkey
     cost = static_cast<int>(cost * modifies.cost);
-    upgradeCost = static_cast<int>(upgradeCost * modifies.upgradeCost);
+    upgradeCost = modifies.upgradeCost;
+
+    // Update the info with the modified cost
+    info["cost"] = std::to_string(cost);
+    info["upgradeCostTop"] = std::to_string(upgradeTop->getCost() * upgradeCost);
+    info["upgradeCostMiddle"] = std::to_string(upgradeMiddle->getCost() * upgradeCost);
+    info["upgradeCostBottom"] = std::to_string(upgradeBottom->getCost() * upgradeCost);
 }
 
 void DartMonkey::upgrade(const UpgradeUnits& upgradeUnits, int& currentCash) {
@@ -101,27 +144,46 @@ void DartMonkey::upgrade(const UpgradeUnits& upgradeUnits, int& currentCash) {
         case UpgradeUnits::Top:
             if (upgradeTop->getCost() * upgradeCost <= currentCash && upgradeTop->getName() != "NoUpgrade") {
                 upgradeTop->update(attacks);
+                info["descriptionTop"] = upgradeTop->getDescription();
+
                 upgradeTop = upgradeTop->buy();
+                info["upgradeCostTop"] = std::to_string(upgradeTop->getCost());
+                info["upgradeDescriptionTop"] = upgradeTop->getDescription();
+
                 currentCash -= upgradeTop->getCost() * upgradeCost;
             }
             break;
         case UpgradeUnits::Middle:
             if (upgradeMiddle->getCost() * upgradeCost <= currentCash && upgradeMiddle->getName() != "NoUpgrade") {
                 upgradeMiddle->update(attacks);
+                info["descriptionMiddle"] = upgradeMiddle->getDescription();
+
                 upgradeMiddle = upgradeMiddle->buy();
+                info["upgradeCostMiddle"] = std::to_string(upgradeMiddle->getCost());
+                info["upgradeDescriptionMiddle"] = upgradeMiddle->getDescription();
+
                 currentCash -= upgradeMiddle->getCost() * upgradeCost;
             }
             break;
         case UpgradeUnits::Bottom:
             if (upgradeBottom->getCost() * upgradeCost <= currentCash && upgradeBottom->getName() != "NoUpgrade") {
                 upgradeBottom->update(attacks);
+                info["descriptionBottom"] = upgradeBottom->getDescription();
+
                 upgradeBottom = upgradeBottom->buy();
+                info["upgradeCostBottom"] = std::to_string(upgradeBottom->getCost());
+                info["upgradeDescriptionBottom"] = upgradeBottom->getDescription();
+                
                 currentCash -= upgradeBottom->getCost() * upgradeCost;
             }
             break;
         default:
             break;
     }
+}
+
+LogicInfo DartMonkey::getInfo() {
+    return this->info;
 }
 
 Rectangle DartMonkey::getBoundingBox() const {

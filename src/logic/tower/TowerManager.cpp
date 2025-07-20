@@ -3,15 +3,16 @@
 #include <iostream>
 
 TowerManager::TowerManager(TowerModifies modifies)
-    : currentModifies(modifies) {
+    : currentModifies(modifies), towerIDCounter(0) {
     // Initialize unique_ptr
-    towerSpawner = std::make_unique<TowerSpawner>();
+    towerSpawner = std::make_unique<TowerSpawner>(currentModifies);
 }
 
 TowerManager::TowerManager(const TowerManager& other) {
     if (this != &other) {
         currentModifies = other.currentModifies; // Copy the current modifies
         towerSpawner = other.towerSpawner->clone();
+        towerIDCounter = other.towerIDCounter; // Copy the tower ID counter
 
         towerList.clear();
         for (const auto& tower : other.towerList) {
@@ -28,6 +29,7 @@ TowerManager& TowerManager::operator=(const TowerManager& other) {
     if (this != &other) {
         currentModifies = other.currentModifies; 
         towerSpawner = other.towerSpawner->clone();
+        towerIDCounter = other.towerIDCounter; // Copy the tower ID counter
 
         towerList.clear();
         for (const auto& tower : other.towerList) {
@@ -42,8 +44,9 @@ TowerManager& TowerManager::operator=(const TowerManager& other) {
 }
 
 void TowerManager::spawnTower(TowerType type, Vector2 position) {
-    std::unique_ptr<Tower> tower = towerSpawner->getTower(type, position, currentModifies);
-    
+    std::unique_ptr<Tower> tower = towerSpawner->getTower(type, position, towerIDCounter++, currentModifies);
+    std::cerr << "Tower cost:" << tower->getInfo()["cost"] << std::endl;
+
     if (tower) {
         towerList.push_back(std::move(tower));
     } else {

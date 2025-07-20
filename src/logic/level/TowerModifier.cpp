@@ -35,10 +35,10 @@ void TowerModifier::init() {
      * These values are adjusted based on game design
      */
 
-    towerModifiesTemplates[Difficulty::Easy] = TowerModifies(1.0f, 1.0f);
-    towerModifiesTemplates[Difficulty::Medium] = TowerModifies(1.1f, 1.1f);
-    towerModifiesTemplates[Difficulty::Hard] = TowerModifies(1.25f, 1.25f);
-    towerModifiesTemplates[Difficulty::Impoppable] = TowerModifies(1.25f, 1.25f);
+    towerModifiesTemplates[Difficulty::Easy] = TowerModifies(0.85f, 0.85f);
+    towerModifiesTemplates[Difficulty::Medium] = TowerModifies(1.0f, 1.0f);
+    towerModifiesTemplates[Difficulty::Hard] = TowerModifies(1.08f, 1.08f);
+    towerModifiesTemplates[Difficulty::Impoppable] = TowerModifies(1.20f, 1.20f);
 }
 
 const TowerModifies& TowerModifier::getDifficultyUnits(Difficulty type) const {

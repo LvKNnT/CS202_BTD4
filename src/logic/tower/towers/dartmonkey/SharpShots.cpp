@@ -1,7 +1,7 @@
 #include "SharpShots.h"
 
 SharpShots::SharpShots() 
-    : Upgrade("Sharp Shots", 140, "Increases the pierce of darts by 1.") {
+    : Upgrade("Sharp Shots", 140, "Can pop 1 extra Bloon per shot.") {
     // Constructor implementation can be extended if needed
     nextUpgrade = std::make_unique<Upgrade>(); // Temporary lmao
 }

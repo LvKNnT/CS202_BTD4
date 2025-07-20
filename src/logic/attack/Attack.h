@@ -22,14 +22,15 @@ protected:
     int pierce; 
     float lifeSpan;
 
+    int towerId; // ID of the tower that created this attack, if applicable
 public:
-    Attack(float range, float cooldown, Vector2 position, int damage = 1, int speed = 200, int pierce = 1, float lifeSpan = 60.0f);
+    Attack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan);
     Attack(const Attack& other) = default;
     virtual ~Attack() = default;
 
     virtual std::unique_ptr<Attack> clone() const = 0; // Pure virtual function for cloning the attack
 
-    virtual bool isInRange(const Vector2& targetPosition) const = 0; // Pure virtual function to check if the target is in range
+    virtual bool isInRange(const Rectangle& rec, const float rotation) const = 0; // Pure virtual function to check if the target is in range
     virtual void update(BulletManager& bulletManager, const Vector2& targetPosition) = 0; // Pure virtual function for executing the attack
 
     // Getters/Setters

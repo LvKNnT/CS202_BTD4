@@ -32,7 +32,7 @@ public:
     void init();
 
     // Returns a unique_ptr to a new Enemy of the given type
-    std::unique_ptr<Enemy> getEnemy(BloonType type, Vector2 position, EnemyModifies modifies);
+    std::unique_ptr<Enemy> getEnemy(BloonType type, Vector2 position, int pathIndex, EnemyModifies modifies);
     std::vector<std::unique_ptr<Enemy> > getChildrenEnemies(BloonType type, Vector2 position, EnemyModifies modifies);
 };
 

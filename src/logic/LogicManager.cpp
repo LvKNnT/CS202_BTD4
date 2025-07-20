@@ -1,5 +1,7 @@
 #include "LogicManager.h"
 
+#include "raymath.h"
+
 #include <cfloat>
 #include <algorithm>
 #include <fstream>
@@ -22,15 +24,16 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
     float elapsedTime = GetFrameTime();
     Vector2 position = enemy.position;
     int trackIndex = enemy.trackIndex;
+    int pathIndex = enemy.pathIndex; 
     int speed = enemy.speed;
 
-    Vector2 nextPoint = map.getNextPoint(trackIndex);
+    Vector2 nextPoint = map.getNextPoint(trackIndex, pathIndex);
     Vector2 direction = {nextPoint.x - position.x, nextPoint.y - position.y};
     float distance = Vector2Distance(position, nextPoint);
 
     // Continously move the enemy until it reaches the next point
-    while (elapsedTime > 0.0f || map.isLastPoint(trackIndex)) {
-        nextPoint = map.getNextPoint(trackIndex);
+    while (elapsedTime > 0.0f || map.isLastPoint(trackIndex, pathIndex)) {
+        nextPoint = map.getNextPoint(trackIndex, pathIndex);
         direction = {nextPoint.x - position.x, nextPoint.y - position.y};
         distance = sqrtf(direction.x * direction.x + direction.y * direction.y);
 
@@ -45,7 +48,7 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
             elapsedTime -= distance / speed; // Reduce the elapsed time by the time taken to reach the next point
         }
 
-        if (map.isLastPoint(trackIndex)) {
+        if (map.isLastPoint(trackIndex, pathIndex)) {
             // Before returning, update the enemy's position and track index
             enemy.position = position;
             enemy.trackIndex = trackIndex; // Move to the next point in the path
@@ -60,7 +63,7 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
     enemy.position = position; 
     enemy.trackIndex = trackIndex; 
     enemy.setRotation(atan2f(direction.y, direction.x) * (180.0f / PI)); // Set the rotation based on the direction
-    enemy.isActiveFlag = map.getPointType(trackIndex) != Point::Type::Invisible; // Check if the enemy is still active based on the point type
+    enemy.isActiveFlag = map.getPointType(trackIndex, pathIndex) != Point::Type::Invisible; // Check if the enemy is still active based on the point type
 
     // If the enemy has not reached the end of the path, return 0
     return 0;
@@ -113,14 +116,23 @@ int LogicManager::runBullet(Bullet& bullet, const Map& map) {
     return 0;
 }
 
-void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyManager& enemyManager, MapManager& mapManager) {
+void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyManager& enemyManager, TowerManager& towerManager, MapManager& mapManager) {
     for (auto enemyIt = enemyManager.enemyList.begin(); enemyIt != enemyManager.enemyList.end(); ) {
         std::unique_ptr<Enemy>& enemy = *enemyIt;
         bool isEnemyRemoved = false;
 
         for (auto bulletIt = bulletManager.bulletList.begin(); bulletIt != bulletManager.bulletList.end(); ) {
             if (checkCollision(**bulletIt, *enemy)) {
-                std::vector<std::unique_ptr<Enemy>> children = getChildrenEnemies(enemyManager, *enemy, (*bulletIt)->damage);
+                int popCount = 0;
+                std::vector<std::unique_ptr<Enemy>> children;
+                children = getChildrenEnemies(enemyManager, *enemy, (*bulletIt)->damage, popCount);
+
+                // Add the pop count to the original tower
+                for (auto& tower : towerManager.towerList) {
+                    if(tower->towerId == (*bulletIt)->towerId) {
+                        tower->popCount += popCount; 
+                    }
+                }
 
                 // Every collision costs bullet damage
                 if(enemy->health <= 0) {
@@ -146,48 +158,46 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
     }
 }
 
-std::vector<std::unique_ptr<Enemy>> LogicManager::getChildrenEnemies(EnemyManager& enemyManager, Enemy& enemy, int damage) {
+std::vector<std::unique_ptr<Enemy>> LogicManager::getChildrenEnemies(EnemyManager& enemyManager, Enemy& enemy, int damage, int& popCount) {
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::app);
     flog << "Enemy " << enemy.tag << " hit with damage: " << damage << std::endl;
     flog.close();
     
     if(enemy.hit(damage)) {
+        popCount += damage;
         return {};
     }
 
     std::vector<std::unique_ptr<Enemy>> childrenEnemies;
     childrenEnemies = enemyManager.spawnChildrenEnemies(enemy.type, enemy.position);
-
+    
     int remainingHealth = -enemy.health; // Get the remaining health after damage
+    int finalPopCount = damage - remainingHealth; // Calculate the pop count`
+    popCount += finalPopCount;
     std::vector<std::unique_ptr<Enemy> > finalChildrenEnemies;
 
     for(auto& child : childrenEnemies) {
-        if(remainingHealth > 0) {
-            auto subChildren = getChildrenEnemies(enemyManager, *child, remainingHealth);
+        std::vector<std::unique_ptr<Enemy> > subChildren = getChildrenEnemies(enemyManager, *child, remainingHealth, popCount);
 
-            if(!subChildren.empty()) {
-                // If there are sub-children, add them to the final list
-                for(auto& subChild : subChildren) {
-                    finalChildrenEnemies.push_back(std::move(subChild));
-                }
-            } else {
-                // Skip adding Red bloon as it has no sub-children
-                if(child->type == BloonType::Red) {
-                    continue;
-                }
-
-                // If no sub-children, just add the child
-                finalChildrenEnemies.push_back(std::move(child));
+        if(!subChildren.empty()) {
+            // If there are sub-children, add them to the final list
+            for(auto& subChild : subChildren) {
+                finalChildrenEnemies.push_back(std::move(subChild));
             }
-        }
-        else {
-            // If no remaining health, just add the child
+        } else {
+            // Skip adding Red bloon as it has no sub-children
+            if(child->type == BloonType::Red) {
+                continue;
+            }
+
+            // If no sub-children, just add the child
             finalChildrenEnemies.push_back(std::move(child));
-        }
+            }
     }
 
     for(auto& child : finalChildrenEnemies) {
         child->trackIndex = enemy.trackIndex; // Set the track index to the same as the parent enemy
+        child->pathIndex = enemy.pathIndex; // Set the path index to the same as the parent enemy
     }
     return finalChildrenEnemies;
 }
@@ -207,18 +217,23 @@ bool LogicManager::checkCollision(const Bullet& bullet, const Enemy& enemy) cons
         float cosTheta = cosf(rotation * (PI / 180.0f));
         float sinTheta = sinf(rotation * (PI / 180.0f));
 
-        corners[0] = {rect.x - halfWidth, rect.y - halfHeight}; // Top-left
-        corners[1] = {rect.x + halfWidth, rect.y - halfHeight}; // Top-right
-        corners[2] = {rect.x + halfWidth, rect.y + halfHeight}; // Bottom-right
-        corners[3] = {rect.x - halfWidth, rect.y + halfHeight}; // Bottom-left
-
         // Rotate corners around the center of the rectangle
+        // Calculate the center of the rectangle
+        float centerX = rect.x + halfWidth;
+        float centerY = rect.y + halfHeight;
+
+        // Define the four corners relative to the center
+        corners[0] = {rect.x, rect.y}; // Top-left
+        corners[1] = {rect.x + rect.width, rect.y}; // Top-right
+        corners[2] = {rect.x + rect.width, rect.y + rect.height}; // Bottom-right
+        corners[3] = {rect.x, rect.y + rect.height}; // Bottom-left
+
+        // Rotate each corner around the center
         for (int i = 0; i < 4; ++i) {
-            float x = corners[i].x - rect.x;
-            float y = corners[i].y - rect.y;
-            
-            corners[i].x = rect.x + x * cosTheta - y * sinTheta;
-            corners[i].y = rect.y + x * sinTheta + y * cosTheta;
+            float x = corners[i].x - centerX;
+            float y = corners[i].y - centerY;
+            corners[i].x = centerX + x * cosTheta - y * sinTheta;
+            corners[i].y = centerY + x * sinTheta + y * cosTheta;
         }
     };
 
@@ -273,7 +288,7 @@ void LogicManager::updateTowers(TowerManager& towerManager, EnemyManager& enemyM
             for(auto& attack : tower->attacks) {
                 for(auto& enemy : enemyManager.enemyList) {
                     // std::cerr << "enemy position: " << enemy->position.x << ", " << enemy->position.y << std::endl;
-                    if(attack->isInRange(enemy->position)) {
+                    if(attack->isInRange(enemy->getBoundingBox(), enemy->rotation)) {
                         enemiesInRange.push_back(enemy.get());
                     }
                 }
@@ -319,6 +334,36 @@ void LogicManager::updateTowers(TowerManager& towerManager, EnemyManager& enemyM
     }
 }
 
-float LogicManager::Vector2Distance(Vector2& a, Vector2& b) const {
-    return sqrtf((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+bool LogicManager::isPutTower(const TowerManager& towerManager, const MapManager& mapManager, TowerType type, Vector2 position) const {
+    auto enemyPath = mapManager.currentMap->enemyPath;
+    Rectangle towerBoundingBox = towerManager.towerSpawner->getBoundingBox(type, position);
+    float pathWidth = 50.0f; // Considerable size
+
+    // Checking collision
+    for(const auto& path : enemyPath) {
+        for(int i = 0; i + 1 < path.size(); ++i) {
+            if(distancePointLine({towerBoundingBox.x, towerBoundingBox.y}, path[i].position, path[i + 1].position) < pathWidth
+            || distancePointLine({towerBoundingBox.x + towerBoundingBox.width, towerBoundingBox.y}, path[i].position, path[i + 1].position) < pathWidth
+            || distancePointLine({towerBoundingBox.x, towerBoundingBox.y + towerBoundingBox.height}, path[i].position, path[i + 1].position) < pathWidth
+            || distancePointLine({towerBoundingBox.x + towerBoundingBox.width, towerBoundingBox.y + towerBoundingBox.height}, path[i].position, path[i + 1].position) < pathWidth) {
+                return false; // Tower is too far from the path
+            }
+        }
+    }
+    return true;
+}
+
+float LogicManager::distancePointLine(Vector2 point, Vector2 lineStart, Vector2 lineEnd) const {
+    Vector2 lineDir = {lineEnd.x - lineStart.x, lineEnd.y - lineStart.y};
+    float lineLength = Vector2Length(lineDir);
+    if (lineLength == 0.0f) {
+        return Vector2Distance(point, lineStart); // If the line is a point, return distance to that point
+    }
+
+    lineDir.x /= lineLength; // Normalize the direction vector
+    lineDir.y /= lineLength;
+    float t = (point.x - lineStart.x) * lineDir.x + (point.y - lineStart.y) * lineDir.y; // Project point onto the line
+    t = fmaxf(0.0f, fminf(t, lineLength)); // Clamp t to the segment length
+    Vector2 closestPoint = {lineStart.x + t * lineDir.x, lineStart.y + t * lineDir.y}; // Find the closest point on the line segment
+    return Vector2Distance(point, closestPoint); // Return the distance from the point to the closest point on the line segment
 }

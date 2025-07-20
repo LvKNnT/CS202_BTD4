@@ -19,7 +19,7 @@ public:
     BulletManager& operator=(const BulletManager& other);
 
     // Methods
-    void spawnBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan);
+    void spawnBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, int towerId);
     void drawBullets() const;
     void unLoad();
 

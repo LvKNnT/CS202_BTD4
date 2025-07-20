@@ -22,7 +22,8 @@ MonkeyLane::MonkeyLane() {
     enemyPath[0].push_back(Point(740, 505));
     enemyPath[0].push_back(Point(480, 510, Point::Type::Invisible));
     enemyPath[0].push_back(Point(270, 510));
-    enemyPath[0].push_back(Point(210, 760, Point::Type::Exit)); // player gets damage here
+    enemyPath[0].push_back(Point(200, 510));
+    enemyPath[0].push_back(Point(200, 760, Point::Type::Exit)); // player gets damage here
 }
 
 std::unique_ptr<Map> MonkeyLane::clone() const {

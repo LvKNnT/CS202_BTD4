@@ -189,13 +189,14 @@ void EnemySpawner::init() {
     enemyChildrenTemplates[BloonType::Bad] = std::move(children);
 }
 
-std::unique_ptr<Enemy> EnemySpawner::getEnemy(BloonType type, Vector2 position, EnemyModifies modifies) {
+std::unique_ptr<Enemy> EnemySpawner::getEnemy(BloonType type, Vector2 position, int pathIndex, EnemyModifies modifies) {
     auto it = enemyTemplates.find(type);
     if (it != enemyTemplates.end()) {
         it->second->loadTexture(); 
 
         std::unique_ptr<Enemy> enemy = it->second->clone();
         enemy->position = position; 
+        enemy->pathIndex = pathIndex; 
         enemy->setModifies(modifies); 
 
         return enemy;
