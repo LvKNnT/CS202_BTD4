@@ -54,6 +54,9 @@ void StateManager::update(Event::Type event) {
             break;
         case Event::Type::Continue: 
             break;
+        case Event::Type::Resume:
+            stateStack.pushState(gameState);
+            break;
         default:
             if(Event::Type::ToEasyModeSelection <= event && event <= Event::Type::ToImpoppableModeSelection) {
                 specificModeSelectionState = std::make_shared<SpecificModeSelectionState>();

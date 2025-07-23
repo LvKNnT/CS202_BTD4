@@ -19,6 +19,13 @@ Options::Options(const Texture &_texture, int _fontSize, int _height, int _width
     event = Event::Type::ToOptions;
 }
 
+Resume::Resume(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+    : SingleEventButton(_texture, _fontSize, _height, _width, _position) {
+    title = "Resume";
+    attach(Game::Instance().getStateManager());
+    event = Event::Type::Resume;
+}
+
 CancelCurrentState::CancelCurrentState(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
     : SingleEventButton(_texture, _fontSize, _height, _width, _position) {
     attach(Game::Instance().getStateManager());

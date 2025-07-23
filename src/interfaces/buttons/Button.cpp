@@ -74,16 +74,6 @@ void NewGame::handleInput() {
     notify(Event::Type::ToMapSelection);
 }
 
-Resume::Resume(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : Button(_texture, _fontSize, _height, _width, _position) {
-    title = "Resume";
-}
-
-void Resume::handleInput() {
-    Button::handleInput();
-    if(!isAvailable || state != Button::State::Clicked) return;
-}
-
 Exit::Exit(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
     : Button(_texture, _fontSize, _height, _width, _position) {
     title = "Exit";
@@ -93,6 +83,7 @@ void Exit::handleInput() {
     Button::handleInput();
     if(!isAvailable || state != Button::State::Clicked) return;
     Game::Instance().requestExit();
+    notify(Event::Type::Exit);
 }
 
 ChooseJungle::ChooseJungle(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)

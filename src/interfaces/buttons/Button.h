@@ -46,12 +46,6 @@ public:
     void handleInput() override;
 };
 
-class Resume : public Button {
-public: 
-    Resume(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-};
-
 class Exit : public Button {
 public: 
     Exit(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);

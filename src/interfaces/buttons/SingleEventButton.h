@@ -53,6 +53,11 @@ public:
     NextTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
+class Resume : public SingleEventButton {
+public: 
+    Resume(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
 class BackHome : public SingleEventButton {
 public:
     BackHome(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
