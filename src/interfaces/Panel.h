@@ -18,11 +18,13 @@ private:
     int width;
     std::string title;
     Vector2 position;
+    bool isAvailable;
 
 public:
     Panel();
     void addPanelElement(std::shared_ptr<PanelElement> newPanelElement);
     void removePanelElement(int index);
+    void setAvailable(bool _isAvailable);
     void draw() const override;
     void update();
     void handleInput();

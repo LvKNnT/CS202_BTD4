@@ -25,7 +25,7 @@ MapSelectionState::MapSelectionState() : State(754, 1022, Game::Instance().getTe
     std::string titleText = "CHOOSE A MAP";
     Vector2 titleSize = MeasureTextEx(titleFont, titleText.c_str(), (float) titleFontSize, 1.0);
 
-    std::shared_ptr<PanelElement> title = std::make_shared<TextField>(titleText, titleFont, WHITE, titleSize.y, titleSize.x, (Vector2) {tablePos.x + (width - titleSize.x) / 2, tablePos.y + 70});
+    std::shared_ptr<PanelElement> title = std::make_shared<TextField>(titleText, titleFont, WHITE, titleSize.y, 0, (Vector2) {tablePos.x + (width - titleSize.x) / 2, tablePos.y + 70});
     panel->addPanelElement((title));
 
     curMap = 0;

@@ -6,30 +6,59 @@ public:
     enum class Type {
         None, 
         // UI
-        ToMapSelection, 
-        ToOptions, 
-        CancelCurrentState,
         Exit,
+        NewGame,
+        Continue,
         MoveNext,
         MovePrevious,
-        ToMonkeyLane,
+        
+        // Music
         HigherSound,
         LowerSound,
         HigherMusic,
         LowerMusic,
+        
+        // State
+        ToOptions, 
+        ToMonkeyLane,
+        CancelCurrentState,
+        ToMapSelection, 
         ToAreYouSure,
         BackHome,
+        ToSpecificModeSelection, 
         ToEasyModeSelection,
         ToMediumModeSelection, 
         ToHardModeSelection,
-        ToEasyStandardMode, 
-        ToEasyPrimaryOnlyMode, 
-        ToEasyDeflationdMode, 
-        ToEasySandboxMode, 
+        ToImpoppableModeSelection,
+        ToGameState,
+
+        // Game State 
+        HoveringInfo,
+        NextPriority, 
+        PreviousPriority,
+        Priority_First,
+        Priority_Last, 
+        Priority_Close, 
+        Priority_Strong,
+
+        // Mode
+        AutoNextRound,
+        UnAutoNextRound,
+        TickFastForward,
+        UntickFastForward,
+
+        StandardMode, 
+        AlternateBloonsMode,
+        ReverseMode, 
+        ApopalyseMode,
+        HoveringReverseMode, 
+        HoveringAlternateBloonsMode,
+        HoveringApopalyseMode,
 
         //UI towers
         //Hovering
         HoveringChooseBomb,
+        
         //Clicked
         ClickedChooseBomb
         // Logic

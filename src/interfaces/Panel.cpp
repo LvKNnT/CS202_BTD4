@@ -1,7 +1,6 @@
 #include "Panel.h"
 
-Panel::Panel()
-{
+Panel::Panel():isAvailable(true) {
 }
 
 void Panel::addPanelElement(std::shared_ptr<PanelElement> newPanelElement) {
@@ -18,17 +17,23 @@ void Panel::removePanelElement(int index) {
 }
 
 void Panel::draw() const {
+    if(!isAvailable) return;
     for(auto &element:elements) {
         element->draw();
     }
 }
 
 void Panel::update() {
-
+    if(!isAvailable) return;
 }
 
 void Panel::handleInput() {
+    if(!isAvailable) return;
     for(auto &element:elements) {
         element->handleInput();
     }
+}
+
+void Panel::setAvailable(bool _isAvailable) {
+    isAvailable = _isAvailable;
 }

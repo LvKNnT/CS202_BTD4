@@ -13,6 +13,7 @@ private:
 
 public:
     StateStack() : drawPreviousStates(false) {}
+    int getSize() const;
     void pushState(std::shared_ptr<State> state);
     void popState();
     //State* currentState();

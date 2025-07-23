@@ -9,8 +9,8 @@
 #include "../interfaces/states/OptionsState.h"
 #include "../interfaces/states/GameState.h"
 #include "../interfaces/states/AreYouSureState.h"
-#include "../interfaces/states/ModeSelectionState.h"
-#include "../interfaces/states/EasyModeSelectionState.h"
+#include "../interfaces/states/DifficultySelectionState.h"
+#include "../interfaces/states/SpecificModeSelectionState.h"
 #include "../core/IObserver.h"
 #include "../core/Event.h"
 
@@ -22,10 +22,8 @@ private:
     std::shared_ptr<State> gameState;
     std::shared_ptr<State> optionsState;
     std::shared_ptr<State> areYouSureState;
-    std::shared_ptr<State> modeSelectionState;
-    std::shared_ptr<State> easyModeSelectionState;
-    std::shared_ptr<State> mediumModeSelectionState;
-    std::shared_ptr<State> hardModeSelectionState;
+    std::shared_ptr<State> difficultySelectionState;
+    std::shared_ptr<State> specificModeSelectionState;
 
 public:
     void initialize() override;

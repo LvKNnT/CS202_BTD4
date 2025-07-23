@@ -10,7 +10,7 @@ AreYouSureState::AreYouSureState() : State(377, 511, Game::Instance().getTexture
     std::string titleText = "Are you sure?";
     Vector2 titleSize = MeasureTextEx(titleFont, titleText.c_str(), (float) titleFontSize, 1.0);
 
-    std::shared_ptr<PanelElement> title = std::make_shared<TextField>(titleText, titleFont, WHITE, titleSize.y, titleSize.x, (Vector2) {tablePos.x + (width - titleSize.x) / 2, tablePos.y + 70});
+    std::shared_ptr<PanelElement> title = std::make_shared<TextField>(titleText, titleFont, WHITE, titleSize.y, 0, (Vector2) {tablePos.x + (width - titleSize.x) / 2, tablePos.y + 70});
     panel->addPanelElement((title));
 
     std::shared_ptr<PanelElement> okButton = std::make_shared<BackHome>(Game::Instance().getTextureManager().getTexture("OkButton"), 0, 91, 85, (Vector2) {tablePos.x + 110, tablePos.y + height - 100 - 91});

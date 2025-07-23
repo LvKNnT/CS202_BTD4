@@ -6,8 +6,8 @@ void StateManager::initialize() {
     optionsState = std::make_shared<OptionsState>();
     gameState = std::make_shared<GameState>();
     areYouSureState = std::make_shared<AreYouSureState>();
-    modeSelectionState = std::make_shared<ModeSelectionState>();
-    easyModeSelectionState = std::make_shared<EasyModeSelectionState>();
+    difficultySelectionState = std::make_shared<DifficultySelectionState>();
+    //specificModeSelectionState = std::make_shared<SpecificModeSelectionState>();
     stateStack.pushState(mainMenuState);
 }
 
@@ -34,7 +34,7 @@ void StateManager::update(Event::Type event) {
             stateStack.setdrawPreviousStates(true);
             break;
         case Event::Type::ToMonkeyLane:
-            stateStack.pushState(modeSelectionState);
+            stateStack.pushState(difficultySelectionState);
             stateStack.setdrawPreviousStates(true);
             break;
         case Event::Type::ToAreYouSure:
@@ -42,20 +42,26 @@ void StateManager::update(Event::Type event) {
             stateStack.setdrawPreviousStates(true);
             break;
         case Event::Type::BackHome:
-            stateStack.popState();
-            stateStack.popState();
-            stateStack.popState();
-            stateStack.popState();
-            stateStack.popState();
+            while(stateStack.getSize() > 1) {
+                stateStack.popState();
+            }
             break;
-        case Event::Type::ToEasyModeSelection:
-            stateStack.pushState(easyModeSelectionState);
-            stateStack.setdrawPreviousStates(true);
-            break;
-        case Event::Type::ToEasyStandardMode:
+        case Event::Type::ToGameState:
             stateStack.pushState(gameState);
             break;
+        case Event::Type::NewGame:
+            gameState = std::make_shared<GameState>();
+            break;
+        case Event::Type::Continue: 
+            break;
         default:
+            if(Event::Type::ToEasyModeSelection <= event && event <= Event::Type::ToImpoppableModeSelection) {
+                specificModeSelectionState = std::make_shared<SpecificModeSelectionState>();
+                stateStack.pushState(specificModeSelectionState);
+                stateStack.update(event);
+                stateStack.setdrawPreviousStates(true);
+                break;
+            }
             stateStack.update(event);
             break;
     }

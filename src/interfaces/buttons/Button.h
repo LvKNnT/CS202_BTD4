@@ -5,10 +5,10 @@
 #include <iostream>
 #include <list>
 
-#include "Clickable.h"
-#include "PanelElement.h"
-#include "../core/ISubject.h"
-#include "../core/Event.h"
+#include "../Clickable.h"
+#include "../PanelElement.h"
+#include "../../core/ISubject.h"
+#include "../../core/Event.h"
 
 class Button : public Clickable, public PanelElement, public ISubject {
 public: 
@@ -32,13 +32,14 @@ public:
     void onClick() override;
     void getBoundingBox(float& x, float& y, float& width, float& height) const override;
     virtual void handleInput();
-
+    State getState() const;
+    
     void attach(std::shared_ptr<IObserver> observer) override;
     void detach(std::shared_ptr<IObserver> observer) override;
     void notify(Event::Type event) override;
 };
 
-// Types of button
+// Normal Buttons
 class NewGame : public Button {
 public: 
     NewGame(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
@@ -51,39 +52,9 @@ public:
     void handleInput() override;
 };
 
-class Options : public Button {
-public: 
-    Options(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-};
-
 class Exit : public Button {
 public: 
     Exit(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-};
-
-class CancelCurrentState : public Button {
-public: 
-    CancelCurrentState(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-};
-
-class PreviousMap : public Button {
-public: 
-    PreviousMap(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-};
-
-class NextMap : public Button {
-public: 
-    NextMap(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-};
-
-class ChooseMonkeyLane : public Button {
-public: 
-    ChooseMonkeyLane(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
     void handleInput() override;
 };
 
@@ -102,36 +73,6 @@ public:
 class StartRound : public Button {
 public:
     StartRound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-};
-
-class GameOptions : public Button {
-public: 
-    GameOptions(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-};
-
-class PreviousTower : public Button {
-public:
-    PreviousTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-};
-
-class NextTower : public Button {
-public:
-    NextTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-};
-
-class AutoNextRound : public Button {
-public:
-    AutoNextRound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-};
-
-class UnAutoNextRound : public Button {
-public:
-    UnAutoNextRound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
     void handleInput() override;
 };
 
@@ -160,64 +101,18 @@ public:
 };
 
 class FastForward : public Button {
+private:
+    bool isTick;
 public:
     FastForward(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
     void handleInput() override;
+    void draw() const override;
 };
 
-class BackHome : public Button {
+class Continue : public Button {
 public:
-    BackHome(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+    Continue(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
     void handleInput() override;
-};
-
-class ToAreYouSure : public Button {
-public:
-    ToAreYouSure(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-};
-
-class ToSpecificModeSelection : public Button {
-public:
-    ToSpecificModeSelection(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-protected:
-    Event::Type modeSelectionEvent;
-};
-
-class ToEasyModeSelection : public ToSpecificModeSelection {
-public:
-    ToEasyModeSelection(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-};
-
-class ToMediumModeSelection : public ToSpecificModeSelection {
-public:
-    ToMediumModeSelection(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-};
-
-class ToHardModeSelection : public ToSpecificModeSelection {
-public:
-    ToHardModeSelection(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-};
-
-class ToEasyStandardMode : public ToSpecificModeSelection {
-public:
-    ToEasyStandardMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-};
-
-class ToEasyPrimaryOnlyMode : public ToSpecificModeSelection {
-public:
-    ToEasyPrimaryOnlyMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-};
-
-class ToEasyDeflationdMode : public ToSpecificModeSelection {
-public:
-    ToEasyDeflationdMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-};
-
-class ToEasySandboxMode : public ToSpecificModeSelection {
-public:
-    ToEasySandboxMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
 class ChooseTower : public Button{ 

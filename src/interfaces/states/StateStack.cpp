@@ -1,6 +1,11 @@
 #include "StateStack.h"
 
-void StateStack::pushState(std::shared_ptr<State> state) {
+int StateStack::getSize() const {
+    return (int) states.size();
+}
+
+void StateStack::pushState(std::shared_ptr<State> state)
+{
     states.push_back(std::move(state));
     drawPreviousStates = false;
 }

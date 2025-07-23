@@ -4,7 +4,10 @@
 #include <memory>
 
 #include "raylib.h"
-#include "../Button.h"
+#include "../buttons/Button.h"
+#include "../buttons/CanHoveringButton.h"
+#include "../buttons/SingleEventButton.h"
+#include "../buttons/TickButton.h"
 #include "../TextField.h"
 #include "../TextureField.h"
 #include "../Panel.h"

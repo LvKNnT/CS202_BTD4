@@ -1,5 +1,5 @@
 #include "Button.h"
-#include "../core/Game.h"
+#include "../../core/Game.h"
 
 
 Button::Button(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
@@ -55,7 +55,12 @@ void Button::handleInput() {
     } else state = Button::State::None;
 }
 
+Button::State Button::getState() const {
+    return state;
+}
+
 // Types of button
+
 NewGame::NewGame(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
     : Button(_texture, _fontSize, _height, _width, _position) {
     title = "New Game";
@@ -65,6 +70,7 @@ NewGame::NewGame(const Texture &_texture, int _fontSize, int _height, int _width
 void NewGame::handleInput() {
     Button::handleInput();
     if(!isAvailable || state != Button::State::Clicked) return;
+    notify(Event::Type::NewGame);
     notify(Event::Type::ToMapSelection);
 }
 
@@ -78,18 +84,6 @@ void Resume::handleInput() {
     if(!isAvailable || state != Button::State::Clicked) return;
 }
 
-Options::Options(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : Button(_texture, _fontSize, _height, _width, _position) {
-    title = "Options";
-    attach(Game::Instance().getStateManager());
-}
-
-void Options::handleInput() {
-    Button::handleInput();
-    if(!isAvailable || state != Button::State::Clicked) return;
-    notify(Event::Type::ToOptions);
-}
-
 Exit::Exit(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
     : Button(_texture, _fontSize, _height, _width, _position) {
     title = "Exit";
@@ -99,51 +93,6 @@ void Exit::handleInput() {
     Button::handleInput();
     if(!isAvailable || state != Button::State::Clicked) return;
     Game::Instance().requestExit();
-}
-
-CancelCurrentState::CancelCurrentState(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : Button(_texture, _fontSize, _height, _width, _position) {
-    attach(Game::Instance().getStateManager());
-}
-
-void CancelCurrentState::handleInput() {
-    Button::handleInput();
-    if(!isAvailable || state != Button::State::Clicked) return;
-    notify(Event::Type::CancelCurrentState);
-}
-
-PreviousMap::PreviousMap(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : Button(_texture, _fontSize, _height, _width, _position) {
-    attach(Game::Instance().getStateManager());
-}
-
-void PreviousMap::handleInput() {
-    Button::handleInput();
-    if(!isAvailable || state != Button::State::Clicked) return;
-    notify(Event::Type::MovePrevious);
-}
-
-NextMap::NextMap(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : Button(_texture, _fontSize, _height, _width, _position) {
-    attach(Game::Instance().getStateManager());
-}
-
-void NextMap::handleInput() {
-    Button::handleInput();
-    if(!isAvailable || state != Button::State::Clicked) return;
-    notify(Event::Type::MoveNext);
-}
-
-
-ChooseMonkeyLane::ChooseMonkeyLane(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : Button(_texture, _fontSize, _height, _width, _position) {
-    attach(Game::Instance().getStateManager());
-}
-
-void ChooseMonkeyLane::handleInput() {
-    Button::handleInput();
-    if(!isAvailable || state != Button::State::Clicked) return;
-    notify(Event::Type::ToMonkeyLane);
 }
 
 ChooseJungle::ChooseJungle(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
@@ -175,58 +124,6 @@ void StartRound::handleInput() {
     Button::handleInput();
     if(!isAvailable || state != Button::State::Clicked) return;
 
-}
-
-GameOptions::GameOptions(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
-    : Button(_texture, _fontSize, _height, _width, _position) {
-    attach(Game::Instance().getStateManager());
-}
-
-void GameOptions::handleInput() {
-    Button::handleInput();
-    if(!isAvailable || state != Button::State::Clicked) return;
-    notify(Event::Type::ToOptions);
-
-}
-
-PreviousTower::PreviousTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
-    : Button(_texture, _fontSize, _height, _width, _position) {
-    attach(Game::Instance().getStateManager());
-}
-
-void PreviousTower::handleInput() {
-    Button::handleInput();
-    if(!isAvailable || state != Button::State::Clicked) return;
-    notify(Event::Type::MovePrevious);
-}
-
-NextTower::NextTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
-    : Button(_texture, _fontSize, _height, _width, _position) {
-    attach(Game::Instance().getStateManager());
-}
-
-void NextTower::handleInput() {
-    Button::handleInput();
-    if(!isAvailable || state != Button::State::Clicked) return;
-    notify(Event::Type::MoveNext);
-}
-
-AutoNextRound::AutoNextRound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
-    : Button(_texture, _fontSize, _height, _width, _position) {
-}
-
-void AutoNextRound::handleInput() {
-    Button::handleInput();
-    if(!isAvailable || state != Button::State::Clicked) return;
-}
-
-UnAutoNextRound::UnAutoNextRound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
-    : Button(_texture, _fontSize, _height, _width, _position) {
-}
-
-void UnAutoNextRound::handleInput() {
-    Button::handleInput();
-    if(!isAvailable || state != Button::State::Clicked) return;
 }
 
 HigherSound::HigherSound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
@@ -291,33 +188,31 @@ void LowerMusic::handleInput() {
 
 FastForward::FastForward(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
     : Button(_texture, _fontSize, _height, _width, _position) {
+    isTick = false;
 }
 
 void FastForward::handleInput() {
     Button::handleInput();
     if(!isAvailable || state != Button::State::Clicked) return;
+    isTick = !isTick;
+    if(isTick) notify(Event::Type::TickFastForward);
+    else notify(Event::Type::UntickFastForward);
 }
 
-BackHome::BackHome(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
-    : Button(_texture, _fontSize, _height, _width, _position) {
-    attach(Game::Instance().getStateManager());
-}
-
-void BackHome::handleInput() {
-    Button::handleInput();
-    if(!isAvailable || state != Button::State::Clicked) return;
-    notify(Event::Type::BackHome);
-}
-
-ToAreYouSure::ToAreYouSure(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
-    : Button(_texture, _fontSize, _height, _width, _position) {
-    attach(Game::Instance().getStateManager());
-}
-
-void ToAreYouSure::handleInput() {
-    Button::handleInput();
-    if(!isAvailable || state != Button::State::Clicked) return;
-    notify(Event::Type::ToAreYouSure);
+void FastForward::draw() const {
+    if(!isAvailable) return;
+    
+    // Draw texture 
+    float scale = std::min(((float) width / texture.width), ( (float) height / texture.height));
+    float texWidth = texture.width * scale;
+    float texHeight = texture.height * scale;
+    DrawTextureEx(texture, (Vector2) {position.x + std::max((float) width - texWidth, 0.f) / 2, position.y + std::max((float) height - texHeight, 0.f) / 2}, 0.0f, scale, isTick ? (Color) {150, 150, 150, 255}:WHITE);
+    
+    // Draw text
+    int textWidth = MeasureText(title.c_str(), fontSize);
+    float textX = position.x + (texture.width * scale - textWidth) / 2;
+    float textY = position.y + (texture.height * scale - fontSize) / 2; 
+    DrawText(title.c_str(), textX, textY, fontSize, WHITE);
 }
 
 ChooseTower::ChooseTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
@@ -341,48 +236,15 @@ ChooseBombTower::ChooseBombTower(const Texture &_texture, int _fontSize, int _he
     clickedEvent = Event::Type::ClickedChooseBomb;
 }
 
-ToSpecificModeSelection::ToSpecificModeSelection(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : Button(_texture, _fontSize, _height, _width, _position) {
+Continue::Continue(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
+    : Button(_texture, _fontSize, _height, _width, _position){
+    title = "Continue";
     attach(Game::Instance().getStateManager());
 }
 
-void ToSpecificModeSelection::handleInput() {
+void Continue::handleInput() {
     Button::handleInput();
     if(!isAvailable || state != Button::State::Clicked) return;
-    notify(modeSelectionEvent);
-}
-
-ToEasyModeSelection::ToEasyModeSelection(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : ToSpecificModeSelection(_texture, _fontSize, _height, _width, _position) {
-    modeSelectionEvent = Event::Type::ToEasyModeSelection;
-}
-
-ToMediumModeSelection::ToMediumModeSelection(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : ToSpecificModeSelection(_texture, _fontSize, _height, _width, _position) {
-    modeSelectionEvent = Event::Type::ToMediumModeSelection;
-}
-
-ToHardModeSelection::ToHardModeSelection(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : ToSpecificModeSelection(_texture, _fontSize, _height, _width, _position) {
-    modeSelectionEvent = Event::Type::ToHardModeSelection;
-}
-
-ToEasyStandardMode::ToEasyStandardMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : ToSpecificModeSelection(_texture, _fontSize, _height, _width, _position) {
-    modeSelectionEvent = Event::Type::ToEasyStandardMode;
-}
-
-ToEasyPrimaryOnlyMode::ToEasyPrimaryOnlyMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : ToSpecificModeSelection(_texture, _fontSize, _height, _width, _position) {
-    modeSelectionEvent = Event::Type::ToEasyPrimaryOnlyMode;
-}
-
-ToEasyDeflationdMode::ToEasyDeflationdMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : ToSpecificModeSelection(_texture, _fontSize, _height, _width, _position) {
-    modeSelectionEvent = Event::Type::ToEasyDeflationdMode;
-}
-
-ToEasySandboxMode::ToEasySandboxMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : ToSpecificModeSelection(_texture, _fontSize, _height, _width, _position) {
-    modeSelectionEvent = Event::Type::ToEasySandboxMode;
+    notify(Event::Type::Continue);
+    notify(Event::Type::ToMapSelection);
 }

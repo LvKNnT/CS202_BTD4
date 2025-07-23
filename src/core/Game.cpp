@@ -32,6 +32,14 @@ void Game::LoadContent() {
     textureManager.loadTexture("Untick", "../assets/UI/Untick.png");
     textureManager.loadTexture("FastForward", "../assets/UI/FastForward.png");
     textureManager.loadTexture("OkButton", "../assets/UI/OkButton.png");
+    textureManager.loadTexture("Play", "../assets/UI/Play.png");
+    textureManager.loadTexture("PurpleRect", "../assets/UI/PurpleRect.jpg");
+    textureManager.loadTexture("LeftWhiteTriangle", "../assets/UI/LeftWhiteTriangle.png");
+    textureManager.loadTexture("RightWhiteTriangle", "../assets/UI/RightWhiteTriangle.png");
+    textureManager.loadTexture("RedRect", "../assets/UI/RedRect.png");
+    textureManager.loadTexture("GreenRect", "../assets/UI/GreenRect.png");
+    textureManager.loadTexture("Info", "../assets/UI/Info.png");
+    
     //Sound
     textureManager.loadTexture("Volume100", "../assets/UI/Volume100.png");
     textureManager.loadTexture("Volume80", "../assets/UI/Volume80.png");
@@ -52,30 +60,27 @@ void Game::LoadContent() {
     fontManager.loadFont("Medium-Big", "../assets/font/Squada_One/SquadaOne-Regular.ttf", 45);
     fontManager.loadFont("Medium", "../assets/font/Squada_One/SquadaOne-Regular.ttf", 30);
     //fontManager.loadFont("Small", "../assets/font/Luckiest_Guy/LuckiestGuy-Regular.ttf", 15);
+    fontManager.loadFont("SmallBold", "../assets/font/Luckiest_Guy/LuckiestGuy-Regular.ttf", 20);
     fontManager.loadFont("Small", "../assets/font/Source_Sans_3/static/SourceSans3-Medium.ttf", 20);
+    fontManager.loadFont("SupperSmallBold", "../assets/font/Source_Sans_3/static/SourceSans3-Bold.ttf", 20);
+    fontManager.loadFont("SuperSmall", "../assets/font/Source_Sans_3/static/SourceSans3-Medium.ttf", 15);
     //fontManager.loadFont("SmallBold", "../assets/font/Source_Sans_3/../assets/font/Source_Sans_3/static/SourceSans3-Bold.ttf", 20);
 
     // Load tower
     textureManager.loadTexture("DartMonkeyIcon", "../assets/tower/Dart_Monkey_Mobile.png");
     textureManager.loadTexture("BombTowerIcon", "../assets/tower/Bomb_Tower_2.png");
+    textureManager.loadTexture("DartMonkeyUI", "../assets/tower/Dart_Monkey/000-DartMonkey.png");
+    textureManager.loadTexture("CrossbowMasterUpgradeIcon", "../assets/tower/Dart_Monkey/CrossbowMasterUpgradeIcon.png");
 
     // Load mode icons
     textureManager.loadTexture("Easy", "../assets/mode/Easy.png");
     textureManager.loadTexture("Medium", "../assets/mode/Medium.png");
     textureManager.loadTexture("Hard", "../assets/mode/Hard.png");
     textureManager.loadTexture("Standard", "../assets/mode/Standard.png");
-    textureManager.loadTexture("PrimaryOnly", "../assets/mode/PrimaryOnly.png");
-    textureManager.loadTexture("Deflation", "../assets/mode/Deflation.png");
-    textureManager.loadTexture("Sandbox", "../assets/mode/Sandbox.png");
-    textureManager.loadTexture("MilitaryOnly", "../assets/mode/MilitaryOnly.png");
     textureManager.loadTexture("Reverse", "../assets/mode/Reverse.png");
-    textureManager.loadTexture("Apopalypse", "../assets/mode/Apopalypse.png");
-    textureManager.loadTexture("MagicMonkeysOnly", "../assets/mode/MagicMonkeysOnly.png");
     textureManager.loadTexture("AlternateBloons", "../assets/mode/AlternateBloons.png");
-    textureManager.loadTexture("DoubleHpMoabs", "../assets/mode/DoubleHpMoabs.png");
     textureManager.loadTexture("Impoppable", "../assets/mode/Impoppable.png");
-    textureManager.loadTexture("HalfCash", "../assets/mode/HalfCash.png");
-    textureManager.loadTexture("CHIMPS", "../assets/mode/CHIMPS.png");
+    textureManager.loadTexture("Apopalyse", "../assets/mode/Apopalypse.png");
 }
 
 void Game::UnloadContent() {
