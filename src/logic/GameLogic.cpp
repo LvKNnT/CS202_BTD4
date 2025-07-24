@@ -12,7 +12,10 @@ void GameLogic::init() {
     const ModeType modeType = ModeType::Alternative; // Default mode type for testing
 
     // stimulate what will happen in the game
-    init(difficulty, mapType, modeType);
+    // init(difficulty, mapType, modeType); // same same but different
+    init(mapType);
+    init(difficulty);
+    init(modeType);
 
     spawnTower(TowerType::DartMonkey, {200.0f, 225.0f});
     std::cerr << resourceManager.getResource(difficulty).cash << std::endl;
@@ -37,22 +40,39 @@ void GameLogic::init(Difficulty difficulty, MapType mapType, ModeType modeType) 
     towerManager = TowerManager(resourceManager.getTowerModifies());
 }
 
+void GameLogic::init(MapType mapType) {
+    mapManager.loadMap(mapType);
+}
+
+void GameLogic::init(Difficulty difficulty) {
+    resourceManager.initResource(difficulty);
+
+    enemyManager = EnemyManager(resourceManager.getEnemyModifies());
+    towerManager = TowerManager(resourceManager.getTowerModifies());
+}
+
+void GameLogic::init(ModeType modeType) {
+    modeManager.setMode(modeType);
+}
+
 void GameLogic::update() {
-    // Update game result
-    if(resourceManager.isEndGame() != 0) {
-        std::cerr << "Game Over! Result: " << resourceManager.isEndGame() << std::endl;
-        return;
+    for(int i = 0; i < (isTickFast ? 3 : 1); ++i) {
+        // Update game result
+        if(resourceManager.isEndGame() != 0) {
+            std::cerr << "Game Over! Result: " << resourceManager.isEndGame() << std::endl;
+            return;
+        }
+
+        // Update by the managers
+        mapManager.updateMap();
+        enemyManager.updateEnemies();
+
+        logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager);
+        logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager);
+        logicManager.updateEnemies(enemyManager, mapManager);
+        logicManager.updateBullets(bulletManager, mapManager);
+        logicManager.updateTowers(towerManager, enemyManager, bulletManager);
     }
-
-    // Update by the managers
-    mapManager.updateMap();
-    enemyManager.updateEnemies();
-
-    logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager);
-    logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager);
-    logicManager.updateEnemies(enemyManager, mapManager);
-    logicManager.updateBullets(bulletManager, mapManager);
-    logicManager.updateTowers(towerManager, enemyManager, bulletManager);
 }
 
 void GameLogic::draw() const {
@@ -79,4 +99,60 @@ bool GameLogic::isPutTower(TowerType type, Vector2 position) const {
 bool GameLogic::spawnTower(TowerType type, Vector2 position) {
     // Check if the tower can be placed at the given position
     return logicManager.spawnTower(resourceManager, towerManager, mapManager, type, position);
+}
+
+bool GameLogic::isUpgradeTower(Vector2 position, UpgradeUnits upgradeUnits) const {
+    // Check if the tower can be upgraded at the given position
+    return logicManager.isUpgradeTower(resourceManager, towerManager, position, upgradeUnits);
+}
+
+bool GameLogic::upgradeTower(Vector2 position, UpgradeUnits upgradeUnits) {
+    // Upgrade the tower at the given position
+    return logicManager.upgradeTower(resourceManager, towerManager, position, upgradeUnits);
+}
+
+LogicInfo GameLogic::getInfoTower(TowerType type) const {
+    return towerManager.getInfoTower(type);
+}
+
+LogicInfo GameLogic::getInfoTower(Vector2 position) const {
+    return towerManager.getInfoTower(position);
+}
+
+void GameLogic::chooseNextPriority(Vector2 position) {
+    towerManager.chooseNextPriority(position);
+}
+
+void GameLogic::choosePreviousPriority(Vector2 position) {
+    towerManager.choosePreviousPriority(position);
+}
+
+// same same but different
+void GameLogic::setAutoPlay(bool autoPlay) {
+    logicManager.setAutoPlay(modeManager, autoPlay);
+}
+
+void GameLogic::activeAutoPlay() {
+    setAutoPlay(true);
+}
+
+void GameLogic::unactiveAutoPlay() {
+    setAutoPlay(false);
+}
+
+// same same but different
+void GameLogic::setTickFast(bool isTickFast) {
+    this->isTickFast = isTickFast;
+}
+
+void GameLogic::activeTickFast() {
+    setTickFast(true);
+}
+
+void GameLogic::unactiveTickFast() {
+    setTickFast(false);
+}
+
+LogicInfo GameLogic::getInfoResource() const {
+    return resourceManager.getInfo();
 }

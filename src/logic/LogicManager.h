@@ -23,10 +23,11 @@ public:
     bool isPutTower(const ResourceManager& resourceManager, const TowerManager& towerManager, const MapManager& mapManager, TowerType type, Vector2 position) const; 
     bool spawnTower(ResourceManager& resourceManager, TowerManager& towerManager, const MapManager& mapManager, TowerType type, Vector2 position);
     bool isUpgradeTower(const ResourceManager& resourceManager, const TowerManager& towerManager, Vector2 position, UpgradeUnits upgradeUnits) const;
-    void upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, Vector2 position, UpgradeUnits upgradeUnits);
+    bool upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, Vector2 position, UpgradeUnits upgradeUnits);
+
     void playRound(ResourceManager& resourceManager, ModeManager& modeManager, EnemyManager& enemyManager, MapManager& mapManager);
     void playNextRound(ResourceManager& resourceManager);
-    void setAutoPlay(bool autoPlay);
+    void setAutoPlay(ModeManager& modeManager, bool autoPlay);
 
     // Update methods for interactions between game objects
     void updateBulletsHitEnemies(BulletManager& bulletManager, EnemyManager& enemyManager, TowerManager& towerManager, MapManager& mapManager);
@@ -39,7 +40,6 @@ private:
     int runBullet(Bullet& bullet, const Map& map);
     bool checkCollision(const Bullet& bullet, const Enemy& enemy) const;
     std::vector<std::unique_ptr<Enemy>> getChildrenEnemies(EnemyManager& enemyManager, Enemy& enemy, int damage, int& popCount);
-    Tower* getTowerFromPosition(const TowerManager& towerManager, Vector2 position) const;
 
     // sub-methods
     float distancePointLine(Vector2 point, Vector2 lineStart, Vector2 lineEnd) const;

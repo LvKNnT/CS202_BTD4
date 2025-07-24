@@ -18,6 +18,11 @@ public:
     // Initialize the game logic
     void init(); // only for testing, should not be called in production
     void init(Difficulty difficulty, MapType mapType, ModeType modeType); // For loading new game
+    
+    // Inidividual init
+    void init(MapType mapType);
+    void init(Difficulty difficulty);
+    void init(ModeType modeType);
 
     // Update the game logic
     void update();
@@ -31,6 +36,21 @@ public:
     // Supplyment methos for Game
     bool isPutTower(TowerType type, Vector2 position) const;
     bool spawnTower(TowerType type, Vector2 position);
+    bool isUpgradeTower(Vector2 position, UpgradeUnits upgradeUnits) const;
+    bool upgradeTower(Vector2 position, UpgradeUnits upgradeUnits);
+    void chooseNextPriority(Vector2 position);
+    void choosePreviousPriority(Vector2 position);
+
+    void setAutoPlay(bool autoPlay);
+    void activeAutoPlay();
+    void unactiveAutoPlay();
+    void setTickFast(bool isTickFast);
+    void activeTickFast();
+    void unactiveTickFast();
+    
+    LogicInfo getInfoResource() const;
+    LogicInfo getInfoTower(TowerType type) const;
+    LogicInfo getInfoTower(Vector2 position) const;
 
     // Save/Load
     
@@ -45,6 +65,9 @@ private:
     // Light/less important game logic
     ResourceManager resourceManager; // Manages resources like cash, lives, and rounds
     ModeManager modeManager; // Manages the current game mode and its rounds
+
+    // game state
+    bool isTickFast = false;
 };
 
 #endif // GAME_LOGIC_H

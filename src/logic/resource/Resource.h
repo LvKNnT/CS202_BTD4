@@ -2,6 +2,7 @@
 #define RESOURCE_H
 
 #include <memory>
+#include "../LogicInfo.h"
 
 class Resource {
 public:
@@ -26,6 +27,18 @@ public:
             maxRound = other.maxRound;
         }
         return *this;
+    }
+    
+    LogicInfo getInfo() const {
+        LogicInfo info;
+
+        info["cash"] = std::to_string(cash);
+        info["lives"] = std::to_string(lives);
+        info["currentRound"] = std::to_string(currentRound);
+        info["initialRound"] = std::to_string(initialRound);
+        info["maxRound"] = std::to_string(maxRound);
+
+        return info;
     }
 };
 

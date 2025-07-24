@@ -139,6 +139,9 @@ void DartMonkey::setModifies(const TowerModifies& modifies) {
 }
 
 LogicInfo DartMonkey::getInfo() {
+    // info that need to be live-updated
+    info["popCount"] = std::to_string(popCount);
+    
     return this->info;
 }
 

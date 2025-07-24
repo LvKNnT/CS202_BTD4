@@ -28,3 +28,7 @@ int ResourceManager::isEndGame() const {
     // If the game is still ongoing, return 0
     return 0; 
 }
+
+LogicInfo ResourceManager::getInfo() const {
+    return currentResource.getInfo();
+}
