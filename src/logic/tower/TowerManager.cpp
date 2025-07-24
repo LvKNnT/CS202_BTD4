@@ -53,6 +53,21 @@ void TowerManager::spawnTower(TowerType type, Vector2 position) {
     }
 }
 
+LogicInfo TowerManager::getInfoTower(TowerType type) const {
+    return towerSpawner->getInfoTower(type, currentModifies);
+}
+
+LogicInfo TowerManager::getInfoTower(Vector2 position) const {
+    Tower* tower = getTowerFromPosition(position);
+    if (tower) {
+        return tower->getInfo();
+    }
+
+    // should be here only if no tower is found at the position
+    std::cerr << "No tower found at position: " << position.x << ", " << position.y << std::endl;
+    return LogicInfo(); // Return an empty LogicInfo if no tower is found
+}
+
 void TowerManager::drawTowers() const {
     for (const auto& tower : towerList) {
         if (tower) {
@@ -82,4 +97,31 @@ void TowerManager::unLoad() {
         }
     }
     towerList.clear(); // Clear the tower list after unloading
+}
+
+Tower* TowerManager::getTowerFromPosition(Vector2 position) const {
+    for (const auto& tower : towerList) {
+        if (tower && CheckCollisionPointRec(position, tower->getBoundingBox())) {
+            return tower.get(); // Return the tower if the position collides with its bounding box
+        }
+    }
+    return nullptr; // No tower found at the given position
+}
+
+void TowerManager::chooseNextPriority(Vector2 position) {
+    Tower* tower = getTowerFromPosition(position);
+    if (tower) {
+        tower->targetPriority = static_cast<TargetPriority>((static_cast<int>(tower->targetPriority) + 1) % 4);
+    } else {
+        std::cerr << "No tower found at position: " << position.x << ", " << position.y << std::endl;
+    }
+}
+
+void TowerManager::choosePreviousPriority(Vector2 position) {
+    Tower* tower = getTowerFromPosition(position);
+    if (tower) {
+        tower->targetPriority = static_cast<TargetPriority>((static_cast<int>(tower->targetPriority) + 3) % 4);
+    } else {
+        std::cerr << "No tower found at position: " << position.x << ", " << position.y << std::endl;
+    }
 }

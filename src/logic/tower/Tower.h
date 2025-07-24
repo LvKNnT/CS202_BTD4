@@ -17,6 +17,7 @@
 class Tower : public GameObject {
 // should be only accessible by LogicManager and Spawner
     friend class LogicManager; 
+    friend class TowerManager;
     friend class TowerSpawner;
 
 public:

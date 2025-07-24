@@ -15,3 +15,20 @@ const TowerModifies& ResourceManager::getTowerModifies() const {
 const EnemyModifies& ResourceManager::getEnemyModifies() const {
     return enemyModifier.getDifficultyUnits(currentDifficulty);
 }
+
+int ResourceManager::isEndGame() const {
+    // Check if the game has ended based on the current resources
+    if (currentResource.lives <= 0) {
+        return -1; // Lose game
+    }
+    if (currentResource.currentRound > currentResource.maxRound) {
+        return 1; // Win game
+    }
+    
+    // If the game is still ongoing, return 0
+    return 0; 
+}
+
+LogicInfo ResourceManager::getInfo() const {
+    return currentResource.getInfo();
+}

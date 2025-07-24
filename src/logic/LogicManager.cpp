@@ -334,22 +334,31 @@ bool LogicManager::isPutTower(const ResourceManager& resourceManager, const Towe
     Rectangle towerBoundingBox = towerManager.towerSpawner->getBoundingBox(type, position);
     float pathWidth = 50.0f; // Considerable size
 
-    // Checking collision
+    // Checking collision with the path
     for(const auto& path : enemyPath) {
         for(int i = 0; i + 1 < path.size(); ++i) {
             if(distancePointLine({towerBoundingBox.x, towerBoundingBox.y}, path[i].position, path[i + 1].position) < pathWidth
             || distancePointLine({towerBoundingBox.x + towerBoundingBox.width, towerBoundingBox.y}, path[i].position, path[i + 1].position) < pathWidth
             || distancePointLine({towerBoundingBox.x, towerBoundingBox.y + towerBoundingBox.height}, path[i].position, path[i + 1].position) < pathWidth
             || distancePointLine({towerBoundingBox.x + towerBoundingBox.width, towerBoundingBox.y + towerBoundingBox.height}, path[i].position, path[i + 1].position) < pathWidth) {
-                std::cerr << "Cannot put tower at position: " << position.x << ", " << position.y << std::endl;
+                std::cerr << "Cannot put tower at position: " << position.x << ", " << position.y << "due to path" << std::endl;
 
                 return false; 
             }
         }
     }
 
+    // Checking collision with other towers
+    for (const auto& tower : towerManager.towerList) {
+        if (tower->isActive() && CheckCollisionRecs(tower->getBoundingBox(), towerBoundingBox)) {
+            std::cerr << "Cannot put tower at position: " << position.x << ", " << position.y << "due to other towers" << std::endl;
+
+            return false; // Collision with another tower
+        }
+    }
+
     // Check if the player has enough resources to spawn the tower
-    int towerCost = stoi(towerManager.towerSpawner->getInfoTower(type)["cost"]);
+    int towerCost = stoi(towerManager.getInfoTower(type)["cost"]);
     if(resourceManager.currentResource.cash < towerCost) {
         std::cerr << "Current cash: " << resourceManager.currentResource.cash << ", Tower cost: " << towerCost << std::endl;
         std::cerr << "Not enough resources to spawn tower." << std::endl;
@@ -381,23 +390,14 @@ bool LogicManager::spawnTower(ResourceManager& resourceManager, TowerManager& to
     
     towerManager.spawnTower(type, position);
 
-    int towerCost = stoi(towerManager.towerSpawner->getInfoTower(type)["cost"]);
+    int towerCost = stoi(towerManager.getInfoTower(type)["cost"]);
     resourceManager.currentResource.cash -= towerCost;
 
     return true;
 }
 
-Tower* LogicManager::getTowerFromPosition(const TowerManager& towerManager, Vector2 position) const {
-    for (const auto& tower : towerManager.towerList) {
-        if (CheckCollisionPointRec(position, tower->getBoundingBox())) {
-            return tower.get(); // Return the tower if the position collides with its bounding box
-        }
-    }
-    return nullptr; // No tower found at the given position
-}
-
 bool LogicManager::isUpgradeTower(const ResourceManager& resourceManager, const TowerManager& towerManager, Vector2 position, UpgradeUnits upgradeUnits) const {
-    Tower* tower = getTowerFromPosition(towerManager, position);
+    Tower* tower = towerManager.getTowerFromPosition(position);
 
     // Sadly, another switch/case here.
     switch (upgradeUnits) {
@@ -426,8 +426,8 @@ bool LogicManager::isUpgradeTower(const ResourceManager& resourceManager, const 
     return false;
 }
 
-void LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, Vector2 position, UpgradeUnits upgradeUnits) {
-    Tower* tower = getTowerFromPosition(towerManager, position);
+bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, Vector2 position, UpgradeUnits upgradeUnits) {
+    Tower* tower = towerManager.getTowerFromPosition(position);
 
     // Sadly, another switch/case here.
     switch (upgradeUnits) {
@@ -440,6 +440,8 @@ void LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 tower->upgradeTop = tower->upgradeTop->buy();
                 tower->info["upgradeCostTop"] = std::to_string(tower->upgradeTop->getCost());
                 tower->info["upgradeDescriptionTop"] = tower->upgradeTop->getDescription();
+
+                return true;
             }
             break;
         case UpgradeUnits::Middle:
@@ -451,6 +453,8 @@ void LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 tower->upgradeMiddle = tower->upgradeMiddle->buy();
                 tower->info["upgradeCostMiddle"] = std::to_string(tower->upgradeMiddle->getCost());
                 tower->info["upgradeDescriptionMiddle"] = tower->upgradeMiddle->getDescription();
+
+                return true;
             }
             break;
         case UpgradeUnits::Bottom:
@@ -462,11 +466,15 @@ void LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 tower->upgradeBottom = tower->upgradeBottom->buy();
                 tower->info["upgradeCostBottom"] = std::to_string(tower->upgradeBottom->getCost());
                 tower->info["upgradeDescriptionBottom"] = tower->upgradeBottom->getDescription();
+
+                return true;
             }
             break;
         default:
             break;
     }
+
+    return false;
 }
 
 void LogicManager::playRound(ResourceManager& resourceManager, ModeManager& modeManager, EnemyManager& enemyManager, MapManager& mapManager) {
@@ -499,6 +507,6 @@ void LogicManager::playNextRound(ResourceManager& resourceManager) {
     std::cerr << "Playing next round: " << resourceManager.currentResource.currentRound << std::endl;
 }
 
-void LogicManager::setAutoPlay(bool autoPlay) {
-    autoPlayRound = autoPlay;
+void LogicManager::setAutoPlay(ModeManager& modeManager, bool autoPlay) {
+    autoPlayRound = modeManager.setAutoPlay(autoPlay);
 }

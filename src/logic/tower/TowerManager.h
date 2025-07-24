@@ -18,6 +18,11 @@ public:
 
     // Methods
     void spawnTower(TowerType type, Vector2 position);
+    LogicInfo getInfoTower(TowerType type) const;
+    LogicInfo getInfoTower(Vector2 position) const;
+    void chooseNextPriority(Vector2 position);
+    void choosePreviousPriority(Vector2 position);
+
     void drawTowers() const;
     void updateTowers();
     void unLoad();
@@ -30,6 +35,9 @@ private:
     std::unique_ptr<TowerSpawner> towerSpawner; // Factory to create towers based on type
 
     int towerIDCounter; // Counter for ID tower
+
+    // Helper methods
+    Tower* getTowerFromPosition(Vector2 position) const;
 };
 
 #endif // TOWER_MANAGER_H

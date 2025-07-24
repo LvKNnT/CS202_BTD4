@@ -25,6 +25,9 @@ public:
     const Resource& getResource(Difficulty difficulty) const;
     const TowerModifies& getTowerModifies() const;
     const EnemyModifies& getEnemyModifies() const;
+
+    int isEndGame() const;
+    LogicInfo getInfo() const;
 };
 
 #endif // RESOURCE_MANAGER_H
