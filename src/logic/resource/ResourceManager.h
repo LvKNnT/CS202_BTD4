@@ -5,31 +5,24 @@
 #include "../level/DifficultyUnits.h"
 #include "../level/TowerModifier.h"
 #include "../level/EnemyModifier.h"
+#include "ResourceSpawner.h"
 
 class ResourceManager {
+    friend class LogicManager; // Allow LogicManager to access private members
+
 private:
     TowerModifier towerModifier; // Manages tower modifications based on difficulty
     EnemyModifier enemyModifier; // Manages enemy modifications based on difficulty
+    ResourceSpawner resourceSpawner;
     Difficulty currentDifficulty; // Current game difficulty
-
-    struct DifficultyCompare {
-        bool operator()(const Difficulty& a, const Difficulty& b) const {
-            return static_cast<int>(a) < static_cast<int>(b);
-        }
-    };
-    std::map<Difficulty, Resource, DifficultyCompare> resourceTemplates; 
+    Resource currentResource; // Current resource state
 
 public:
-    ResourceManager(); 
-    ResourceManager(Difficulty difficulty);
-    ResourceManager(const ResourceManager& other);
+    ResourceManager() = default; 
     ~ResourceManager() = default;
 
-    ResourceManager& operator=(const ResourceManager& other);
-
-    void init();
-
-    const Resource& getResource(Difficulty type) const;
+    void initResource(Difficulty difficulty);
+    const Resource& getResource(Difficulty difficulty) const;
     const TowerModifies& getTowerModifies() const;
     const EnemyModifies& getEnemyModifies() const;
 };

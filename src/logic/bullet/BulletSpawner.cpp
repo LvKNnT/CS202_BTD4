@@ -56,7 +56,7 @@ void BulletSpawner::init() {
     // bulletTemplates[BulletType::Shuriken] = std::make_unique<Shuriken>();
 }
 
-std::unique_ptr<Bullet> BulletSpawner::getBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, int towerId) {
+std::unique_ptr<Bullet> BulletSpawner::getBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, bool canHitCamo, int towerId) {
     auto it = bulletTemplates.find(type);
     if (it != bulletTemplates.end()) {
         it->second->loadTexture(); 
@@ -69,6 +69,7 @@ std::unique_ptr<Bullet> BulletSpawner::getBullet(BulletType type, Vector2 positi
         bullet->speed = speed;
         bullet->pierce = pierce;
         bullet->lifeSpan = lifeSpan;
+        bullet->canHitCamo = canHitCamo;
         bullet->towerId = towerId; 
 
         return bullet;

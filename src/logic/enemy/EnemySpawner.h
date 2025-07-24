@@ -18,8 +18,12 @@ private:
 
     // For creating enemies based on type
     std::map<BloonType, std::unique_ptr<Enemy>, BloonTypeCompare> enemyTemplates;
-    // for creating children enemies based on type
+    // For creating children enemies based on type
     std::map<BloonType, std::vector<std::unique_ptr<Enemy> >, BloonTypeCompare> enemyChildrenTemplates; 
+    // For creating regrow enemies
+    std::map<BloonType, std::unique_ptr<Enemy> , BloonTypeCompare> regrowEnemyTemplates;
+
+    const float regrowTime = 3.0f; // Time for regrow enemy to regrow
 
 public:
     EnemySpawner();
@@ -32,8 +36,9 @@ public:
     void init();
 
     // Returns a unique_ptr to a new Enemy of the given type
-    std::unique_ptr<Enemy> getEnemy(BloonType type, Vector2 position, int pathIndex, EnemyModifies modifies);
-    std::vector<std::unique_ptr<Enemy> > getChildrenEnemies(BloonType type, Vector2 position, EnemyModifies modifies);
+    std::unique_ptr<Enemy> getEnemy(BloonType type, BloonProperties properties, Vector2 position, int pathIndex, EnemyModifies modifies);
+    std::vector<std::unique_ptr<Enemy> > getChildrenEnemies(Enemy* enemy, EnemyModifies modifies);
+    void getRegrowEnemy(std::unique_ptr<Enemy>& enemy, EnemyModifies modifies);
 };
 
 #endif // ENEMYSPAWNER_H

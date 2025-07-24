@@ -41,8 +41,8 @@ EnemyManager& EnemyManager::operator=(const EnemyManager& other) {
     return *this;
 }
 
-void EnemyManager::spawnEnemy(BloonType type, Vector2 position, int pathIndex) {
-    std::unique_ptr<Enemy> enemy = enemySpawner->getEnemy(type, position, pathIndex, currentModifies);
+void EnemyManager::spawnEnemy(BloonType type, BloonProperties properties, Vector2 position, int pathIndex) {
+    std::unique_ptr<Enemy> enemy = enemySpawner->getEnemy(type, properties, position, pathIndex, currentModifies);
     
     if (enemy) {
         enemyList.push_back(std::move(enemy));
@@ -51,8 +51,8 @@ void EnemyManager::spawnEnemy(BloonType type, Vector2 position, int pathIndex) {
     }
 }
 
-std::vector<std::unique_ptr<Enemy>> EnemyManager::spawnChildrenEnemies(BloonType type, Vector2 position) {
-    std::vector<std::unique_ptr<Enemy>> childrenEnemies = enemySpawner->getChildrenEnemies(type, position, currentModifies);
+std::vector<std::unique_ptr<Enemy>> EnemyManager::spawnChildrenEnemies(Enemy* enemy) {
+    std::vector<std::unique_ptr<Enemy>> childrenEnemies = enemySpawner->getChildrenEnemies(enemy, currentModifies);
     
     return childrenEnemies; // Return the spawned children enemies
 }
@@ -64,6 +64,12 @@ void EnemyManager::drawEnemies() const {
         } else {
             std::cerr << "Enemy is null!" << std::endl;
         }
+    }
+}
+
+void EnemyManager::updateEnemies() {
+    for(auto it = enemyList.begin(); it != enemyList.end(); ++it) {
+        enemySpawner->getRegrowEnemy(*it, currentModifies); 
     }
 }
 

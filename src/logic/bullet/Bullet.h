@@ -34,6 +34,7 @@ protected:
     int speed; // Speed of the bullet
     int pierce; // Number of targets the bullet can pierce through
     float lifeSpan; // Life span of the bullet in frames
+    bool canHitCamo; // Whether the bullet can hit camo targets
 
     // Position and rotation for movement
     Vector2 position; // Position of the bullet

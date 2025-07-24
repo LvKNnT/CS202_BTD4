@@ -22,9 +22,10 @@ public:
     EnemyManager& operator=(const EnemyManager& other); 
 
     // Methods
-    void spawnEnemy(BloonType type, Vector2 position, int pathIndex = 0);
-    std::vector<std::unique_ptr<Enemy> > spawnChildrenEnemies(BloonType type, Vector2 position);
+    void spawnEnemy(BloonType type, BloonProperties properties, Vector2 position, int pathIndex = 0);
+    std::vector<std::unique_ptr<Enemy> > spawnChildrenEnemies(Enemy* enemy);
     void drawEnemies() const;
+    void updateEnemies();
     void unLoad();
 
 private:

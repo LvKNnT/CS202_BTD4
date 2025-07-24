@@ -25,6 +25,7 @@ public:
     // Lead bloon does not need rotation, but we need to implement it
     void setRotation(float rotation) override;
     void setModifies(const EnemyModifies& modifies) override;
+    void setProperties(const BloonProperties& properties) override;
 
 private:
 

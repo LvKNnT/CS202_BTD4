@@ -20,9 +20,9 @@ DartMonkey::DartMonkey(Vector2 position)
      * * * damage = 1
      * * * speed = 200
      * * * pierce = 1
-     * * * lifeSpan = 60.0f
+     * * * lifeSpan = 1.0f
      */
-    attacks.push_back(std::make_unique<DartAttack>(100.0f, 0.1f, position, towerId, 1, 200, 1, 5.0f));
+    attacks.push_back(std::make_unique<DartAttack>(100.0f, 1.0f, position, towerId, 1, 200, 1, 1.0f, false));
 
     // Upgrade Path
     upgradeTop = std::make_unique<SharpShots>();
@@ -136,50 +136,6 @@ void DartMonkey::setModifies(const TowerModifies& modifies) {
     info["upgradeCostTop"] = std::to_string(upgradeTop->getCost() * upgradeCost);
     info["upgradeCostMiddle"] = std::to_string(upgradeMiddle->getCost() * upgradeCost);
     info["upgradeCostBottom"] = std::to_string(upgradeBottom->getCost() * upgradeCost);
-}
-
-void DartMonkey::upgrade(const UpgradeUnits& upgradeUnits, int& currentCash) {
-    // Upgrade the Dart Monkey tower based on the specified upgrade unit
-    switch (upgradeUnits) {
-        case UpgradeUnits::Top:
-            if (upgradeTop->getCost() * upgradeCost <= currentCash && upgradeTop->getName() != "NoUpgrade") {
-                upgradeTop->update(attacks);
-                info["descriptionTop"] = upgradeTop->getDescription();
-
-                upgradeTop = upgradeTop->buy();
-                info["upgradeCostTop"] = std::to_string(upgradeTop->getCost());
-                info["upgradeDescriptionTop"] = upgradeTop->getDescription();
-
-                currentCash -= upgradeTop->getCost() * upgradeCost;
-            }
-            break;
-        case UpgradeUnits::Middle:
-            if (upgradeMiddle->getCost() * upgradeCost <= currentCash && upgradeMiddle->getName() != "NoUpgrade") {
-                upgradeMiddle->update(attacks);
-                info["descriptionMiddle"] = upgradeMiddle->getDescription();
-
-                upgradeMiddle = upgradeMiddle->buy();
-                info["upgradeCostMiddle"] = std::to_string(upgradeMiddle->getCost());
-                info["upgradeDescriptionMiddle"] = upgradeMiddle->getDescription();
-
-                currentCash -= upgradeMiddle->getCost() * upgradeCost;
-            }
-            break;
-        case UpgradeUnits::Bottom:
-            if (upgradeBottom->getCost() * upgradeCost <= currentCash && upgradeBottom->getName() != "NoUpgrade") {
-                upgradeBottom->update(attacks);
-                info["descriptionBottom"] = upgradeBottom->getDescription();
-
-                upgradeBottom = upgradeBottom->buy();
-                info["upgradeCostBottom"] = std::to_string(upgradeBottom->getCost());
-                info["upgradeDescriptionBottom"] = upgradeBottom->getDescription();
-                
-                currentCash -= upgradeBottom->getCost() * upgradeCost;
-            }
-            break;
-        default:
-            break;
-    }
 }
 
 LogicInfo DartMonkey::getInfo() {

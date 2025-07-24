@@ -38,3 +38,7 @@ void MonkeyLane::loadTexture() {
 void MonkeyLane::update() {
     // This map has no dynamic elements to update
 }
+
+std::pair<Vector2, int> MonkeyLane::getPositionAndPathIdx(BloonType type) {
+    return {getCurrentPoint(0, 0), 0}; // Default position and path index for this map
+}

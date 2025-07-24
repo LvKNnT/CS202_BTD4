@@ -27,7 +27,7 @@ public:
     void unLoad();
 
     // Get the current map
-    const Map& getCurrentMap() const; // should be const
+    Map& getCurrentMap(); // should be const
 private:
     // Should be only one map at a time
     std::unique_ptr<MapSpawner> mapSpawner = std::make_unique<MapSpawner>(); // Factory to create maps based on type

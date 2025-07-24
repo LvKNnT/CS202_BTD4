@@ -35,8 +35,8 @@ BulletManager& BulletManager::operator=(const BulletManager& other) {
     return *this;
 }
 
-void BulletManager::spawnBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, int towerId) {
-    std::unique_ptr<Bullet> bullet = bulletSpawner->getBullet(type, position, size, rotation, damage, speed, pierce, lifeSpan, towerId);
+void BulletManager::spawnBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, bool canHitCamo, int towerId) {
+    std::unique_ptr<Bullet> bullet = bulletSpawner->getBullet(type, position, size, rotation, damage, speed, pierce, lifeSpan, canHitCamo, towerId);
     
     if (bullet) {
         bulletList.push_back(std::move(bullet));

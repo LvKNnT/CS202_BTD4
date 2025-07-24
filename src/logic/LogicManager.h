@@ -5,19 +5,28 @@
 #include "map/MapManager.h"
 #include "bullet/BulletManager.h"
 #include "tower/TowerManager.h"
-#include "resource/Resource.h"
+#include "resource/ResourceManager.h"
+#include "mode/ModeManager.h"
 
 // This class handles the iteration between different game Logic managers
 class LogicManager {
 public:
     LogicManager() = default;
     ~LogicManager() = default;
-
-    // Update methods for different game objects
+    
+    // Core logic
     void updateEnemies(EnemyManager& enemyManager, MapManager& mapManager);
     void updateBullets(BulletManager& bulletManager, MapManager& mapManager);
     void updateTowers(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager);
-    bool isPutTower(const TowerManager& towerManager, const MapManager& mapManager, TowerType type, Vector2 position) const; 
+    
+    // Suplly for GameLogic
+    bool isPutTower(const ResourceManager& resourceManager, const TowerManager& towerManager, const MapManager& mapManager, TowerType type, Vector2 position) const; 
+    bool spawnTower(ResourceManager& resourceManager, TowerManager& towerManager, const MapManager& mapManager, TowerType type, Vector2 position);
+    bool isUpgradeTower(const ResourceManager& resourceManager, const TowerManager& towerManager, Vector2 position, UpgradeUnits upgradeUnits) const;
+    void upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, Vector2 position, UpgradeUnits upgradeUnits);
+    void playRound(ResourceManager& resourceManager, ModeManager& modeManager, EnemyManager& enemyManager, MapManager& mapManager);
+    void playNextRound(ResourceManager& resourceManager);
+    void setAutoPlay(bool autoPlay);
 
     // Update methods for interactions between game objects
     void updateBulletsHitEnemies(BulletManager& bulletManager, EnemyManager& enemyManager, TowerManager& towerManager, MapManager& mapManager);
@@ -30,9 +39,11 @@ private:
     int runBullet(Bullet& bullet, const Map& map);
     bool checkCollision(const Bullet& bullet, const Enemy& enemy) const;
     std::vector<std::unique_ptr<Enemy>> getChildrenEnemies(EnemyManager& enemyManager, Enemy& enemy, int damage, int& popCount);
+    Tower* getTowerFromPosition(const TowerManager& towerManager, Vector2 position) const;
 
     // sub-methods
     float distancePointLine(Vector2 point, Vector2 lineStart, Vector2 lineEnd) const;
+    bool autoPlayRound = true;
 };
 
 #endif // LOGICMANAGER_H

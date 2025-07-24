@@ -66,7 +66,7 @@ void MapManager::unLoad() {
     }
 }
 
-const Map& MapManager::getCurrentMap() const {
+Map& MapManager::getCurrentMap() {
     if(!currentMap) {
         // should not be here
         std::cerr << "Current map is not loaded. Please load a map before accessing it." << std::endl;

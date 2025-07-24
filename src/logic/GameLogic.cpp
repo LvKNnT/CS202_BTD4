@@ -9,45 +9,13 @@ void GameLogic::init() {
     // parameters
     const Difficulty difficulty = Difficulty::Easy; // Default difficulty for testing
     const MapType mapType = MapType::MonkeyLane; // Default map type for testing
+    const ModeType modeType = ModeType::Alternative; // Default mode type for testing
 
-    resourceManager = ResourceManager(difficulty); // Initialize resource manager with difficulty
+    // stimulate what will happen in the game
+    init(difficulty, mapType, modeType);
 
-    // Re-initialize all the managers
-    mapManager = MapManager();
-    bulletManager = BulletManager();
-    enemyManager = EnemyManager(resourceManager.getEnemyModifies());
-    towerManager = TowerManager(resourceManager.getTowerModifies());
-
-    // Optionally, spawn some initial enemies for testing
-    mapManager.loadMap(mapType); // Load the Monkey Lane map
-    // enemyManager.spawnEnemy(BloonType::Moab, mapManager.getCurrentMap().getCurrentPoint(0));
-    {
-        // testing all enemies
-        enemyManager.spawnEnemy(BloonType::Red, mapManager.getCurrentMap().getCurrentPoint(0));
-        enemyManager.spawnEnemy(BloonType::Blue, mapManager.getCurrentMap().getCurrentPoint(0));
-        enemyManager.spawnEnemy(BloonType::Green, mapManager.getCurrentMap().getCurrentPoint(0));
-        enemyManager.spawnEnemy(BloonType::Yellow, mapManager.getCurrentMap().getCurrentPoint(0));
-        enemyManager.spawnEnemy(BloonType::Pink, mapManager.getCurrentMap().getCurrentPoint(0));
-        enemyManager.spawnEnemy(BloonType::Black, mapManager.getCurrentMap().getCurrentPoint(0));
-        enemyManager.spawnEnemy(BloonType::White, mapManager.getCurrentMap().getCurrentPoint(0));
-        enemyManager.spawnEnemy(BloonType::Purple, mapManager.getCurrentMap().getCurrentPoint(0));
-        enemyManager.spawnEnemy(BloonType::Lead, mapManager.getCurrentMap().getCurrentPoint(0));
-        enemyManager.spawnEnemy(BloonType::Zebra, mapManager.getCurrentMap().getCurrentPoint(0));
-        enemyManager.spawnEnemy(BloonType::Rainbow, mapManager.getCurrentMap().getCurrentPoint(0));
-        enemyManager.spawnEnemy(BloonType::Ceramic, mapManager.getCurrentMap().getCurrentPoint(0));
-        enemyManager.spawnEnemy(BloonType::Moab, mapManager.getCurrentMap().getCurrentPoint(0));
-        enemyManager.spawnEnemy(BloonType::Bfb, mapManager.getCurrentMap().getCurrentPoint(0));
-        enemyManager.spawnEnemy(BloonType::Zomg, mapManager.getCurrentMap().getCurrentPoint(0));
-        enemyManager.spawnEnemy(BloonType::Ddt, mapManager.getCurrentMap().getCurrentPoint(0));
-        enemyManager.spawnEnemy(BloonType::Bad, mapManager.getCurrentMap().getCurrentPoint(0));
-    }
-    // bulletManager.spawnBullet(BulletType::Dart, {100.0f, 100.0f}, {10.0f, 10.0f}, 0.0f, 170, 20, 2, 60.0f);
-    // towerManager.spawnTower(TowerType::DartMonkey, {200.0f, 200.0f});
-    // if(logicManager.isPutTower(towerManager, mapManager, TowerType::DartMonkey, {200.0f, 200.0f})) {
-        towerManager.spawnTower(TowerType::DartMonkey, {200.0f, 200.0f});
-    // }
-
-
+    spawnTower(TowerType::DartMonkey, {200.0f, 225.0f});
+    
     // Resetting log file
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::trunc);  
     
@@ -59,9 +27,21 @@ void GameLogic::init() {
     }
 }
 
+void GameLogic::init(Difficulty difficulty, MapType mapType, ModeType modeType) {
+    resourceManager.initResource(difficulty);
+    mapManager.loadMap(mapType); 
+    modeManager.setMode(modeType); 
+    
+    enemyManager = EnemyManager(resourceManager.getEnemyModifies());
+    towerManager = TowerManager(resourceManager.getTowerModifies());
+}
+
 void GameLogic::update() {
     // Update by the managers
     mapManager.updateMap();
+    enemyManager.updateEnemies();
+
+    logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager);
     logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager);
     logicManager.updateEnemies(enemyManager, mapManager);
     logicManager.updateBullets(bulletManager, mapManager);
@@ -86,5 +66,10 @@ void GameLogic::unLoad() {
 
 bool GameLogic::isPutTower(TowerType type, Vector2 position) const {
     // Check if the tower can be placed at the given position
-    return logicManager.isPutTower(towerManager, mapManager, type, position);
+    return logicManager.isPutTower(resourceManager, towerManager, mapManager, type, position);
+}
+
+bool GameLogic::spawnTower(TowerType type, Vector2 position) {
+    // Check if the tower can be placed at the given position
+    return logicManager.spawnTower(resourceManager, towerManager, mapManager, type, position);
 }

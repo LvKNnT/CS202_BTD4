@@ -52,6 +52,14 @@ EnemySpawner::EnemySpawner(const EnemySpawner& other) {
             }
             enemyChildrenTemplates[type] = std::move(clonedChildren); // Move the cloned children
         }
+
+        // Clear current regrow enemy templates
+        regrowEnemyTemplates.clear();
+        
+        // deep copy of regrow enemy templates
+        for (const auto& [type, enemy] : other.regrowEnemyTemplates) {
+            regrowEnemyTemplates[type] = enemy->clone(); // Clone each regrow enemy template
+        }
     } else {
         // should not be here
         std::cerr << "EnemySpawner copy constructor called on self-assignment." << std::endl;
@@ -78,6 +86,14 @@ EnemySpawner& EnemySpawner::operator=(const EnemySpawner& other) {
                 clonedChildren.push_back(child->clone()); // Clone each child enemy
             }
             enemyChildrenTemplates[type] = std::move(clonedChildren); // Move the cloned children
+        }
+
+        // Clear current regrow enemy templates
+        regrowEnemyTemplates.clear();
+
+        // deep copy of regrow enemy templates
+        for (const auto& [type, enemy] : other.regrowEnemyTemplates) {
+            regrowEnemyTemplates[type] = enemy->clone(); // Clone each regrow enemy template
         }
     } else {
         // should not be here
@@ -187,17 +203,31 @@ void EnemySpawner::init() {
     children.push_back(std::make_unique<Ddt>());
     children.push_back(std::make_unique<Ddt>());
     enemyChildrenTemplates[BloonType::Bad] = std::move(children);
+
+    // Regrow enemies templates
+    regrowEnemyTemplates[BloonType::Red] = std::make_unique<Blue>();
+    regrowEnemyTemplates[BloonType::Blue] = std::make_unique<Green>();
+    regrowEnemyTemplates[BloonType::Green] = std::make_unique<Yellow>();
+    regrowEnemyTemplates[BloonType::Yellow] = std::make_unique<Pink>();
+    regrowEnemyTemplates[BloonType::Pink] = std::make_unique<Black>();
+    regrowEnemyTemplates[BloonType::Black] = std::make_unique<White>();
+    regrowEnemyTemplates[BloonType::White] = std::make_unique<Purple>();
+    regrowEnemyTemplates[BloonType::Purple] = std::make_unique<Lead>();
+    regrowEnemyTemplates[BloonType::Lead] = std::make_unique<Zebra>();
+    regrowEnemyTemplates[BloonType::Zebra] = std::make_unique<Rainbow>();
+    regrowEnemyTemplates[BloonType::Rainbow] = std::make_unique<Ceramic>();
 }
 
-std::unique_ptr<Enemy> EnemySpawner::getEnemy(BloonType type, Vector2 position, int pathIndex, EnemyModifies modifies) {
+std::unique_ptr<Enemy> EnemySpawner::getEnemy(BloonType type, BloonProperties properties, Vector2 position, int pathIndex, EnemyModifies modifies) {
     auto it = enemyTemplates.find(type);
     if (it != enemyTemplates.end()) {
-        it->second->loadTexture(); 
-
         std::unique_ptr<Enemy> enemy = it->second->clone();
+        enemy->properties = properties;
         enemy->position = position; 
+        // enemy->trackIndex = 0; 
         enemy->pathIndex = pathIndex; 
         enemy->setModifies(modifies); 
+        enemy->loadTexture();
 
         return enemy;
     }
@@ -207,24 +237,60 @@ std::unique_ptr<Enemy> EnemySpawner::getEnemy(BloonType type, Vector2 position, 
     return nullptr;
 }
 
-std::vector<std::unique_ptr<Enemy>> EnemySpawner::getChildrenEnemies(BloonType type, Vector2 position, EnemyModifies modifies) {
-    auto it = enemyChildrenTemplates.find(type);
+std::vector<std::unique_ptr<Enemy>> EnemySpawner::getChildrenEnemies(Enemy* enemy, EnemyModifies modifies) {
+    if (!enemy) return {};
+
+    auto it = enemyChildrenTemplates.find(enemy->type);
     if (it != enemyChildrenTemplates.end()) {
         std::vector<std::unique_ptr<Enemy>> childrenEnemies;
 
         for (const auto& child : it->second) {
-            child->loadTexture(); // Load texture for each child enemy
+            std::unique_ptr<Enemy> childEnemy = child->clone();
+            childEnemy->regrowLimit = enemy->regrowLimit;
+            // childEnemy->regrowTimer = 0.0f;
+            childEnemy->properties = enemy->properties;
+            childEnemy->position = enemy->position;
+            childEnemy->trackIndex = enemy->trackIndex;
+            childEnemy->pathIndex = enemy->pathIndex;
+            childEnemy->setModifies(modifies);
+            childEnemy->loadTexture();
 
-            std::unique_ptr<Enemy> enemy = child->clone();
-            enemy->position = position; 
-            enemy->setModifies(modifies); 
-            childrenEnemies.push_back(std::move(enemy));
+            childrenEnemies.push_back(std::move(childEnemy));
         }
 
         return childrenEnemies;
     }
 
-    // should not be here
-    std::cerr << "Children enemies type not found: " << static_cast<int>(type) << std::endl;
+    std::cerr << "Children enemies type not found: " << static_cast<int>(enemy->type) << std::endl;
     return {};
+}
+
+void EnemySpawner::getRegrowEnemy(std::unique_ptr<Enemy>& enemy, EnemyModifies modifies) {
+    if(!enemy) return;
+    if(enemy->properties.isRegrow == false) return;
+    if(enemy->type == enemy->regrowLimit) return; 
+    if(enemy->regrowTimer < regrowTime) {
+        enemy->regrowTimer += GetFrameTime(); 
+        return; 
+    }
+    
+    auto it = regrowEnemyTemplates.find(enemy->type);
+    if (it != regrowEnemyTemplates.end()) {
+        std::unique_ptr<Enemy> regrowEnemy = it->second->clone();
+        regrowEnemy->regrowLimit = enemy->regrowLimit; 
+        regrowEnemy->properties = enemy->properties; 
+        regrowEnemy->position = enemy->position; 
+        regrowEnemy->trackIndex = enemy->trackIndex;
+        regrowEnemy->pathIndex = enemy->pathIndex;
+
+        regrowEnemy->setModifies(modifies);
+        regrowEnemy->loadTexture();
+
+        // Replace the original enemy with the regrow enemy
+        enemy = std::move(regrowEnemy);
+        return;
+    } 
+
+    // should not be here
+    std::cerr << "Regrow enemy type not found: " << static_cast<int>(enemy->type) << std::endl;
 }
