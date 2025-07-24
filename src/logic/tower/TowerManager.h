@@ -18,6 +18,8 @@ public:
 
     // Methods
     void spawnTower(TowerType type, Vector2 position);
+    LogicInfo getInfoTower(TowerType type) const;
+
     void drawTowers() const;
     void updateTowers();
     void unLoad();

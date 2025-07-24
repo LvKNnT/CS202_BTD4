@@ -349,7 +349,7 @@ bool LogicManager::isPutTower(const ResourceManager& resourceManager, const Towe
     }
 
     // Check if the player has enough resources to spawn the tower
-    int towerCost = stoi(towerManager.towerSpawner->getInfoTower(type)["cost"]);
+    int towerCost = stoi(towerManager.getInfoTower(type)["cost"]);
     if(resourceManager.currentResource.cash < towerCost) {
         std::cerr << "Current cash: " << resourceManager.currentResource.cash << ", Tower cost: " << towerCost << std::endl;
         std::cerr << "Not enough resources to spawn tower." << std::endl;
@@ -381,7 +381,7 @@ bool LogicManager::spawnTower(ResourceManager& resourceManager, TowerManager& to
     
     towerManager.spawnTower(type, position);
 
-    int towerCost = stoi(towerManager.towerSpawner->getInfoTower(type)["cost"]);
+    int towerCost = stoi(towerManager.getInfoTower(type)["cost"]);
     resourceManager.currentResource.cash -= towerCost;
 
     return true;

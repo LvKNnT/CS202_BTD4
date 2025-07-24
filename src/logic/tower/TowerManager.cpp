@@ -53,6 +53,10 @@ void TowerManager::spawnTower(TowerType type, Vector2 position) {
     }
 }
 
+LogicInfo TowerManager::getInfoTower(TowerType type) const {
+    return towerSpawner->getInfoTower(type, currentModifies);
+}
+
 void TowerManager::drawTowers() const {
     for (const auto& tower : towerList) {
         if (tower) {

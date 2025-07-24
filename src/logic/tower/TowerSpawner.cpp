@@ -102,11 +102,12 @@ int TowerSpawner::getRangeTower(TowerType type) const {
     }
 }
 
-LogicInfo TowerSpawner::getInfoTower(TowerType type) const {
+LogicInfo TowerSpawner::getInfoTower(TowerType type, const TowerModifies& modifies) const {
     // Find the tower template for the given type
     auto it = towerTemplates.find(type);
     if (it != towerTemplates.end()) {
-        return it->second->getInfo(); // Return the LogicInfo of the tower
+        it->second->setModifies(modifies); 
+        return it->second->getInfo(); // Return the info of the tower
     } else {
         // should not be here
         std::cerr << "Tower type not found: " << static_cast<int>(type) << std::endl;

@@ -15,6 +15,7 @@ void GameLogic::init() {
     init(difficulty, mapType, modeType);
 
     spawnTower(TowerType::DartMonkey, {200.0f, 225.0f});
+    std::cerr << resourceManager.getResource(difficulty).cash << std::endl;
     
     // Resetting log file
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::trunc);  
@@ -37,6 +38,12 @@ void GameLogic::init(Difficulty difficulty, MapType mapType, ModeType modeType) 
 }
 
 void GameLogic::update() {
+    // Update game result
+    if(resourceManager.isEndGame() != 0) {
+        std::cerr << "Game Over! Result: " << resourceManager.isEndGame() << std::endl;
+        return;
+    }
+
     // Update by the managers
     mapManager.updateMap();
     enemyManager.updateEnemies();
