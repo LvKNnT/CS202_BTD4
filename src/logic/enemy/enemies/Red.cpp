@@ -11,7 +11,7 @@ Red::Red(Vector2 position)
      *  */ 
 
     // Variable initialization that cant use initializer list
-    tag = "RedBloon";
+    tag = "Red";
 }
 
 std::unique_ptr<Enemy> Red::clone() const {
@@ -20,12 +20,16 @@ std::unique_ptr<Enemy> Red::clone() const {
 
 void Red::loadTexture() {
     // Load the texture
-    Game::Instance().getTextureManager().loadTexture(tag, "../assets/enemy/Normal Bloons/default/BTD6Red.png");
-    texture = Game::Instance().getTextureManager().getTexture(tag);
-    
+    std::string fullTag = properties.getFullTag(tag);
+    std::string path = properties.getPath() + fullTag + ".png";
+    Game::Instance().getTextureManager().loadTexture(fullTag, path);
+    texture = Game::Instance().getTextureManager().getTexture(fullTag);
+
     // Update size based on the loaded texture
     size.x = static_cast<float>(texture.width);
     size.y = static_cast<float>(texture.height);
+
+    tag = fullTag;
 }
 
 bool Red::hit(int damage) {
@@ -90,4 +94,13 @@ void Red::setModifies(const EnemyModifies& modifies) {
     speed = static_cast<int>(speed * modifies.speed);
     // health = static_cast<int>(health * modifies.health);
     reward = static_cast<int>(reward * modifies.reward);
+}
+
+void Red::setProperties(const BloonProperties& properties) {
+    // Set the bloon properties for the Red bloon
+    this->properties = properties;
+    
+    if(properties.isFortified) {
+        health *= 2; // Fortified bloons have double health
+    }
 }

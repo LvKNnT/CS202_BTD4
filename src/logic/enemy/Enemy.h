@@ -30,16 +30,21 @@ public:
     virtual void die() = 0; // Pure virtual function for handling death by end of track
     virtual void setRotation(float rotation) = 0; // Pure virtual function for setting rotation
     virtual void setModifies(const EnemyModifies& modifies) = 0; // Pure virtual function for setting enemy modifiers
+    virtual void setProperties(const BloonProperties& properties) = 0; // Pure virtual function for setting bloon properties
 
 protected:
     BloonType type;
+    BloonProperties properties; // Properties of the bloon, such as fortified, camo, regrow
     int health;
     int speed;
     int reward; // Reward for popping this bloon
     int livesLost; // Number of lives lost due to this bloon reaching the end
-
+    
     int trackIndex; // Index of the current point in the enemy path
     int pathIndex; // Index of the path this enemy is following
+    
+    BloonType regrowLimit;
+    float regrowTimer;
 };
 
 #endif // ENEMY_H

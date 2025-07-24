@@ -1,7 +1,7 @@
 #include "DartAttack.h"
 
-DartAttack::DartAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan)
-    : Attack(range, cooldown, position, towerId, damage, speed, pierce, lifeSpan) {
+DartAttack::DartAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, bool canSeeCamo)
+    : Attack(range, cooldown, position, towerId, damage, speed, pierce, lifeSpan, canSeeCamo) {
     // Constructor implementation can be extended if needed
 }
 
@@ -10,7 +10,10 @@ std::unique_ptr<Attack> DartAttack::clone() const {
     return std::make_unique<DartAttack>(*this);
 }
 
-bool DartAttack::isInRange(const Rectangle& rec, const float rotation) const {
+bool DartAttack::isInRange(const Rectangle& rec, const float rotation, bool isCamo) const {
+    // Check if the attack can hit camo targets
+    if (isCamo && !canSeeCamo) return false;
+
     // Check if the rotated rectangle (rec, rotation) collides with the circle (position, range)
     // First, get the center of the rectangle
     Vector2 rectCenter = { rec.x + rec.width / 2.0f, rec.y + rec.height / 2.0f };
@@ -41,7 +44,7 @@ void DartAttack::update(BulletManager& bulletManager, const Vector2& targetPosit
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
         
-        bulletManager.spawnBullet(BulletType::Dart, position, {10.0f, 10.0f}, angle, damage, speed, pierce, lifeSpan, towerId);
+        bulletManager.spawnBullet(BulletType::Dart, position, {10.0f, 10.0f}, angle, damage, speed, pierce, lifeSpan, canSeeCamo, towerId);
         
         timer += cooldown; // Reset the timer after spawning
     } else {

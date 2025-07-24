@@ -34,7 +34,6 @@ public:
     virtual void update() = 0; // Pure virtual function for handling special attack
     virtual void setRotation(float rotation) = 0; 
     virtual void setModifies(const TowerModifies& modifies) = 0; 
-    virtual void upgrade(const UpgradeUnits& upgradeUnits, int& currentCash) = 0; 
     virtual LogicInfo getInfo() = 0; // Pure virtual function for UI info
 
 protected:
@@ -46,9 +45,10 @@ protected:
 
     TowerType type; // Type of the tower
     TargetPriority targetPriority; 
+    bool canSeeCamo;
 
     int cost; 
-    float upgradeCost; 
+    float upgradeCost;
 
     int towerId; 
     int popCount; 

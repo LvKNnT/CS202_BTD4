@@ -2,7 +2,7 @@
 #include <iostream>
 
 Tower::Tower(Vector2 position, Vector2 size, float rotation, TowerType type, int cost)
-    : GameObject(position, size, rotation, "Tower"), type(type), cost(cost), targetPriority(TargetPriority::First), towerId(-1), popCount(0) {
+    : GameObject(position, size, rotation, "Tower"), type(type), cost(cost), targetPriority(TargetPriority::First), canSeeCamo(false), towerId(-1), popCount(0) {
     // Constructor implementation can be extended if needed
 }
 

@@ -11,7 +11,7 @@ Bad::Bad(Vector2 position)
      */
 
     // Variable initialization that cant use initializer list
-    tag = "BadBloon";
+    tag = "BAD";
 }
 Bad::~Bad() {
     // Cleanup if necessary
@@ -23,12 +23,16 @@ std::unique_ptr<Enemy> Bad::clone() const {
 
 void Bad::loadTexture() {
     // Load the texture
-    Game::Instance().getTextureManager().loadTexture(tag, "../assets/enemy/MOAB Class Bloons/BTD6BAD.png");
-    texture = Game::Instance().getTextureManager().getTexture(tag);
+    std::string fullTag = properties.getFullTag(tag);
+    std::string path = "../assets/enemy/MOAB Class Bloons/" + fullTag + ".png";
+    Game::Instance().getTextureManager().loadTexture(fullTag, path);
+    texture = Game::Instance().getTextureManager().getTexture(fullTag);
 
     // Update size based on the loaded texture
     size.x = static_cast<float>(texture.width);
     size.y = static_cast<float>(texture.height);
+
+    tag = fullTag;
 }
 
 bool Bad::hit(int damage) {
@@ -99,4 +103,13 @@ void Bad::setModifies(const EnemyModifies& modifies) {
     speed = static_cast<int>(speed * modifies.speed);
     health = static_cast<int>(health * modifies.health);
     reward = static_cast<int>(reward * modifies.reward);
+}
+
+void Bad::setProperties(const BloonProperties& properties) {
+    // Set the bloon properties for the Bad bloon
+    this->properties = properties;
+    
+    if(properties.isFortified) {
+        health *= 2; // Fortified bloons have double health
+    }
 }

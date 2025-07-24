@@ -23,6 +23,7 @@ public:
     void setActive(bool active) override;
     void setRotation(float rotation) override;
     void setModifies(const EnemyModifies& modifies) override;
+    void setProperties(const BloonProperties& properties) override;
 
 private:
 

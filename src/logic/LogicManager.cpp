@@ -117,15 +117,17 @@ int LogicManager::runBullet(Bullet& bullet, const Map& map) {
 }
 
 void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyManager& enemyManager, TowerManager& towerManager, MapManager& mapManager) {
-    for (auto enemyIt = enemyManager.enemyList.begin(); enemyIt != enemyManager.enemyList.end(); ) {
-        std::unique_ptr<Enemy>& enemy = *enemyIt;
-        bool isEnemyRemoved = false;
+    for (auto bulletIt = bulletManager.bulletList.begin(); bulletIt != bulletManager.bulletList.end(); ) {
+        bool isBulletAlive = true;
 
-        for (auto bulletIt = bulletManager.bulletList.begin(); bulletIt != bulletManager.bulletList.end(); ) {
-            if (checkCollision(**bulletIt, *enemy)) {
+        for (auto enemyIt = enemyManager.enemyList.begin(); enemyIt != enemyManager.enemyList.end() && isBulletAlive; ++enemyIt) {
+            if((*enemyIt)->isActiveFlag == false) continue;
+            if((*bulletIt)->canHitCamo == false && (*enemyIt)->properties.isCamo == true) continue; 
+            
+            if (checkCollision(**bulletIt, **enemyIt)) {
                 int popCount = 0;
                 std::vector<std::unique_ptr<Enemy>> children;
-                children = getChildrenEnemies(enemyManager, *enemy, (*bulletIt)->damage, popCount);
+                children = getChildrenEnemies(enemyManager, **enemyIt, (*bulletIt)->damage, popCount);
 
                 // Add the pop count to the original tower
                 for (auto& tower : towerManager.towerList) {
@@ -135,26 +137,24 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
                 }
 
                 // Every collision costs bullet damage
-                if(enemy->health <= 0) {
+                if((*enemyIt)->health <= 0) {
                     enemyIt = enemyManager.enemyList.erase(enemyIt); // Remove the current enemy
-                    isEnemyRemoved = true; // Mark that the enemy was removed
                 }
-                enemyManager.enemyList.insert(enemyIt, 
-                    std::make_move_iterator(children.begin()), 
-                    std::make_move_iterator(children.end()));
+                if(!children.empty()) {
+                    enemyIt = enemyManager.enemyList.insert(enemyIt, 
+                        std::make_move_iterator(children.begin()), 
+                        std::make_move_iterator(children.end()));
+                }
 
                 // Every collision cost 1 pierce
                 if((*bulletIt)->hit(1)) {
                     bulletIt = bulletManager.bulletList.erase(bulletIt);
-                    continue;
+                    isBulletAlive = false;
                 }
             }
-            ++bulletIt;
         }
-        
-        if(!isEnemyRemoved) {
-            ++enemyIt;
-        }
+
+        if(isBulletAlive && bulletIt != bulletManager.bulletList.end()) ++bulletIt;
     }
 }
 
@@ -169,7 +169,7 @@ std::vector<std::unique_ptr<Enemy>> LogicManager::getChildrenEnemies(EnemyManage
     }
 
     std::vector<std::unique_ptr<Enemy>> childrenEnemies;
-    childrenEnemies = enemyManager.spawnChildrenEnemies(enemy.type, enemy.position);
+    childrenEnemies = enemyManager.spawnChildrenEnemies(&enemy);
     
     int remainingHealth = -enemy.health; // Get the remaining health after damage
     int finalPopCount = damage - remainingHealth; // Calculate the pop count`
@@ -184,15 +184,10 @@ std::vector<std::unique_ptr<Enemy>> LogicManager::getChildrenEnemies(EnemyManage
             for(auto& subChild : subChildren) {
                 finalChildrenEnemies.push_back(std::move(subChild));
             }
-        } else {
-            // Skip adding Red bloon as it has no sub-children
-            if(child->type == BloonType::Red) {
-                continue;
-            }
-
+        } else if(child->health > 0) {
             // If no sub-children, just add the child
             finalChildrenEnemies.push_back(std::move(child));
-            }
+        }
     }
 
     for(auto& child : finalChildrenEnemies) {
@@ -288,7 +283,7 @@ void LogicManager::updateTowers(TowerManager& towerManager, EnemyManager& enemyM
             for(auto& attack : tower->attacks) {
                 for(auto& enemy : enemyManager.enemyList) {
                     // std::cerr << "enemy position: " << enemy->position.x << ", " << enemy->position.y << std::endl;
-                    if(attack->isInRange(enemy->getBoundingBox(), enemy->rotation)) {
+                    if(attack->isInRange(enemy->getBoundingBox(), enemy->rotation, enemy->properties.isCamo)) {
                         enemiesInRange.push_back(enemy.get());
                     }
                 }
@@ -334,7 +329,7 @@ void LogicManager::updateTowers(TowerManager& towerManager, EnemyManager& enemyM
     }
 }
 
-bool LogicManager::isPutTower(const TowerManager& towerManager, const MapManager& mapManager, TowerType type, Vector2 position) const {
+bool LogicManager::isPutTower(const ResourceManager& resourceManager, const TowerManager& towerManager, const MapManager& mapManager, TowerType type, Vector2 position) const {
     auto enemyPath = mapManager.currentMap->enemyPath;
     Rectangle towerBoundingBox = towerManager.towerSpawner->getBoundingBox(type, position);
     float pathWidth = 50.0f; // Considerable size
@@ -346,9 +341,20 @@ bool LogicManager::isPutTower(const TowerManager& towerManager, const MapManager
             || distancePointLine({towerBoundingBox.x + towerBoundingBox.width, towerBoundingBox.y}, path[i].position, path[i + 1].position) < pathWidth
             || distancePointLine({towerBoundingBox.x, towerBoundingBox.y + towerBoundingBox.height}, path[i].position, path[i + 1].position) < pathWidth
             || distancePointLine({towerBoundingBox.x + towerBoundingBox.width, towerBoundingBox.y + towerBoundingBox.height}, path[i].position, path[i + 1].position) < pathWidth) {
-                return false; // Tower is too far from the path
+                std::cerr << "Cannot put tower at position: " << position.x << ", " << position.y << std::endl;
+
+                return false; 
             }
         }
+    }
+
+    // Check if the player has enough resources to spawn the tower
+    int towerCost = stoi(towerManager.towerSpawner->getInfoTower(type)["cost"]);
+    if(resourceManager.currentResource.cash < towerCost) {
+        std::cerr << "Current cash: " << resourceManager.currentResource.cash << ", Tower cost: " << towerCost << std::endl;
+        std::cerr << "Not enough resources to spawn tower." << std::endl;
+        
+        return false; // Not enough resources
     }
     return true;
 }
@@ -366,4 +372,133 @@ float LogicManager::distancePointLine(Vector2 point, Vector2 lineStart, Vector2 
     t = fmaxf(0.0f, fminf(t, lineLength)); // Clamp t to the segment length
     Vector2 closestPoint = {lineStart.x + t * lineDir.x, lineStart.y + t * lineDir.y}; // Find the closest point on the line segment
     return Vector2Distance(point, closestPoint); // Return the distance from the point to the closest point on the line segment
+}
+
+bool LogicManager::spawnTower(ResourceManager& resourceManager, TowerManager& towerManager, const MapManager& mapManager, TowerType type, Vector2 position) {
+    if(!isPutTower(resourceManager, towerManager, mapManager, type, position)) {
+        return false; 
+    }
+    
+    towerManager.spawnTower(type, position);
+
+    int towerCost = stoi(towerManager.towerSpawner->getInfoTower(type)["cost"]);
+    resourceManager.currentResource.cash -= towerCost;
+
+    return true;
+}
+
+Tower* LogicManager::getTowerFromPosition(const TowerManager& towerManager, Vector2 position) const {
+    for (const auto& tower : towerManager.towerList) {
+        if (CheckCollisionPointRec(position, tower->getBoundingBox())) {
+            return tower.get(); // Return the tower if the position collides with its bounding box
+        }
+    }
+    return nullptr; // No tower found at the given position
+}
+
+bool LogicManager::isUpgradeTower(const ResourceManager& resourceManager, const TowerManager& towerManager, Vector2 position, UpgradeUnits upgradeUnits) const {
+    Tower* tower = getTowerFromPosition(towerManager, position);
+
+    // Sadly, another switch/case here.
+    switch (upgradeUnits) {
+        case UpgradeUnits::Top:
+            if (tower->upgradeTop->getCost() * tower->upgradeCost <= resourceManager.currentResource.cash 
+            && tower->upgradeTop->getName() != "NoUpgrade") {
+                return true;
+            }
+            break;
+        case UpgradeUnits::Middle:
+            if (tower->upgradeMiddle->getCost() * tower->upgradeCost <= resourceManager.currentResource.cash 
+            && tower->upgradeMiddle->getName() != "NoUpgrade") {
+                return true;
+            }
+            break;
+        case UpgradeUnits::Bottom:
+            if (tower->upgradeBottom->getCost() * tower->upgradeCost <= resourceManager.currentResource.cash 
+            && tower->upgradeBottom->getName() != "NoUpgrade") {
+                return true;
+            }
+            break;
+        default:
+            break;
+    }
+
+    return false;
+}
+
+void LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, Vector2 position, UpgradeUnits upgradeUnits) {
+    Tower* tower = getTowerFromPosition(towerManager, position);
+
+    // Sadly, another switch/case here.
+    switch (upgradeUnits) {
+        case UpgradeUnits::Top:
+            if (tower->upgradeTop->getCost() * tower->upgradeCost <= resourceManager.currentResource.cash 
+            && tower->upgradeTop->getName() != "NoUpgrade") {
+                tower->upgradeTop->update(tower->attacks);
+                tower->info["descriptionTop"] = tower->upgradeTop->getDescription();
+
+                tower->upgradeTop = tower->upgradeTop->buy();
+                tower->info["upgradeCostTop"] = std::to_string(tower->upgradeTop->getCost());
+                tower->info["upgradeDescriptionTop"] = tower->upgradeTop->getDescription();
+            }
+            break;
+        case UpgradeUnits::Middle:
+            if (tower->upgradeMiddle->getCost() * tower->upgradeCost <= resourceManager.currentResource.cash 
+            && tower->upgradeMiddle->getName() != "NoUpgrade") {
+                tower->upgradeMiddle->update(tower->attacks);
+                tower->info["descriptionMiddle"] = tower->upgradeMiddle->getDescription();
+
+                tower->upgradeMiddle = tower->upgradeMiddle->buy();
+                tower->info["upgradeCostMiddle"] = std::to_string(tower->upgradeMiddle->getCost());
+                tower->info["upgradeDescriptionMiddle"] = tower->upgradeMiddle->getDescription();
+            }
+            break;
+        case UpgradeUnits::Bottom:
+            if (tower->upgradeBottom->getCost() * tower->upgradeCost <= resourceManager.currentResource.cash 
+            && tower->upgradeBottom->getName() != "NoUpgrade") {
+                tower->upgradeBottom->update(tower->attacks);
+                tower->info["descriptionBottom"] = tower->upgradeBottom->getDescription();
+
+                tower->upgradeBottom = tower->upgradeBottom->buy();
+                tower->info["upgradeCostBottom"] = std::to_string(tower->upgradeBottom->getCost());
+                tower->info["upgradeDescriptionBottom"] = tower->upgradeBottom->getDescription();
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+void LogicManager::playRound(ResourceManager& resourceManager, ModeManager& modeManager, EnemyManager& enemyManager, MapManager& mapManager) {
+    // set the roundNumber being played
+    int roundNumber = resourceManager.currentResource.currentRound;
+    modeManager.playRound(roundNumber);
+
+    std::vector<std::pair<BloonType, BloonProperties>> enemies = modeManager.getEnemies();
+    // std::cerr << "Playing round " << roundNumber << " with " << enemies.size() << " enemies." << std::endl;
+    for(const auto& [type, properties] : enemies) {
+        // Spawn each enemy with the given type and properties
+        auto [position, pathIdx] = mapManager.getCurrentMap().getPositionAndPathIdx(type);
+        enemyManager.spawnEnemy(type, properties, mapManager.getCurrentMap().getCurrentPoint(0));
+    }
+
+    // end round logic
+    if (modeManager.canPlayNextRound(enemyManager.enemyList.empty())) {
+        // reward cash
+        resourceManager.currentResource.cash += modeManager.getRoundReward();
+
+        // auto play next round
+        if(autoPlayRound) {
+            resourceManager.currentResource.currentRound++;
+        }
+    }
+}
+
+void LogicManager::playNextRound(ResourceManager& resourceManager) {
+    resourceManager.currentResource.currentRound++;
+    std::cerr << "Playing next round: " << resourceManager.currentResource.currentRound << std::endl;
+}
+
+void LogicManager::setAutoPlay(bool autoPlay) {
+    autoPlayRound = autoPlay;
 }

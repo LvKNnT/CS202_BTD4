@@ -8,6 +8,7 @@
 #include "bullet/BulletManager.h"
 #include "tower/TowerManager.h"
 #include "resource/ResourceManager.h"
+#include "mode/ModeManager.h"
 
 class GameLogic {
 public:
@@ -16,7 +17,7 @@ public:
     
     // Initialize the game logic
     void init(); // only for testing, should not be called in production
-    void init(Difficulty difficulty); // For loading new game
+    void init(Difficulty difficulty, MapType mapType, ModeType modeType); // For loading new game
 
     // Update the game logic
     void update();
@@ -29,6 +30,7 @@ public:
 
     // Supplyment methos for Game
     bool isPutTower(TowerType type, Vector2 position) const;
+    bool spawnTower(TowerType type, Vector2 position);
 
     // Save/Load
     
@@ -42,6 +44,7 @@ private:
 
     // Light/less important game logic
     ResourceManager resourceManager; // Manages resources like cash, lives, and rounds
+    ModeManager modeManager; // Manages the current game mode and its rounds
 };
 
 #endif // GAME_LOGIC_H

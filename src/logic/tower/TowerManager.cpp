@@ -45,7 +45,6 @@ TowerManager& TowerManager::operator=(const TowerManager& other) {
 
 void TowerManager::spawnTower(TowerType type, Vector2 position) {
     std::unique_ptr<Tower> tower = towerSpawner->getTower(type, position, towerIDCounter++, currentModifies);
-    std::cerr << "Tower cost:" << tower->getInfo()["cost"] << std::endl;
 
     if (tower) {
         towerList.push_back(std::move(tower));

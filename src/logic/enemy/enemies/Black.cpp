@@ -11,7 +11,7 @@ Black::Black(Vector2 position)
      */
 
     // Variable initialization that can't use initializer list
-    tag = "BlackBloon";
+    tag = "Black";
 }  
 
 std::unique_ptr<Enemy> Black::clone() const {
@@ -20,12 +20,16 @@ std::unique_ptr<Enemy> Black::clone() const {
 
 void Black::loadTexture() {
     // Load the texture
-    Game::Instance().getTextureManager().loadTexture(tag, "../assets/enemy/Normal Bloons/default/BTD6Black.png");
-    texture = Game::Instance().getTextureManager().getTexture(tag);
+    std::string fullTag = properties.getFullTag(tag);
+    std::string path = properties.getPath() + fullTag + ".png";
+    Game::Instance().getTextureManager().loadTexture(fullTag, path);
+    texture = Game::Instance().getTextureManager().getTexture(fullTag);
 
     // Update size based on the loaded texture
     size.x = static_cast<float>(texture.width);
     size.y = static_cast<float>(texture.height);
+
+    tag = fullTag;
 }
 
 bool Black::hit(int damage) {
@@ -95,4 +99,13 @@ void Black::setModifies(const EnemyModifies& modifies) {
     speed = static_cast<int>(speed * modifies.speed);
     // health = static_cast<int>(health * modifies.health);
     reward = static_cast<int>(reward * modifies.reward);
+}
+
+void Black::setProperties(const BloonProperties& properties) {
+    // Set the bloon properties for the Black bloon
+    this->properties = properties;
+    
+    if(properties.isFortified) {
+        health *= 2; // Fortified bloons have double health
+    }
 }

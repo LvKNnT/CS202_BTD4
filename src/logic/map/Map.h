@@ -10,6 +10,7 @@
 #include "../../interfaces/Drawable.h"
 #include "Point.h"
 #include "MapUnits.h"
+#include "../enemy/EnemyUnits.h"
 
 class Map : public Drawable {
     friend class LogicManager; 
@@ -29,6 +30,7 @@ public:
     virtual void loadTexture() = 0;
     void draw() const override;
     virtual void update() = 0;
+    virtual std::pair<Vector2, int> getPositionAndPathIdx(BloonType type) = 0; 
     void unLoad();
 
     // These functions should be the same for all maps
