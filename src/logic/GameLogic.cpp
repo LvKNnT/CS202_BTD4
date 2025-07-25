@@ -18,9 +18,10 @@ void GameLogic::init() {
     init(difficulty);
     init(modeType);
 
-    putTower(TowerType::DartMonkey, {125.0f, 230.0f}); // draging tower
-    spawnTower(); // default state on the map
-    pickTower({125.0f, 230.0f}); // when choosing this tower
+    putTower(TowerType::DartMonkey, {200.0f, 230.0f}); // draging tower
+    // putTower(TowerType::DartMonkey, {125.0f, 230.0f}); // draging tower
+    // spawnTower(); // default state on the map
+    // pickTower({125.0f, 230.0f}); // when choosing this tower
     
     // Resetting log file
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::trunc);  
