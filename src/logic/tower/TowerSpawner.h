@@ -32,6 +32,8 @@ public:
 
     // Returns a unique_ptr to a new Tower of the given type
     std::unique_ptr<Tower> getTower(TowerType type, Vector2 position, int towerID, const TowerModifies& modifies);
+    std::unique_ptr<Tower> getPutTower(TowerType type, Vector2 position, const TowerModifies& modifies);
+    std::unique_ptr<Tower> getTower(TowerType type, Vector2 position, float rotation, int towerID, const TowerModifies& modifies);
     int getRangeTower(TowerType type) const;
     LogicInfo getInfoTower(TowerType type, const TowerModifies& modifies) const;
     Rectangle getBoundingBox(TowerType type, Vector2 position) const;

@@ -2,11 +2,11 @@
 #include <iostream>
 #include <cmath>
 
-std::unique_ptr<Mode> AlternativeMode::clone() const {
-    return std::make_unique<AlternativeMode>(*this);
+std::unique_ptr<Mode> AlternativeModePlayer::clone() const {
+    return std::make_unique<AlternativeModePlayer>(*this);
 }
 
-void AlternativeMode::playRound(const RoundManager& roundManager, int roundNumber) {
+void AlternativeModePlayer::playRound(const RoundManager& roundManager, int roundNumber) {
     if(currentRoundNumber != roundNumber) {
         std::cerr << "Playing round: " << roundNumber << std::endl;
         currentRound = roundManager.getAlternativeRound(roundNumber);
@@ -15,7 +15,7 @@ void AlternativeMode::playRound(const RoundManager& roundManager, int roundNumbe
     }
 }
 
-std::vector<std::pair<BloonType, BloonProperties>> AlternativeMode::getEnemies(const RoundManager& roundManager) {
+std::vector<std::pair<BloonType, BloonProperties>> AlternativeModePlayer::getEnemies(const RoundManager& roundManager) {
     std::vector<std::pair<BloonType, BloonProperties>> bloonList;
 
     // playing round
@@ -52,16 +52,16 @@ std::vector<std::pair<BloonType, BloonProperties>> AlternativeMode::getEnemies(c
     return bloonList;
 }
 
-bool AlternativeMode::canPlayNextRound(bool isClear) const {
+bool AlternativeModePlayer::canPlayNextRound(bool isClear) const {
     return timer >= currentRound.bloonTypes.back().endTime && isClear;
 }
 
-int AlternativeMode::getRoundReward() {
+int AlternativeModePlayer::getRoundReward() {
     int reward = currentRound.extraCash;
     currentRound.extraCash = 0; 
     return reward;
 }
 
-bool AlternativeMode::setAutoPlay(bool autoPlay) {
+bool AlternativeModePlayer::setAutoPlay(bool autoPlay) {
     return autoPlay;
 }

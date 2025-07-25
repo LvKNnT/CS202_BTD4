@@ -1,6 +1,8 @@
 #include "MonkeyLane.h"
 
 MonkeyLane::MonkeyLane() {
+    mapType = MapType::MonkeyLane; 
+
     // Generate the enemy path
     enemyPath[0].push_back(Point(-50, 400, Point::Type::SpawnEnenmy)); // enemy goes from there
     enemyPath[0].push_back(Point(0, 390));

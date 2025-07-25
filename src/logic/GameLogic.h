@@ -33,13 +33,19 @@ public:
     // Unload all game logic resources
     void unLoad();
 
+    // condition
+    int isEndGame() const;
+
     // Supplyment methos for Game
-    bool isPutTower(TowerType type, Vector2 position) const;
-    bool spawnTower(TowerType type, Vector2 position);
-    bool isUpgradeTower(Vector2 position, UpgradeUnits upgradeUnits) const;
-    bool upgradeTower(Vector2 position, UpgradeUnits upgradeUnits);
-    void chooseNextPriority(Vector2 position);
-    void choosePreviousPriority(Vector2 position);
+    void pickTower(Vector2 position);
+    void putTower(TowerType type, Vector2 position);
+    void unPutTower();
+    bool spawnTower();
+    bool isUpgradeTower(UpgradeUnits upgradeUnits) const;
+    bool upgradeTower(UpgradeUnits upgradeUnits);
+    void sellTower();
+    void chooseNextPriority();
+    void choosePreviousPriority();
 
     void setAutoPlay(bool autoPlay);
     void activeAutoPlay();
@@ -49,10 +55,14 @@ public:
     void unactiveTickFast();
     
     LogicInfo getInfoResource() const;
+    LogicInfo getInfoTower() const;
     LogicInfo getInfoTower(TowerType type) const;
-    LogicInfo getInfoTower(Vector2 position) const;
 
-    // Save/Load
+    // save/load
+    void autoSave() const;
+    void loadAutoSave();
+    void saveGame() const;
+    void loadGame(MapType type);
     
 private:
     // Heavy/important game logic
@@ -68,6 +78,9 @@ private:
 
     // game state
     bool isTickFast = false;
+
+    // save/load path
+    std::string savePath = "../save/"; 
 };
 
 #endif // GAME_LOGIC_H

@@ -3,14 +3,14 @@
 
 #include "../Mode.h"
 
-class ReverseMode : public Mode {
+class ReverseModePlayer : public Mode {
 private:
     Round currentRound;    
 
 public:
-    ReverseMode() = default;
-    ReverseMode(const ReverseMode& other) = default;
-    ReverseMode& operator=(const ReverseMode& other) = default;
+    ReverseModePlayer() = default;
+    ReverseModePlayer(const ReverseModePlayer& other) = default;
+    ReverseModePlayer& operator=(const ReverseModePlayer& other) = default;
 
     std::unique_ptr<Mode> clone() const override;
 

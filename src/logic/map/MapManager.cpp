@@ -1,5 +1,5 @@
 #include "MapManager.h"
-// #include "maps/MonkeyLane.h"
+#include <fstream>
 
 MapManager::MapManager() {
     // Initialize unique_ptr
@@ -73,4 +73,49 @@ Map& MapManager::getCurrentMap() {
     }
 
     return *currentMap; 
+}
+
+MapType MapManager::getMapType() const {
+    if(!currentMap) {
+        // should not be here
+        std::cerr << "Current map is not loaded. Please load a map before accessing its type." << std::endl;
+        return MapType::MonkeyLane; // Default to Jungle if no map is loaded
+    }
+
+    return currentMap->mapType; 
+}
+
+void MapManager::save(std::string filePath) const {
+    if(!currentMap) {
+        // should not be here
+        std::cerr << "Current map is not loaded. Please load a map before saving." << std::endl;
+        return;
+    }
+
+    std::fstream file(filePath, std::ios::out | std::ios::app);
+    if (!file.is_open()) {
+        std::cerr << "Error: Failed to open file for saving map." << std::endl;
+        return;
+    }
+
+    // file << "map\n";
+    file << static_cast<int>(currentMap->mapType) << std::endl;
+    file.close();
+}
+
+void MapManager::load(std::string filePath) {
+    std::fstream file(filePath, std::ios::in);
+    if (!file.is_open()) {
+        std::cerr << "Error: Failed to open file for loading map." << std::endl;
+        return;    
+    } 
+
+    int mapTypeInt;
+    file >> mapTypeInt; 
+    std::cerr << "Loading map type: " << mapTypeInt << std::endl;
+    MapType mapType = static_cast<MapType>(mapTypeInt);
+
+    loadMap(mapType);
+
+    file.close();
 }

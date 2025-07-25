@@ -1,12 +1,13 @@
 #include "ResourceManager.h"
 #include <iostream>
+#include <fstream>
 
 void ResourceManager::initResource(Difficulty difficulty) {
     currentDifficulty = difficulty;
     currentResource = resourceSpawner.getResource(difficulty);
 }
 
-const Resource& ResourceManager::getResource(Difficulty difficulty) const {
+const Resource& ResourceManager::getResource() const {
     return currentResource;
 }
 const TowerModifies& ResourceManager::getTowerModifies() const {
@@ -31,4 +32,48 @@ int ResourceManager::isEndGame() const {
 
 LogicInfo ResourceManager::getInfo() const {
     return currentResource.getInfo();
+}
+
+void ResourceManager::save(const std::string& filePath) const {
+    std::fstream file(filePath, std::ios::out | std::ios::app);
+    if (!file.is_open()) {
+        std::cerr << "Error: Failed to open file for saving resources." << std::endl;
+        return;
+    }
+
+    // file << "resource\n";
+    file << static_cast<int>(currentDifficulty) << " ";
+    file << currentResource.cash << " ";
+    file << currentResource.lives << " ";
+    file << currentResource.currentRound << "\n";
+    file.close();
+}
+
+void ResourceManager::load(const std::string& filePath) {
+    std::fstream file(filePath, std::ios::in);
+    if (!file.is_open()) {
+        std::cerr << "Error: Failed to open file for loading resources." << std::endl;
+        return;
+    } 
+    
+    // skip 1 line
+    std::string line;
+    std::getline(file, line);
+
+    int difficultyInt;
+    file >> difficultyInt; 
+    currentDifficulty = static_cast<Difficulty>(difficultyInt);
+    initResource(currentDifficulty);
+
+    file >> currentResource.cash;
+    file >> currentResource.lives;
+    file >> currentResource.currentRound;
+
+    std::cerr << "Loaded resources: "
+              << "Difficulty: " << static_cast<int>(currentDifficulty) << ", "
+              << "Cash: " << currentResource.cash << ", "
+              << "Lives: " << currentResource.lives << ", "
+              << "Current Round: " << currentResource.currentRound << std::endl;
+
+    file.close();
 }

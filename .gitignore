@@ -32,6 +32,8 @@
 *.app
 
 # ignore vscode settings
+.gitignore
 /.vscode/
 /raw/
-.gitignore
+/build/
+/logs/

@@ -22,7 +22,7 @@ DartMonkey::DartMonkey(Vector2 position)
      * * * pierce = 1
      * * * lifeSpan = 1.0f
      */
-    attacks.push_back(std::make_unique<DartAttack>(100.0f, 1.0f, position, towerId, 1, 200, 1, 1.0f, false));
+    attacks.push_back(std::make_unique<DartAttack>(100.0f, 0.1f, position, towerId, 1, 200, 1, 1.0f, false));
 
     // Upgrade Path
     upgradeTop = std::make_unique<SharpShots>();
@@ -119,10 +119,22 @@ void DartMonkey::draw() const {
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,
                    WHITE); // Draw the Dart Monkey texture with the specified position and rotation
+}
 
+void DartMonkey::drawRange() const {
     // Draw the range of attacks
     for(const auto& attack : attacks) {
         DrawCircleV(position, attack->getRange(), Fade(GRAY, 0.5f)); // Draw the attack range
+    }
+}
+
+void DartMonkey::drawPut() const {
+    // Draw the range of attacks
+    for(const auto& attack : attacks) {
+        if(isActive()) {
+            DrawCircleV(position, attack->getRange(), Fade(GRAY, 0.5f)); // Draw the attack range
+        }
+        else DrawCircleV(position, attack->getRange(), Fade(RED, 0.5f)); // Draw the attack range
     }
 }
 
@@ -141,6 +153,7 @@ void DartMonkey::setModifies(const TowerModifies& modifies) {
 LogicInfo DartMonkey::getInfo() {
     // info that need to be live-updated
     info["popCount"] = std::to_string(popCount);
+    info["sell"] = std::to_string(static_cast<int>(cost * 0.70f));
     
     return this->info;
 }

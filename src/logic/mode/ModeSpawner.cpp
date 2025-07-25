@@ -12,10 +12,10 @@ ModeSpawner::ModeSpawner() {
 
 void ModeSpawner::init() {
     // Initialize mode templates
-    modeTemplates[ModeType::Classic] = std::make_unique<ClassicMode>();
-    modeTemplates[ModeType::Apopalypse] = std::make_unique<ApopalypseMode>();
-    modeTemplates[ModeType::Alternative] = std::make_unique<AlternativeMode>();
-    modeTemplates[ModeType::Reverse] = std::make_unique<ReverseMode>();
+    modeTemplates[ModeType::Classic] = std::make_unique<ClassicModePlayer>();
+    modeTemplates[ModeType::Apopalypse] = std::make_unique<ApopalypseModePlayer>();
+    modeTemplates[ModeType::Alternative] = std::make_unique<AlternativeModePlayer>();
+    modeTemplates[ModeType::Reverse] = std::make_unique<ReverseModePlayer>();
 }
 
 const Mode& ModeSpawner::getMode(ModeType type) const {

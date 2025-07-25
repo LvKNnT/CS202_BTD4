@@ -1,9 +1,11 @@
 #include "ModeManager.h"
 #include <iostream>
+#include <fstream>
 
 void ModeManager::setMode(ModeType modeType) {
     // Use the modeSpawner to get the mode based on the type
     currentMode = modeSpawner.getMode(modeType).clone();
+    currentModeType = modeType;
     
     // should not be here
     if (!currentMode) {
@@ -59,4 +61,44 @@ bool ModeManager::canPlayNextRound(bool isClear) const {
     // should not be here
     std::cerr << "canPlayNextRound: No current mode set\n";
     return false;
+}
+
+void ModeManager::save(const std::string& filePath) const {
+    if (!currentMode) {
+        std::cerr << "save: No current mode set\n";
+        return;
+    }
+
+    std::fstream file(filePath, std::ios::out | std::ios::app);
+    if (!file.is_open()) {
+        std::cerr << "Error: Failed to open file for saving mode." << std::endl;
+        return;
+    }
+
+    // file << "mode\n";
+    file << static_cast<int>(currentModeType) << std::endl;
+    file.close();
+}
+
+void ModeManager::load(const std::string& filePath) {
+    std::fstream file(filePath, std::ios::in);
+    if (!file.is_open()) {
+        std::cerr << "Error: Failed to open file for loading mode." << std::endl;
+        return;
+    } 
+
+    // skip 2 lines
+    std::string line;
+    std::getline(file, line); 
+    std::getline(file, line); 
+    
+    int modeTypeInt;
+    file >> modeTypeInt; 
+    ModeType modeType = static_cast<ModeType>(modeTypeInt);
+    
+    setMode(modeType);
+    
+    std::cerr << "Loaded mode type: " << modeTypeInt << std::endl;
+    
+    file.close();
 }
