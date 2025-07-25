@@ -19,7 +19,7 @@ void Button::draw() const {
     float scale = std::min(((float) width / texture.width), ( (float) height / texture.height));
     float texWidth = texture.width * scale;
     float texHeight = texture.height * scale;
-    DrawTextureEx(texture, (Vector2) {position.x + std::max((float) width - texWidth, 0.f) / 2, position.y + std::max((float) height - texHeight, 0.f) / 2}, 0.0f, scale, state == Button::State::Hovering ? (Color) {200, 200, 200, 255}:WHITE);
+    DrawTextureEx(texture, (Vector2) {position.x + std::max((float) width - texWidth, 0.f) / 2, position.y + std::max((float) height - texHeight, 0.f) / 2}, 0.0f, scale, state == Button::State::Hovering && fontSize ? (Color) {200, 200, 200, 255}:WHITE);
     
     // Draw text
     int textWidth = MeasureText(title.c_str(), fontSize);
@@ -50,7 +50,7 @@ void Button::notify(Event::Type event) {
 
 void Button::handleInput() {    
     if(CheckCollisionPointRec(GetMousePosition(), {position.x, position.y, (float) width, (float) height})) {
-        state = (fontSize == 0 ? Button::State::None:Button::State::Hovering);
+        state = Button::State::Hovering;
         if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) state = Button::State::Clicked;
     } else state = Button::State::None;
 }
@@ -180,6 +180,7 @@ void LowerMusic::handleInput() {
 FastForward::FastForward(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
     : Button(_texture, _fontSize, _height, _width, _position) {
     isTick = false;
+    attach(Game::Instance().getStateManager());
 }
 
 void FastForward::handleInput() {
@@ -204,27 +205,6 @@ void FastForward::draw() const {
     float textX = position.x + (texture.width * scale - textWidth) / 2;
     float textY = position.y + (texture.height * scale - fontSize) / 2; 
     DrawText(title.c_str(), textX, textY, fontSize, WHITE);
-}
-
-ChooseTower::ChooseTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : Button(_texture, _fontSize, _height, _width, _position) {
-    attach(Game::Instance().getStateManager());
-}
-
-void ChooseTower::handleInput() {
-    Button::handleInput();
-    if(!isAvailable) return;
-    if(state == Button::State::Hovering) {
-        notify(hoveringEvent);
-    } else if(state == Button::State::Clicked) {
-        notify(clickedEvent);
-    } 
-}
-
-ChooseBombTower::ChooseBombTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : ChooseTower(_texture, _fontSize, _height, _width, _position){
-    hoveringEvent = Event::Type::HoveringChooseBomb;
-    clickedEvent = Event::Type::ClickedChooseBomb;
 }
 
 Continue::Continue(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 

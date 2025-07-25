@@ -1,10 +1,11 @@
 #include "StateManager.h"
+#include "../core/Game.h"
 
 void StateManager::initialize() {
+    isNewGame = false;
     mainMenuState = std::make_shared<MainMenuState>();
     mapSelectionState = std::make_shared<MapSelectionState>();
     optionsState = std::make_shared<OptionsState>();
-    gameState = std::make_shared<GameState>();
     areYouSureState = std::make_shared<AreYouSureState>();
     difficultySelectionState = std::make_shared<DifficultySelectionState>();
     //specificModeSelectionState = std::make_shared<SpecificModeSelectionState>();
@@ -45,12 +46,16 @@ void StateManager::update(Event::Type event) {
             while(stateStack.getSize() > 1) {
                 stateStack.popState();
             }
+            
+            // Reset Game Logic - hmmm maybe because we dont have new game actually
+            Game::Instance().getGameLogic().unactiveTickFast();
             break;
         case Event::Type::ToGameState:
+            if(isNewGame) gameState = std::make_shared<GameState>();
             stateStack.pushState(gameState);
             break;
         case Event::Type::NewGame:
-            gameState = std::make_shared<GameState>();
+            isNewGame = true;
             break;
         case Event::Type::Continue: 
             break;
@@ -70,3 +75,18 @@ void StateManager::update(Event::Type event) {
     }
 }
 
+void StateManager::setMode(std::string _mode){ 
+    mode = _mode;
+}
+
+std::string StateManager::getMode() const {
+    return mode;
+}
+
+void StateManager::setModeInfo(std::string _modeInfo) {
+    modeInfo = _modeInfo;
+}
+
+std::string StateManager::getModeInfo() const {
+    return modeInfo;
+}

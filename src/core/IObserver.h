@@ -6,9 +6,7 @@
 class IObserver {
 public:
     virtual void update(Event::Type event) = 0;
-    virtual void initialize() = 0;
-    virtual void draw() const = 0;
-    virtual void handleInput() = 0;
+    virtual ~IObserver() = default;
 };
 
 #endif // IOBSERVER_H

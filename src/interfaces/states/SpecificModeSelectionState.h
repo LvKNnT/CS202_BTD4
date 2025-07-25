@@ -21,6 +21,7 @@ private:
     std::shared_ptr<PanelElement> title;
     
     Difficulty diff;
+    std::string diffStr;
     std::string getDifficultyInfo(Difficulty type) const;
     
     void setInfo();

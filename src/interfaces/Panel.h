@@ -25,6 +25,7 @@ public:
     void addPanelElement(std::shared_ptr<PanelElement> newPanelElement);
     void removePanelElement(int index);
     void setAvailable(bool _isAvailable);
+    bool getIsAvailable() const;
     void draw() const override;
     void update();
     void handleInput();

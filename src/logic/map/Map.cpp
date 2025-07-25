@@ -26,6 +26,23 @@ void Map::unLoad() {
     UnloadTexture(texture);
 }
 
+// Point::Type Map::getPointType(Vector2 position) const {
+//     if(position.x >= mapImage.width || position.y >= mapImage.height) return Point::Type::Enemy;
+//     for(int pathIdx = 0; pathIdx < MAXPATHS; pathIdx++) {
+//         for(int i = 0; i < enemyPath[pathIdx].size() - 1; i++) {
+//             if(enemyPath[pathIdx][i].canGetType(position, enemyPath[pathIdx][i + 1])) return enemyPath[pathIdx][i].getType();
+//         }
+
+//         Color pixelColor = pixelColors[static_cast<int>(position.x) * mapImage.width + static_cast<int>(position.y)];
+//         Color pathColor = pixelColors[static_cast<int>(enemyPath[pathIdx][1].position.x) * mapImage.width +  static_cast<int>(enemyPath[pathIdx][1].position.y)];
+//         int tolerance = 10;
+//         bool isPath = abs(pixelColor.r - pathColor.r) < tolerance && abs(pixelColor.g - pathColor.g) < tolerance && abs(pixelColor.b - pathColor.b) < tolerance;
+//         if(isPath) return Point::Type::Enemy;
+//     }
+
+//     return Point::Type::None; // can place tower here
+// }
+
 Point::Type Map::getPointType(Vector2 position) const {
     for(int pathIdx = 0; pathIdx < MAXPATHS; pathIdx++) {
         for(int i = 0; i < enemyPath[pathIdx].size() - 1; i++) {

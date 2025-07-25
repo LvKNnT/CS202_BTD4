@@ -38,6 +38,7 @@ void Game::LoadContent() {
     textureManager.loadTexture("RightWhiteTriangle", "../assets/UI/RightWhiteTriangle.png");
     textureManager.loadTexture("RedRect", "../assets/UI/RedRect.png");
     textureManager.loadTexture("GreenRect", "../assets/UI/GreenRect.png");
+    textureManager.loadTexture("GreyRect", "../assets/UI/GreyRect.png");
     textureManager.loadTexture("Info", "../assets/UI/Info.png");
     
     //Sound
@@ -67,9 +68,9 @@ void Game::LoadContent() {
     //fontManager.loadFont("SmallBold", "../assets/font/Source_Sans_3/../assets/font/Source_Sans_3/static/SourceSans3-Bold.ttf", 20);
 
     // Load tower
-    textureManager.loadTexture("DartMonkeyIcon", "../assets/tower/Dart_Monkey_Mobile.png");
-    textureManager.loadTexture("BombTowerIcon", "../assets/tower/Bomb_Tower_2.png");
-    textureManager.loadTexture("DartMonkeyUI", "../assets/tower/Dart_Monkey/000-DartMonkey.png");
+    textureManager.loadTexture("Dart Monkey Icon", "../assets/tower/Dart_Monkey_Mobile.png");
+    textureManager.loadTexture("Bomb Tower Icon", "../assets/tower/Bomb_Tower_2.png");
+    textureManager.loadTexture("Dart Monkey UI", "../assets/tower/Dart_Monkey/000-DartMonkey.png");
     textureManager.loadTexture("CrossbowMasterUpgradeIcon", "../assets/tower/Dart_Monkey/CrossbowMasterUpgradeIcon.png");
 
     // Load mode icons
@@ -93,16 +94,16 @@ void Game::UnloadContent() {
 void Game::initialize() {
     stateManager = std::make_shared<StateManager>();
     soundManager = std::make_shared<SoundManager>();
-    stateManager->initialize();
-    soundManager->initialize();
+    std::static_pointer_cast<StateManager>(stateManager)->initialize();
+    std::static_pointer_cast<SoundManager>(soundManager)->initialize();
 }
 
 void Game::render() {
-    stateManager->draw();
+    std::static_pointer_cast<StateManager>(stateManager)->draw();
 }
 
 void Game::update(float deltaTime) {
-    stateManager->handleInput();
+    std::static_pointer_cast<StateManager>(stateManager)->handleInput();
 }
 
 void Game::requestExit() {

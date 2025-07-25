@@ -22,11 +22,12 @@ protected:
     std::vector<std::vector<Point> > enemyPath; // use vector<vector cause now we have 2 paths for jungle
     Image mapImage;
     MapType mapType;
+    //std::shared_ptr<Color[]> pixelColors; // save all pixel colors
 
 public:
     Map();
     virtual std::unique_ptr<Map> clone() const = 0; 
-    ~Map() = default; 
+    virtual ~Map() = default; 
 
     // Basics settings
     virtual void loadTexture() = 0;

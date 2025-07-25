@@ -8,6 +8,7 @@
 #include "../buttons/CanHoveringButton.h"
 #include "../buttons/SingleEventButton.h"
 #include "../buttons/TickButton.h"
+#include "../buttons/UpgradeButton.h"
 #include "../TextField.h"
 #include "../TextureField.h"
 #include "../Panel.h"

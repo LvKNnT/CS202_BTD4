@@ -29,9 +29,9 @@ public:
     int getVolume(SoundType soundType) const;
 
     void update(Event::Type event) override;
-    void draw() const override;
-    void initialize() override;
-    void handleInput() override;
+    void draw() const;
+    void initialize();
+    void handleInput();
 };
 
 #endif // SOUND_MANAGER_H

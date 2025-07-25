@@ -19,13 +19,13 @@ void TextField::formatText() {
     }
     words.push_back(tmp);
 
+    tmp = "";
     int cntWord = 0;
     for(int i = 0; i < (int) words.size(); i++) {
         tmp += (i == 0 ? "":" ") + words[i];
         float curWidth = MeasureTextEx(font, tmp.c_str(), height, 0).x;
         if(curWidth > width && cntWord > 0) {
-            tmp.clear();
-            tmp += words[i];
+            tmp = words[i];
             cntWord = 1;
             res += '\n' + words[i];
         } else {
@@ -48,7 +48,13 @@ void TextField::setTextAndPos(const std::string &newText, Vector2 newPosition) {
 
 void TextField::draw() const {
     if(!isAvailable) return;
-    DrawTextEx(font, text.c_str(), position, height, 0, color);
+    bool isOneLine = (width != 0);
+    for(auto ch:text) {
+        if(ch == '\n') isOneLine = false;
+    }
+
+    float textWidth = MeasureTextEx(font, text.c_str(), height, 0).x;
+    DrawTextEx(font, text.c_str(), (Vector2) {position.x + isOneLine * (width - textWidth) / 2, position.y}, height, 0, color);
 }
 
 void TextField::handleInput() {
@@ -63,12 +69,13 @@ MovableTextbox::MovableTextbox(const std::string& _text, const Font& _font, cons
 void MovableTextbox::draw() const {
     if(!isAvailable) return;
     Vector2 mousePos = GetMousePosition();
-    float rectHeight = height;
+    float rectHeight = height + 5.0;
     for(auto ch:text) {
         if(ch == '\n') {
             rectHeight += height;
         }
-    }
+    }  
+
     DrawRectangle(mousePos.x - width, mousePos.y, width, rectHeight, {0, 0, 0, 170});
     DrawTextEx(font, text.c_str(), (Vector2) {mousePos.x - width, mousePos.y}, height, 0, color);
 }

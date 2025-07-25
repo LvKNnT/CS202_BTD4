@@ -19,6 +19,7 @@ public:
     void draw() const override;
     void draw(int idx, float rotation) const;
     void handleInput() override; 
+    void setTexture(const Texture &newTexture, int idx = 0);
 };
 
 class MovableTextureField : public TextureField {
