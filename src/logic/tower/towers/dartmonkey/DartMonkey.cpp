@@ -99,11 +99,6 @@ void DartMonkey::setRotation(float rotation) {
 }
 
 void DartMonkey::draw() const {
-    // Check if the tower is active before drawing
-    if (!isActiveFlag) {
-        return; 
-    } 
-
     // Draw the Dart Monkey tower using raylib functions
     DrawCircleV(position, 10, YELLOW); // Example drawing a yellow circle for the tower
 
