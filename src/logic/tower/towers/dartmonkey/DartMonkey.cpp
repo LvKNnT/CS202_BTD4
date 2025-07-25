@@ -119,10 +119,22 @@ void DartMonkey::draw() const {
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,
                    WHITE); // Draw the Dart Monkey texture with the specified position and rotation
+}
 
+void DartMonkey::drawRange() const {
     // Draw the range of attacks
     for(const auto& attack : attacks) {
         DrawCircleV(position, attack->getRange(), Fade(GRAY, 0.5f)); // Draw the attack range
+    }
+}
+
+void DartMonkey::drawPut() const {
+    // Draw the range of attacks
+    for(const auto& attack : attacks) {
+        if(isActive()) {
+            DrawCircleV(position, attack->getRange(), Fade(GRAY, 0.5f)); // Draw the attack range
+        }
+        else DrawCircleV(position, attack->getRange(), Fade(RED, 0.5f)); // Draw the attack range
     }
 }
 

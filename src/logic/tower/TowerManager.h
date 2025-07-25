@@ -19,6 +19,8 @@ public:
     // Methods
     void pickTower(Vector2 position);
     void spawnTower(TowerType type, Vector2 position);
+    void spawnPutTower(TowerType type, Vector2 position);
+    void unPutTower();
     void spawnTower(TowerType type, Vector2 position, float rotation);
     LogicInfo getInfo() const;
     LogicInfo getInfoTower(TowerType type) const;
@@ -42,6 +44,7 @@ private:
     
     std::vector<std::unique_ptr<Tower>> towerList; // Collection to hold all active towers
     Tower* lastPickedTower = nullptr;
+    std::unique_ptr<Tower> putTower;
 
     std::unique_ptr<TowerSpawner> towerSpawner; // Factory to create towers based on type
 

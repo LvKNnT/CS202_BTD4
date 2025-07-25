@@ -19,6 +19,9 @@ TowerManager::TowerManager(const TowerManager& other) {
         for (const auto& tower : other.towerList) {
             towerList.push_back(tower->clone());
         }
+
+        putTower = other.putTower ? other.putTower->clone() : nullptr; // Clone the put tower if it exists
+        lastPickedTower = other.lastPickedTower; // Copy the last picked tower
     }
     else {
         // should not be here
@@ -36,6 +39,9 @@ TowerManager& TowerManager::operator=(const TowerManager& other) {
         for (const auto& tower : other.towerList) {
             towerList.push_back(tower->clone());
         }
+
+        putTower = other.putTower ? other.putTower->clone() : nullptr; // Clone the put tower if it exists
+        lastPickedTower = other.lastPickedTower; // Copy the last picked tower
     }
     else {
         // should not be here
@@ -51,6 +57,22 @@ void TowerManager::spawnTower(TowerType type, Vector2 position) {
         towerList.push_back(std::move(tower));
     } else {
         std::cerr << "Failed to spawn tower of type: " << static_cast<int>(type) << std::endl;
+    }
+}
+
+void TowerManager::spawnPutTower(TowerType type, Vector2 position) {
+    std::unique_ptr<Tower> tower = towerSpawner->getPutTower(type, position, currentModifies);
+
+    putTower = nullptr;
+    if (tower) {
+        putTower = std::move(tower);
+    }
+    else std::cerr << "Failed to spawn put tower of type: " << static_cast<int>(type) << std::endl;
+}
+
+void TowerManager::unPutTower() {
+    if (putTower) {
+        putTower = nullptr; // Clear the put tower
     }
 }
 
@@ -96,10 +118,18 @@ LogicInfo TowerManager::getInfoTower(Vector2 position) const {
 void TowerManager::drawTowers() const {
     for (const auto& tower : towerList) {
         if (tower) {
-            tower->draw();
+            if(tower.get() == lastPickedTower) {
+                tower->drawRange(); 
+            } 
+            tower->draw(); 
         } else {
             std::cerr << "Tower is null." << std::endl;
         }
+    }
+
+    if(putTower) {
+        putTower->drawPut();
+        putTower->draw();
     }
 }
 

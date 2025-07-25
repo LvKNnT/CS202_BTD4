@@ -33,6 +33,8 @@ public:
 
     // Different towers can have different behaviors when attacking
     virtual void update() = 0; // Pure virtual function for handling special attack
+    virtual void drawRange() const = 0;
+    virtual void drawPut() const = 0;
     virtual void setRotation(float rotation) = 0; 
     virtual void setModifies(const TowerModifies& modifies) = 0; 
     virtual LogicInfo getInfo() = 0; // Pure virtual function for UI info

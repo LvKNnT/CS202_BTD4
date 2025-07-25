@@ -38,8 +38,9 @@ public:
 
     // Supplyment methos for Game
     void pickTower(Vector2 position);
-    bool isPutTower(TowerType type, Vector2 position) const;
-    bool spawnTower(TowerType type, Vector2 position);
+    void putTower(TowerType type, Vector2 position);
+    void unPutTower();
+    bool spawnTower();
     bool isUpgradeTower(UpgradeUnits upgradeUnits) const;
     bool upgradeTower(UpgradeUnits upgradeUnits);
     void sellTower();

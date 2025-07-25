@@ -330,9 +330,14 @@ void LogicManager::updateTowers(TowerManager& towerManager, EnemyManager& enemyM
     }
 }
 
-bool LogicManager::isPutTower(const ResourceManager& resourceManager, const TowerManager& towerManager, const MapManager& mapManager, TowerType type, Vector2 position) const {
+bool LogicManager::isSpawnTower(const ResourceManager& resourceManager, const TowerManager& towerManager, const MapManager& mapManager) const {
+    if(towerManager.putTower == nullptr) {
+        std::cerr << "No tower selected to spawn." << std::endl;
+        return false; // No tower selected to spawn
+    }
+    
     auto enemyPath = mapManager.currentMap->enemyPath;
-    Rectangle towerBoundingBox = towerManager.towerSpawner->getBoundingBox(type, position);
+    Rectangle towerBoundingBox = towerManager.putTower->getBoundingBox();
     float pathWidth = 50.0f; // Considerable size
 
     // Checking collision with the path
@@ -342,30 +347,35 @@ bool LogicManager::isPutTower(const ResourceManager& resourceManager, const Towe
             || distancePointLine({towerBoundingBox.x + towerBoundingBox.width, towerBoundingBox.y}, path[i].position, path[i + 1].position) < pathWidth
             || distancePointLine({towerBoundingBox.x, towerBoundingBox.y + towerBoundingBox.height}, path[i].position, path[i + 1].position) < pathWidth
             || distancePointLine({towerBoundingBox.x + towerBoundingBox.width, towerBoundingBox.y + towerBoundingBox.height}, path[i].position, path[i + 1].position) < pathWidth) {
-                std::cerr << "Cannot put tower at position: " << position.x << ", " << position.y << "due to path" << std::endl;
+                std::cerr << "Cannot put tower due to path" << std::endl;
 
+                towerManager.putTower->setActive(false);
                 return false; 
             }
         }
     }
-
+    
     // Checking collision with other towers
     for (const auto& tower : towerManager.towerList) {
         if (tower->isActive() && CheckCollisionRecs(tower->getBoundingBox(), towerBoundingBox)) {
-            std::cerr << "Cannot put tower at position: " << position.x << ", " << position.y << "due to other towers" << std::endl;
-
+            std::cerr << "Cannot put tower due to other towers" << std::endl;
+            
+            towerManager.putTower->setActive(false);
             return false; // Collision with another tower
         }
     }
-
+    
     // Check if the player has enough resources to spawn the tower
-    int towerCost = stoi(towerManager.getInfoTower(type)["cost"]);
+    int towerCost = towerManager.putTower->cost;
     if(resourceManager.currentResource.cash < towerCost) {
         std::cerr << "Current cash: " << resourceManager.currentResource.cash << ", Tower cost: " << towerCost << std::endl;
         std::cerr << "Not enough resources to spawn tower." << std::endl;
         
+        towerManager.putTower->setActive(false);
         return false; // Not enough resources
     }
+
+    towerManager.putTower->setActive(true);
     return true;
 }
 
@@ -384,15 +394,16 @@ float LogicManager::distancePointLine(Vector2 point, Vector2 lineStart, Vector2 
     return Vector2Distance(point, closestPoint); // Return the distance from the point to the closest point on the line segment
 }
 
-bool LogicManager::spawnTower(ResourceManager& resourceManager, TowerManager& towerManager, const MapManager& mapManager, TowerType type, Vector2 position) {
-    if(!isPutTower(resourceManager, towerManager, mapManager, type, position)) {
+bool LogicManager::spawnTower(ResourceManager& resourceManager, TowerManager& towerManager, const MapManager& mapManager) {
+    if(!isSpawnTower(resourceManager, towerManager, mapManager)) {
         return false; 
     }
     
-    towerManager.spawnTower(type, position);
+    towerManager.spawnTower(towerManager.putTower->type, towerManager.putTower->position);
 
-    int towerCost = stoi(towerManager.getInfoTower(type)["cost"]);
-    resourceManager.currentResource.cash -= towerCost;
+    resourceManager.currentResource.cash -= towerManager.putTower->cost;
+
+    towerManager.putTower = nullptr; 
 
     return true;
 }

@@ -15,6 +15,8 @@ public:
     void loadTexture() override;
 
     void draw() const override;
+    void drawRange() const override; 
+    void drawPut() const override;
     void update() override;
     void setRotation(float rotation) override;
     void setModifies(const TowerModifies& modifies) override;

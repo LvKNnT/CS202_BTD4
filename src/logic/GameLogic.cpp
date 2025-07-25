@@ -18,12 +18,9 @@ void GameLogic::init() {
     init(difficulty);
     init(modeType);
 
-    std::cerr << resourceManager.getResource().cash << std::endl;
-    spawnTower(TowerType::DartMonkey, {200.0f, 225.0f});
-    std::cerr << resourceManager.getResource().cash << std::endl;
-    pickTower({200.0f, 225.0f});
-    sellTower();
-    std::cerr << resourceManager.getResource().cash << std::endl;
+    putTower(TowerType::DartMonkey, {125.0f, 230.0f}); // draging tower
+    spawnTower(); // default state on the map
+    pickTower({125.0f, 230.0f}); // when choosing this tower
     
     // Resetting log file
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::trunc);  
@@ -107,14 +104,18 @@ void GameLogic::pickTower(Vector2 position) {
     towerManager.pickTower(position);
 }
 
-bool GameLogic::isPutTower(TowerType type, Vector2 position) const {
-    // Check if the tower can be placed at the given position
-    return logicManager.isPutTower(resourceManager, towerManager, mapManager, type, position);
+void GameLogic::putTower(TowerType type, Vector2 position) {
+    towerManager.spawnPutTower(type, position);
+    logicManager.isSpawnTower(resourceManager, towerManager, mapManager);
 }
 
-bool GameLogic::spawnTower(TowerType type, Vector2 position) {
+void GameLogic::unPutTower() {
+    towerManager.unPutTower();
+}
+
+bool GameLogic::spawnTower() {
     // Check if the tower can be placed at the given position
-    return logicManager.spawnTower(resourceManager, towerManager, mapManager, type, position);
+    return logicManager.spawnTower(resourceManager, towerManager, mapManager);
 }
 
 bool GameLogic::isUpgradeTower(UpgradeUnits upgradeUnits) const {

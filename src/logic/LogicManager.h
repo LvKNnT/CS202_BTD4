@@ -20,8 +20,8 @@ public:
     void updateTowers(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager);
     
     // Suplly for GameLogic
-    bool isPutTower(const ResourceManager& resourceManager, const TowerManager& towerManager, const MapManager& mapManager, TowerType type, Vector2 position) const; 
-    bool spawnTower(ResourceManager& resourceManager, TowerManager& towerManager, const MapManager& mapManager, TowerType type, Vector2 position);
+    bool isSpawnTower(const ResourceManager& resourceManager, const TowerManager& towerManager, const MapManager& mapManager) const; 
+    bool spawnTower(ResourceManager& resourceManager, TowerManager& towerManager, const MapManager& mapManager);
     bool isUpgradeTower(const ResourceManager& resourceManager, const TowerManager& towerManager, UpgradeUnits upgradeUnits) const;
     bool upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, UpgradeUnits upgradeUnits);
     void sellTower(ResourceManager& resourceManager, TowerManager& towerManager);
