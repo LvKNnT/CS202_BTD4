@@ -18,6 +18,7 @@ public:
 
     // Methods
     void pickTower(Vector2 position);
+    void unPickTower();
     void spawnTower(TowerType type, Vector2 position);
     void spawnPutTower(TowerType type, Vector2 position);
     void unPutTower();

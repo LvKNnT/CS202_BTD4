@@ -95,6 +95,11 @@ void TowerManager::pickTower(Vector2 position) {
     }
 }
 
+void TowerManager::unPickTower() {
+    lastPickedTower = nullptr; // Clear the last picked tower
+    std::cout << "Unpicked tower: " << static_cast<int>(lastPickedTower->type) << std::endl;
+}
+
 LogicInfo TowerManager::getInfo() const {
     if(lastPickedTower) return lastPickedTower->getInfo();
     return LogicInfo(); 

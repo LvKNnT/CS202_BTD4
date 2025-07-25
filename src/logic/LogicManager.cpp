@@ -338,7 +338,7 @@ bool LogicManager::isSpawnTower(const ResourceManager& resourceManager, const To
     
     auto enemyPath = mapManager.currentMap->enemyPath;
     Rectangle towerBoundingBox = towerManager.putTower->getBoundingBox();
-    float pathWidth = 50.0f; // Considerable size
+    float pathWidth = 25.0f; // Considerable size
 
     // Checking collision with the path
     for(const auto& path : enemyPath) {
@@ -410,6 +410,7 @@ bool LogicManager::spawnTower(ResourceManager& resourceManager, TowerManager& to
 
 bool LogicManager::isUpgradeTower(const ResourceManager& resourceManager, const TowerManager& towerManager, UpgradeUnits upgradeUnits) const {
     Tower* tower = towerManager.lastPickedTower;
+    if(!tower) return false; // No tower selected for upgrade
 
     // Sadly, another switch/case here.
     switch (upgradeUnits) {
@@ -440,6 +441,7 @@ bool LogicManager::isUpgradeTower(const ResourceManager& resourceManager, const 
 
 bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, UpgradeUnits upgradeUnits) {
     Tower* tower = towerManager.lastPickedTower;
+    if(!tower) return false;
 
     // Sadly, another switch/case here.
     switch (upgradeUnits) {
@@ -450,7 +452,8 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 tower->cost += tower->upgradeTop->getCost() * tower->upgradeCost;
 
                 tower->upgradeTop = tower->upgradeTop->buy();
-                tower->info["upgradeCostTop"] = std::to_string(tower->upgradeTop->getCost());
+                tower->info["nameUpgradeTop"] = tower->upgradeTop->getName();
+                tower->info["upgradeCostTop"] = std::to_string(tower->upgradeTop->getCost() * tower->upgradeCost);
                 tower->info["upgradeDescriptionTop"] = tower->upgradeTop->getDescription();
 
                 return true;
@@ -463,7 +466,8 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 tower->cost += tower->upgradeMiddle->getCost() * tower->upgradeCost;
 
                 tower->upgradeMiddle = tower->upgradeMiddle->buy();
-                tower->info["upgradeCostMiddle"] = std::to_string(tower->upgradeMiddle->getCost());
+                tower->info["nameUpgradeMiddle"] = tower->upgradeMiddle->getName();
+                tower->info["upgradeCostMiddle"] = std::to_string(tower->upgradeMiddle->getCost() * tower->upgradeCost);
                 tower->info["upgradeDescriptionMiddle"] = tower->upgradeMiddle->getDescription();
 
                 return true;
@@ -476,7 +480,8 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 tower->cost += tower->upgradeBottom->getCost() * tower->upgradeCost;
 
                 tower->upgradeBottom = tower->upgradeBottom->buy();
-                tower->info["upgradeCostBottom"] = std::to_string(tower->upgradeBottom->getCost());
+                tower->info["nameUpgradeBottom"] = tower->upgradeBottom->getName();
+                tower->info["upgradeCostBottom"] = std::to_string(tower->upgradeBottom->getCost() * tower->upgradeCost);
                 tower->info["upgradeDescriptionBottom"] = tower->upgradeBottom->getDescription();
 
                 return true;

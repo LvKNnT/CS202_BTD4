@@ -105,6 +105,10 @@ void GameLogic::pickTower(Vector2 position) {
     towerManager.pickTower(position);
 }
 
+void GameLogic::unPickTower() {
+    towerManager.unPickTower();
+}
+
 void GameLogic::putTower(TowerType type, Vector2 position) {
     towerManager.spawnPutTower(type, position);
     logicManager.isSpawnTower(resourceManager, towerManager, mapManager);

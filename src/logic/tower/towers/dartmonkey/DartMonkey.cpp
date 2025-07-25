@@ -36,35 +36,23 @@ DartMonkey::DartMonkey(Vector2 position)
     info["popCount"] = std::to_string(popCount);
     info["sellPrice"] = std::to_string(static_cast<int>(cost * 0.75f));
 
-    switch (targetPriority) {
-        case TargetPriority::First:
-            info["targetPriority"] = "First";
-            break;
-        case TargetPriority::Last:
-            info["targetPriority"] = "Last";
-            break;
-        case TargetPriority::Close:
-            info["targetPriority"] = "Close";
-            break;
-        case TargetPriority::Strong:
-            info["targetPriority"] = "Strong";
-            break;
-        default:
-            info["targetPriority"] = "Unknown";
-            break;
-    }
-
     // At the beginning, no upgrades are available
+    info["nameTop"] = "";
+    info["nameMiddle"] = "";
+    info["nameBottom"] = "";
     info["descriptionTop"] = "";
     info["descriptionMiddle"] = "";
     info["descriptionBottom"] = "";
 
+    info["upgradeNameTop"] = upgradeTop->getName();
     info["upgradeCostTop"] = std::to_string(upgradeTop->getCost());
     info["upgradeDescriptionTop"] = upgradeTop->getDescription();
-    info["upgradeCostMiddle"] = std::to_string(upgradeMiddle->getCost());
+    info["upgradeNameMiddle"] = upgradeMiddle->getName();
     info["upgradeDescriptionMiddle"] = upgradeMiddle->getDescription();
-    info["upgradeCostBottom"] = std::to_string(upgradeBottom->getCost());
+    info["upgradeCostMiddle"] = std::to_string(upgradeMiddle->getCost());
+    info["upgradeNameBottom"] = upgradeBottom->getName();
     info["upgradeDescriptionBottom"] = upgradeBottom->getDescription();
+    info["upgradeCostBottom"] = std::to_string(upgradeBottom->getCost());
 }
 
 DartMonkey::DartMonkey(const DartMonkey& other)
@@ -149,6 +137,25 @@ LogicInfo DartMonkey::getInfo() {
     // info that need to be live-updated
     info["popCount"] = std::to_string(popCount);
     info["sell"] = std::to_string(static_cast<int>(cost * 0.70f));
+
+    // sadly, using switch/case here
+    switch (targetPriority) {
+        case TargetPriority::First:
+            info["targetPriority"] = "First";
+            break;
+        case TargetPriority::Last:
+            info["targetPriority"] = "Last";
+            break;
+        case TargetPriority::Close:
+            info["targetPriority"] = "Close";
+            break;
+        case TargetPriority::Strong:
+            info["targetPriority"] = "Strong";
+            break;
+        default:
+            info["targetPriority"] = "Unknown";
+            break;
+    }
     
     return this->info;
 }
