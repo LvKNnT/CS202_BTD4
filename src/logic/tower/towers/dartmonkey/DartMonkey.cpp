@@ -22,7 +22,7 @@ DartMonkey::DartMonkey(Vector2 position)
      * * * pierce = 1
      * * * lifeSpan = 1.0f
      */
-    attacks.push_back(std::make_unique<DartAttack>(100.0f, 1.0f, position, towerId, 1, 200, 1, 1.0f, false));
+    attacks.push_back(std::make_unique<DartAttack>(100.0f, 0.1f, position, towerId, 1, 200, 1, 1.0f, false));
 
     // Upgrade Path
     upgradeTop = std::make_unique<SharpShots>();
@@ -141,6 +141,7 @@ void DartMonkey::setModifies(const TowerModifies& modifies) {
 LogicInfo DartMonkey::getInfo() {
     // info that need to be live-updated
     info["popCount"] = std::to_string(popCount);
+    info["sell"] = std::to_string(static_cast<int>(cost * 0.70f));
     
     return this->info;
 }

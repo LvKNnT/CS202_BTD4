@@ -4,14 +4,14 @@
 #include "../Mode.h"
 #include <vector>
 
-class ApopalypseMode : public Mode {
+class ApopalypseModePlayer : public Mode {
 private:
     Round currentRound;
 
 public:
-    ApopalypseMode() = default;
-    ApopalypseMode(const ApopalypseMode& other) = default;
-    ApopalypseMode& operator=(const ApopalypseMode& other) = default;
+    ApopalypseModePlayer() = default;
+    ApopalypseModePlayer(const ApopalypseModePlayer& other) = default;
+    ApopalypseModePlayer& operator=(const ApopalypseModePlayer& other) = default;
 
     std::unique_ptr<Mode> clone() const override;
 

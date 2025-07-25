@@ -15,17 +15,18 @@ public:
     ~LogicManager() = default;
     
     // Core logic
-    void updateEnemies(EnemyManager& enemyManager, MapManager& mapManager);
+    void updateEnemies(EnemyManager& enemyManager, MapManager& mapManager, ResourceManager& resourceManager);
     void updateBullets(BulletManager& bulletManager, MapManager& mapManager);
     void updateTowers(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager);
     
     // Suplly for GameLogic
     bool isPutTower(const ResourceManager& resourceManager, const TowerManager& towerManager, const MapManager& mapManager, TowerType type, Vector2 position) const; 
     bool spawnTower(ResourceManager& resourceManager, TowerManager& towerManager, const MapManager& mapManager, TowerType type, Vector2 position);
-    bool isUpgradeTower(const ResourceManager& resourceManager, const TowerManager& towerManager, Vector2 position, UpgradeUnits upgradeUnits) const;
-    bool upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, Vector2 position, UpgradeUnits upgradeUnits);
+    bool isUpgradeTower(const ResourceManager& resourceManager, const TowerManager& towerManager, UpgradeUnits upgradeUnits) const;
+    bool upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, UpgradeUnits upgradeUnits);
+    void sellTower(ResourceManager& resourceManager, TowerManager& towerManager);
 
-    void playRound(ResourceManager& resourceManager, ModeManager& modeManager, EnemyManager& enemyManager, MapManager& mapManager);
+    bool playRound(ResourceManager& resourceManager, ModeManager& modeManager, EnemyManager& enemyManager, MapManager& mapManager);
     void playNextRound(ResourceManager& resourceManager);
     void setAutoPlay(ModeManager& modeManager, bool autoPlay);
 

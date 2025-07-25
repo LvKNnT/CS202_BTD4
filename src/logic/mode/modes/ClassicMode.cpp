@@ -2,11 +2,11 @@
 #include <iostream>
 #include <cmath> 
 
-std::unique_ptr<Mode> ClassicMode::clone() const {
-    return std::make_unique<ClassicMode>(*this);
+std::unique_ptr<Mode> ClassicModePlayer::clone() const {
+    return std::make_unique<ClassicModePlayer>(*this);
 }
 
-void ClassicMode::playRound(const RoundManager& roundManager, int roundNumber) {
+void ClassicModePlayer::playRound(const RoundManager& roundManager, int roundNumber) {
     if(currentRoundNumber != roundNumber) {
         std::cerr << "Playing round: " << roundNumber << std::endl;
         currentRound = roundManager.getRegularRound(roundNumber);
@@ -15,7 +15,7 @@ void ClassicMode::playRound(const RoundManager& roundManager, int roundNumber) {
     }
 }
 
-std::vector<std::pair<BloonType, BloonProperties>> ClassicMode::getEnemies(const RoundManager& roundManager) {
+std::vector<std::pair<BloonType, BloonProperties>> ClassicModePlayer::getEnemies(const RoundManager& roundManager) {
     std::vector<std::pair<BloonType, BloonProperties>> bloonList;
 
     // playing round
@@ -52,16 +52,16 @@ std::vector<std::pair<BloonType, BloonProperties>> ClassicMode::getEnemies(const
     return bloonList;
 }
 
-bool ClassicMode::canPlayNextRound(bool isClear) const {
+bool ClassicModePlayer::canPlayNextRound(bool isClear) const {
     return timer >= currentRound.bloonTypes.back().endTime && isClear;
 }
 
-int ClassicMode::getRoundReward() {
+int ClassicModePlayer::getRoundReward() {
     int reward = currentRound.extraCash;
     currentRound.extraCash = 0; 
     return reward;
 }
 
-bool ClassicMode::setAutoPlay(bool autoPlay) {
+bool ClassicModePlayer::setAutoPlay(bool autoPlay) {
     return autoPlay;
 }

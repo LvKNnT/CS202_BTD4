@@ -6,12 +6,13 @@
 #include <algorithm>
 #include <fstream>
 
-void LogicManager::updateEnemies(EnemyManager& enemyManager, MapManager& mapManager) {
+void LogicManager::updateEnemies(EnemyManager& enemyManager, MapManager& mapManager, ResourceManager& resourceManager) {
     for (auto it = enemyManager.enemyList.begin(); it != enemyManager.enemyList.end(); ) {
         int result = runEnemy(**it, mapManager.getCurrentMap());
         
         if (result == -1) {
             // Enemy reached the end — remove and destroy it
+            resourceManager.currentResource.lives -= (*it)->livesLost; // Update lives lost
             it = enemyManager.enemyList.erase(it);  // erase returns the next iterator
             continue;  // Skip the increment, already moved to next
         }
@@ -396,8 +397,8 @@ bool LogicManager::spawnTower(ResourceManager& resourceManager, TowerManager& to
     return true;
 }
 
-bool LogicManager::isUpgradeTower(const ResourceManager& resourceManager, const TowerManager& towerManager, Vector2 position, UpgradeUnits upgradeUnits) const {
-    Tower* tower = towerManager.getTowerFromPosition(position);
+bool LogicManager::isUpgradeTower(const ResourceManager& resourceManager, const TowerManager& towerManager, UpgradeUnits upgradeUnits) const {
+    Tower* tower = towerManager.lastPickedTower;
 
     // Sadly, another switch/case here.
     switch (upgradeUnits) {
@@ -426,16 +427,16 @@ bool LogicManager::isUpgradeTower(const ResourceManager& resourceManager, const 
     return false;
 }
 
-bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, Vector2 position, UpgradeUnits upgradeUnits) {
-    Tower* tower = towerManager.getTowerFromPosition(position);
+bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, UpgradeUnits upgradeUnits) {
+    Tower* tower = towerManager.lastPickedTower;
 
     // Sadly, another switch/case here.
     switch (upgradeUnits) {
         case UpgradeUnits::Top:
-            if (tower->upgradeTop->getCost() * tower->upgradeCost <= resourceManager.currentResource.cash 
-            && tower->upgradeTop->getName() != "NoUpgrade") {
+            if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Top)) {
                 tower->upgradeTop->update(tower->attacks);
                 tower->info["descriptionTop"] = tower->upgradeTop->getDescription();
+                tower->cost += tower->upgradeTop->getCost() * tower->upgradeCost;
 
                 tower->upgradeTop = tower->upgradeTop->buy();
                 tower->info["upgradeCostTop"] = std::to_string(tower->upgradeTop->getCost());
@@ -445,10 +446,10 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
             }
             break;
         case UpgradeUnits::Middle:
-            if (tower->upgradeMiddle->getCost() * tower->upgradeCost <= resourceManager.currentResource.cash 
-            && tower->upgradeMiddle->getName() != "NoUpgrade") {
+            if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Middle)) {
                 tower->upgradeMiddle->update(tower->attacks);
                 tower->info["descriptionMiddle"] = tower->upgradeMiddle->getDescription();
+                tower->cost += tower->upgradeMiddle->getCost() * tower->upgradeCost;
 
                 tower->upgradeMiddle = tower->upgradeMiddle->buy();
                 tower->info["upgradeCostMiddle"] = std::to_string(tower->upgradeMiddle->getCost());
@@ -458,10 +459,10 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
             }
             break;
         case UpgradeUnits::Bottom:
-            if (tower->upgradeBottom->getCost() * tower->upgradeCost <= resourceManager.currentResource.cash 
-            && tower->upgradeBottom->getName() != "NoUpgrade") {
+            if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Bottom)) {
                 tower->upgradeBottom->update(tower->attacks);
                 tower->info["descriptionBottom"] = tower->upgradeBottom->getDescription();
+                tower->cost += tower->upgradeBottom->getCost() * tower->upgradeCost;
 
                 tower->upgradeBottom = tower->upgradeBottom->buy();
                 tower->info["upgradeCostBottom"] = std::to_string(tower->upgradeBottom->getCost());
@@ -477,7 +478,14 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
     return false;
 }
 
-void LogicManager::playRound(ResourceManager& resourceManager, ModeManager& modeManager, EnemyManager& enemyManager, MapManager& mapManager) {
+void LogicManager::sellTower(ResourceManager& resourceManager, TowerManager& towerManager) {
+    int sellValue = towerManager.sellTower();
+    if (sellValue > 0) {
+        resourceManager.currentResource.cash += sellValue;
+    }
+}
+
+bool LogicManager::playRound(ResourceManager& resourceManager, ModeManager& modeManager, EnemyManager& enemyManager, MapManager& mapManager) {
     // set the roundNumber being played
     int roundNumber = resourceManager.currentResource.currentRound;
     modeManager.playRound(roundNumber);
@@ -491,15 +499,21 @@ void LogicManager::playRound(ResourceManager& resourceManager, ModeManager& mode
     }
 
     // end round logic
+    bool isSave = false;
     if (modeManager.canPlayNextRound(enemyManager.enemyList.empty())) {
         // reward cash
-        resourceManager.currentResource.cash += modeManager.getRoundReward();
+        int reward = modeManager.getRoundReward();
+        resourceManager.currentResource.cash += reward;
+        isSave = (reward != 0);
 
         // auto play next round
         if(autoPlayRound) {
             resourceManager.currentResource.currentRound++;
+            return true;
         }
     }
+
+    return isSave;
 }
 
 void LogicManager::playNextRound(ResourceManager& resourceManager) {

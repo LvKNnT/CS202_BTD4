@@ -2,11 +2,11 @@
 #include <iostream>
 #include <cmath> 
 
-std::unique_ptr<Mode> ApopalypseMode::clone() const {
-    return std::make_unique<ApopalypseMode>(*this);
+std::unique_ptr<Mode> ApopalypseModePlayer::clone() const {
+    return std::make_unique<ApopalypseModePlayer>(*this);
 }
 
-void ApopalypseMode::playRound(const RoundManager& roundManager, int roundNumber) {
+void ApopalypseModePlayer::playRound(const RoundManager& roundManager, int roundNumber) {
     if(currentRoundNumber != roundNumber) {
         currentRound = roundManager.getRegularRound(roundNumber);
         timer = 0.0f;
@@ -14,7 +14,7 @@ void ApopalypseMode::playRound(const RoundManager& roundManager, int roundNumber
     }
 }
 
-std::vector<std::pair<BloonType, BloonProperties>> ApopalypseMode::getEnemies(const RoundManager& roundManager) {
+std::vector<std::pair<BloonType, BloonProperties>> ApopalypseModePlayer::getEnemies(const RoundManager& roundManager) {
     std::vector<std::pair<BloonType, BloonProperties>> bloonList;
 
     // playing round
@@ -51,16 +51,16 @@ std::vector<std::pair<BloonType, BloonProperties>> ApopalypseMode::getEnemies(co
     return bloonList;
 }
 
-bool ApopalypseMode::canPlayNextRound(bool isClear) const {
+bool ApopalypseModePlayer::canPlayNextRound(bool isClear) const {
     return timer >= currentRound.bloonTypes.back().endTime;
 }
 
-int ApopalypseMode::getRoundReward() {
+int ApopalypseModePlayer::getRoundReward() {
     int reward = currentRound.extraCash;
     currentRound.extraCash = 0; 
     return reward;
 }
 
-bool ApopalypseMode::setAutoPlay(bool autoPlay) {
+bool ApopalypseModePlayer::setAutoPlay(bool autoPlay) {
     return true;
 }

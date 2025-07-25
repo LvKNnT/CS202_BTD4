@@ -21,8 +21,13 @@ public:
     bool setAutoPlay(bool autoPlay);
     bool canPlayNextRound(bool isClear) const;
 
+    // save/load
+    void save(const std::string& filePath) const;
+    void load(const std::string& filePath);
+    
 private:
     ModeSpawner modeSpawner; 
+    ModeType currentModeType;
     std::unique_ptr<Mode> currentMode;
     std::unique_ptr<RoundManager> roundManager = std::make_unique<RoundManager>();
 };

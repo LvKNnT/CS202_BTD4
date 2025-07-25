@@ -3,14 +3,14 @@
 
 #include "../Mode.h"
 
-class ClassicMode : public Mode {
+class ClassicModePlayer : public Mode {
 private:
     Round currentRound;    
 
 public:
-    ClassicMode() = default;
-    ClassicMode(const ClassicMode& other) = default;
-    ClassicMode& operator=(const ClassicMode& other) = default;
+    ClassicModePlayer() = default;
+    ClassicModePlayer(const ClassicModePlayer& other) = default;
+    ClassicModePlayer& operator=(const ClassicModePlayer& other) = default;
 
     std::unique_ptr<Mode> clone() const override;
 

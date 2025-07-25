@@ -1,5 +1,6 @@
 #include "GameLogic.h"
 #include <fstream>
+#include <filesystem>
 
 void GameLogic::init() {
     // testing, should be jajaja whenever enter a new game
@@ -12,13 +13,17 @@ void GameLogic::init() {
     const ModeType modeType = ModeType::Alternative; // Default mode type for testing
 
     // stimulate what will happen in the game
-    // init(difficulty, mapType, modeType); // same same but different
+    init(difficulty, mapType, modeType); // same same but different
     init(mapType);
     init(difficulty);
     init(modeType);
 
+    std::cerr << resourceManager.getResource().cash << std::endl;
     spawnTower(TowerType::DartMonkey, {200.0f, 225.0f});
-    std::cerr << resourceManager.getResource(difficulty).cash << std::endl;
+    std::cerr << resourceManager.getResource().cash << std::endl;
+    pickTower({200.0f, 225.0f});
+    sellTower();
+    std::cerr << resourceManager.getResource().cash << std::endl;
     
     // Resetting log file
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::trunc);  
@@ -67,9 +72,12 @@ void GameLogic::update() {
         mapManager.updateMap();
         enemyManager.updateEnemies();
 
-        logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager);
+        if(logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager)) {
+            autoSave(); 
+        }
+
         logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager);
-        logicManager.updateEnemies(enemyManager, mapManager);
+        logicManager.updateEnemies(enemyManager, mapManager, resourceManager);
         logicManager.updateBullets(bulletManager, mapManager);
         logicManager.updateTowers(towerManager, enemyManager, bulletManager);
     }
@@ -91,6 +99,14 @@ void GameLogic::unLoad() {
     towerManager.unLoad();
 }
 
+int GameLogic::isEndGame() const {
+    return resourceManager.isEndGame();
+}
+
+void GameLogic::pickTower(Vector2 position) {
+    towerManager.pickTower(position);
+}
+
 bool GameLogic::isPutTower(TowerType type, Vector2 position) const {
     // Check if the tower can be placed at the given position
     return logicManager.isPutTower(resourceManager, towerManager, mapManager, type, position);
@@ -101,30 +117,35 @@ bool GameLogic::spawnTower(TowerType type, Vector2 position) {
     return logicManager.spawnTower(resourceManager, towerManager, mapManager, type, position);
 }
 
-bool GameLogic::isUpgradeTower(Vector2 position, UpgradeUnits upgradeUnits) const {
+bool GameLogic::isUpgradeTower(UpgradeUnits upgradeUnits) const {
     // Check if the tower can be upgraded at the given position
-    return logicManager.isUpgradeTower(resourceManager, towerManager, position, upgradeUnits);
+    return logicManager.isUpgradeTower(resourceManager, towerManager, upgradeUnits);
 }
 
-bool GameLogic::upgradeTower(Vector2 position, UpgradeUnits upgradeUnits) {
+bool GameLogic::upgradeTower(UpgradeUnits upgradeUnits) {
     // Upgrade the tower at the given position
-    return logicManager.upgradeTower(resourceManager, towerManager, position, upgradeUnits);
+    return logicManager.upgradeTower(resourceManager, towerManager, upgradeUnits);
+}
+
+void GameLogic::sellTower() {
+    // Sell the currently picked tower
+    logicManager.sellTower(resourceManager, towerManager);
+}
+
+LogicInfo GameLogic::getInfoTower() const {
+    return towerManager.getInfo();
 }
 
 LogicInfo GameLogic::getInfoTower(TowerType type) const {
     return towerManager.getInfoTower(type);
 }
 
-LogicInfo GameLogic::getInfoTower(Vector2 position) const {
-    return towerManager.getInfoTower(position);
+void GameLogic::chooseNextPriority() {
+    towerManager.chooseNextPriority();
 }
 
-void GameLogic::chooseNextPriority(Vector2 position) {
-    towerManager.chooseNextPriority(position);
-}
-
-void GameLogic::choosePreviousPriority(Vector2 position) {
-    towerManager.choosePreviousPriority(position);
+void GameLogic::choosePreviousPriority() {
+    towerManager.choosePreviousPriority();
 }
 
 // same same but different
@@ -155,4 +176,74 @@ void GameLogic::unactiveTickFast() {
 
 LogicInfo GameLogic::getInfoResource() const {
     return resourceManager.getInfo();
+}
+
+void GameLogic::autoSave() const {
+    std::string saveFilePath = savePath + "autosave.txt";
+    std::cerr << "Auto-saving to: " << saveFilePath << std::endl;
+
+    // reset autosave file
+    std::fstream saveFile(saveFilePath, std::ios::out | std::ios::trunc);
+    if (saveFile.is_open()) {
+        saveFile.close();
+    } else {
+        std::cerr << "Error: Failed to open autosave file for resetting." << std::endl;
+    }
+
+    mapManager.save(saveFilePath);
+    resourceManager.save(saveFilePath);
+    modeManager.save(saveFilePath);
+    towerManager.save(saveFilePath);
+}
+
+void GameLogic::loadAutoSave() {
+    std::string saveFilePath = savePath + "autosave.txt";
+    std::cerr << "Loading autosave from: " << saveFilePath << std::endl;
+
+    if (!std::filesystem::exists(saveFilePath)) {
+        std::cerr << "Autosave file does not exist: " << saveFilePath << std::endl;
+        return;
+    }
+
+    mapManager.load(saveFilePath);
+    resourceManager.load(saveFilePath);
+    modeManager.load(saveFilePath);
+    towerManager.load(saveFilePath);
+}
+
+void GameLogic::saveGame() const {
+    std::string saveFilePath = savePath + "save" + std::to_string(static_cast<int>(mapManager.getMapType())) + ".txt";
+    std::cerr << "Saving game to: " << saveFilePath << std::endl;
+
+    // reset save file
+    std::fstream saveFile(saveFilePath, std::ios::out | std::ios::trunc);
+    if (saveFile.is_open()) {
+        saveFile.close();
+    } else {
+        std::cerr << "Error: Failed to open save file for resetting." << std::endl;
+    }
+
+    mapManager.save(saveFilePath);
+    resourceManager.save(saveFilePath);
+    modeManager.save(saveFilePath);
+    towerManager.save(saveFilePath);
+}
+
+void GameLogic::loadGame(MapType type) {
+    std::string saveFilePath = savePath + "save" + std::to_string(static_cast<int>(type)) + ".txt";
+    std::cerr << "Loading game from: " << saveFilePath << std::endl;
+
+    if (!std::filesystem::exists(saveFilePath)) {
+        std::cerr << "Save file does not exist: " << saveFilePath << std::endl;
+        return;
+    }
+
+    mapManager.load(saveFilePath);
+
+    resourceManager.load(saveFilePath);
+    enemyManager = EnemyManager(resourceManager.getEnemyModifies());
+    towerManager = TowerManager(resourceManager.getTowerModifies());
+    towerManager.load(saveFilePath);
+
+    modeManager.load(saveFilePath);
 }

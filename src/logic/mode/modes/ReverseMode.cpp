@@ -2,11 +2,11 @@
 #include <iostream>
 #include <cmath>
 
-std::unique_ptr<Mode> ReverseMode::clone() const {
-    return std::make_unique<ReverseMode>(*this);
+std::unique_ptr<Mode> ReverseModePlayer::clone() const {
+    return std::make_unique<ReverseModePlayer>(*this);
 }
 
-void ReverseMode::playRound(const RoundManager& roundManager, int roundNumber) {
+void ReverseModePlayer::playRound(const RoundManager& roundManager, int roundNumber) {
     if(currentRoundNumber != roundNumber) {
         currentRound = roundManager.getReverseRound(roundNumber);
         timer = 0.0f;
@@ -14,7 +14,7 @@ void ReverseMode::playRound(const RoundManager& roundManager, int roundNumber) {
     }
 }
 
-std::vector<std::pair<BloonType, BloonProperties>> ReverseMode::getEnemies(const RoundManager& roundManager) {
+std::vector<std::pair<BloonType, BloonProperties>> ReverseModePlayer::getEnemies(const RoundManager& roundManager) {
     std::vector<std::pair<BloonType, BloonProperties>> bloonList;
 
     // playing round
@@ -51,16 +51,16 @@ std::vector<std::pair<BloonType, BloonProperties>> ReverseMode::getEnemies(const
     return bloonList;
 }
 
-bool ReverseMode::canPlayNextRound(bool isClear) const {
+bool ReverseModePlayer::canPlayNextRound(bool isClear) const {
     return timer >= currentRound.bloonTypes.back().endTime && isClear;
 }
 
-int ReverseMode::getRoundReward() {
+int ReverseModePlayer::getRoundReward() {
     int reward = currentRound.extraCash;
     currentRound.extraCash = 0; 
     return reward;
 }
 
-bool ReverseMode::setAutoPlay(bool autoPlay) {
+bool ReverseModePlayer::setAutoPlay(bool autoPlay) {
     return autoPlay;
 }

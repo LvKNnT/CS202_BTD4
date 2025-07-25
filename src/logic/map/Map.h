@@ -14,12 +14,14 @@
 
 class Map : public Drawable {
     friend class LogicManager; 
+    friend class MapManager; 
 
 protected:
     Texture texture;
     static const int MAXPATHS = 2;
     std::vector<std::vector<Point> > enemyPath; // use vector<vector cause now we have 2 paths for jungle
-    Image mapImage; 
+    Image mapImage;
+    MapType mapType;
 
 public:
     Map();

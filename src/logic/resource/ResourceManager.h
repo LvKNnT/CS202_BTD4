@@ -22,12 +22,16 @@ public:
     ~ResourceManager() = default;
 
     void initResource(Difficulty difficulty);
-    const Resource& getResource(Difficulty difficulty) const;
+    const Resource& getResource() const;
     const TowerModifies& getTowerModifies() const;
     const EnemyModifies& getEnemyModifies() const;
 
     int isEndGame() const;
     LogicInfo getInfo() const;
+
+    // save/load
+    void save(const std::string& filePath) const;
+    void load(const std::string& filePath);
 };
 
 #endif // RESOURCE_MANAGER_H
