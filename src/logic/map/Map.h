@@ -11,6 +11,7 @@
 #include "Point.h"
 #include "MapUnits.h"
 #include "../enemy/EnemyUnits.h"
+#include "../../utils/Utils.h"
 
 class Map : public Drawable {
     friend class LogicManager; 
@@ -22,7 +23,6 @@ protected:
     std::vector<std::vector<Point> > enemyPath; // use vector<vector cause now we have 2 paths for jungle
     Image mapImage;
     MapType mapType;
-    //std::shared_ptr<Color[]> pixelColors; // save all pixel colors
 
 public:
     Map();
@@ -37,7 +37,7 @@ public:
     void unLoad();
 
     // These functions should be the same for all maps
-    Point::Type getPointType(Vector2 position) const; // For towers
+    bool canPlaceTowerHere(Vector2 position) const; // For towers
     Point::Type getPointType(int index, int pathIdx = 0) const; // For enemies
 
     // only pass pathIdx when we are in jungle_lane

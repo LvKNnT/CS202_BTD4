@@ -34,8 +34,7 @@ std::unique_ptr<Map> MonkeyLane::clone() const {
 
 void MonkeyLane::loadTexture() {
     texture = Game::Instance().getTextureManager().getTexture("MonkeyLaneThumb");
-    mapImage = LoadImage("../assets/map/Monkey_lane_path_mask.png");
-    //pixelColors = std::shared_ptr<Color[]>(LoadImageColors(mapImage)); // create a new pixel colors array
+    mapImage = LoadImage("../assets/map/Monkey_lane_path_mask.png"); // MUST BE LOADED
 }
 
 void MonkeyLane::update() {

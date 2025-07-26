@@ -98,4 +98,8 @@ public:
     PreviousPriority(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
+class SellButton : public SingleEventButton {
+public:
+    SellButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
 #endif // SINGLE_EVENT_BUTTON_H

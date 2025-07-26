@@ -30,6 +30,7 @@ public:
         HoveringInfo,
         NextPriority, 
         PreviousPriority,
+        SellTower,
         
         // Mode
         HoveringStandardMode,
@@ -50,7 +51,7 @@ public:
         NewGame, // Begin a new game without save
         Continue, // Continue save game
         Exit, // Exit game, so when player clicks here, we should save the game 
-        StartGame, // Start the round 
+        StartRound, // Start the round 
         BackHome, // Pause the game to back home
         Resume, // Unpause the game, we will back to the game immediately
         

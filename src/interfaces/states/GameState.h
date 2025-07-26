@@ -54,14 +54,13 @@ private:
     std::shared_ptr<PanelElement> nextUpgradeTitle[3];
     std::shared_ptr<PanelElement> nextUpgradeInfoButton[3];
 
-    std::shared_ptr<PanelElement> sellButton;
-    std::shared_ptr<PanelElement> sellCost;
-    std::shared_ptr<PanelElement> infoTextbox;
+    std::shared_ptr<PanelElement> sellPrice;
+    std::shared_ptr<PanelElement> buttonInfoTextbox;
+    std::shared_ptr<PanelElement> upgradeInfoTextbox;
 
     // Functions
-    void setPriority(TargetPriority type);
-    void setInfo(Event::Type event);
     std::string getTowerName(TowerType type) const;
+    void pickTower();
 };
 
 #endif // GAME_STATE_H

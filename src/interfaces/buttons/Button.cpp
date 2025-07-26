@@ -106,17 +106,6 @@ void CommingSoon::handleInput() {
     if(!isAvailable || state != Button::State::Clicked) return;
 }
 
-
-StartRound::StartRound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : Button(_texture, _fontSize, _height, _width, _position) {    
-}
-
-void StartRound::handleInput() {
-    Button::handleInput();
-    if(!isAvailable || state != Button::State::Clicked) return;
-
-}
-
 HigherSound::HigherSound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
     : Button(_texture, _fontSize, _height, _width, _position) {
     attach(Game::Instance().getSoundManager());
@@ -175,36 +164,6 @@ void LowerMusic::handleInput() {
         return;
     }
     notify(Event::Type::LowerMusic);
-}
-
-FastForward::FastForward(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
-    : Button(_texture, _fontSize, _height, _width, _position) {
-    isTick = false;
-    attach(Game::Instance().getStateManager());
-}
-
-void FastForward::handleInput() {
-    Button::handleInput();
-    if(!isAvailable || state != Button::State::Clicked) return;
-    isTick = !isTick;
-    if(isTick) notify(Event::Type::TickFastForward);
-    else notify(Event::Type::UntickFastForward);
-}
-
-void FastForward::draw() const {
-    if(!isAvailable) return;
-    
-    // Draw texture 
-    float scale = std::min(((float) width / texture.width), ( (float) height / texture.height));
-    float texWidth = texture.width * scale;
-    float texHeight = texture.height * scale;
-    DrawTextureEx(texture, (Vector2) {position.x + std::max((float) width - texWidth, 0.f) / 2, position.y + std::max((float) height - texHeight, 0.f) / 2}, 0.0f, scale, isTick ? (Color) {150, 150, 150, 255}:WHITE);
-    
-    // Draw text
-    int textWidth = MeasureText(title.c_str(), fontSize);
-    float textX = position.x + (texture.width * scale - textWidth) / 2;
-    float textY = position.y + (texture.height * scale - fontSize) / 2; 
-    DrawText(title.c_str(), textX, textY, fontSize, WHITE);
 }
 
 Continue::Continue(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 

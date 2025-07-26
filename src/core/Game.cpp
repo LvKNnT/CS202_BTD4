@@ -12,7 +12,13 @@ Game::~Game() {
 }
 
 void Game::LoadContent() {
-    // Load UI
+    loadTexture();
+    loadFont();
+    loadSound();
+}
+
+void Game::loadTexture() {
+        // Load UI
     textureManager.loadTexture("MainMenu", "../assets/states/MainMenu.png");
     textureManager.loadTexture("MainMenuButton", "../assets/UI/MainMenuButton.png");
     textureManager.loadTexture("Table", "../assets/UI/Table.png");
@@ -33,7 +39,7 @@ void Game::LoadContent() {
     textureManager.loadTexture("FastForward", "../assets/UI/FastForward.png");
     textureManager.loadTexture("OkButton", "../assets/UI/OkButton.png");
     textureManager.loadTexture("Play", "../assets/UI/Play.png");
-    textureManager.loadTexture("PurpleRect", "../assets/UI/PurpleRect.jpg");
+    textureManager.loadTexture("PurpleRect", "../assets/UI/PurpleRect.png");
     textureManager.loadTexture("LeftWhiteTriangle", "../assets/UI/LeftWhiteTriangle.png");
     textureManager.loadTexture("RightWhiteTriangle", "../assets/UI/RightWhiteTriangle.png");
     textureManager.loadTexture("RedRect", "../assets/UI/RedRect.png");
@@ -54,24 +60,14 @@ void Game::LoadContent() {
     textureManager.loadTexture("JungleThumb", "../assets/map/Jungle_thumb.png");
     textureManager.loadTexture("CommingSoon", "../assets/map/CommingSoon.png");
     textureManager.loadTexture("CommingSoon2", "../assets/map/CommingSoon2.png");
-    textureManager.loadTexture("GameStateBackground", "../assets/states/GameStateBackground.jpg");
-
-    // Load fonts
-    fontManager.loadFont("Big", "../assets/font/Luckiest_Guy/LuckiestGuy-Regular.ttf", 60);
-    fontManager.loadFont("Medium-Big", "../assets/font/Squada_One/SquadaOne-Regular.ttf", 45);
-    fontManager.loadFont("Medium", "../assets/font/Squada_One/SquadaOne-Regular.ttf", 30);
-    //fontManager.loadFont("Small", "../assets/font/Luckiest_Guy/LuckiestGuy-Regular.ttf", 15);
-    fontManager.loadFont("SmallBold", "../assets/font/Luckiest_Guy/LuckiestGuy-Regular.ttf", 20);
-    fontManager.loadFont("Small", "../assets/font/Source_Sans_3/static/SourceSans3-Medium.ttf", 20);
-    fontManager.loadFont("SupperSmallBold", "../assets/font/Source_Sans_3/static/SourceSans3-Bold.ttf", 20);
-    fontManager.loadFont("SuperSmall", "../assets/font/Source_Sans_3/static/SourceSans3-Medium.ttf", 15);
-    //fontManager.loadFont("SmallBold", "../assets/font/Source_Sans_3/../assets/font/Source_Sans_3/static/SourceSans3-Bold.ttf", 20);
+    textureManager.loadTexture("GameStateBackground", "../assets/states/GameStateBackground.png");
 
     // Load tower
     textureManager.loadTexture("Dart Monkey Icon", "../assets/tower/Dart_Monkey_Mobile.png");
     textureManager.loadTexture("Bomb Tower Icon", "../assets/tower/Bomb_Tower_2.png");
-    textureManager.loadTexture("Dart Monkey UI", "../assets/tower/Dart_Monkey/000-DartMonkey.png");
+    textureManager.loadTexture("Dart Monkey Info", "../assets/tower/Dart_Monkey/000-DartMonkey.png");
     textureManager.loadTexture("CrossbowMasterUpgradeIcon", "../assets/tower/Dart_Monkey/CrossbowMasterUpgradeIcon.png");
+    textureManager.loadTexture("Sharp Shots Upgrade Icon", "../assets/tower/Dart_Monkey/SharpShotsUpgradeIcon.png");
 
     // Load mode icons
     textureManager.loadTexture("Easy", "../assets/mode/Easy.png");
@@ -82,6 +78,23 @@ void Game::LoadContent() {
     textureManager.loadTexture("AlternateBloons", "../assets/mode/AlternateBloons.png");
     textureManager.loadTexture("Impoppable", "../assets/mode/Impoppable.png");
     textureManager.loadTexture("Apopalyse", "../assets/mode/Apopalypse.png");
+}
+
+void Game::loadFont() {
+    // Load fonts
+    fontManager.loadFont("Big", "../assets/font/Luckiest_Guy/LuckiestGuy-Regular.ttf", 60);
+    fontManager.loadFont("Medium-Big", "../assets/font/Squada_One/SquadaOne-Regular.ttf", 45);
+    fontManager.loadFont("Medium", "../assets/font/Squada_One/SquadaOne-Regular.ttf", 30);
+    //fontManager.loadFont("Small", "../assets/font/Luckiest_Guy/LuckiestGuy-Regular.ttf", 15);
+    fontManager.loadFont("SmallBold", "../assets/font/Luckiest_Guy/LuckiestGuy-Regular.ttf", 20);
+    fontManager.loadFont("Small", "../assets/font/Source_Sans_3/static/SourceSans3-Medium.ttf", 20);
+    fontManager.loadFont("SupperSmallBold", "../assets/font/Source_Sans_3/static/SourceSans3-Bold.ttf", 20);
+    fontManager.loadFont("SuperSmall", "../assets/font/Source_Sans_3/static/SourceSans3-Medium.ttf", 15);
+    //fontManager.loadFont("SmallBold", "../assets/font/Source_Sans_3/../assets/font/Source_Sans_3/static/SourceSans3-Bold.ttf", 20);
+}
+
+void Game::loadSound() {
+
 }
 
 void Game::UnloadContent() {

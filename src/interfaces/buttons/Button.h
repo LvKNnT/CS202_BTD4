@@ -64,12 +64,6 @@ public:
     void handleInput() override;
 };
 
-class StartRound : public Button {
-public:
-    StartRound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-};
-
 class HigherSound : public Button {
 public:
     HigherSound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
@@ -92,15 +86,6 @@ class LowerMusic : public Button {
 public:
     LowerMusic(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
     void handleInput() override;
-};
-
-class FastForward : public Button {
-private:
-    bool isTick;
-public:
-    FastForward(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-    void draw() const override;
 };
 
 class Continue : public Button {

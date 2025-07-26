@@ -1,1 +1,96 @@
 Game Logic Initialized
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Dart bullet reached the end of its life!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Dart bullet reached the end of its life!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Dart bullet reached the end of its life!

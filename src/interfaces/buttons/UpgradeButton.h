@@ -16,6 +16,7 @@ protected:
 class UpgradeLeftButton : public UpgradeButton {
 public:
     UpgradeLeftButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+    void draw() const override;
 };
 
 class UpgradeMiddleButton : public UpgradeButton {
