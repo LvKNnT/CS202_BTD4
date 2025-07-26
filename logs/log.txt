@@ -17,6 +17,1154 @@ Enemy BTD6Red hit with damage: 0
 Enemy BTD6Red is still alive with health: 1
 Enemy BTD6Red hit with damage: 1
 Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+BTD6CamoRed reached the end of the track!
+BTD6CamoRed reached the end of the track!
+BTD6CamoRed reached the end of the track!
+BTD6CamoRed reached the end of the track!
+BTD6CamoRed reached the end of the track!
+BTD6CamoRed reached the end of the track!
+BTD6CamoRed reached the end of the track!
+BTD6CamoRed reached the end of the track!
+BTD6CamoRed reached the end of the track!
+BTD6CamoRed reached the end of the track!
+BTD6CamoRed reached the end of the track!
+BTD6CamoRed reached the end of the track!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Black hit with damage: 1
+Black bloon popped!
+Enemy BTD6Pink hit with damage: 0
+Enemy BTD6Pink is still alive with health: 1
+Enemy BTD6Pink hit with damage: 0
+Enemy BTD6Pink is still alive with health: 1
+Enemy BTD6Pink hit with damage: 1
+Pink bloon popped!
+Enemy BTD6Yellow hit with damage: 0
+Enemy BTD6Yellow is still alive with health: 1
+Enemy BTD6Yellow hit with damage: 1
+Yellow bloon popped!
+Enemy BTD6Green hit with damage: 0
+Enemy BTD6Green is still alive with health: 1
+Enemy BTD6Pink hit with damage: 1
+Pink bloon popped!
+Enemy BTD6Yellow hit with damage: 0
+Enemy BTD6Yellow is still alive with health: 1
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Yellow hit with damage: 1
+Yellow bloon popped!
+Enemy BTD6Green hit with damage: 0
+Enemy BTD6Green is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Dart bullet reached the end of its life!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Dart bullet reached the end of its life!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Dart bullet reached the end of its life!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Dart bullet reached the end of its life!
+Enemy BTD6Black hit with damage: 1
+Black bloon popped!
+Enemy BTD6Pink hit with damage: 0
+Enemy BTD6Pink is still alive with health: 1
+Enemy BTD6Pink hit with damage: 0
+Enemy BTD6Pink is still alive with health: 1
+Enemy BTD6Pink hit with damage: 1
+Pink bloon popped!
+Enemy BTD6Yellow hit with damage: 0
+Enemy BTD6Yellow is still alive with health: 1
+Dart bullet reached the end of its life!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Dart bullet reached the end of its life!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Pink hit with damage: 1
+Pink bloon popped!
+Enemy BTD6Yellow hit with damage: 0
+Enemy BTD6Yellow is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Yellow hit with damage: 1
+Yellow bloon popped!
+Enemy BTD6Green hit with damage: 0
+Enemy BTD6Green is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+BTD6Yellow reached the end of the track!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+BTD6Red reached the end of the track!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Yellow hit with damage: 1
+Yellow bloon popped!
+Enemy BTD6Green hit with damage: 0
+Enemy BTD6Green is still alive with health: 1
+Enemy BTD6Yellow hit with damage: 1
+Yellow bloon popped!
+Enemy BTD6Green hit with damage: 0
+Enemy BTD6Green is still alive with health: 1
+Enemy BTD6Yellow hit with damage: 1
+Yellow bloon popped!
+Enemy BTD6Green hit with damage: 0
+Enemy BTD6Green is still alive with health: 1
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Yellow hit with damage: 1
+Yellow bloon popped!
+Enemy BTD6Green hit with damage: 0
+Enemy BTD6Green is still alive with health: 1
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Yellow hit with damage: 1
+Yellow bloon popped!
+Enemy BTD6Green hit with damage: 0
+Enemy BTD6Green is still alive with health: 1
+Enemy BTD6Yellow hit with damage: 1
+Yellow bloon popped!
+Enemy BTD6Green hit with damage: 0
+Enemy BTD6Green is still alive with health: 1
+Dart bullet reached the end of its life!
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Dart bullet reached the end of its life!
 Dart bullet reached the end of its life!
 Dart bullet reached the end of its life!
 Enemy BTD6Blue hit with damage: 1
@@ -26,7 +1174,10 @@ Enemy BTD6Red is still alive with health: 1
 Enemy BTD6Red hit with damage: 1
 Red bloon popped!
 Dart bullet reached the end of its life!
-Dart bullet reached the end of its life!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
 Enemy BTD6Blue hit with damage: 1
 Blue bloon popped!
 Enemy BTD6Red hit with damage: 0
@@ -34,63 +1185,63 @@ Enemy BTD6Red is still alive with health: 1
 Enemy BTD6Red hit with damage: 1
 Red bloon popped!
 Dart bullet reached the end of its life!
-Dart bullet reached the end of its life!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
 Enemy BTD6Blue hit with damage: 1
 Blue bloon popped!
 Enemy BTD6Red hit with damage: 0
 Enemy BTD6Red is still alive with health: 1
 Enemy BTD6Red hit with damage: 1
 Red bloon popped!
-Dart bullet reached the end of its life!
-Dart bullet reached the end of its life!
+Enemy BTD6Yellow hit with damage: 1
+Yellow bloon popped!
+Enemy BTD6Green hit with damage: 0
+Enemy BTD6Green is still alive with health: 1
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Yellow hit with damage: 1
+Yellow bloon popped!
+Enemy BTD6Green hit with damage: 0
+Enemy BTD6Green is still alive with health: 1
+Enemy BTD6Red hit with damage: 1
+Red bloon popped!
+Enemy BTD6Yellow hit with damage: 1
+Yellow bloon popped!
+Enemy BTD6Green hit with damage: 0
+Enemy BTD6Green is still alive with health: 1
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Blue hit with damage: 1
+Blue bloon popped!
+Enemy BTD6Red hit with damage: 0
+Enemy BTD6Red is still alive with health: 1
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
 Enemy BTD6Blue hit with damage: 1
 Blue bloon popped!
 Enemy BTD6Red hit with damage: 0
 Enemy BTD6Red is still alive with health: 1
 Enemy BTD6Red hit with damage: 1
 Red bloon popped!
-Dart bullet reached the end of its life!
-Dart bullet reached the end of its life!
-Enemy BTD6Blue hit with damage: 1
-Blue bloon popped!
-Enemy BTD6Red hit with damage: 0
-Enemy BTD6Red is still alive with health: 1
 Enemy BTD6Red hit with damage: 1
 Red bloon popped!
-Dart bullet reached the end of its life!
-Dart bullet reached the end of its life!
-Enemy BTD6Blue hit with damage: 1
-Blue bloon popped!
-Enemy BTD6Red hit with damage: 0
-Enemy BTD6Red is still alive with health: 1
-Enemy BTD6Red hit with damage: 1
-Red bloon popped!
-Dart bullet reached the end of its life!
-Dart bullet reached the end of its life!
-Enemy BTD6Blue hit with damage: 1
-Blue bloon popped!
-Enemy BTD6Red hit with damage: 0
-Enemy BTD6Red is still alive with health: 1
-Enemy BTD6Red hit with damage: 1
-Red bloon popped!
-Enemy BTD6Red hit with damage: 1
-Red bloon popped!
-Dart bullet reached the end of its life!
-Enemy BTD6Red hit with damage: 1
-Red bloon popped!
-Enemy BTD6Red hit with damage: 1
-Red bloon popped!
-Enemy BTD6Red hit with damage: 1
-Red bloon popped!
-Enemy BTD6Red hit with damage: 1
-Red bloon popped!
-Dart bullet reached the end of its life!
-Enemy BTD6Red hit with damage: 1
-Red bloon popped!
-Enemy BTD6Red hit with damage: 1
-Red bloon popped!
-Enemy BTD6Red hit with damage: 1
-Red bloon popped!
-Enemy BTD6Red hit with damage: 1
-Red bloon popped!
-Dart bullet reached the end of its life!
+Enemy BTD6Green hit with damage: 1
+Green bloon popped!
+Enemy BTD6Blue hit with damage: 0
+Enemy BTD6Blue is still alive with health: 1
