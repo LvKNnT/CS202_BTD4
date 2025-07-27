@@ -117,18 +117,28 @@ int LogicManager::runBullet(Bullet& bullet, const Map& map) {
     return 0;
 }
 
-void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyManager& enemyManager, TowerManager& towerManager, MapManager& mapManager) {
+void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyManager& enemyManager, TowerManager& towerManager, MapManager& mapManager, ResourceManager& resourceManager) {
     for (auto bulletIt = bulletManager.bulletList.begin(); bulletIt != bulletManager.bulletList.end(); ) {
         bool isBulletAlive = true;
 
-        for (auto enemyIt = enemyManager.enemyList.begin(); enemyIt != enemyManager.enemyList.end() && isBulletAlive; ++enemyIt) {
-            if((*enemyIt)->isActiveFlag == false) continue;
-            if((*bulletIt)->canHitCamo == false && (*enemyIt)->properties.isCamo == true) continue; 
+        std::cerr << "Checking bullet " << (*bulletIt)->tag << std::endl;
+
+        for (auto enemyIt = enemyManager.enemyList.begin(); enemyIt != enemyManager.enemyList.end() && isBulletAlive; ) {
+            if((*enemyIt)->isActiveFlag == false) {
+                ++enemyIt; 
+                continue;
+            }
+            if((*bulletIt)->canHitCamo == false && (*enemyIt)->properties.isCamo == true) {
+                ++enemyIt; 
+                continue;
+            }
+
+            std::cerr << "Checking enemy " << (*enemyIt)->tag << std::endl;
             
             if (checkCollision(**bulletIt, **enemyIt)) {
                 int popCount = 0;
                 std::vector<std::unique_ptr<Enemy>> children;
-                children = getChildrenEnemies(enemyManager, **enemyIt, (*bulletIt)->damage, popCount);
+                children = getChildrenEnemies(enemyManager, **enemyIt, (*bulletIt)->damage, popCount, resourceManager);
 
                 // Add the pop count to the original tower
                 for (auto& tower : towerManager.towerList) {
@@ -140,11 +150,16 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
                 // Every collision costs bullet damage
                 if((*enemyIt)->health <= 0) {
                     enemyIt = enemyManager.enemyList.erase(enemyIt); // Remove the current enemy
+
+                    if(!children.empty()) {
+                        enemyIt = enemyManager.enemyList.insert(enemyIt, 
+                            std::make_move_iterator(children.begin()), 
+                            std::make_move_iterator(children.end()));
+                    }
                 }
-                if(!children.empty()) {
-                    enemyIt = enemyManager.enemyList.insert(enemyIt, 
-                        std::make_move_iterator(children.begin()), 
-                        std::make_move_iterator(children.end()));
+                else {
+                    std::cerr << "not die" << std::endl;
+                    ++enemyIt;
                 }
 
                 // Every collision cost 1 pierce
@@ -153,13 +168,14 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
                     isBulletAlive = false;
                 }
             }
+            else ++enemyIt;
         }
 
         if(isBulletAlive && bulletIt != bulletManager.bulletList.end()) ++bulletIt;
     }
 }
 
-std::vector<std::unique_ptr<Enemy>> LogicManager::getChildrenEnemies(EnemyManager& enemyManager, Enemy& enemy, int damage, int& popCount) {
+std::vector<std::unique_ptr<Enemy>> LogicManager::getChildrenEnemies(EnemyManager& enemyManager, Enemy& enemy, int damage, int& popCount, ResourceManager& resourceManager) const {
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::app);
     flog << "Enemy " << enemy.tag << " hit with damage: " << damage << std::endl;
     flog.close();
@@ -168,6 +184,8 @@ std::vector<std::unique_ptr<Enemy>> LogicManager::getChildrenEnemies(EnemyManage
         popCount += damage;
         return {};
     }
+
+    resourceManager.currentResource.cash += enemy.reward; // Add reward for popping the enemy
 
     std::vector<std::unique_ptr<Enemy>> childrenEnemies;
     childrenEnemies = enemyManager.spawnChildrenEnemies(&enemy);
@@ -178,7 +196,7 @@ std::vector<std::unique_ptr<Enemy>> LogicManager::getChildrenEnemies(EnemyManage
     std::vector<std::unique_ptr<Enemy> > finalChildrenEnemies;
 
     for(auto& child : childrenEnemies) {
-        std::vector<std::unique_ptr<Enemy> > subChildren = getChildrenEnemies(enemyManager, *child, remainingHealth, popCount);
+        std::vector<std::unique_ptr<Enemy> > subChildren = getChildrenEnemies(enemyManager, *child, remainingHealth, popCount, resourceManager);
 
         if(!subChildren.empty()) {
             // If there are sub-children, add them to the final list
@@ -450,6 +468,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 tower->upgradeTop->update(tower->attacks);
                 tower->info["descriptionTop"] = tower->upgradeTop->getDescription();
                 tower->cost += tower->upgradeTop->getCost() * tower->upgradeCost;
+                resourceManager.currentResource.cash -= tower->upgradeTop->getCost() * tower->upgradeCost;
 
                 tower->upgradeTop = tower->upgradeTop->buy();
                 tower->info["nameUpgradeTop"] = tower->upgradeTop->getName();
@@ -464,6 +483,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 tower->upgradeMiddle->update(tower->attacks);
                 tower->info["descriptionMiddle"] = tower->upgradeMiddle->getDescription();
                 tower->cost += tower->upgradeMiddle->getCost() * tower->upgradeCost;
+                resourceManager.currentResource.cash -= tower->upgradeMiddle->getCost() * tower->upgradeCost;
 
                 tower->upgradeMiddle = tower->upgradeMiddle->buy();
                 tower->info["nameUpgradeMiddle"] = tower->upgradeMiddle->getName();
@@ -478,6 +498,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 tower->upgradeBottom->update(tower->attacks);
                 tower->info["descriptionBottom"] = tower->upgradeBottom->getDescription();
                 tower->cost += tower->upgradeBottom->getCost() * tower->upgradeCost;
+                resourceManager.currentResource.cash -= tower->upgradeBottom->getCost() * tower->upgradeCost;
 
                 tower->upgradeBottom = tower->upgradeBottom->buy();
                 tower->info["nameUpgradeBottom"] = tower->upgradeBottom->getName();

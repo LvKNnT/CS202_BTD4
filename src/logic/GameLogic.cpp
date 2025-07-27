@@ -8,12 +8,12 @@ void GameLogic::init() {
 
     // Currently working on create new game 
     // parameters
-    const Difficulty difficulty = Difficulty::Easy; // Default difficulty for testing
+    const Difficulty difficulty = Difficulty::Medium; // Default difficulty for testing
     const MapType mapType = MapType::MonkeyLane; // Default map type for testing
     const ModeType modeType = ModeType::Alternative; // Default mode type for testing
 
     // stimulate what will happen in the game
-    init(difficulty, mapType, modeType); // same same but different
+    // init(difficulty, mapType, modeType); // same same but different
     init(mapType);
     init(difficulty);
     init(modeType);
@@ -21,7 +21,6 @@ void GameLogic::init() {
     //putTower(TowerType::DartMonkey, {200.0f, 230.0f}); // draging tower
     putTower(TowerType::DartMonkey, {125.0f, 230.0f}); // draging tower
     spawnTower(); // default state on the map
-    pickTower({125.0f, 230.0f}); // when choosing this tower
     
     // Resetting log file
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::trunc);  
@@ -70,11 +69,14 @@ void GameLogic::update() {
         mapManager.updateMap();
         enemyManager.updateEnemies();
 
+        std::cerr << "Updating round..." << std::endl;
         if(logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager)) {
             autoSave(); 
         }
 
-        logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager);
+        std::cerr << "Updating bullet hit enemies..." << std::endl;
+        logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager, resourceManager);
+        std::cerr << "Updating enemies..." << std::endl;
         logicManager.updateEnemies(enemyManager, mapManager, resourceManager);
         logicManager.updateBullets(bulletManager, mapManager);
         logicManager.updateTowers(towerManager, enemyManager, bulletManager);
