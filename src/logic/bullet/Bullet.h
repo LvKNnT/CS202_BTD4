@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <string>
+#include <set>
 
 // We use design pattern Template Method Pattern to create bullets
 
@@ -34,13 +35,14 @@ protected:
     int speed; // Speed of the bullet
     int pierce; // Number of targets the bullet can pierce through
     float lifeSpan; // Life span of the bullet in frames
-    bool canHitCamo; // Whether the bullet can hit camo targets
+    BulletProperties properties; // Properties of the bullet, such as canHitCamo
 
     // Position and rotation for movement
     Vector2 position; // Position of the bullet
     float rotation; // Rotation angle for the bullet
 
     int towerId; // ID of the tower that created this bullet, if applicable
+    std::set<int> hitEnemies; // Set of enemy IDs that this bullet has hit
 };
 
 #endif  // BULLET_H

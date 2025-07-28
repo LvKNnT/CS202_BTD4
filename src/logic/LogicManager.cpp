@@ -121,21 +121,34 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
     for (auto bulletIt = bulletManager.bulletList.begin(); bulletIt != bulletManager.bulletList.end(); ) {
         bool isBulletAlive = true;
 
-        std::cerr << "Checking bullet " << (*bulletIt)->tag << std::endl;
-
         for (auto enemyIt = enemyManager.enemyList.begin(); enemyIt != enemyManager.enemyList.end() && isBulletAlive; ) {
             if((*enemyIt)->isActiveFlag == false) {
                 ++enemyIt; 
                 continue;
             }
-            if((*bulletIt)->canHitCamo == false && (*enemyIt)->properties.isCamo == true) {
+
+            // bullet goes through enemies section
+            if((*bulletIt)->properties.canCamo == false && (*enemyIt)->properties.isCamo) {
                 ++enemyIt; 
                 continue;
             }
-
-            std::cerr << "Checking enemy " << (*enemyIt)->tag << std::endl;
+            if((*bulletIt)->hitEnemies.find((*enemyIt)->enemyId) != (*bulletIt)->hitEnemies.end()) {
+                // Bullet has already hit this enemy
+                ++enemyIt; 
+                continue;
+            }
             
             if (checkCollision(**bulletIt, **enemyIt)) {
+                // bullet touch but cannot destroy enemy
+                if(!canBulletDestroyEnemy(**bulletIt, **enemyIt)) {
+                    bulletIt = bulletManager.bulletList.erase(bulletIt);
+                    isBulletAlive = false;
+                    continue; 
+                }
+
+                // mark the enemy as hit by this bullet
+                (*bulletIt)->hitEnemies.insert((*enemyIt)->enemyId);
+
                 int popCount = 0;
                 std::vector<std::unique_ptr<Enemy>> children;
                 children = getChildrenEnemies(enemyManager, **enemyIt, (*bulletIt)->damage, popCount, resourceManager);
@@ -150,17 +163,14 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
                 // Every collision costs bullet damage
                 if((*enemyIt)->health <= 0) {
                     enemyIt = enemyManager.enemyList.erase(enemyIt); // Remove the current enemy
-
+                    
                     if(!children.empty()) {
                         enemyIt = enemyManager.enemyList.insert(enemyIt, 
                             std::make_move_iterator(children.begin()), 
                             std::make_move_iterator(children.end()));
                     }
                 }
-                else {
-                    std::cerr << "not die" << std::endl;
-                    ++enemyIt;
-                }
+                else ++enemyIt;
 
                 // Every collision cost 1 pierce
                 if((*bulletIt)->hit(1)) {
@@ -173,6 +183,37 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
 
         if(isBulletAlive && bulletIt != bulletManager.bulletList.end()) ++bulletIt;
     }
+}
+
+bool LogicManager::canBulletDestroyEnemy(const Bullet& bullet, const Enemy& enemy) const {
+    // camo
+    if(!bullet.properties.canCamo && enemy.properties.isCamo) {
+        return false;
+    }
+
+    // special properties
+    if(bullet.properties.canLead == false
+    && (enemy.type == BloonType::Lead || enemy.type == BloonType::Ddt)) {
+        return false;
+    }
+    if(bullet.properties.canBlack == false
+    && (enemy.type == BloonType::Black || enemy.type == BloonType::Zebra || enemy.type == BloonType::Ddt)) {
+        return false;
+    }
+    if(bullet.properties.canWhite == false
+    && (enemy.type == BloonType::White || enemy.type == BloonType::Zebra)) {
+        return false;
+    }
+    if(bullet.properties.canFrozen == false
+    && (enemy.properties.isFrozen)) {
+        return false;
+    }
+    if(bullet.properties.canPurple == false
+    && (enemy.type == BloonType::Purple)) {
+        return false;
+    }
+
+    return true;
 }
 
 std::vector<std::unique_ptr<Enemy>> LogicManager::getChildrenEnemies(EnemyManager& enemyManager, Enemy& enemy, int damage, int& popCount, ResourceManager& resourceManager) const {
@@ -209,10 +250,6 @@ std::vector<std::unique_ptr<Enemy>> LogicManager::getChildrenEnemies(EnemyManage
         }
     }
 
-    for(auto& child : finalChildrenEnemies) {
-        child->trackIndex = enemy.trackIndex; // Set the track index to the same as the parent enemy
-        child->pathIndex = enemy.pathIndex; // Set the path index to the same as the parent enemy
-    }
     return finalChildrenEnemies;
 }
 

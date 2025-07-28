@@ -218,7 +218,7 @@ void EnemySpawner::init() {
     regrowEnemyTemplates[BloonType::Rainbow] = std::make_unique<Ceramic>();
 }
 
-std::unique_ptr<Enemy> EnemySpawner::getEnemy(BloonType type, BloonProperties properties, Vector2 position, int pathIndex, EnemyModifies modifies) {
+std::unique_ptr<Enemy> EnemySpawner::getEnemy(BloonType type, BloonProperties properties, Vector2 position, int pathIndex, int enemyId, EnemyModifies modifies) {
     auto it = enemyTemplates.find(type);
     if (it != enemyTemplates.end()) {
         std::unique_ptr<Enemy> enemy = it->second->clone();
@@ -226,6 +226,8 @@ std::unique_ptr<Enemy> EnemySpawner::getEnemy(BloonType type, BloonProperties pr
         enemy->position = position; 
         // enemy->trackIndex = 0; 
         enemy->pathIndex = pathIndex; 
+        enemy->enemyId = enemyId; 
+        
         enemy->setModifies(modifies); 
         enemy->loadTexture();
 
@@ -252,6 +254,8 @@ std::vector<std::unique_ptr<Enemy>> EnemySpawner::getChildrenEnemies(Enemy* enem
             childEnemy->position = enemy->position;
             childEnemy->trackIndex = enemy->trackIndex;
             childEnemy->pathIndex = enemy->pathIndex;
+            childEnemy->enemyId = enemy->enemyId; 
+
             childEnemy->setModifies(modifies);
             childEnemy->loadTexture();
 
@@ -282,6 +286,7 @@ void EnemySpawner::getRegrowEnemy(std::unique_ptr<Enemy>& enemy, EnemyModifies m
         regrowEnemy->position = enemy->position; 
         regrowEnemy->trackIndex = enemy->trackIndex;
         regrowEnemy->pathIndex = enemy->pathIndex;
+        regrowEnemy->enemyId = enemy->enemyId;
 
         regrowEnemy->setModifies(modifies);
         regrowEnemy->loadTexture();

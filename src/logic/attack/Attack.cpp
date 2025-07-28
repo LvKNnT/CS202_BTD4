@@ -1,7 +1,7 @@
 #include "Attack.h"
 
-Attack::Attack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, bool canSeeCamo)
-    : range(range), cooldown(cooldown), timer(0.0f), position(position), towerId(towerId), damage(damage), speed(speed), pierce(pierce), lifeSpan(lifeSpan), canSeeCamo(canSeeCamo) {
+Attack::Attack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties)
+    : range(range), cooldown(cooldown), timer(0.0f), position(position), towerId(towerId), damage(damage), speed(speed), pierce(pierce), lifeSpan(lifeSpan), properties(properties) {
     // Constructor implementation can be extended if needed
 }
 

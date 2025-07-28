@@ -40,8 +40,9 @@ private:
     int runEnemy(Enemy& enemy, const Map& map);
     int runBullet(Bullet& bullet, const Map& map);
     bool checkCollision(const Bullet& bullet, const Enemy& enemy) const;
+    bool canBulletDestroyEnemy(const Bullet& bullet, const Enemy& enemy) const;
     std::vector<std::unique_ptr<Enemy>> getChildrenEnemies(EnemyManager& enemyManager, Enemy& enemy, int damage, int& popCount, ResourceManager& resourceManager) const;
-
+    
     // sub-methods
     float distancePointLine(Vector2 point, Vector2 lineStart, Vector2 lineEnd) const;
     bool autoPlayRound = true;

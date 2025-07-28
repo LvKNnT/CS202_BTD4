@@ -62,21 +62,17 @@ void GameLogic::update() {
         // Update game result
         if(resourceManager.isEndGame() != 0) {
             std::cerr << "Game Over! Result: " << resourceManager.isEndGame() << std::endl;
-            return;
         }
 
         // Update by the managers
         mapManager.updateMap();
         enemyManager.updateEnemies();
 
-        std::cerr << "Updating round..." << std::endl;
-        if(logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager)) {
+        if(resourceManager.isEndGame() == 0 && logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager)) {
             autoSave(); 
         }
 
-        std::cerr << "Updating bullet hit enemies..." << std::endl;
         logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager, resourceManager);
-        std::cerr << "Updating enemies..." << std::endl;
         logicManager.updateEnemies(enemyManager, mapManager, resourceManager);
         logicManager.updateBullets(bulletManager, mapManager);
         logicManager.updateTowers(towerManager, enemyManager, bulletManager);
