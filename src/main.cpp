@@ -17,6 +17,7 @@ int main() {
     SetTargetFPS(60);         
     SetExitKey(0);
     
+    InitAudioDevice();  
     Game &game = Game::Instance();
     game.LoadContent();
     game.initialize();

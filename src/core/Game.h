@@ -4,11 +4,10 @@
 #include <memory>
 
 // UI/UX
-#include "../managers/TextureManager.h"
-#include "../managers/FontManager.h"
-#include "../managers/StateManager.h"
-#include "../managers/SoundLoader.h"
-#include "../managers/SoundManager.h"
+#include "../interfaces/managers/StateManager.h"
+#include "../interfaces/managers/TextureManager.h"
+#include "../interfaces/managers/FontManager.h"
+#include "../interfaces/managers/AudioManager.h"
 #include "../interfaces/states/StateStack.h"
 #include "../interfaces/states/MainMenuState.h"
 #include "../interfaces/states/LoadingState.h"
@@ -35,8 +34,7 @@ public:
 
     TextureManager &getTextureManager();
     FontManager &getFontManager();
-    SoundLoader &getSoundLoader();
-    std::shared_ptr<IObserver> getSoundManager();
+    std::shared_ptr<IObserver> getAudioManager();
     std::shared_ptr<IObserver> getStateManager();
 
     GameLogic &getGameLogic();
@@ -46,9 +44,8 @@ private:
     // Managers
     TextureManager textureManager;
     FontManager fontManager;
-    SoundLoader soundLoader;
     // pointer for observer pattern
-    std::shared_ptr<IObserver> soundManager;
+    std::shared_ptr<IObserver> audioManager;
     std::shared_ptr<IObserver> stateManager;    
 
     GameLogic gameLogic;

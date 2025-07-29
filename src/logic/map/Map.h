@@ -31,14 +31,14 @@ public:
 
     // Basics settings
     virtual void loadTexture() = 0;
-    void draw() const override;
     virtual void update() = 0;
     virtual std::pair<Vector2, int> getPositionAndPathIdx(BloonType type) = 0; 
+    void draw() const override;
     void unLoad();
-
-    // These functions should be the same for all maps
-    bool canPlaceTowerHere(Vector2 position) const; // For towers
+    
+    // Get the type of points
     Point::Type getPointType(int index, int pathIdx = 0) const; // For enemies
+    virtual Point::Type getTowerPointType(Vector2 position) const; // For towers
 
     // only pass pathIdx when we are in jungle_lane
     Vector2 getCurrentPoint(int index, int pathIdx = 0) const;

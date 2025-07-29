@@ -221,6 +221,7 @@ void GameState::update(Event::Type event) {
             break;
         case Event::Type::SellTower:
             Game::Instance().getGameLogic().sellTower();
+            unpickTower();
             break;
         default:
             break;
@@ -259,13 +260,7 @@ void GameState::handleInput() {
         if(clickedTowerType != TowerType::None) {
             clickedTowerType = TowerType::None;
             Game::Instance().getGameLogic().unPutTower();
-        }
-        
-        if(towerPanel->getIsAvailable()) {
-            towerPanel->setAvailable(false);
-            roundPanel->setAvailable(true);
-            //Game::Instance().getGameLogic().unPickTower();
-        }
+        } else unpickTower();
         return;
     }    
     
@@ -349,5 +344,14 @@ void GameState::pickTower() {
         std::dynamic_pointer_cast<TextureField>(towerTex)->setTexture(Game::Instance().getTextureManager().getTexture(curTowerInfos["name"] + " Info"));
         std::dynamic_pointer_cast<TextField>(priorityTitle)->setText(curTowerInfos["targetPriority"]);
         std::dynamic_pointer_cast<TextField>(sellPrice)->setText("$" + curTowerInfos["sellPrice"]);
+    } else {
+        unpickTower();
+    }
+}
+
+void GameState::unpickTower() {
+    if(towerPanel->getIsAvailable()) {
+        roundPanel->setAvailable(true);
+        towerPanel->setAvailable(false);
     }
 }

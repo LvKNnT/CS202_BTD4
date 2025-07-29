@@ -9,6 +9,7 @@ protected:
     std::string text;
     Font font;
     Color color;
+    bool hasOutline;
 
     void formatText();
 public:

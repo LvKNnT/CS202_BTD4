@@ -3,7 +3,7 @@
 #include "iostream"
 
 TextField::TextField(const std::string &_text, const Font &_font, const Color &_color, int _height, int _width, Vector2 _position)
-    : PanelElement(_height, _width, _position), text(_text), font(_font), color(_color) {
+    : PanelElement(_height, _width, _position), text(_text), font(_font), color(_color){
     if(width) formatText();
 }
 
@@ -54,6 +54,7 @@ void TextField::draw() const {
     }
 
     float textWidth = MeasureTextEx(font, text.c_str(), height, 0).x;
+    
     DrawTextEx(font, text.c_str(), (Vector2) {position.x + isOneLine * (width - textWidth) / 2, position.y}, height, 0, color);
 }
 
