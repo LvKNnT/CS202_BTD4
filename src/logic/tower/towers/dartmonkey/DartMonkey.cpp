@@ -16,13 +16,13 @@ DartMonkey::DartMonkey(Vector2 position)
     /**
      * * range = 100.0f
      * * cooldown = 1.0f
-     * * * position = {0.0f, 0.0f}
      * * * damage = 1
      * * * speed = 200
-     * * * pierce = 1
+     * * * pierce = 2
      * * * lifeSpan = 1.0f
+     * * * properties = {false, false, false, false, false} // canHitCamo, canHitLead, canHitFrozen, canHitRegrow, canHitBlack
      */
-    attacks.push_back(std::make_unique<DartAttack>(100.0f, 0.1f, position, towerId, 1, 200, 1, 1.0f, false));
+    attacks.push_back(std::make_unique<DartAttack>(100.0f, 1.0f, position, towerId, 1, 400, 2, 1.0f, BulletProperties::normal())); 
 
     // Upgrade Path
     upgradeTop = std::make_unique<SharpShots>();
@@ -102,6 +102,10 @@ void DartMonkey::draw() const {
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,
                    WHITE); // Draw the Dart Monkey texture with the specified position and rotation
+
+    // draw the hitbox
+    Rectangle hitbox = getBoundingBox();
+    DrawRectangleLinesEx(hitbox, 2.0f, RED); // Draw the hitbox in red for visibility
 }
 
 void DartMonkey::drawRange() const {

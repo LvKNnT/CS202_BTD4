@@ -4,6 +4,7 @@ SharpShots::SharpShots()
     : Upgrade("Sharp Shots", 140, "Can pop 1 extra Bloon per shot.") {
     // Constructor implementation can be extended if needed
     nextUpgrade = std::make_unique<Upgrade>(); // Temporary lmao
+    tag = "SharpShots";
 }
 
 SharpShots::SharpShots(const SharpShots& other)

@@ -10,6 +10,7 @@ public:
     SharpShots();
     SharpShots(const SharpShots& other);
     std::unique_ptr<Upgrade> clone() const override;
+    ~SharpShots() override = default;
 
     // Override all methods from Upgrade
     void loadTexture();

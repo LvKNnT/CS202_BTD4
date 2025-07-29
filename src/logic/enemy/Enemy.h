@@ -45,6 +45,8 @@ protected:
     
     BloonType regrowLimit;
     float regrowTimer;
+
+    int enemyId; // Unique ID for the enemy instance
 };
 
 #endif // ENEMY_H

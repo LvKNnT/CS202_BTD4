@@ -6,7 +6,7 @@
 
 class DartAttack : public Attack {
 public:
-    DartAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, bool canSeeCamo);
+    DartAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties Properties);
     ~DartAttack() override = default;
 
     std::unique_ptr<Attack> clone() const override;

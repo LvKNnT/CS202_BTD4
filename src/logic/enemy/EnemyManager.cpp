@@ -42,7 +42,7 @@ EnemyManager& EnemyManager::operator=(const EnemyManager& other) {
 }
 
 void EnemyManager::spawnEnemy(BloonType type, BloonProperties properties, Vector2 position, int pathIndex) {
-    std::unique_ptr<Enemy> enemy = enemySpawner->getEnemy(type, properties, position, pathIndex, currentModifies);
+    std::unique_ptr<Enemy> enemy = enemySpawner->getEnemy(type, properties, position, pathIndex, currentEnemyId++, currentModifies);
     
     if (enemy) {
         enemyList.push_back(std::move(enemy));
