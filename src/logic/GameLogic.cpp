@@ -8,20 +8,19 @@ void GameLogic::init() {
 
     // Currently working on create new game 
     // parameters
-    const Difficulty difficulty = Difficulty::Easy; // Default difficulty for testing
+    const Difficulty difficulty = Difficulty::Medium; // Default difficulty for testing
     const MapType mapType = MapType::MonkeyLane; // Default map type for testing
     const ModeType modeType = ModeType::Alternative; // Default mode type for testing
 
     // stimulate what will happen in the game
-    init(difficulty, mapType, modeType); // same same but different
+    // init(difficulty, mapType, modeType); // same same but different
     init(mapType);
     init(difficulty);
     init(modeType);
 
-    putTower(TowerType::DartMonkey, {200.0f, 230.0f}); // draging tower
-    // putTower(TowerType::DartMonkey, {125.0f, 230.0f}); // draging tower
-    // spawnTower(); // default state on the map
-    // pickTower({125.0f, 230.0f}); // when choosing this tower
+    //putTower(TowerType::DartMonkey, {200.0f, 230.0f}); // draging tower
+    putTower(TowerType::DartMonkey, {125.0f, 230.0f}); // draging tower
+    spawnTower(); // default state on the map
     
     // Resetting log file
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::trunc);  
@@ -63,18 +62,17 @@ void GameLogic::update() {
         // Update game result
         if(resourceManager.isEndGame() != 0) {
             std::cerr << "Game Over! Result: " << resourceManager.isEndGame() << std::endl;
-            return;
         }
 
         // Update by the managers
         mapManager.updateMap();
         enemyManager.updateEnemies();
 
-        if(logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager)) {
+        if(resourceManager.isEndGame() == 0 && logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager)) {
             autoSave(); 
         }
 
-        logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager);
+        logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager, resourceManager);
         logicManager.updateEnemies(enemyManager, mapManager, resourceManager);
         logicManager.updateBullets(bulletManager, mapManager);
         logicManager.updateTowers(towerManager, enemyManager, bulletManager);
@@ -103,6 +101,10 @@ int GameLogic::isEndGame() const {
 
 void GameLogic::pickTower(Vector2 position) {
     towerManager.pickTower(position);
+}
+
+void GameLogic::unPickTower() {
+    towerManager.unPickTower();
 }
 
 void GameLogic::putTower(TowerType type, Vector2 position) {

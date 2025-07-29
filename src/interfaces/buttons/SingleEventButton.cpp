@@ -115,3 +115,10 @@ PreviousPriority::PreviousPriority(const Texture &_texture, int _fontSize, int _
     attach(Game::Instance().getStateManager());
     event = Event::Type::PreviousPriority;
 }
+
+SellButton::SellButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
+    : SingleEventButton(_texture, _fontSize, _height, _width, _position){
+    title = "SELL";
+    attach(Game::Instance().getStateManager());
+    event = Event::Type::SellTower;
+}

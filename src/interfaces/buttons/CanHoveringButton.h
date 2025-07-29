@@ -26,24 +26,36 @@ public:
 };
 
 
-class StandardMode : public ModeButton {
+class StandardModeButton : public ModeButton {
 public:
-    StandardMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+    StandardModeButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
-class AlternateBloonsMode : public ModeButton {
+class AlternateBloonsModeButton : public ModeButton {
 public:
-    AlternateBloonsMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+    AlternateBloonsModeButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
-class ReverseMode : public ModeButton {
+class ReverseModeButton : public ModeButton {
 public:
-    ReverseMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+    ReverseModeButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
-class ApopalyseMode : public ModeButton {
+class ApopalyseModeButton : public ModeButton {
 public:
-    ApopalyseMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+    ApopalyseModeButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+// Tower buttons
+
+class ChooseBombTower : public CanHoveringButton {
+public:
+    ChooseBombTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class ChooseDartMonkeyTower : public CanHoveringButton {
+public:
+    ChooseDartMonkeyTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
 #endif // CAN_HOVERING_BUTTON_H

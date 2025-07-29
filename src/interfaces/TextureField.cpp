@@ -27,6 +27,10 @@ void TextureField::draw() const {
     }
 }
 
+void TextureField::setTexture(const Texture &newTexture, int idx) {
+    textureList[idx].setTexture(newTexture);
+}
+
 void TextureField::draw(int idx, float rotation) const {
     if(!isAvailable) return;
     textureList[idx].draw(height, width, rotation);

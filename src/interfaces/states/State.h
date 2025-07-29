@@ -8,11 +8,14 @@
 #include "../buttons/CanHoveringButton.h"
 #include "../buttons/SingleEventButton.h"
 #include "../buttons/TickButton.h"
+#include "../buttons/TickHoveringButton.h"
+#include "../buttons/UpgradeButton.h"
 #include "../TextField.h"
 #include "../TextureField.h"
 #include "../Panel.h"
 #include "../../core/Event.h"
 #include "../../utils/Properties.h"
+#include "../../utils/Utils.h"
 
 class State {
 protected:

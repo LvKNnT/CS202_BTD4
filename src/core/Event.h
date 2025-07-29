@@ -23,28 +23,35 @@ public:
         ToMapSelection, 
         ToSpecificModeSelection, 
         
-        // Game State 
+        // Game State
+        UpgradeTowerLeft,
+        UpgradeTowerMiddle,
+        UpgradeTowerRight,
         HoveringInfo,
         NextPriority, 
         PreviousPriority,
+        SellTower,
         
         // Mode
+        HoveringStandardMode,
         HoveringReverseMode, 
         HoveringAlternateBloonsMode,
         HoveringApopalyseMode,
         
         //UI towers
         //Hovering
+        HoveringChooseDartMoneky,
         HoveringChooseBomb,
-        
         //Clicked
+        ClickedChooseBomb, // player begins to place Tower, we should know the valid points on the map
+        ClickedChooseDartMonkey, 
         
-        /*-------------------------------------------------------------LOGIC------------------------------------------------------------------*/
+/*----------------------------------------------------------------------LOGIC------------------------------------------------------------------*/
         // Options (later)
         NewGame, // Begin a new game without save
         Continue, // Continue save game
         Exit, // Exit game, so when player clicks here, we should save the game 
-        StartGame, // Start the round 
+        StartRound, // Start the round 
         BackHome, // Pause the game to back home
         Resume, // Unpause the game, we will back to the game immediately
         
@@ -78,7 +85,6 @@ public:
         
         // Tower - handle tower placing
         // Clicked the button
-        ClickedChooseBomb, // player begins to place Tower, we should know the valid points on the map
     };
 
 };

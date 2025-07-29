@@ -19,7 +19,7 @@ void Panel::removePanelElement(int index) {
 void Panel::draw() const {
     if(!isAvailable) return;
     for(auto &element:elements) {
-        element->draw();
+        if(element) element->draw();
     }
 }
 
@@ -30,10 +30,14 @@ void Panel::update() {
 void Panel::handleInput() {
     if(!isAvailable) return;
     for(auto &element:elements) {
-        element->handleInput();
+        if(element) element->handleInput();
     }
 }
 
 void Panel::setAvailable(bool _isAvailable) {
     isAvailable = _isAvailable;
+}
+
+bool Panel::getIsAvailable() const {
+    return isAvailable;
 }

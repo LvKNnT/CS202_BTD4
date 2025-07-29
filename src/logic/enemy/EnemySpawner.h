@@ -36,7 +36,7 @@ public:
     void init();
 
     // Returns a unique_ptr to a new Enemy of the given type
-    std::unique_ptr<Enemy> getEnemy(BloonType type, BloonProperties properties, Vector2 position, int pathIndex, EnemyModifies modifies);
+    std::unique_ptr<Enemy> getEnemy(BloonType type, BloonProperties properties, Vector2 position, int pathIndex, int enemyId, EnemyModifies modifies);
     std::vector<std::unique_ptr<Enemy> > getChildrenEnemies(Enemy* enemy, EnemyModifies modifies);
     void getRegrowEnemy(std::unique_ptr<Enemy>& enemy, EnemyModifies modifies);
 };

@@ -52,6 +52,10 @@ private:
     std::shared_ptr<IObserver> stateManager;    
 
     GameLogic gameLogic;
+
+    void loadTexture();
+    void loadFont();
+    void loadSound();
 };
 
 #endif // GAME_H

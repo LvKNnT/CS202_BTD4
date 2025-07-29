@@ -2,6 +2,7 @@
 #define STATE_MANAGER_H
 
 #include <memory>
+#include <string>
 
 #include "../interfaces/states/StateStack.h"
 #include "../interfaces/states/MainMenuState.h"
@@ -25,11 +26,21 @@ private:
     std::shared_ptr<State> difficultySelectionState;
     std::shared_ptr<State> specificModeSelectionState;
 
+private:
+    std::string mode;
+    std::string modeInfo;
+    bool isNewGame;
+
 public:
-    void initialize() override;
+    void initialize();
     void draw() const;
-    void handleInput() override;
+    void handleInput();
     void update(Event::Type event) override;
+    
+    void setMode(std::string _mode);
+    std::string getMode() const;
+    void setModeInfo(std::string _modeInfo);
+    std::string getModeInfo() const;
 };
 
 #endif // STATE_MANAGER_H

@@ -38,6 +38,7 @@ public:
 
     // Supplyment methos for Game
     void pickTower(Vector2 position);
+    void unPickTower();
     void putTower(TowerType type, Vector2 position);
     void unPutTower();
     bool spawnTower();

@@ -30,6 +30,12 @@ public:
     bool isCamo;
     bool isRegrow;
 
+    // other properties
+    bool isGlue = false;
+    bool isStun = false;
+    bool isFrozen = false;
+    bool isKnockback = false;
+
     BloonProperties(bool fortified = false, bool camo = false, bool regrow = false)
         : isFortified(fortified), isCamo(camo), isRegrow(regrow) {}
     BloonProperties(const BloonProperties& other)

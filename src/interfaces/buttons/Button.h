@@ -64,12 +64,6 @@ public:
     void handleInput() override;
 };
 
-class StartRound : public Button {
-public:
-    StartRound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-};
-
 class HigherSound : public Button {
 public:
     HigherSound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
@@ -94,38 +88,15 @@ public:
     void handleInput() override;
 };
 
-class FastForward : public Button {
-private:
-    bool isTick;
-public:
-    FastForward(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-    void draw() const override;
-};
-
 class Continue : public Button {
 public:
     Continue(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
     void handleInput() override;
 };
 
-class ChooseTower : public Button{ 
-    // deal hover effect(show infor, texture) 
-    // deal select event -> move the texture need a circle around show range, check whether placable, show cancel by option 
-    // deal cancel click -> press esc or move out the screen 
-public:
-    ChooseTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-
-protected:
-    Event::Type hoveringEvent;
-    Event::Type clickedEvent; // or select
-};
-
-class ChooseBombTower : public ChooseTower {
-public:
-    ChooseBombTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-};
+// deal hover effect(show infor, texture) 
+// deal select event -> move the texture need a circle around show range, check whether placable, show cancel by option 
+// deal cancel click -> press esc or move out the screen 
 
 // class Tower : public Button {
 //     // deal select tower -> show infor, upgrade, sell 

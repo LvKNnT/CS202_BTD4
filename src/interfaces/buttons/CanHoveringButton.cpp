@@ -33,26 +33,25 @@ void ModeButton::handleInput() {
     notify(Event::Type::ToGameState);
 }
 
-
-StandardMode::StandardMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+StandardModeButton::StandardModeButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
     : ModeButton(_texture, _fontSize, _height, _width, _position) {
     clickedEvent = Event::Type::StandardMode;
-    hoveringEvent = Event::Type::None;
+    hoveringEvent = Event::Type::HoveringStandardMode;
 }
 
-AlternateBloonsMode::AlternateBloonsMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+AlternateBloonsModeButton::AlternateBloonsModeButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
     : ModeButton(_texture, _fontSize, _height, _width, _position) {
     clickedEvent = Event::Type::AlternateBloonsMode;
     hoveringEvent = Event::Type::HoveringAlternateBloonsMode;
 }
 
-ReverseMode::ReverseMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+ReverseModeButton::ReverseModeButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
     : ModeButton(_texture, _fontSize, _height, _width, _position) {
     clickedEvent = Event::Type::ReverseMode;
     hoveringEvent = Event::Type::HoveringReverseMode;
 }
 
-ApopalyseMode::ApopalyseMode(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+ApopalyseModeButton::ApopalyseModeButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
     : ModeButton(_texture, _fontSize, _height, _width, _position) {
     clickedEvent = Event::Type::ApopalyseMode;
     hoveringEvent = Event::Type::HoveringApopalyseMode;
@@ -63,4 +62,18 @@ Info::Info(const Texture &_texture, int _fontSize, int _height, int _width, Vect
     attach(Game::Instance().getStateManager());
     clickedEvent = Event::Type::None;
     hoveringEvent = Event::Type::HoveringInfo;
+}
+
+ChooseBombTower::ChooseBombTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+    : CanHoveringButton(_texture, _fontSize, _height, _width, _position){
+    attach(Game::Instance().getStateManager());
+    hoveringEvent = Event::Type::HoveringChooseBomb;
+    clickedEvent = Event::Type::ClickedChooseBomb;
+}
+
+ChooseDartMonkeyTower::ChooseDartMonkeyTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+    : CanHoveringButton(_texture, _fontSize, _height, _width, _position){
+    attach(Game::Instance().getStateManager());
+    hoveringEvent = Event::Type::HoveringChooseDartMoneky;
+    clickedEvent = Event::Type::ClickedChooseDartMonkey;
 }

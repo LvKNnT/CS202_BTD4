@@ -20,12 +20,7 @@ MapSelectionState::MapSelectionState() : State(754, 1022, Game::Instance().getTe
         if(i > 0) ChooseMapButton[i]->setAvailable(false);
     }
 
-    Font titleFont = Game::Instance().getFontManager().getFont("Big");
-    int titleFontSize = 60;
-    std::string titleText = "CHOOSE A MAP";
-    Vector2 titleSize = MeasureTextEx(titleFont, titleText.c_str(), (float) titleFontSize, 1.0);
-
-    std::shared_ptr<PanelElement> title = std::make_shared<TextField>(titleText, titleFont, WHITE, titleSize.y, 0, (Vector2) {tablePos.x + (width - titleSize.x) / 2, tablePos.y + 70});
+    std::shared_ptr<PanelElement> title = std::make_shared<TextField>("CHOOSE A MAP", Game::Instance().getFontManager().getFont("Big"), WHITE, 60, width, (Vector2) {tablePos.x, tablePos.y + 70});
     panel->addPanelElement((title));
 
     curMap = 0;

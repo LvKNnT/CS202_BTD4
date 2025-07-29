@@ -21,11 +21,11 @@ protected:
     int speed; 
     int pierce; 
     float lifeSpan;
-    bool canSeeCamo; // Whether the attack can see camo targets
+    BulletProperties properties; 
 
     int towerId; // ID of the tower that created this attack, if applicable
 public:
-    Attack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, bool canSeeCamo);
+    Attack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties);
     Attack(const Attack& other) = default;
     virtual ~Attack() = default;
 

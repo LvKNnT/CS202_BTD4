@@ -11,6 +11,7 @@
 #include "Point.h"
 #include "MapUnits.h"
 #include "../enemy/EnemyUnits.h"
+#include "../../utils/Utils.h"
 
 class Map : public Drawable {
     friend class LogicManager; 
@@ -26,7 +27,7 @@ protected:
 public:
     Map();
     virtual std::unique_ptr<Map> clone() const = 0; 
-    ~Map() = default; 
+    virtual ~Map() = default; 
 
     // Basics settings
     virtual void loadTexture() = 0;
@@ -36,7 +37,7 @@ public:
     void unLoad();
 
     // These functions should be the same for all maps
-    Point::Type getPointType(Vector2 position) const; // For towers
+    bool canPlaceTowerHere(Vector2 position) const; // For towers
     Point::Type getPointType(int index, int pathIdx = 0) const; // For enemies
 
     // only pass pathIdx when we are in jungle_lane

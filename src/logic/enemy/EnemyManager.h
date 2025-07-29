@@ -38,6 +38,8 @@ private:
 
     // Collection to hold all active enemies
     std::vector<std::unique_ptr<Enemy> > enemyList;
+
+    int currentEnemyId = 0;
 };
 
 #endif // ENEMYMANAGER_H
