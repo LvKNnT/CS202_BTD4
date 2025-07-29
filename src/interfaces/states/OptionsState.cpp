@@ -1,6 +1,6 @@
 #include "OptionsState.h"
 #include "../../core/Game.h"
-#include "../../managers/SoundManager.h"
+#include "../managers/AudioManager.h"
 
 OptionsState::OptionsState() : State(754, 1022, Game::Instance().getTextureManager().getTexture("Table")) {
     Vector2 tablePos = {static_cast<float>((Properties::screenWidth - width) / 2), static_cast<float>((Properties::screenHeight - height) / 2)};
@@ -51,23 +51,29 @@ void OptionsState::draw() const {
 }
 
 void OptionsState::update(Event::Type event) {
-    auto soundManagerPtr = std::dynamic_pointer_cast<SoundManager>(Game::Instance().getSoundManager());
+    auto soundManagerPtr = std::dynamic_pointer_cast<AudioManager>(Game::Instance().getAudioManager());
     switch(event) {
         case Event::Type::HigherMusic:
             case Event::Type::LowerMusic:
                 resetMusicTextures();
-                musicTexture[soundManagerPtr->getVolume(SoundManager::SoundType::MusicSound) / 20]->setAvailable(true);
+                musicTexture[soundManagerPtr->getVolume(AudioType::MusicSound) / 20]->setAvailable(true);
                 break;
         case Event::Type::HigherSound:
             case Event::Type::LowerSound:
                 resetSoundTextures();
-                soundTexture[soundManagerPtr->getVolume(SoundManager::SoundType::SFXSound) / 20]->setAvailable(true);
+                soundTexture[soundManagerPtr->getVolume(AudioType::SFXSound) / 20]->setAvailable(true);
                 break;
+        case Event::Type::AutoNextRound:
+            Game::Instance().getGameLogic().activeAutoPlay();
+            break;
+        case Event::Type::UnAutoNextRound:
+            Game::Instance().getGameLogic().unactiveAutoPlay();
+            break;
         case Event::Type::None:
             resetMusicTextures();
             resetSoundTextures();
-            musicTexture[soundManagerPtr->getVolume(SoundManager::SoundType::MusicSound) / 20]->setAvailable(true);
-            soundTexture[soundManagerPtr->getVolume(SoundManager::SoundType::SFXSound) / 20]->setAvailable(true);
+            musicTexture[soundManagerPtr->getVolume(AudioType::MusicSound) / 20]->setAvailable(true);
+            soundTexture[soundManagerPtr->getVolume(AudioType::SFXSound) / 20]->setAvailable(true);
             break;
     }
 }

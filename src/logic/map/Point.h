@@ -13,6 +13,7 @@ public:
         SpawnEnenmy,
         Exit,
         Invisible,
+        Water, 
         Enemy
     };
 

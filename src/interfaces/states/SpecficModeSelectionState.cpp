@@ -1,5 +1,5 @@
 #include "SpecificModeSelectionState.h"
-#include "../../managers/StateManager.h"
+#include "../managers/StateManager.h"
 #include "../../core/Game.h"
 
 SpecificModeSelectionState::SpecificModeSelectionState(): State(754, 1022, Game::Instance().getTextureManager().getTexture("Table")) {

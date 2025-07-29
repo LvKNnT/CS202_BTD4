@@ -6,6 +6,7 @@ Game &Game::Instance() {
 }
 
 Game::Game() : exit(false) {
+    audioManager = std::make_unique<AudioManager>();
 }
 
 Game::~Game() {
@@ -94,21 +95,22 @@ void Game::loadFont() {
 }
 
 void Game::loadSound() {
-
+    // for loadSound() we need to pass number of maxSounds or default will be 1 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("Kuru Kuru", "../assets/sounds/music/Kuru Kururin.wav", 2); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadMusic("Kuru Kuru", "../assets/sounds/music/Kuru Kururin.wav");
 }
 
 void Game::UnloadContent() {
     textureManager.unloadContent();
     fontManager.unloadContent();
-
+    std::static_pointer_cast<AudioManager>(audioManager)->unload();
     gameLogic.unLoad();
 }
 
 void Game::initialize() {
-    stateManager = std::make_shared<StateManager>();
-    soundManager = std::make_shared<SoundManager>();
+    stateManager = std::make_unique<StateManager>();
     std::static_pointer_cast<StateManager>(stateManager)->initialize();
-    std::static_pointer_cast<SoundManager>(soundManager)->initialize();
+    std::static_pointer_cast<AudioManager>(audioManager)->initialize();
 }
 
 void Game::render() {
@@ -117,6 +119,7 @@ void Game::render() {
 
 void Game::update(float deltaTime) {
     std::static_pointer_cast<StateManager>(stateManager)->handleInput();
+    std::static_pointer_cast<AudioManager>(audioManager)->updateMusic();
 }
 
 void Game::requestExit() {
@@ -135,12 +138,8 @@ FontManager &Game::getFontManager() {
     return fontManager;
 }
 
-SoundLoader &Game::getSoundLoader() {
-    return soundLoader;
-}
-
-std::shared_ptr<IObserver> Game::getSoundManager() {
-    return soundManager;
+std::shared_ptr<IObserver> Game::getAudioManager() {
+    return audioManager;
 }
 
 std::shared_ptr<IObserver> Game::getStateManager() {

@@ -108,7 +108,7 @@ void CommingSoon::handleInput() {
 
 HigherSound::HigherSound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
     : Button(_texture, _fontSize, _height, _width, _position) {
-    attach(Game::Instance().getSoundManager());
+    attach(Game::Instance().getAudioManager());
     attach(Game::Instance().getStateManager());
 }
 
@@ -123,7 +123,7 @@ void HigherSound::handleInput() {
 
 LowerSound::LowerSound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
     : Button(_texture, _fontSize, _height, _width, _position) {
-    attach(Game::Instance().getSoundManager());
+    attach(Game::Instance().getAudioManager());
     attach(Game::Instance().getStateManager());
 }
 
@@ -138,7 +138,7 @@ void LowerSound::handleInput() {
 
 HigherMusic::HigherMusic(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
     : Button(_texture, _fontSize, _height, _width, _position) {
-    attach(Game::Instance().getSoundManager());
+    attach(Game::Instance().getAudioManager());
     attach(Game::Instance().getStateManager());
 }
 
@@ -153,7 +153,7 @@ void HigherMusic::handleInput() {
 
 LowerMusic::LowerMusic(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
     : Button(_texture, _fontSize, _height, _width, _position) {
-    attach(Game::Instance().getSoundManager());
+    attach(Game::Instance().getAudioManager());
     attach(Game::Instance().getStateManager());
 }
 

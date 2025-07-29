@@ -61,6 +61,7 @@ private:
     // Functions
     std::string getTowerName(TowerType type) const;
     void pickTower();
+    void unpickTower();
 };
 
 #endif // GAME_STATE_H

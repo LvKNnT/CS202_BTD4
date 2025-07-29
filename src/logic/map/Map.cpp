@@ -26,15 +26,15 @@ void Map::unLoad() {
     UnloadTexture(texture);
 }
 
-bool Map::canPlaceTowerHere(Vector2 position) const {
-    if(!Utils::isPositionInMap(position)) return false;
+Point::Type Map::getTowerPointType(Vector2 position) const {
+    if(!Utils::isPositionInMap(position)) return Point::Type::None;
     Color pixelColor = GetImageColor(mapImage, static_cast<int>(position.x), static_cast<int>(position.y));
     Color pathColor = GetImageColor(mapImage, static_cast<int>(enemyPath[0][1].position.x), static_cast<int>(enemyPath[0][1].position.y));
     int tolerance = 10;
     bool isPath = abs(pixelColor.r - pathColor.r) < tolerance && abs(pixelColor.g - pathColor.g) < tolerance && abs(pixelColor.b - pathColor.b) < tolerance;
-    if(isPath) return false;
+    if(isPath) return Point::Type::Enemy;
 
-    return true; // can place tower here
+    return Point::Type::None; // can place tower here
 }
 
 Point::Type Map::getPointType(int index, int pathIdx) const
