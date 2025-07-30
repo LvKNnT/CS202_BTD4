@@ -1,4 +1,5 @@
 #include "Dart.h"
+#include "../../../core/Game.h"
 
 #include <fstream>
 
@@ -19,6 +20,19 @@ void Dart::loadTexture() {
     // Update size based on the loaded texture
     size.x = static_cast<float>(texture.width);
     size.y = static_cast<float>(texture.height);
+}
+
+void Dart::init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properites, AttackBuff attackBuff, int towerId) {
+    this->position = position;
+    this->size = size;
+    this->rotation = rotation;
+    this->damage = damage;
+    this->speed = speed;
+    this->pierce = pierce;
+    this->lifeSpan = lifeSpan;
+    this->properties = properties; 
+    this->attackBuff = attackBuff; 
+    this->towerId = towerId; 
 }
 
 bool Dart::hit(int damage) {
@@ -49,12 +63,19 @@ void Dart::draw() const {
                    WHITE); // Draw the Dart texture with the specified position and rotation
 }
 
-void Dart::die() {
+int Dart::die() {
     // Logic for when the Dart bullet reaches the end of its life
     // For example, you might want to remove it from the game or trigger an event
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::app);
     flog << "Dart bullet reached the end of its life!" << std::endl;
     flog.close();
+
+    return -1;
+}
+
+std::vector<std::unique_ptr<Bullet>> Dart::getChild() {
+    // Dart bullet does not spawn any child bullets, so return an empty vector
+    return {};
 }
 
 Rectangle Dart::getBoundingBox() const {

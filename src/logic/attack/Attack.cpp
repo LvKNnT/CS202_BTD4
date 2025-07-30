@@ -46,3 +46,13 @@ float Attack::getLifeSpan() const {
 void Attack::setLifeSpan(float newLifeSpan) {
     lifeSpan = newLifeSpan;
 }
+
+Vector2 Attack::getPosition() const {
+    return position;
+}
+std::string Attack::getTag() const {
+    return tag;
+}
+int Attack::getTowerId() const {
+    return towerId;
+}

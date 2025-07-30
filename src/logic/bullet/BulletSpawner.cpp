@@ -1,7 +1,14 @@
 #include "BulletSpawner.h"
 
+#include <iostream>
+
 // Headers for bullet types
 #include "bullets/Dart.h"
+#include "bullets/SpikeOPultBullet.h"
+#include "bullets/JuggernautBullet.h"
+#include "bullets/UltraJuggernautBullet.h"
+#include "bullets/Arrow.h"
+#include "bullets/ArrowCrit.h"
 // #include "bullets/Bomb.h"
 // #include "bullets/Tack.h"
 // #include "bullets/Ice.h"
@@ -49,6 +56,11 @@ std::unique_ptr<BulletSpawner> BulletSpawner::clone() const {
 void BulletSpawner::init() {
     // Load bullet templates
     bulletTemplates[BulletType::Dart] = std::make_unique<Dart>();
+    bulletTemplates[BulletType::SpikeOPult] = std::make_unique<SpikeOPultBullet>();
+    bulletTemplates[BulletType::Juggernaut] = std::make_unique<JuggernautBullet>();
+    bulletTemplates[BulletType::UltraJuggernaut] = std::make_unique<UltraJuggernautBullet>();
+    bulletTemplates[BulletType::Arrow] = std::make_unique<Arrow>();
+    bulletTemplates[BulletType::ArrowCrit] = std::make_unique<ArrowCrit>();
     // bulletTemplates[BulletType::Bomb] = std::make_unique<Bomb>();
     // bulletTemplates[BulletType::Tack] = std::make_unique<Tack>();
     // bulletTemplates[BulletType::Ice] = std::make_unique<Ice>();
@@ -56,23 +68,17 @@ void BulletSpawner::init() {
     // bulletTemplates[BulletType::Shuriken] = std::make_unique<Shuriken>();
 }
 
-std::unique_ptr<Bullet> BulletSpawner::getBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, int towerId) {
+std::unique_ptr<Bullet> BulletSpawner::getBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, AttackBuff& attackBuff, int towerId) {
     auto it = bulletTemplates.find(type);
     if (it != bulletTemplates.end()) {
         it->second->loadTexture(); 
         
         std::unique_ptr<Bullet> bullet = it->second->clone();
-        bullet->position = position;
-        bullet->size = size;
-        bullet->rotation = rotation;
-        bullet->damage = damage;
-        bullet->speed = speed;
-        bullet->pierce = pierce;
-        bullet->lifeSpan = lifeSpan;
-        bullet->properties = properties; 
-        bullet->towerId = towerId; 
+        bullet->init(position, size, rotation, damage, speed, pierce, lifeSpan, properties, attackBuff, towerId);
 
         return bullet;
     }
+
+    std::cerr << "Bullet type not found: " << static_cast<int>(type) << std::endl;
     return nullptr; // Return nullptr if the bullet type is not found
 }

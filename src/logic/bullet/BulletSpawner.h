@@ -2,8 +2,10 @@
 #define BULLETSPAWNER_H
 
 #include "Bullet.h"
+#include "../attack/AttackUnits.h"
 
 #include <map>
+#include <vector>
 
 // We use design pattern Factory Method Pattern to create bullets
 class BulletSpawner {
@@ -26,7 +28,7 @@ public:
     void init();
 
     // Returns a unique_ptr to a new Bullet of the given type
-    std::unique_ptr<Bullet> getBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, int towerId = -1);
+    std::unique_ptr<Bullet> getBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, AttackBuff& attackBuff,int towerId = -1);
 };
 
 #endif // BULLETSPAWNER_H
