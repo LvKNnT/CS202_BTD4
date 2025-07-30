@@ -70,10 +70,10 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
     return 0;
 }
 
-void LogicManager::updateBullets(BulletManager& bulletManager, MapManager& mapManager) {
+void LogicManager::updateBullets(BulletManager& bulletManager) {
     for(auto it = bulletManager.bulletList.begin(); it != bulletManager.bulletList.end(); ) {
         // Check if the bullet is still on the map
-        int result = runBullet(**it, mapManager.getCurrentMap());
+        int result = runBullet(**it);
 
         if (result == -1) {
             // Bullet has reached the end of its life — remove and destroy it
@@ -94,7 +94,7 @@ void LogicManager::updateBullets(BulletManager& bulletManager, MapManager& mapMa
     }
 }
 
-int LogicManager::runBullet(Bullet& bullet, const Map& map) {
+int LogicManager::runBullet(Bullet& bullet) {
     float elapsedTime = GetFrameTime();
     Vector2 position = bullet.position;
     float rotation = bullet.rotation;
@@ -106,11 +106,12 @@ int LogicManager::runBullet(Bullet& bullet, const Map& map) {
 
     // Update the bullet's position
     bullet.position = position;
+    Rectangle bulletBoundingBox = bullet.getBoundingBox();
 
     // Check if the bullet is still within the bounds of the map
-    if (!map.isWithinBounds(position)) {
-        bullet.die(); // Call the die method to handle the end of the bullet's life
-        return -1; // Bullet has reached the end of its life
+    if(!Utils::isPositionInMap({bulletBoundingBox.x, bulletBoundingBox.y})
+    || !Utils::isPositionInMap({bulletBoundingBox.x + bulletBoundingBox.width, bulletBoundingBox.y + bulletBoundingBox.height})) {
+        return bullet.die();
     }
 
     // If the bullet is still active, return 0
@@ -150,8 +151,8 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
                 (*bulletIt)->hitEnemies.insert((*enemyIt)->enemyId);
 
                 int popCount = 0;
-                std::vector<std::unique_ptr<Enemy>> children;
-                children = getChildrenEnemies(enemyManager, **enemyIt, (*bulletIt)->damage, popCount, resourceManager);
+                std::vector<std::unique_ptr<Enemy>> enemyChildren;
+                enemyChildren = getChildrenEnemies(enemyManager, **enemyIt, (*bulletIt)->damage, popCount, resourceManager);
 
                 // Add the pop count to the original tower
                 for (auto& tower : towerManager.towerList) {
@@ -164,18 +165,30 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
                 if((*enemyIt)->health <= 0) {
                     enemyIt = enemyManager.enemyList.erase(enemyIt); // Remove the current enemy
                     
-                    if(!children.empty()) {
+                    if(!enemyChildren.empty()) {
                         enemyIt = enemyManager.enemyList.insert(enemyIt, 
-                            std::make_move_iterator(children.begin()), 
-                            std::make_move_iterator(children.end()));
+                            std::make_move_iterator(enemyChildren.begin()), 
+                            std::make_move_iterator(enemyChildren.end()));
                     }
                 }
                 else ++enemyIt;
 
                 // Every collision cost 1 pierce
-                if((*bulletIt)->hit(1)) {
+                bool isBulletDie = (*bulletIt)->hit(1);
+
+                std::vector<std::unique_ptr<Bullet> > bulletChildren = (*bulletIt)->getChild();
+                
+                if(isBulletDie) {
                     bulletIt = bulletManager.bulletList.erase(bulletIt);
                     isBulletAlive = false;
+                }
+                
+                if(!bulletChildren.empty()) {
+                    auto nextBulletIt = isBulletDie || bulletIt == bulletManager.bulletList.end() ? bulletIt : std::next(bulletIt);
+
+                    bulletIt = bulletManager.bulletList.insert(nextBulletIt,
+                        std::make_move_iterator(bulletChildren.begin()), 
+                        std::make_move_iterator(bulletChildren.end()));
                 }
             }
             else ++enemyIt;
@@ -338,47 +351,46 @@ void LogicManager::updateTowers(TowerManager& towerManager, EnemyManager& enemyM
 
             for(auto& attack : tower->attacks) {
                 for(auto& enemy : enemyManager.enemyList) {
+                    if(!enemy->isActiveFlag) continue;
+
                     // std::cerr << "enemy position: " << enemy->position.x << ", " << enemy->position.y << std::endl;
-                    if(attack->isInRange(enemy->getBoundingBox(), enemy->rotation, enemy->properties.isCamo)) {
+                    if(attack->isInRange(enemy->getBoundingBox(), enemy->rotation, enemy->properties.isCamo, tower->attackBuff)) {
                         enemiesInRange.push_back(enemy.get());
                     }
                 }
-            }
-
-            // Pick one enemy based on the tower's target priority
-            // Sadly have to use switch/case here.
-            Enemy* targetEnemy = nullptr;
-            if(!enemiesInRange.empty()) {
-                switch(tower->targetPriority) {
-                    case TargetPriority::First:
+                
+                // Pick one enemy based on the tower's target priority
+                // Sadly have to use switch/case here.
+                Enemy* targetEnemy = nullptr;
+                if(!enemiesInRange.empty()) {
+                    switch(tower->targetPriority) {
+                        case TargetPriority::First:
                         targetEnemy = enemiesInRange.front();
                         break;
-                    case TargetPriority::Last:
+                        case TargetPriority::Last:
                         targetEnemy = enemiesInRange.back();
                         break;
-                    case TargetPriority::Close:
+                        case TargetPriority::Close:
                         targetEnemy = *std::min_element(enemiesInRange.begin(), enemiesInRange.end(),
                             [&](Enemy* a, Enemy* b) {
                                 return Vector2Distance(a->position, tower->position) < Vector2Distance(b->position, tower->position);
                             });
                         break;
-                    case TargetPriority::Strong:
+                        case TargetPriority::Strong:
                         targetEnemy = *std::max_element(enemiesInRange.begin(), enemiesInRange.end(),
-                            [&](Enemy* a, Enemy* b) {
-                                return a->health < b->health; // Compare health
-                            });
+                        [&](Enemy* a, Enemy* b) {
+                            return a->health < b->health; // Compare health
+                        });
                         break;
+                    }
                 }
-            }
-
-            // update the rotation of the tower to face the target enemy
-            if(targetEnemy) {
-                float angle = atan2f(targetEnemy->position.y - tower->position.y, targetEnemy->position.x - tower->position.x);
-                tower->setRotation(angle * (180.0f / PI) + 90.0f); // Convert radians to degrees
-
-                for(auto& attack : tower->attacks) {
-                    // Update the attack with the target position
-                    attack->update(bulletManager, targetEnemy->position);
+                
+                // update the rotation of the tower to face the target enemy
+                if(targetEnemy) {
+                    float angle = atan2f(targetEnemy->position.y - tower->position.y, targetEnemy->position.x - tower->position.x);
+                    tower->setRotation(angle * (180.0f / PI) + 90.0f); // Convert radians to degrees
+                    
+                    attack->update(bulletManager, targetEnemy->position, tower->attackBuff, *tower->attackPattern);
                 }
             }
         }
@@ -395,7 +407,27 @@ bool LogicManager::isSpawnTower(const ResourceManager& resourceManager, const To
     Rectangle towerBoundingBox = towerManager.putTower->getBoundingBox();
     float pathWidth = 25.0f; // Considerable size
 
+    // Checking collision with the map boundaries
+    if(!Utils::isPositionInMap({towerBoundingBox.x, towerBoundingBox.y})
+    || !Utils::isPositionInMap({towerBoundingBox.x + towerBoundingBox.width, towerBoundingBox.y + towerBoundingBox.height})) {
+        std::cerr << "Cannot put tower outside of the map boundaries." << std::endl;
+        
+        towerManager.putTower->setActive(false);
+        return false; 
+    }
+
     // Checking collision with the path
+    // for(int x = towerBoundingBox.x; x <= towerBoundingBox.x + towerBoundingBox.width; ++x) {
+    //     for(int y = towerBoundingBox.y; y <= towerBoundingBox.y + towerBoundingBox.height; ++y) {
+    //         Vector2 point = {static_cast<float>(x), static_cast<float>(y)};
+    //         if(mapManager.getCurrentMap().canPlaceTowerHere(point)) {
+    //             std::cerr << "Cannot put tower due to path" << std::endl;
+                
+    //             towerManager.putTower->setActive(false);
+    //             return false; // Collision with the path
+    //         }
+    //     }
+    // }
     for(const auto& path : enemyPath) {
         for(int i = 0; i + 1 < path.size(); ++i) {
             if(distancePointLine({towerBoundingBox.x, towerBoundingBox.y}, path[i].position, path[i + 1].position) < pathWidth
@@ -502,7 +534,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
     switch (upgradeUnits) {
         case UpgradeUnits::Top:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Top)) {
-                tower->upgradeTop->update(tower->attacks);
+                tower->upgradeTop->update(tower->attacks, tower->attackBuff, tower->attackPattern);
                 tower->info["descriptionTop"] = tower->upgradeTop->getDescription();
                 tower->cost += tower->upgradeTop->getCost() * tower->upgradeCost;
                 resourceManager.currentResource.cash -= tower->upgradeTop->getCost() * tower->upgradeCost;
@@ -517,7 +549,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
             break;
         case UpgradeUnits::Middle:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Middle)) {
-                tower->upgradeMiddle->update(tower->attacks);
+                tower->upgradeMiddle->update(tower->attacks, tower->attackBuff, tower->attackPattern);
                 tower->info["descriptionMiddle"] = tower->upgradeMiddle->getDescription();
                 tower->cost += tower->upgradeMiddle->getCost() * tower->upgradeCost;
                 resourceManager.currentResource.cash -= tower->upgradeMiddle->getCost() * tower->upgradeCost;
@@ -532,7 +564,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
             break;
         case UpgradeUnits::Bottom:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Bottom)) {
-                tower->upgradeBottom->update(tower->attacks);
+                tower->upgradeBottom->update(tower->attacks, tower->attackBuff, tower->attackPattern);
                 tower->info["descriptionBottom"] = tower->upgradeBottom->getDescription();
                 tower->cost += tower->upgradeBottom->getCost() * tower->upgradeCost;
                 resourceManager.currentResource.cash -= tower->upgradeBottom->getCost() * tower->upgradeCost;

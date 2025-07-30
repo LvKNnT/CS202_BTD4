@@ -6,6 +6,7 @@
 #include "TowerUnits.h"
 #include "../GameObject.h"
 #include "../attack/Attack.h"
+#include "../attack/AttackPattern.h"
 #include "Upgrade.h"
 #include "UpgradeUnits.h"
 #include "../level/TowerModifies.h"
@@ -48,7 +49,8 @@ protected:
 
     TowerType type; // Type of the tower
     TargetPriority targetPriority; 
-    bool canSeeCamo;
+    AttackBuff attackBuff; 
+    std::unique_ptr<AttackPattern> attackPattern;
 
     int cost; 
     float upgradeCost;

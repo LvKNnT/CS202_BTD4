@@ -22,6 +22,7 @@ protected:
     static const int MAXPATHS = 2;
     std::vector<std::vector<Point> > enemyPath; // use vector<vector cause now we have 2 paths for jungle
     Image mapImage;
+    Image pathImage;
     MapType mapType;
 
 public:

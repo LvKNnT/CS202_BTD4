@@ -3,10 +3,12 @@
 
 #include "BulletUnits.h"
 #include "../GameObject.h"
+#include "../attack/AttackUnits.h"
 
 #include <memory>
 #include <string>
 #include <set>
+#include <vector>
 
 // We use design pattern Template Method Pattern to create bullets
 
@@ -25,9 +27,11 @@ public:
     void unLoad();
 
     // Different bullets can have different behaviors when hitting targets
+    virtual void init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properites, AttackBuff attackBuff, int towerId) = 0;
     virtual bool hit(int damage) = 0; // Pure virtual function for handling hit
     virtual void setRotation(float rotation) = 0; // Pure virtual function for setting rotation
-    virtual void die() = 0; // Pure virtual function for handling death or end of life
+    virtual int die() = 0; // Pure virtual function for handling death or end of life
+    virtual std::vector<std::unique_ptr<Bullet>> getChild() = 0;
 
 protected:
     BulletType type;
@@ -36,6 +40,7 @@ protected:
     int pierce; // Number of targets the bullet can pierce through
     float lifeSpan; // Life span of the bullet in frames
     BulletProperties properties; // Properties of the bullet, such as canHitCamo
+    AttackBuff attackBuff; // Buffs applied to the bullet, such as range, damage, etc.
 
     // Position and rotation for movement
     Vector2 position; // Position of the bullet

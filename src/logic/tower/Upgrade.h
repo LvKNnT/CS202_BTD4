@@ -9,7 +9,7 @@
 #include "../../interfaces/Drawable.h"
 #include "../attack/Attack.h"
 
-class Upgrade : public Drawable {
+class Upgrade {
 public:
     Upgrade(const std::string& name = "NoUpgrade", int cost = 0, const std::string& description = "");
     Upgrade(const Upgrade& other);
@@ -26,8 +26,7 @@ public:
     void setCost(int newCost);
 
     virtual void loadTexture();
-    virtual void draw() const override; 
-    virtual void update(std::vector<std::unique_ptr<Attack> >& attacks);
+    virtual void update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern); 
     virtual std::unique_ptr<Upgrade> buy();
 
 protected:
@@ -35,7 +34,6 @@ protected:
     int cost;                // Cost of the upgrade
     std::string description; // Description of the upgrade
 
-    Texture texture; // Texture for the upgrade, if applicable
     std::string tag;
 
     std::unique_ptr<Upgrade> nextUpgrade;

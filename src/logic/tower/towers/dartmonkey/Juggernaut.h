@@ -1,0 +1,21 @@
+#ifndef JUGGERNAUT_H
+#define JUGGERNAUT_H
+
+#include "../../Upgrade.h"
+
+class Juggernaut : public Upgrade {
+public:
+    Juggernaut();
+    Juggernaut(const Juggernaut& other);
+    std::unique_ptr<Upgrade> clone() const override;
+    ~Juggernaut() override = default;
+
+    // Override all methods from Upgrade
+    void loadTexture() override;
+
+    // Upgrade does not need to update attacks, but we need to implement it
+    void update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) override;
+    std::unique_ptr<Upgrade> buy() override;
+};
+
+#endif // JUGGERNAUT_H

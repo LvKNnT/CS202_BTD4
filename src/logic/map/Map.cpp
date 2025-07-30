@@ -29,7 +29,8 @@ void Map::unLoad() {
 bool Map::canPlaceTowerHere(Vector2 position) const {
     if(!Utils::isPositionInMap(position)) return false;
     Color pixelColor = GetImageColor(mapImage, static_cast<int>(position.x), static_cast<int>(position.y));
-    Color pathColor = GetImageColor(mapImage, static_cast<int>(enemyPath[0][1].position.x), static_cast<int>(enemyPath[0][1].position.y));
+    // Color pathColor = GetImageColor(mapImage, static_cast<int>(enemyPath[0][1].position.x), static_cast<int>(enemyPath[0][1].position.y));
+    Color pathColor = GetImageColor(pathImage, static_cast<int>(position.x), static_cast<int>(position.y));
     int tolerance = 10;
     bool isPath = abs(pixelColor.r - pathColor.r) < tolerance && abs(pixelColor.g - pathColor.g) < tolerance && abs(pixelColor.b - pathColor.b) < tolerance;
     if(isPath) return false;

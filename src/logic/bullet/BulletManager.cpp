@@ -35,13 +35,21 @@ BulletManager& BulletManager::operator=(const BulletManager& other) {
     return *this;
 }
 
-void BulletManager::spawnBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, int towerId) {
-    std::unique_ptr<Bullet> bullet = bulletSpawner->getBullet(type, position, size, rotation, damage, speed, pierce, lifeSpan, properties, towerId);
+void BulletManager::spawnBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, AttackBuff& attackBuff, int towerId) {
+    std::unique_ptr<Bullet> bullet = bulletSpawner->getBullet(type, position, size, rotation, damage, speed, pierce, lifeSpan, properties, attackBuff, towerId);
     
     if (bullet) {
         bulletList.push_back(std::move(bullet));
     } else {
         std::cerr << "Failed to spawn bullet of type: " << static_cast<int>(type) << std::endl;
+    }
+}
+
+void BulletManager::spawnChildBullet(std::unique_ptr<Bullet> bullet) {
+    if (bullet) {
+        bulletList.push_back(std::move(bullet));
+    } else {
+        std::cerr << "Failed to spawn child bullet!" << std::endl;
     }
 }
 

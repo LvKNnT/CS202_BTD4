@@ -1,7 +1,6 @@
 #ifndef DART_H
 #define DART_H
 
-#include "../../../core/Game.h"
 #include "../Bullet.h"
 
 class Dart : public Bullet {
@@ -13,9 +12,11 @@ public:
     // Override all methods from Bullet
     void loadTexture() override;
 
+    void init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properites, AttackBuff attackBuff, int towerId) override;
     bool hit(int damage) override;
     void draw() const override;
-    void die() override;
+    int die() override;
+    std::vector<std::unique_ptr<Bullet>> getChild() override;
 
     Rectangle getBoundingBox() const override;
     bool isActive() const override;

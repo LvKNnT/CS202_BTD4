@@ -1,7 +1,12 @@
 #include "DartMonkey.h"
 
+#include "../../../../core/Game.h"
+
 #include "../../../attack/attacks/DartAttack.h"
+#include "../../../attack/patterns/NormalAttack.h"
 #include "SharpShots.h"
+#include "QuickShots.h"
+#include "LongRangeDarts.h"
 
 DartMonkey::DartMonkey(Vector2 position)
     : Tower(position, {0.0f, 0.0f}, 0.0f, TowerType::DartMonkey, 200) {
@@ -14,20 +19,21 @@ DartMonkey::DartMonkey(Vector2 position)
 
     // Basic attack
     /**
-     * * range = 100.0f
-     * * cooldown = 1.0f
+     * * range = 128.0f
+     * * cooldown = 0.95f
      * * * damage = 1
-     * * * speed = 200
+     * * * speed = 600
      * * * pierce = 2
-     * * * lifeSpan = 1.0f
+     * * * lifeSpan = 0.25f
      * * * properties = {false, false, false, false, false} // canHitCamo, canHitLead, canHitFrozen, canHitRegrow, canHitBlack
      */
-    attacks.push_back(std::make_unique<DartAttack>(100.0f, 1.0f, position, towerId, 1, 400, 2, 1.0f, BulletProperties::normal())); 
+    attacks.push_back(std::make_unique<DartAttack>(128.0f, 0.95f, position, towerId, 1, 600, 2, 0.25f, BulletProperties::normal())); 
+    attackPattern = std::make_unique<NormalAttack>(); 
 
     // Upgrade Path
     upgradeTop = std::make_unique<SharpShots>();
-    upgradeMiddle = std::make_unique<Upgrade>();
-    upgradeBottom = std::make_unique<Upgrade>();
+    upgradeMiddle = std::make_unique<QuickShots>();
+    upgradeBottom = std::make_unique<LongRangeDarts>();
 
     // Info section
     info["name"] = "Dart Monkey";
@@ -111,7 +117,7 @@ void DartMonkey::draw() const {
 void DartMonkey::drawRange() const {
     // Draw the range of attacks
     for(const auto& attack : attacks) {
-        DrawCircleV(position, attack->getRange(), Fade(GRAY, 0.5f)); // Draw the attack range
+        DrawCircleV(position, attack->getRange() + attackBuff.range, Fade(GRAY, 0.5f)); // Draw the attack range
     }
 }
 

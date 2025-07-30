@@ -16,7 +16,7 @@ public:
     
     // Core logic
     void updateEnemies(EnemyManager& enemyManager, MapManager& mapManager, ResourceManager& resourceManager);
-    void updateBullets(BulletManager& bulletManager, MapManager& mapManager);
+    void updateBullets(BulletManager& bulletManager);
     void updateTowers(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager);
     
     // Suplly for GameLogic
@@ -38,7 +38,7 @@ private:
      * @return -1 if the enemy has reached the end of the path, otherwise returns 0
      */
     int runEnemy(Enemy& enemy, const Map& map);
-    int runBullet(Bullet& bullet, const Map& map);
+    int runBullet(Bullet& bullet);
     bool checkCollision(const Bullet& bullet, const Enemy& enemy) const;
     bool canBulletDestroyEnemy(const Bullet& bullet, const Enemy& enemy) const;
     std::vector<std::unique_ptr<Enemy>> getChildrenEnemies(EnemyManager& enemyManager, Enemy& enemy, int damage, int& popCount, ResourceManager& resourceManager) const;

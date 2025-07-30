@@ -19,7 +19,8 @@ public:
     BulletManager& operator=(const BulletManager& other);
 
     // Methods
-    void spawnBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, int towerId);
+    void spawnBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, AttackBuff& attackBuff, int towerId);
+    void spawnChildBullet(std::unique_ptr<Bullet> bullet);
     void drawBullets() const;
     void unLoad();
 

@@ -35,6 +35,7 @@ std::unique_ptr<Map> MonkeyLane::clone() const {
 void MonkeyLane::loadTexture() {
     texture = Game::Instance().getTextureManager().getTexture("MonkeyLaneThumb");
     mapImage = LoadImage("../assets/map/Monkey_lane_path_mask.png"); // MUST BE LOADED
+    pathImage = LoadImage("../assets/map/Monkey_lane_thumb.png"); // Path image for collision detection
 }
 
 void MonkeyLane::update() {

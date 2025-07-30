@@ -22,7 +22,7 @@ public:
     ~ResourceManager() = default;
 
     void initResource(Difficulty difficulty);
-    const Resource& getResource() const;
+    Resource& getResource();
     const TowerModifies& getTowerModifies() const;
     const EnemyModifies& getEnemyModifies() const;
 

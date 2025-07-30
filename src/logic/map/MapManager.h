@@ -31,7 +31,7 @@ public:
     void load(std::string filePath);
 
     // Get the current map
-    Map& getCurrentMap(); // should be const
+    Map& getCurrentMap() const; // should be const
     MapType getMapType() const;
 private:
     // Should be only one map at a time

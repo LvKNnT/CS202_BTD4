@@ -2,7 +2,6 @@
 #define DARTATTACK_H
 
 #include "../Attack.h"
-#include "../../bullet/bullets/Dart.h"
 
 class DartAttack : public Attack {
 public:
@@ -11,8 +10,8 @@ public:
 
     std::unique_ptr<Attack> clone() const override;
 
-    bool isInRange(const Rectangle& rec, const float rotation, bool isCamo) const override;
-    void update(BulletManager& bulletManager, const Vector2& targetPosition) override;
+    bool isInRange(const Rectangle& rec, const float rotation, bool isCamo, AttackBuff& attackBuff) const override;
+    void update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) override;
 };
 
 #endif // DARTATTACK_H
