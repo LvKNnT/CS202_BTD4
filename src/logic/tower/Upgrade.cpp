@@ -22,12 +22,7 @@ void Upgrade::loadTexture() {
     std::cerr << "LoadTexture NoUpgrade\n";
 }
 
-void Upgrade::draw() const {
-    // Currently only log
-    std::cerr << "Draw NoUpgrade\n";
-}
-
-void Upgrade::update(std::vector<std::unique_ptr<Attack> >& attacks) {
+void Upgrade::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) {
     // Should do nothin
     std::cerr << "Update NoUpgrade\n";
 }

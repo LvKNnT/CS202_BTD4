@@ -10,13 +10,15 @@ void GameLogic::init() {
     // parameters
     const Difficulty difficulty = Difficulty::Medium; // Default difficulty for testing
     const MapType mapType = MapType::MonkeyLane; // Default map type for testing
-    const ModeType modeType = ModeType::Alternative; // Default mode type for testing
+    const ModeType modeType = ModeType::Apopalypse; // Default mode type for testing
 
     // stimulate what will happen in the game
     // init(difficulty, mapType, modeType); // same same but different
     init(mapType);
     init(difficulty);
     init(modeType);
+
+    resourceManager.getResource().cash = 999999;
 
     //putTower(TowerType::DartMonkey, {200.0f, 230.0f}); // draging tower
     putTower(TowerType::DartMonkey, {125.0f, 230.0f}); // draging tower
@@ -74,7 +76,7 @@ void GameLogic::update() {
 
         logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager, resourceManager);
         logicManager.updateEnemies(enemyManager, mapManager, resourceManager);
-        logicManager.updateBullets(bulletManager, mapManager);
+        logicManager.updateBullets(bulletManager);
         logicManager.updateTowers(towerManager, enemyManager, bulletManager);
     }
 }

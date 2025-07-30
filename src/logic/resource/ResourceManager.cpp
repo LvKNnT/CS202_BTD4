@@ -7,7 +7,7 @@ void ResourceManager::initResource(Difficulty difficulty) {
     currentResource = resourceSpawner.getResource(difficulty);
 }
 
-const Resource& ResourceManager::getResource() const {
+Resource& ResourceManager::getResource() {
     return currentResource;
 }
 const TowerModifies& ResourceManager::getTowerModifies() const {
