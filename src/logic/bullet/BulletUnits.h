@@ -12,7 +12,8 @@ enum class BulletType {
     Tack,
     Ice,
     MagicBall,
-    Shuriken
+    Shuriken,
+    BombExplosion
 };
 
 class BulletProperties {

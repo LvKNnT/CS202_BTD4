@@ -65,7 +65,7 @@ void Game::loadTexture() {
 
     // Load tower
     textureManager.loadTexture("Dart Monkey Icon", "../assets/tower/Dart_Monkey_Mobile.png");
-    textureManager.loadTexture("Bomb Tower Icon", "../assets/tower/Bomb_Tower_2.png");
+    textureManager.loadTexture("Bomb Shooter Icon", "../assets/tower/Boom_Shooter/Bomb_Shooter.png");
     textureManager.loadTexture("Dart Monkey Info", "../assets/tower/Dart_Monkey/000-DartMonkey.png");
     textureManager.loadTexture("CrossbowMasterUpgradeIcon", "../assets/tower/Dart_Monkey/CrossbowMasterUpgradeIcon.png");
     textureManager.loadTexture("Sharp Shots Upgrade Icon", "../assets/tower/Dart_Monkey/SharpShotsUpgradeIcon.png");

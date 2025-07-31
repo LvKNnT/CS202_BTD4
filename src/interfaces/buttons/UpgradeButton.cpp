@@ -16,12 +16,7 @@ void UpgradeButton::handleInput() {
     notify(upgradeEvent);
 }
 
-UpgradeLeftButton::UpgradeLeftButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
-    : UpgradeButton(_texture, _fontSize, _height, _width, _position){
-    upgradeEvent = Event::Type::UpgradeTowerLeft;        
-}
-
-void UpgradeLeftButton::draw() const {
+void UpgradeButton::draw() const {
     if(!isAvailable) return;
     
     // Draw texture 
@@ -35,6 +30,11 @@ void UpgradeLeftButton::draw() const {
     float textX = position.x + (texture.width * scale - textWidth) / 2;
     float textY = position.y + (texture.height * scale - fontSize) / 2; 
     DrawText(title.c_str(), textX, textY, fontSize, WHITE);
+}
+
+UpgradeLeftButton::UpgradeLeftButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
+    : UpgradeButton(_texture, _fontSize, _height, _width, _position){
+    upgradeEvent = Event::Type::UpgradeTowerLeft;        
 }
 
 UpgradeMiddleButton::UpgradeMiddleButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 

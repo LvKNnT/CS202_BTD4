@@ -4,6 +4,7 @@
 #include "../../../core/Game.h"
 #include "../Map.h"
 
+// 0 is normal path 1 is reverse path 
 class MonkeyLane : public Map {
 public:
     MonkeyLane();

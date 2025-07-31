@@ -4,7 +4,7 @@ MonkeyLane::MonkeyLane() {
     mapType = MapType::MonkeyLane; 
 
     // Generate the enemy path
-    enemyPath[0].push_back(Point(-50, 400, Point::Type::SpawnEnenmy)); // enemy goes from there
+    enemyPath[0].push_back(Point(-35, 400, Point::Type::SpawnEnenmy)); // enemy goes from there
     enemyPath[0].push_back(Point(0, 390));
     enemyPath[0].push_back(Point(203, 390));
     enemyPath[0].push_back(Point(203, 275));
@@ -26,6 +26,31 @@ MonkeyLane::MonkeyLane() {
     enemyPath[0].push_back(Point(235, 510));
     enemyPath[0].push_back(Point(200, 510));
     enemyPath[0].push_back(Point(200, 695, Point::Type::Exit)); // player gets damage here
+
+    // Reverse path
+    enemyPath[1].push_back(Point(200, 755, Point::Type::SpawnEnenmy)); // player gets damage here
+    enemyPath[1].push_back(Point(200, 510));
+    enemyPath[1].push_back(Point(235, 510, Point::Type::Invisible));
+    enemyPath[1].push_back(Point(497, 510));
+    enemyPath[1].push_back(Point(730, 500));
+    enemyPath[1].push_back(Point(730, 287));
+    enemyPath[1].push_back(Point(875, 265));
+    enemyPath[1].push_back(Point(875, 162));
+    enemyPath[1].push_back(Point(735, 145));
+    enemyPath[1].push_back(Point(725, 42));
+    enemyPath[1].push_back(Point(205, 42));
+    enemyPath[1].push_back(Point(200, 160));
+    enemyPath[1].push_back(Point(590, 160));
+    enemyPath[1].push_back(Point(605, 373, Point::Type::Invisible));
+    enemyPath[1].push_back(Point(610, 635));
+    enemyPath[1].push_back(Point(610, 660));
+    enemyPath[1].push_back(Point(370, 655));
+    enemyPath[1].push_back(Point(360, 275));
+    enemyPath[1].push_back(Point(203, 275));
+    enemyPath[1].push_back(Point(203, 390));
+    enemyPath[1].push_back(Point(0, 390));
+    enemyPath[1].push_back(Point(35, 400, Point::Type::Exit)); // enemy goes from there
+
 }
 
 std::unique_ptr<Map> MonkeyLane::clone() const {

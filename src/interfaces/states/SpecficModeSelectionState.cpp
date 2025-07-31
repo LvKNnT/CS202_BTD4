@@ -74,12 +74,12 @@ void SpecificModeSelectionState::update(Event::Type event) {
             setInfo();
             diffStr = "Easy - ";
             break;
-        case Event::Type::ToMediumModeSelection:
+            case Event::Type::ToMediumModeSelection:
             diff = Difficulty::Medium;
             diffStr = "Medium - ";
             setInfo();
             break;
-        case Event::Type::ToHardModeSelection:
+            case Event::Type::ToHardModeSelection:
             diff = Difficulty::Hard;
             diffStr = "Hard - ";
             setInfo();

@@ -9,7 +9,8 @@
 #include "bullets/UltraJuggernautBullet.h"
 #include "bullets/Arrow.h"
 #include "bullets/ArrowCrit.h"
-// #include "bullets/Bomb.h"
+#include "bullets/Bomb.h"
+#include "bullets/BombExplosion.h"
 // #include "bullets/Tack.h"
 // #include "bullets/Ice.h"
 // #include "bullets/MagicBall.h"
@@ -61,7 +62,8 @@ void BulletSpawner::init() {
     bulletTemplates[BulletType::UltraJuggernaut] = std::make_unique<UltraJuggernautBullet>();
     bulletTemplates[BulletType::Arrow] = std::make_unique<Arrow>();
     bulletTemplates[BulletType::ArrowCrit] = std::make_unique<ArrowCrit>();
-    // bulletTemplates[BulletType::Bomb] = std::make_unique<Bomb>();
+    bulletTemplates[BulletType::Bomb] = std::make_unique<Bomb>();
+    bulletTemplates[BulletType::BombExplosion] = std::make_unique<BombExplosion>();
     // bulletTemplates[BulletType::Tack] = std::make_unique<Tack>();
     // bulletTemplates[BulletType::Ice] = std::make_unique<Ice>();
     // bulletTemplates[BulletType::MagicBall] = std::make_unique<MagicBall>();

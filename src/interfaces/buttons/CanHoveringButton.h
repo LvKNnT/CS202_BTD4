@@ -48,9 +48,9 @@ public:
 
 // Tower buttons
 
-class ChooseBombTower : public CanHoveringButton {
+class ChooseBombShooterTower : public CanHoveringButton {
 public:
-    ChooseBombTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+    ChooseBombShooterTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
 class ChooseDartMonkeyTower : public CanHoveringButton {
