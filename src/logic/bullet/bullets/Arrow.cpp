@@ -32,6 +32,29 @@ void Arrow::init(Vector2 position, Vector2 size, float rotation, int damage, int
     this->towerId = towerId; 
 }
 
+int Arrow::run() {
+    float elapsedTime = GetFrameTime();
+
+    Vector2 direction = {cosf(rotation * (PI / 180.0f)), sinf(rotation * (PI / 180.0f))};
+    position.x += direction.x * speed * elapsedTime;
+    position.y += direction.y * speed * elapsedTime;
+
+    Rectangle bulletBoundingBox = getBoundingBox();
+
+    // Check if the bullet is still within the bounds of the map
+    if(!Utils::isPositionInMap({bulletBoundingBox.x, bulletBoundingBox.y})
+    || !Utils::isPositionInMap({bulletBoundingBox.x + bulletBoundingBox.width, bulletBoundingBox.y + bulletBoundingBox.height})) {
+        return die();
+    }
+
+    // If the bullet is still active, return 0
+    return 0;
+}
+
+void Arrow::update(std::vector<std::unique_ptr<Enemy>>& enemyList) {
+    // no special update
+}
+
 bool Arrow::hit(int damage) {
     pierce -= damage;
     

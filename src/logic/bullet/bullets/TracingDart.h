@@ -1,15 +1,13 @@
-#ifndef JUGGERNAUT_BULLET_H
-#define JUGGERNAUT_BULLET_H
+#ifndef TRACING_DART_H
+#define TRACING_DART_H
 
 #include "../Bullet.h"
 
-class JuggernautBullet : public Bullet {
-    friend class UltraJuggernautBullet;
-
+class TracingDart : public Bullet {
 public:
-    JuggernautBullet();
+    TracingDart();
     std::unique_ptr<Bullet> clone() const override;
-    ~JuggernautBullet() override = default;
+    ~TracingDart() override = default;
 
     // Override all methods from Bullet
     void loadTexture() override;
@@ -25,8 +23,10 @@ public:
     Rectangle getBoundingBox() const override;
     bool isActive() const override;
     void setActive(bool active) override;
-
+    
     void setRotation(float rotation) override;
+private:
+    int tracingId = -2;
 };
 
-#endif // JUGGERNAUT_BULLET_H
+#endif // TRACING_DART_H

@@ -45,9 +45,10 @@ void SpikeOPult::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuf
             attack = std::make_unique<SpikeOPultAttack>(128.0f, 1.15f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 1, 300, 19, 10.0f, BulletProperties{false, true, true, true, false, true}); 
             isFound = true;
         }
-        attackBuff.rangeRatio = 1.15f;
     }
-
+    
+    attackBuff.rangeRatio *= 1.15f;
+    
     if (!isFound) {
         attacks.push_back(std::make_unique<SpikeOPultAttack>(128.0f, 1.15f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 1, 300, 19, 10.0f, BulletProperties{false, true, true, true, false, true})); 
     }

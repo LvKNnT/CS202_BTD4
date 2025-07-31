@@ -3,6 +3,7 @@
 
 enum class BulletType {
     Dart,
+    TracingDart,
     SpikeOPult,
     Juggernaut,
     UltraJuggernaut,
@@ -46,12 +47,12 @@ public:
     ~BulletProperties() = default;
 
     BulletProperties& operator+= (const BulletProperties& other) {
-        canLead |= other.canLead;
-        canBlack |= other.canBlack;
-        canWhite |= other.canWhite;
-        canFrozen |= other.canFrozen;
-        canCamo |= other.canCamo;
-        canPurple |= other.canPurple;
+        canLead = canLead || other.canLead;
+        canBlack = canBlack || other.canBlack;
+        canWhite = canWhite || other.canWhite;
+        canFrozen = canFrozen || other.canFrozen;
+        canCamo = canCamo || other.canCamo;
+        canPurple = canPurple || other.canPurple;
         return *this;
     }
 
@@ -59,6 +60,18 @@ public:
         BulletProperties result = *this;
         result += other;
         return result;
+    }
+
+    BulletProperties& operator= (const BulletProperties& other) {
+        if (this != &other) {
+            canLead = other.canLead;
+            canBlack = other.canBlack;
+            canWhite = other.canWhite;
+            canFrozen = other.canFrozen;
+            canCamo = other.canCamo;
+            canPurple = other.canPurple;
+        }
+        return *this;
     }
 };
 

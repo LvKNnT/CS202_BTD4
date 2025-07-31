@@ -22,6 +22,12 @@ void LogicManager::updateEnemies(EnemyManager& enemyManager, MapManager& mapMana
 
 // Logic to move the enemy along the path
 int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
+    if(map.isLastPoint(enemy.trackIndex, enemy.pathIndex)) {
+        // Enemy has reached the end of the path
+        enemy.die(); // Handle the death of the enemy
+        return -1; // Indicating that the enemy has reached the end of the path
+    }
+
     float elapsedTime = GetFrameTime();
     Vector2 position = enemy.position;
     int trackIndex = enemy.trackIndex;
@@ -73,7 +79,7 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
 void LogicManager::updateBullets(BulletManager& bulletManager) {
     for(auto it = bulletManager.bulletList.begin(); it != bulletManager.bulletList.end(); ) {
         // Check if the bullet is still on the map
-        int result = runBullet(**it);
+        int result = (*it)->run();
 
         if (result == -1) {
             // Bullet has reached the end of its life — remove and destroy it
@@ -86,7 +92,19 @@ void LogicManager::updateBullets(BulletManager& bulletManager) {
         
         if ((*it)->lifeSpan <= 0) {
             // Bullet has reached the end of its life span — remove and destroy it
+            
+            // first, remove all pierce left
+            (*it)->pierce = 0; 
+            std::vector<std::unique_ptr<Bullet>> bulletChildren = (*it)->getChild();
+            
             it = bulletManager.bulletList.erase(it);  // erase returns the next iterator
+
+            if (!bulletChildren.empty()) {
+                it = bulletManager.bulletList.insert(it,
+                    std::make_move_iterator(bulletChildren.begin()), 
+                    std::make_move_iterator(bulletChildren.end()));
+            }
+
             continue;  // Skip the increment, already moved to next
         }
 
@@ -94,34 +112,11 @@ void LogicManager::updateBullets(BulletManager& bulletManager) {
     }
 }
 
-int LogicManager::runBullet(Bullet& bullet) {
-    float elapsedTime = GetFrameTime();
-    Vector2 position = bullet.position;
-    float rotation = bullet.rotation;
-    int speed = bullet.speed;
-
-    Vector2 direction = {cosf(rotation * (PI / 180.0f)), sinf(rotation * (PI / 180.0f))};
-    position.x += direction.x * speed * elapsedTime;
-    position.y += direction.y * speed * elapsedTime;
-
-    // Update the bullet's position
-    bullet.position = position;
-    Rectangle bulletBoundingBox = bullet.getBoundingBox();
-
-    // Check if the bullet is still within the bounds of the map
-    if(!Utils::isPositionInMap({bulletBoundingBox.x, bulletBoundingBox.y})
-    || !Utils::isPositionInMap({bulletBoundingBox.x + bulletBoundingBox.width, bulletBoundingBox.y + bulletBoundingBox.height})) {
-        return bullet.die();
-    }
-
-    // If the bullet is still active, return 0
-    return 0;
-}
-
 void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyManager& enemyManager, TowerManager& towerManager, MapManager& mapManager, ResourceManager& resourceManager) {
     for (auto bulletIt = bulletManager.bulletList.begin(); bulletIt != bulletManager.bulletList.end(); ) {
         bool isBulletAlive = true;
-
+        
+        std::set<int> hitEnemies;
         for (auto enemyIt = enemyManager.enemyList.begin(); enemyIt != enemyManager.enemyList.end() && isBulletAlive; ) {
             if((*enemyIt)->isActiveFlag == false) {
                 ++enemyIt; 
@@ -135,6 +130,7 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
             }
             if((*bulletIt)->hitEnemies.find((*enemyIt)->enemyId) != (*bulletIt)->hitEnemies.end()) {
                 // Bullet has already hit this enemy
+                // std::cerr << "Bullet " << (*bulletIt)->tag << " has already hit enemy " << (*enemyIt)->tag << " id " << (*enemyIt)->enemyId << " with lifeSpan" << (*bulletIt)->lifeSpan << std::endl;
                 ++enemyIt; 
                 continue;
             }
@@ -144,11 +140,13 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
                 if(!canBulletDestroyEnemy(**bulletIt, **enemyIt)) {
                     bulletIt = bulletManager.bulletList.erase(bulletIt);
                     isBulletAlive = false;
-                    continue; 
+                    continue;
                 }
 
                 // mark the enemy as hit by this bullet
-                (*bulletIt)->hitEnemies.insert((*enemyIt)->enemyId);
+                // std::cerr << "Bullet " << (*bulletIt)->tag << " hit enemy " << (*enemyIt)->tag << " id " << (*enemyIt)->enemyId << " with lifeSpan " << (*bulletIt)->lifeSpan << std::endl;
+                // (*bulletIt)->hitEnemies.insert((*enemyIt)->enemyId);
+                hitEnemies.insert((*enemyIt)->enemyId); 
 
                 int popCount = 0;
                 std::vector<std::unique_ptr<Enemy>> enemyChildren;
@@ -163,13 +161,23 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
 
                 // Every collision costs bullet damage
                 if((*enemyIt)->health <= 0) {
-                    enemyIt = enemyManager.enemyList.erase(enemyIt); // Remove the current enemy
-                    
-                    if(!enemyChildren.empty()) {
-                        enemyIt = enemyManager.enemyList.insert(enemyIt, 
-                            std::make_move_iterator(enemyChildren.begin()), 
+                    int index = std::distance(enemyManager.enemyList.begin(), enemyIt);
+
+                    if (!enemyChildren.empty()) {
+                        // First, shifting each children
+                        for(int i=0; i < enemyChildren.size(); ++i) {
+                            for(int j=0;j<i;++j) {
+                                runEnemy(*enemyChildren[j], mapManager.getCurrentMap());
+                            }
+                        }
+
+                        enemyManager.enemyList.insert(enemyManager.enemyList.begin() + index,
+                            std::make_move_iterator(enemyChildren.begin()),
                             std::make_move_iterator(enemyChildren.end()));
                     }
+
+                    enemyIt = enemyManager.enemyList.begin() + index + enemyChildren.size();
+                    enemyIt = enemyManager.enemyList.erase(enemyIt);
                 }
                 else ++enemyIt;
 
@@ -184,17 +192,27 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
                 }
                 
                 if(!bulletChildren.empty()) {
-                    auto nextBulletIt = isBulletDie || bulletIt == bulletManager.bulletList.end() ? bulletIt : std::next(bulletIt);
-
-                    bulletIt = bulletManager.bulletList.insert(nextBulletIt,
-                        std::make_move_iterator(bulletChildren.begin()), 
-                        std::make_move_iterator(bulletChildren.end()));
+                    if(isBulletDie) {
+                        bulletIt = bulletManager.bulletList.insert(bulletIt,
+                            std::make_move_iterator(bulletChildren.begin()), 
+                            std::make_move_iterator(bulletChildren.end()));
+                    } 
+                    else {
+                        bulletIt = bulletManager.bulletList.insert(std::next(bulletIt),
+                            std::make_move_iterator(bulletChildren.begin()), 
+                            std::make_move_iterator(bulletChildren.end()));
+                        bulletIt = std::prev(bulletIt); 
+                    }
                 }
             }
             else ++enemyIt;
         }
 
-        if(isBulletAlive && bulletIt != bulletManager.bulletList.end()) ++bulletIt;
+        if(isBulletAlive && bulletIt != bulletManager.bulletList.end()) {
+            (*bulletIt)->hitEnemies.insert(hitEnemies.begin(), hitEnemies.end()); 
+            (*bulletIt)->update(enemyManager.enemyList); // Update the bullet tracing
+            ++bulletIt;
+        }
     }
 }
 

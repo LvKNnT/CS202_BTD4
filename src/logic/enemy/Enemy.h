@@ -31,6 +31,9 @@ public:
     virtual void setModifies(const EnemyModifies& modifies) = 0; // Pure virtual function for setting enemy modifiers
     virtual void setProperties(const BloonProperties& properties) = 0; // Pure virtual function for setting bloon properties
 
+    int getId() const;
+    Vector2 getPosition() const;
+
 protected:
     BloonType type;
     BloonProperties properties; // Properties of the bloon, such as fortified, camo, regrow
