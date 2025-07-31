@@ -52,13 +52,14 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
 
     towerBoxPos = {1000, 145};
     for(int i = 0; i < maxTowerTypes; i++) {
-        if(i == 0) {
-            auto infos = Game::Instance().getGameLogic().getInfoTower(static_cast<TowerType>(i + 1));
+        if(i <= 1) {
+            auto infos = Game::Instance().getGameLogic().getInfoTower(getTowerType(i));
             towerCost[i] = std::make_shared<TextField>('$' + infos["cost"], Game::Instance().getFontManager().getFont("SmallBold"), WHITE, 20, 100, (Vector2) {towerBoxPos.x, towerBoxPos.y + 103 - 30});
-            chooseTowerButton[i] = std::make_shared<ChooseDartMonkeyTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
+            if(i == 0) chooseTowerButton[i] = std::make_shared<ChooseDartMonkeyTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
+            if(i == 1) chooseTowerButton[i] = std::make_shared<ChooseBombShooterTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
         }
-        if(i > 0) {
-            chooseTowerButton[i] = std::make_shared<ChooseBombTower>(Game::Instance().getTextureManager().getTexture("Bomb Tower Icon"), 1, 103, 100, towerBoxPos);
+        if(i > 1) {
+            chooseTowerButton[i] = std::make_shared<ChooseBombShooterTower>(Game::Instance().getTextureManager().getTexture("Bomb Shooter Icon"), 1, 103, 100, towerBoxPos);
             towerCost[i] = std::make_shared<TextField>("$6969", Game::Instance().getFontManager().getFont("SmallBold"), WHITE, 20, 100, (Vector2) {towerBoxPos.x, towerBoxPos.y + 103 - 30});
         }
         towerInfoButton[i] = std::make_shared<Info>(Game::Instance().getTextureManager().getTexture("Info"), 1, 25, 25, (Vector2) {towerBoxPos.x + 100 - 25, towerBoxPos.y});
@@ -84,9 +85,6 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
     buttonInfoTextbox = std::make_shared<MovableTextbox>("", Game::Instance().getFontManager().getFont("Small"), WHITE, 20, 150);
     panel->addPanelElement(upgradeInfoTextbox);
     panel->addPanelElement(buttonInfoTextbox);
-
-    // Temporary only
-    Game::Instance().getGameLogic().init();
     
     // Round Info 
     roundPanel = std::make_unique<Panel>();
@@ -100,6 +98,8 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
     towerName = std::make_shared<TextField>("Name", Game::Instance().getFontManager().getFont("Medium"), YELLOW, 25, 0, (Vector2) {5, 725});
     towerPopCount = std::make_shared<TextField>("Pop Count: 0", Game::Instance().getFontManager().getFont("Medium"), YELLOW, 25, 0, (Vector2) {5 + 550, 725});
     sellPrice = std::make_shared<TextField>("", Game::Instance().getFontManager().getFont("Medium"), YELLOW, 25, 0, (Vector2) {5 + 300, 725});
+    skillButton = std::make_shared<SkillButton>(Game::Instance().getTextureManager().getTexture("Dart Monkey Info"), 1, 80, 80, (Vector2) {10, Properties::mapHeight - 90});
+    std::dynamic_pointer_cast<SkillButton>(skillButton)->setCooldown(70.0);
     std::shared_ptr<PanelElement> sellTowerButton = std::make_shared<SellButton>(Game::Instance().getTextureManager().getTexture("GameStateButton"), 20, 25, 84, (Vector2) {5 + 380, 725});
     std::shared_ptr<PanelElement> priorityContainer = std::make_shared<TextureField>(Game::Instance().getTextureManager().getTexture("PurpleRect"), 115, 195, (Vector2) {5, 725 + 25 + 5});
     Font smallFont = Game::Instance().getFontManager().getFont("SmallBold");
@@ -112,6 +112,7 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
     towerPanel->addPanelElement(priorityTitle);
     towerPanel->addPanelElement(sellPrice);
     towerPanel->addPanelElement(sellTowerButton);
+    towerPanel->addPanelElement(skillButton);
 
 
     std::shared_ptr<PanelElement> nextPriorityButton = std::make_shared<NextPriority>(Game::Instance().getTextureManager().getTexture("RightWhiteTriangle"), 1, 50, 23, (Vector2) {5 + 195 - 23 - 25, 875 - 5 - 50});
@@ -149,9 +150,6 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
 }
 
 void GameState::draw() const {    
-    // Update session 
-    Game::Instance().getGameLogic().update();
-    
     // Draw
     DrawTextureEx(background, (Vector2) {0, 0}, 0.0, 1.0, (Color) {140, 140, 140, 255});
     Game::Instance().getGameLogic().draw();
@@ -210,8 +208,12 @@ void GameState::update(Event::Type event) {
         case Event::Type::ClickedChooseDartMonkey:
             clickedTowerType = TowerType::DartMonkey;
             break;
+        case Event::Type::ClickedChooseBomb:
+            clickedTowerType = TowerType::BombShooter;
+            break;
         case Event::Type::UpgradeTowerLeft:
             Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Top);
+            std::cout<<Game::Instance().getGameLogic().getInfoTower()["upgradeNameTop"]<<"\n";
             break;
         case Event::Type::UpgradeTowerMiddle:
             Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Middle);
@@ -232,6 +234,9 @@ void GameState::update(Event::Type event) {
     }
     
 void GameState::handleInput() {
+    // update game logic
+    Game::Instance().getGameLogic().update();
+
     auto preTowerType = clickedTowerType;
     State::handleInput();
     towerPanel->handleInput();
@@ -330,11 +335,6 @@ void GameState::handleInput() {
     buttonInfoTextbox->setAvailable(drawButtonInfoBox);
 }
 
-std::string GameState::getTowerName(TowerType type) const {
-    std::vector<std::string> towerNames = {"None", "Dart Monkey"};
-    return towerNames[static_cast<int>(type)];
-}
-
 void GameState::pickTower() {
     Game::Instance().getGameLogic().pickTower(GetMousePosition());
     LogicInfo curTowerInfos = Game::Instance().getGameLogic().getInfoTower();
@@ -357,3 +357,14 @@ void GameState::unpickTower() {
         towerPanel->setAvailable(false);
     }
 }
+
+TowerType GameState::getTowerType(int i) const {
+    switch(i) {
+        case 0:
+            return TowerType::DartMonkey;
+        case 1:
+            return TowerType::BombShooter;
+    }
+    return TowerType::None;
+}
+

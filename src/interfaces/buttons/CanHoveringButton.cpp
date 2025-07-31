@@ -64,7 +64,7 @@ Info::Info(const Texture &_texture, int _fontSize, int _height, int _width, Vect
     hoveringEvent = Event::Type::HoveringInfo;
 }
 
-ChooseBombTower::ChooseBombTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+ChooseBombShooterTower::ChooseBombShooterTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
     : CanHoveringButton(_texture, _fontSize, _height, _width, _position){
     attach(Game::Instance().getStateManager());
     hoveringEvent = Event::Type::HoveringChooseBomb;
