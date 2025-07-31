@@ -39,6 +39,12 @@ bool ArrowAttack::isInRange(const Rectangle& rec, const float rotation, bool isC
     return distanceSq <= buffedRange * buffedRange;
 }
 
+void ArrowAttack::update() {
+    if (timer > 0.0f) {
+        timer -= GetFrameTime();
+    }
+}
+
 void ArrowAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) {
     // Update the attack logic, e.g., spawn an arrow bullet if the cooldown is over
     if (timer <= 0.0f) {
@@ -56,7 +62,5 @@ void ArrowAttack::update(BulletManager& bulletManager, const Vector2& targetPosi
             towerId);
         
         timer += cooldown * attackBuff.cooldownRatio; // Reset the timer after spawning
-    } else {
-        timer -= GetFrameTime(); // Decrease the timer based on frame time
     }
 }

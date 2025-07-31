@@ -260,7 +260,8 @@ void GameState::handleInput() {
         if(clickedTowerType != TowerType::None) {
             clickedTowerType = TowerType::None;
             Game::Instance().getGameLogic().unPutTower();
-        } else unpickTower();
+        } 
+        unpickTower();
         return;
     }    
     
@@ -281,10 +282,10 @@ void GameState::handleInput() {
         
         auto infos = Game::Instance().getGameLogic().getInfoTower();
         std::dynamic_pointer_cast<TextField>(upgradeTitle[i])->setText(infos["name" + upgradeType]);
-        std::dynamic_pointer_cast<UpgradeButton>(upgradeButton[i])->setTexture(Game::Instance().getTextureManager().getTexture(infos["name" + upgradeType] + " Upgrade Icon"));
+        std::dynamic_pointer_cast<UpgradeButton>(upgradeButton[i])->setTexture(Game::Instance().getTextureManager().getTexture(infos["name" + upgradeType]));
         std::dynamic_pointer_cast<TextField>(nextUpgradeCost[i])->setText("Cost: $" + infos["upgradeCost" + upgradeType]);
         std::dynamic_pointer_cast<TextField>(nextUpgradeTitle[i])->setText(infos["upgradeName" + upgradeType]);
-        std::dynamic_pointer_cast<UpgradeButton>(nextUpgradeButton[i])->setTexture(Game::Instance().getTextureManager().getTexture(infos["upgradeName" + upgradeType] + " Upgrade Icon"));
+        std::dynamic_pointer_cast<UpgradeButton>(nextUpgradeButton[i])->setTexture(Game::Instance().getTextureManager().getTexture(infos["upgradeName" + upgradeType]));
         
         if(Game::Instance().getGameLogic().isUpgradeTower(static_cast<UpgradeUnits>(i)) == false) {
             redNextUpgradeContainer[i]->setAvailable(true);
@@ -350,6 +351,7 @@ void GameState::pickTower() {
 }
 
 void GameState::unpickTower() {
+    Game::Instance().getGameLogic().unPickTower();
     if(towerPanel->getIsAvailable()) {
         roundPanel->setAvailable(true);
         towerPanel->setAvailable(false);

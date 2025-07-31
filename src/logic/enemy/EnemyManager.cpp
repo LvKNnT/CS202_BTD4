@@ -72,14 +72,3 @@ void EnemyManager::updateEnemies() {
         enemySpawner->getRegrowEnemy(*it, currentModifies); 
     }
 }
-
-void EnemyManager::unLoad() {
-    for (auto& enemy : enemyList) {
-        if (enemy) {
-            enemy->unLoad(); // Unload the enemy resources
-        } else {
-            std::cerr << "Enemy is null during unload!" << std::endl;
-        }
-    }
-    enemyList.clear(); // Clear the list of enemies
-}

@@ -39,6 +39,12 @@ bool JuggernautAttack::isInRange(const Rectangle& rec, const float rotation, boo
     return distanceSq <= buffedRange * buffedRange;
 }
 
+void JuggernautAttack::update() {
+    if (timer > 0.0f) {
+        timer -= GetFrameTime(); 
+    }
+}
+
 void JuggernautAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) {
     // Update the attack logic, e.g., spawn a juggernaut bullet if the cooldown is over
     if (timer <= 0.0f) {
@@ -56,7 +62,5 @@ void JuggernautAttack::update(BulletManager& bulletManager, const Vector2& targe
             towerId);
         
         timer += cooldown * attackBuff.cooldownRatio; // Reset the timer after spawning
-    } else {
-        timer -= GetFrameTime(); // Decrease the timer based on frame time
-    }
+    } 
 }

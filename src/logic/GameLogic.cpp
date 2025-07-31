@@ -73,11 +73,12 @@ void GameLogic::update() {
         if(resourceManager.isEndGame() == 0 && logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager)) {
             autoSave(); 
         }
-
+        
         logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager, resourceManager);
         logicManager.updateEnemies(enemyManager, mapManager, resourceManager);
         logicManager.updateBullets(bulletManager);
         logicManager.updateTowers(towerManager, enemyManager, bulletManager);
+        towerManager.updateTowers();
     }
 }
 
@@ -92,9 +93,6 @@ void GameLogic::draw() const {
 void GameLogic::unLoad() {
     // Unload all game logic resources
     mapManager.unLoad();
-    enemyManager.unLoad();
-    bulletManager.unLoad();
-    towerManager.unLoad();
 }
 
 int GameLogic::isEndGame() const {

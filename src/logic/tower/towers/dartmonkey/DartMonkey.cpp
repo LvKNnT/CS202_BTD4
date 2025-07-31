@@ -43,13 +43,13 @@ DartMonkey::DartMonkey(Vector2 position)
     info["sellPrice"] = std::to_string(static_cast<int>(cost * 0.75f));
 
     // At the beginning, no upgrades are available
-    info["nameTop"] = "";
-    info["nameMiddle"] = "";
-    info["nameBottom"] = "";
+    info["nameTop"] = "NoUpgrade";
+    info["nameMiddle"] = "NoUpgrade";
+    info["nameBottom"] = "NoUpgrade";
     info["descriptionTop"] = "";
     info["descriptionMiddle"] = "";
     info["descriptionBottom"] = "";
-
+    
     info["upgradeNameTop"] = upgradeTop->getName();
     info["upgradeCostTop"] = std::to_string(upgradeTop->getCost());
     info["upgradeDescriptionTop"] = upgradeTop->getDescription();
@@ -62,7 +62,7 @@ DartMonkey::DartMonkey(Vector2 position)
 }
 
 DartMonkey::DartMonkey(const DartMonkey& other)
-    : Tower(other) {
+: Tower(other) {
 }
 
 std::unique_ptr<Tower> DartMonkey::clone() const {
@@ -72,11 +72,11 @@ std::unique_ptr<Tower> DartMonkey::clone() const {
 void DartMonkey::loadTexture() {
     // Load the texture for the Dart Monkey tower
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/DartMonkey.png");
-    texture = Game::Instance().getTextureManager().getTexture(tag);
+    Game::Instance().getTextureManager().loadTexture("NoUpgrade", "../assets/tower/NoUpgradeIcon.png");
     
     // Update size based on the loaded texture
-    size.x = static_cast<float>(texture.width);
-    size.y = static_cast<float>(texture.height);
+    size.x = Game::Instance().getTextureManager().getTexture(tag).width;
+    size.y = Game::Instance().getTextureManager().getTexture(tag).height;
 
     // Get texture for the upgrade
     upgradeTop->loadTexture();
@@ -86,6 +86,9 @@ void DartMonkey::loadTexture() {
 
 void DartMonkey::update() {
     // Dart Monkey has no special update.
+    for(auto& attack : attacks) {
+        attack->update();
+    }
 }
 
 void DartMonkey::setRotation(float rotation) {
@@ -102,8 +105,8 @@ void DartMonkey::draw() const {
         roundf(position.y)
     };    
 
-    DrawTexturePro(texture, 
-                   {0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height)},
+    DrawTexturePro(Game::Instance().getTextureManager().getTexture(tag), 
+                   {0, 0, size.x, size.y},
                    {draw_position.x, draw_position.y, size.x, size.y},
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,

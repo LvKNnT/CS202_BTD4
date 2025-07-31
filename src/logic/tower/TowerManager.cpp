@@ -96,8 +96,10 @@ void TowerManager::pickTower(Vector2 position) {
 }
 
 void TowerManager::unPickTower() {
-    lastPickedTower = nullptr; // Clear the last picked tower
+    if(!lastPickedTower) return;
+
     std::cout << "Unpicked tower: " << static_cast<int>(lastPickedTower->type) << std::endl;
+    lastPickedTower = nullptr;
 }
 
 LogicInfo TowerManager::getInfo() const {
@@ -146,17 +148,6 @@ void TowerManager::updateTowers() {
             std::cerr << "Tower is null or inactive." << std::endl;
         }
     }
-}
-
-void TowerManager::unLoad() {
-    for (auto& tower : towerList) {
-        if (tower) {
-            tower->unLoad();
-        } else {
-            std::cerr << "Tower is null during unload." << std::endl;
-        }
-    }
-    towerList.clear(); // Clear the tower list after unloading
 }
 
 Tower* TowerManager::getTowerFromPosition(Vector2 position) const {

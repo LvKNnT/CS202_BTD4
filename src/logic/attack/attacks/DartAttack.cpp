@@ -43,6 +43,12 @@ bool DartAttack::isInRange(const Rectangle& rec, const float rotation, bool isCa
     return distanceSq <= buffedRange * buffedRange;
 }
 
+void DartAttack::update() {
+    if (timer > 0.0f) {
+        timer -= GetFrameTime(); 
+    }
+}
+
 void DartAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) {
     // Update the attack logic, e.g., spawn a dart if the cooldown is over
     if (timer <= 0.0f) {
@@ -60,7 +66,5 @@ void DartAttack::update(BulletManager& bulletManager, const Vector2& targetPosit
             towerId);
         
         timer += cooldown * attackBuff.cooldownRatio; // Reset the timer after spawning
-    } else {
-        timer -= GetFrameTime(); // Increment the timer based on frame time
     }
 }

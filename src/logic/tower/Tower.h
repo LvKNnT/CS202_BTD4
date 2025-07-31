@@ -30,7 +30,6 @@ public:
     
     // Basic loaders
     virtual void loadTexture() = 0;
-    void unLoad();
 
     // Different towers can have different behaviors when attacking
     virtual void update() = 0; // Pure virtual function for handling special attack

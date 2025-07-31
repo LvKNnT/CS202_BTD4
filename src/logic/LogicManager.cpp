@@ -535,12 +535,14 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
         case UpgradeUnits::Top:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Top)) {
                 tower->upgradeTop->update(tower->attacks, tower->attackBuff, tower->attackPattern);
+                tower->info["nameTop"] = tower->upgradeTop->getName();
                 tower->info["descriptionTop"] = tower->upgradeTop->getDescription();
                 tower->cost += tower->upgradeTop->getCost() * tower->upgradeCost;
                 resourceManager.currentResource.cash -= tower->upgradeTop->getCost() * tower->upgradeCost;
 
                 tower->upgradeTop = tower->upgradeTop->buy();
-                tower->info["nameUpgradeTop"] = tower->upgradeTop->getName();
+                tower->upgradeTop->loadTexture();
+                tower->info["upgradeNameTop"] = tower->upgradeTop->getName();
                 tower->info["upgradeCostTop"] = std::to_string(tower->upgradeTop->getCost() * tower->upgradeCost);
                 tower->info["upgradeDescriptionTop"] = tower->upgradeTop->getDescription();
 
@@ -550,12 +552,14 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
         case UpgradeUnits::Middle:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Middle)) {
                 tower->upgradeMiddle->update(tower->attacks, tower->attackBuff, tower->attackPattern);
+                tower->info["nameMiddle"] = tower->upgradeMiddle->getName();
                 tower->info["descriptionMiddle"] = tower->upgradeMiddle->getDescription();
                 tower->cost += tower->upgradeMiddle->getCost() * tower->upgradeCost;
                 resourceManager.currentResource.cash -= tower->upgradeMiddle->getCost() * tower->upgradeCost;
 
                 tower->upgradeMiddle = tower->upgradeMiddle->buy();
-                tower->info["nameUpgradeMiddle"] = tower->upgradeMiddle->getName();
+                tower->upgradeMiddle->loadTexture();
+                tower->info["upgradeNameMiddle"] = tower->upgradeMiddle->getName();
                 tower->info["upgradeCostMiddle"] = std::to_string(tower->upgradeMiddle->getCost() * tower->upgradeCost);
                 tower->info["upgradeDescriptionMiddle"] = tower->upgradeMiddle->getDescription();
 
@@ -565,12 +569,14 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
         case UpgradeUnits::Bottom:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Bottom)) {
                 tower->upgradeBottom->update(tower->attacks, tower->attackBuff, tower->attackPattern);
+                tower->info["nameBottom"] = tower->upgradeBottom->getName();
                 tower->info["descriptionBottom"] = tower->upgradeBottom->getDescription();
                 tower->cost += tower->upgradeBottom->getCost() * tower->upgradeCost;
                 resourceManager.currentResource.cash -= tower->upgradeBottom->getCost() * tower->upgradeCost;
 
                 tower->upgradeBottom = tower->upgradeBottom->buy();
-                tower->info["nameUpgradeBottom"] = tower->upgradeBottom->getName();
+                tower->upgradeBottom->loadTexture();
+                tower->info["upgradeNameBottom"] = tower->upgradeBottom->getName();
                 tower->info["upgradeCostBottom"] = std::to_string(tower->upgradeBottom->getCost() * tower->upgradeCost);
                 tower->info["upgradeDescriptionBottom"] = tower->upgradeBottom->getDescription();
 

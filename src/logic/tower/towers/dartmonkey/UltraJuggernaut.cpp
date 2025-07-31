@@ -7,7 +7,7 @@ UltraJuggernaut::UltraJuggernaut()
     : Upgrade("Ultra-Juggernaut", 15000, "Gigantic spiked ball splits twice into 6 Juggernaut balls for even more destructive power against Ceramic, Fortified and Lead Bloons.") {
     // Constructor implementation can be extended if needed
     nextUpgrade = std::make_unique<Upgrade>(); // Temporary lmao
-    tag = "Ultra Juggernaut";
+    tag = "Ultra-Juggernaut";
 }
 
 UltraJuggernaut::UltraJuggernaut(const UltraJuggernaut& other)

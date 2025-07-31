@@ -23,13 +23,12 @@ void Green::loadTexture() {
     std::string fullTag = properties.getFullTag(tag);
     std::string path = properties.getPath() + fullTag + ".png";
     Game::Instance().getTextureManager().loadTexture(fullTag, path);
-    texture = Game::Instance().getTextureManager().getTexture(fullTag);
-
-    // Update size based on the loaded texture
-    size.x = static_cast<float>(texture.width);
-    size.y = static_cast<float>(texture.height);
 
     tag = fullTag;
+
+    // Update size based on the loaded texture
+    size.x = static_cast<float>(Game::Instance().getTextureManager().getTexture(tag).width);
+    size.y = static_cast<float>(Game::Instance().getTextureManager().getTexture(tag).height);
 }
 
 bool Green::hit(int damage) {
@@ -68,7 +67,7 @@ void Green::draw() const {
         roundf(position.y - size.y / 2.0f)
     };    
 
-    DrawTextureV(texture, draw_position, WHITE); // Draw the bloon texture at its position
+    DrawTextureV(Game::Instance().getTextureManager().getTexture(tag), draw_position, WHITE); // Draw the bloon texture at its position
 }
 
 Rectangle Green::getBoundingBox() const {

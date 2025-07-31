@@ -17,11 +17,10 @@ std::unique_ptr<Bullet> SpikeOPultBullet::clone() const {
 void SpikeOPultBullet::loadTexture() {
     // Load the texture for the SpikeOPult bullet
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/bullet/SpikeOPultBullet.png");
-    texture = Game::Instance().getTextureManager().getTexture(tag);
     
     // Update size based on the loaded texture
-    size.x = static_cast<float>(texture.width);
-    size.y = static_cast<float>(texture.height);
+    size.x = static_cast<float>(Game::Instance().getTextureManager().getTexture(tag).width);
+    size.y = static_cast<float>(Game::Instance().getTextureManager().getTexture(tag).height);
 }
 
 void SpikeOPultBullet::init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properites, AttackBuff attackBuff, int towerId) {
@@ -57,8 +56,8 @@ void SpikeOPultBullet::draw() const {
         roundf(position.y)
     };    
 
-    DrawTexturePro(texture, 
-                   {0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height)},
+    DrawTexturePro(Game::Instance().getTextureManager().getTexture(tag), 
+                   {0, 0, size.x, size.y},
                    {draw_position.x, draw_position.y, size.x, size.y},
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,

@@ -20,7 +20,3 @@ Tower::Tower(const Tower& other)
     upgradeMiddle = other.upgradeMiddle ? other.upgradeMiddle->clone() : std::make_unique<Upgrade>();
     upgradeBottom = other.upgradeBottom ? other.upgradeBottom->clone() : std::make_unique<Upgrade>();
 }
-
-void Tower::unLoad() {
-    UnloadTexture(texture);
-}
