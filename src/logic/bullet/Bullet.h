@@ -24,7 +24,6 @@ public:
 
     // Basic loaders
     virtual void loadTexture() = 0;
-    void unLoad();
 
     // Different bullets can have different behaviors when hitting targets
     virtual void init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properites, AttackBuff attackBuff, int towerId) = 0;

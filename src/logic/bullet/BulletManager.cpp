@@ -62,14 +62,3 @@ void BulletManager::drawBullets() const {
         }
     }
 }
-
-void BulletManager::unLoad() {
-    for (auto& bullet : bulletList) {
-        if (bullet) {
-            bullet->unLoad(); // Unload the bullet resources
-        } else {
-            std::cerr << "Bullet is null during unload!" << std::endl;
-        }
-    }
-    bulletList.clear(); // Clear the list after unloading
-}

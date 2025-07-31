@@ -26,7 +26,6 @@ public:
     std::vector<std::unique_ptr<Enemy> > spawnChildrenEnemies(Enemy* enemy);
     void drawEnemies() const;
     void updateEnemies();
-    void unLoad();
 
 private:
     // Current enemy modifies

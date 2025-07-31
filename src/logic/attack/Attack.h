@@ -37,6 +37,7 @@ public:
     virtual std::unique_ptr<Attack> clone() const = 0; // Pure virtual function for cloning the attack
 
     virtual bool isInRange(const Rectangle& rec, const float rotation, bool isCamo, AttackBuff& attackBuff) const = 0; // Pure virtual function to check if the target is in range
+    virtual void update() = 0; // for tower update
     virtual void update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) = 0; // Pure virtual function for executing the attack
 
     // Getters/Setters

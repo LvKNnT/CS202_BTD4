@@ -23,7 +23,6 @@ void Map::draw() const {
 void Map::unLoad() {
     // Need to unload before closeWindow()
     UnloadImage(mapImage);
-    UnloadTexture(texture);
 }
 
 Point::Type Map::getTowerPointType(Vector2 position) const {

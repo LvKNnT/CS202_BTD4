@@ -23,7 +23,6 @@ public:
 
     // Basic loaders
     virtual void loadTexture() = 0;
-    void unLoad();
     
     // Different enemies can have different behaviors when taking damage
     virtual bool hit(int damage) = 0; // Pure virtual function for handling damage

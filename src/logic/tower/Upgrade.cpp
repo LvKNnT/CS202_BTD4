@@ -18,8 +18,7 @@ std::unique_ptr<Upgrade> Upgrade::clone() const {
 }
 
 void Upgrade::loadTexture() {
-    // Game::Instance().getTextureManager().loadTexture(tag, "assets/tower/NoUpgrade.png");
-    std::cerr << "LoadTexture NoUpgrade\n";
+    Game::Instance().getTextureManager().loadTexture(tag, "assets/tower/NoUpgradeIcon.png");
 }
 
 void Upgrade::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) {

@@ -39,6 +39,12 @@ bool UltraJuggernautAttack::isInRange(const Rectangle& rec, const float rotation
     return distanceSq <= buffedRange * buffedRange;
 }
 
+void UltraJuggernautAttack::update() {
+    if (timer > 0.0f) {
+        timer -= GetFrameTime(); 
+    }
+}
+
 void UltraJuggernautAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) {
     // Update the attack logic, e.g., spawn an ultra juggernaut bullet if the cooldown is over
     if (timer <= 0.0f) {
@@ -56,7 +62,5 @@ void UltraJuggernautAttack::update(BulletManager& bulletManager, const Vector2& 
             towerId);
         
         timer += cooldown * attackBuff.cooldownRatio; // Reset the timer after spawning
-    } else {
-        timer -= GetFrameTime(); // Decrease the timer based on frame time
     }
 }

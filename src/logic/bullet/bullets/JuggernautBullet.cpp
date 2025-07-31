@@ -13,11 +13,10 @@ std::unique_ptr<Bullet> JuggernautBullet::clone() const {
 void JuggernautBullet::loadTexture() {
     // Load the texture for the Juggernaut bullet
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/bullet/JuggernautBullet.png");
-    texture = Game::Instance().getTextureManager().getTexture(tag);
     
     // Update size based on the loaded texture
-    size.x = static_cast<float>(texture.width);
-    size.y = static_cast<float>(texture.height);
+    size.x = static_cast<float>(Game::Instance().getTextureManager().getTexture(tag).width);
+    size.y = static_cast<float>(Game::Instance().getTextureManager().getTexture(tag).height);
 }
 
 void JuggernautBullet::init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, AttackBuff attackBuff, int towerId) {
@@ -53,8 +52,8 @@ void JuggernautBullet::draw() const {
         roundf(position.y)
     };    
 
-    DrawTexturePro(texture, 
-                   {0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height)},
+    DrawTexturePro(Game::Instance().getTextureManager().getTexture(tag), 
+                   {0, 0, size.x, size.y},
                    {draw_position.x, draw_position.y, size.x, size.y},
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,

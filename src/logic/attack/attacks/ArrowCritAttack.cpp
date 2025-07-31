@@ -40,6 +40,12 @@ bool ArrowCritAttack::isInRange(const Rectangle& rec, const float rotation, bool
     return distanceSq <= buffedRange * buffedRange;
 }
 
+void ArrowCritAttack::update() {
+    if (timer > 0.0f) {
+        timer -= GetFrameTime();
+    }
+}
+
 void ArrowCritAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) {
     // Update the attack logic, e.g., spawn an arrow or arrow crit bullet if the cooldown is over
     if (timer <= 0.0f) {
@@ -70,8 +76,6 @@ void ArrowCritAttack::update(BulletManager& bulletManager, const Vector2& target
         }
 
         timer += cooldown * attackBuff.cooldownRatio; // Reset the timer after spawning
-    } else {
-        timer -= GetFrameTime(); // Decrease the timer based on frame time
     }
 }
 

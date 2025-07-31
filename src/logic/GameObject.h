@@ -24,7 +24,6 @@ protected:
     Vector2 size; // Size of the game object
     float rotation; // Rotation angle for the game object
     std::string tag; // Tag for identifying the game object
-    Texture texture; // Texture for the game object, if applicable
     bool isActiveFlag; // Flag to indicate if the object is active
 };
 

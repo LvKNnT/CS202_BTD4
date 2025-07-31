@@ -9,7 +9,7 @@ SpikeOPult::SpikeOPult()
     : Upgrade("Spike-O-Pult", 320, "Converts the Dart Monkey into a slower attacking Spike-o-pult that hurls large spiked balls. Each ball can pop lots of Bloons and rebounds off obstacles.") {
     // Constructor implementation can be extended if needed
     nextUpgrade = std::make_unique<Juggernaut>(); // Temporary lmao
-    tag = "Spike-o-pult";
+    tag = "Spike-O-Pult";
 }
 
 SpikeOPult::SpikeOPult(const SpikeOPult& other)
@@ -24,7 +24,7 @@ std::unique_ptr<Upgrade> SpikeOPult::clone() const {
 
 void SpikeOPult::loadTexture() {
     // Load the texture for Spike-O-Pult upgrade
-    Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/SpikeOPultUpgradeIcon.png");
+    Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/Spike-o-pultUpgradeIcon.png");
 }
 
 void SpikeOPult::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) {

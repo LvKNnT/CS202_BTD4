@@ -26,13 +26,12 @@ void Bad::loadTexture() {
     std::string fullTag = properties.getFullTag(tag);
     std::string path = "../assets/enemy/MOAB Class Bloons/" + fullTag + ".png";
     Game::Instance().getTextureManager().loadTexture(fullTag, path);
-    texture = Game::Instance().getTextureManager().getTexture(fullTag);
-
-    // Update size based on the loaded texture
-    size.x = static_cast<float>(texture.width);
-    size.y = static_cast<float>(texture.height);
 
     tag = fullTag;
+
+    // Update size based on the loaded texture
+    size.x = static_cast<float>(Game::Instance().getTextureManager().getTexture(tag).width);
+    size.y = static_cast<float>(Game::Instance().getTextureManager().getTexture(tag).height);
 }
 
 bool Bad::hit(int damage) {
@@ -70,8 +69,8 @@ void Bad::draw() const {
         roundf(position.y)
     };    
 
-    DrawTexturePro(texture, 
-                   {0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height)},
+    DrawTexturePro(Game::Instance().getTextureManager().getTexture(tag), 
+                   {0, 0, size.x, size.y},
                    {draw_position.x, draw_position.y, size.x, size.y},
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,

@@ -34,7 +34,6 @@ public:
 
     void drawTowers() const;
     void updateTowers();
-    void unLoad();
 
     // save/load
     void save(const std::string& filePath) const;
