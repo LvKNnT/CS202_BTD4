@@ -25,7 +25,7 @@ DartMonkey::DartMonkey(Vector2 position)
      * * * speed = 600
      * * * pierce = 2
      * * * lifeSpan = 0.25f
-     * * * properties = {false, false, false, false, false} // canHitCamo, canHitLead, canHitFrozen, canHitRegrow, canHitBlack
+     * * * properties = BulletProperties::normal()
      */
     attacks.push_back(std::make_unique<DartAttack>(128.0f, 0.95f, position, towerId, 1, 600, 2, 0.25f, BulletProperties::normal())); 
     attackPattern = std::make_unique<NormalAttack>(); 
@@ -120,7 +120,7 @@ void DartMonkey::draw() const {
 void DartMonkey::drawRange() const {
     // Draw the range of attacks
     for(const auto& attack : attacks) {
-        DrawCircleV(position, attack->getRange() + attackBuff.range, Fade(GRAY, 0.5f)); // Draw the attack range
+        DrawCircleV(position, attack->getRange() * attackBuff.rangeRatio + attackBuff.range, Fade(GRAY, 0.5f)); // Draw the attack range
     }
 }
 

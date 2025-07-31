@@ -4,6 +4,7 @@
 
 // Headers for bullet types
 #include "bullets/Dart.h"
+#include "bullets/TracingDart.h"
 #include "bullets/SpikeOPultBullet.h"
 #include "bullets/JuggernautBullet.h"
 #include "bullets/UltraJuggernautBullet.h"
@@ -57,6 +58,7 @@ std::unique_ptr<BulletSpawner> BulletSpawner::clone() const {
 void BulletSpawner::init() {
     // Load bullet templates
     bulletTemplates[BulletType::Dart] = std::make_unique<Dart>();
+    bulletTemplates[BulletType::TracingDart] = std::make_unique<TracingDart>();
     bulletTemplates[BulletType::SpikeOPult] = std::make_unique<SpikeOPultBullet>();
     bulletTemplates[BulletType::Juggernaut] = std::make_unique<JuggernautBullet>();
     bulletTemplates[BulletType::UltraJuggernaut] = std::make_unique<UltraJuggernautBullet>();

@@ -8,9 +8,9 @@ void GameLogic::init() {
 
     // Currently working on create new game 
     // parameters
-    const Difficulty difficulty = Difficulty::Medium; // Default difficulty for testing
+    const Difficulty difficulty = Difficulty::Impoppable; // Default difficulty for testing
     const MapType mapType = MapType::MonkeyLane; // Default map type for testing
-    const ModeType modeType = ModeType::Apopalypse; // Default mode type for testing
+    const ModeType modeType = ModeType::Classic; // Default mode type for testing
 
     // stimulate what will happen in the game
     // init(difficulty, mapType, modeType); // same same but different
@@ -19,6 +19,7 @@ void GameLogic::init() {
     init(modeType);
 
     resourceManager.getResource().cash = 999999;
+    resourceManager.getResource().currentRound = 10;
 
     //putTower(TowerType::DartMonkey, {200.0f, 230.0f}); // draging tower
     putTower(TowerType::DartMonkey, {125.0f, 230.0f}); // draging tower
@@ -60,7 +61,7 @@ void GameLogic::init(ModeType modeType) {
 }
 
 void GameLogic::update() {
-    for(int i = 0; i < (isTickFast ? 3 : 1); ++i) {
+    for(int i = 0; i < (isTickFast ? 25 : 1); ++i) {
         // Update game result
         if(resourceManager.isEndGame() != 0) {
             std::cerr << "Game Over! Result: " << resourceManager.isEndGame() << std::endl;
@@ -74,9 +75,9 @@ void GameLogic::update() {
             autoSave(); 
         }
         
-        logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager, resourceManager);
         logicManager.updateEnemies(enemyManager, mapManager, resourceManager);
         logicManager.updateBullets(bulletManager);
+        logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager, resourceManager);
         logicManager.updateTowers(towerManager, enemyManager, bulletManager);
         towerManager.updateTowers();
     }

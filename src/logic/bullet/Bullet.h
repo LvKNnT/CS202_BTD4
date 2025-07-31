@@ -4,6 +4,7 @@
 #include "BulletUnits.h"
 #include "../GameObject.h"
 #include "../attack/AttackUnits.h"
+#include "../enemy/Enemy.h"
 
 #include <memory>
 #include <string>
@@ -26,8 +27,10 @@ public:
     virtual void loadTexture() = 0;
 
     // Different bullets can have different behaviors when hitting targets
-    virtual void init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properites, AttackBuff attackBuff, int towerId) = 0;
+    virtual void init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, AttackBuff attackBuff, int towerId) = 0;
     virtual bool hit(int damage) = 0; // Pure virtual function for handling hit
+    virtual int run() = 0; // Pure virtual function for running the bullet logic
+    virtual void update(std::vector<std::unique_ptr<Enemy>>& enemyList) = 0; // Pure virtual function for updating the bullet tracing
     virtual void setRotation(float rotation) = 0; // Pure virtual function for setting rotation
     virtual int die() = 0; // Pure virtual function for handling death or end of life
     virtual std::vector<std::unique_ptr<Bullet>> getChild() = 0;

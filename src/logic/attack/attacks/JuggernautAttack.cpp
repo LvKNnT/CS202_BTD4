@@ -35,7 +35,7 @@ bool JuggernautAttack::isInRange(const Rectangle& rec, const float rotation, boo
     float dy = localCircle.y - closestY;
     float distanceSq = dx * dx + dy * dy;
 
-    float buffedRange = range + attackBuff.range;
+    float buffedRange = range * attackBuff.rangeRatio + attackBuff.range;
     return distanceSq <= buffedRange * buffedRange;
 }
 
