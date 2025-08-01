@@ -5,7 +5,7 @@
 
 class BombExplosionAttack : public Attack {
 public:
-    BombExplosionAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties Properties);
+    BombExplosionAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties Properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff);
     ~BombExplosionAttack() override = default;
 
     std::unique_ptr<Attack> clone() const override;

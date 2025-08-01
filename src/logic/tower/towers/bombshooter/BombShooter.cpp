@@ -16,7 +16,7 @@ BombShooter::BombShooter(Vector2 position)
 
     // Basic attack
     /**
-     * * range = 120.0f
+     * * range = 160.0f
      * * cooldown = 1.5f
      * * * damage = 1
      * * * speed = 600
@@ -24,7 +24,7 @@ BombShooter::BombShooter(Vector2 position)
      * * * lifeSpan = 0.25f
      * * * properties = {false, false, false, false, false} // canHitCamo, canHitLead, canHitFrozen, canHitRegrow, canHitBlack
      */
-    attacks.push_back(std::make_unique<BombAttack>(120.0f, 1.5f, position, towerId, 1, 200, 22, 2.0f, BulletProperties::normal())); 
+    attacks.push_back(std::make_unique<BombAttack>(160.0f, 1.5f, position, towerId, 1, 200, 22, 2.0f, BulletProperties::normal(), BloonDebuff(), BloonDebuff())); 
     attackPattern = std::make_unique<NormalAttack>(); 
 
     // Upgrade Path

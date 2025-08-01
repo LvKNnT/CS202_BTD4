@@ -17,6 +17,7 @@ class Bullet : public GameObject {
     // should be only accessible by LogicManager and Spawner
     friend class LogicManager;
     friend class BulletSpawner;
+    friend class BulletManager;
 
 public:
     Bullet(BulletType type);

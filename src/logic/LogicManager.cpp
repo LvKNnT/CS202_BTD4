@@ -100,8 +100,10 @@ void LogicManager::updateBullets(BulletManager& bulletManager) {
         
         // Update the life span of the bullet
         (*it)->lifeSpan -= GetFrameTime();
+        std::cerr << "Bullet " << (*it)->tag << " has lifeSpan " << (*it)->lifeSpan << std::endl;
         
         if ((*it)->lifeSpan <= 0) {
+            std::cerr << "Bullet " << (*it)->tag << " has reached the end of its lifeSpan " << (*it)->lifeSpan << std::endl;
             // Bullet has reached the end of its life span — remove and destroy it
             
             // first, remove all pierce left
