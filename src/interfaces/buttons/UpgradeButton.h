@@ -8,6 +8,7 @@ public:
     UpgradeButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
     void setTexture(const Texture &newTexture);
     void handleInput() override;
+    void draw() const override;
 
 protected:
     Event::Type upgradeEvent;
@@ -16,7 +17,6 @@ protected:
 class UpgradeLeftButton : public UpgradeButton {
 public:
     UpgradeLeftButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void draw() const override;
 };
 
 class UpgradeMiddleButton : public UpgradeButton {

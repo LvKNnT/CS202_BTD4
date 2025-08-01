@@ -39,25 +39,3 @@ void TextureField::draw(int idx, float rotation) const {
 void TextureField::handleInput() {
     if(!isAvailable) return;
 }
-
-MovableTextureField::MovableTextureField(const Texture &texture, int _height, int _width)
-    : TextureField(texture, _height, _width, GetMousePosition()) {
-}
-
-void MovableTextureField::handleInput() {
-    if(!isAvailable) return;
-    for(auto &mTexture:textureList) {
-        mTexture.followMouse(height, width);
-    }
-}
-
-void MovableTextureField::setTexture(const Texture &_texture, int idx) {
-    textureList[idx].setTexture(_texture);
-}
-
-void MovableTextureField::drawRangeCircle(float range, Color color) {
-    if(!isAvailable) return;
-    for(auto &mTexture:textureList) {
-        mTexture.drawRangeCircle(range, color);
-    }
-}

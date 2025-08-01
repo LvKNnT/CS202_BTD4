@@ -38,8 +38,11 @@ Point::Type Map::getTowerPointType(Vector2 position) const {
     return Point::Type::None; // can place tower here
 }
 
-Point::Type Map::getPointType(int index, int pathIdx) const
-{
+Point::Type Map::getPointType(int index, int pathIdx, bool isReverse) const {
+    int numPaths = 0;
+    for(int i = 0; i < MAXPATHS; i++) numPaths += !enemyPath.empty();
+    pathIdx += numPaths / 2 * isReverse;
+
     if(index < 0 || index >= (int) enemyPath[pathIdx].size()) return Point::Type::None;
     return enemyPath[pathIdx][index].getType();
 }

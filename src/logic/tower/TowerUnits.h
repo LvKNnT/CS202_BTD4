@@ -12,7 +12,8 @@ enum class TowerUnits {
     Tower7 = 7,
     Tower8 = 8,
     Tower9 = 9,
-    Tower10 = 10
+    Tower10 = 10, 
+    Tower11 = 11
 };
 
 enum class TowerType {
@@ -26,7 +27,8 @@ enum class TowerType {
     SuperMonkey = 7,
     MonkeyAce = 8,
     HeliPilot = 9,
-    MortarMonkey = 10
+    MortarMonkey = 10,
+    BombShooter = 11
 };
 
 enum class TargetPriority {

@@ -22,13 +22,4 @@ public:
     void setTexture(const Texture &newTexture, int idx = 0);
 };
 
-class MovableTextureField : public TextureField {
-public:
-    MovableTextureField(const Texture &texture, int _height, int _width);
-    void handleInput() override;
-    void setTexture(const Texture &_texture, int idx);
-    void drawRangeCircle(float range, Color color);
-
-};
-
 #endif // TEXTUREFIELD_H

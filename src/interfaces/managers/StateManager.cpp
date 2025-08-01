@@ -37,6 +37,7 @@ void StateManager::update(Event::Type event) {
         case Event::Type::ToMonkeyLane:
             stateStack.pushState(difficultySelectionState);
             stateStack.setdrawPreviousStates(true);
+            Game::Instance().getGameLogic().init(MapType::MonkeyLane);
             break;
         case Event::Type::ToAreYouSure:
             stateStack.pushState(areYouSureState);
@@ -62,8 +63,34 @@ void StateManager::update(Event::Type event) {
         case Event::Type::Resume:
             stateStack.pushState(gameState);
             break;
+        case Event::Type::StandardMode:
+            Game::Instance().getGameLogic().init(ModeType::Classic);
+            break;
+        case Event::Type::AlternateBloonsMode:
+            Game::Instance().getGameLogic().init(ModeType::Alternative);
+            break;
+        case Event::Type::ReverseMode:
+            Game::Instance().getGameLogic().init(ModeType::Reverse);
+            break;
+        case Event::Type::ApopalyseMode:
+            Game::Instance().getGameLogic().init(ModeType::Apopalypse);
+            break;
         default:
             if(Event::Type::ToEasyModeSelection <= event && event <= Event::Type::ToImpoppableModeSelection) {
+                switch(event) {
+                    case Event::Type::ToEasyModeSelection:
+                        Game::Instance().getGameLogic().init(Difficulty::Easy);
+                        break;
+                    case Event::Type::ToMediumModeSelection:
+                        Game::Instance().getGameLogic().init(Difficulty::Medium);
+                        break;
+                    case Event::Type::ToHardModeSelection:
+                        Game::Instance().getGameLogic().init(Difficulty::Hard);
+                        break;
+                    case Event::Type::ToImpoppableModeSelection:
+                        Game::Instance().getGameLogic().init(Difficulty::Impoppable);
+                        break;
+                }
                 specificModeSelectionState = std::make_shared<SpecificModeSelectionState>();
                 stateStack.pushState(specificModeSelectionState);
                 stateStack.update(event);

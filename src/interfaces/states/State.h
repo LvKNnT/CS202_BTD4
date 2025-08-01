@@ -10,6 +10,7 @@
 #include "../buttons/TickButton.h"
 #include "../buttons/TickHoveringButton.h"
 #include "../buttons/UpgradeButton.h"
+#include "../buttons/SkillButton.h"
 #include "../TextField.h"
 #include "../TextureField.h"
 #include "../Panel.h"

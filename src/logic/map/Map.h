@@ -19,7 +19,7 @@ class Map : public Drawable {
 
 protected:
     Texture texture;
-    static const int MAXPATHS = 2;
+    static const int MAXPATHS = 4;
     std::vector<std::vector<Point> > enemyPath; // use vector<vector cause now we have 2 paths for jungle
     Image mapImage;
     Image pathImage;
@@ -38,7 +38,7 @@ public:
     void unLoad();
     
     // Get the type of points
-    Point::Type getPointType(int index, int pathIdx = 0) const; // For enemies
+    Point::Type getPointType(int index, int pathIdx = 0, bool isReverse = 0) const; // For enemies
     float distanceToEndPoint(Vector2 position, int index, int pathIdx = 0) const; // For enemies
     virtual Point::Type getTowerPointType(Vector2 position) const; // For towers
 
