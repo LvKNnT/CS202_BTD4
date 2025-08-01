@@ -57,6 +57,11 @@ void BulletManager::drawBullets() const {
     for (const auto& bullet : bulletList) {
         if(bullet) {
             bullet->draw();
+
+            // draw bounding box for debugging
+            Rectangle boundingBox = bullet->getBoundingBox();
+            float rotation = bullet->rotation;
+            DrawRectanglePro(boundingBox, {boundingBox.width / 2.0f, boundingBox.height / 2.0f}, rotation, RED);
         } else {
             std::cerr << "Bullet is null!" << std::endl;
         }

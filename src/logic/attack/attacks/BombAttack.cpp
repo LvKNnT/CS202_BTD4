@@ -4,8 +4,8 @@
 
 #include <cmath>
 
-BombAttack::BombAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties)
-    : Attack(range, cooldown, position, towerId, damage, speed, pierce, lifeSpan, properties) {
+BombAttack::BombAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff)
+    : Attack(range, cooldown, position, towerId, damage, speed, pierce, lifeSpan, properties, normalDebuff, moabDebuff) {
     // Constructor implementation can be extended if needed
     tag = "BombAttack"; 
 }
@@ -56,12 +56,14 @@ void BombAttack::update(BulletManager& bulletManager, const Vector2& targetPosit
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
         
-        attackPattern.execute(bulletManager, BulletType::Bomb, position, {100.f, 100.f}, angle, 
+        attackPattern.execute(bulletManager, BulletType::Bomb, position, {10.f, 10.f}, angle, 
             0, 
             speed * attackBuff.speedRatio, 
             1, 
             lifeSpan * attackBuff.lifeSpanRatio, 
             properties + attackBuff.properties, 
+            normalDebuff,
+            moabDebuff,
             attackBuff,
             towerId);
         
