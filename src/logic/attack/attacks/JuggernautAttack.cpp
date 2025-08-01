@@ -4,8 +4,8 @@
 
 #include <cmath>
 
-JuggernautAttack::JuggernautAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties)
-    : Attack(range, cooldown, position, towerId, damage, speed, pierce, lifeSpan, properties) {
+JuggernautAttack::JuggernautAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff)
+    : Attack(range, cooldown, position, towerId, damage, speed, pierce, lifeSpan, properties, normalDebuff, moabDebuff) {
     // Constructor implementation can be extended if needed
     tag = "JuggernautAttack"; 
 }
@@ -58,6 +58,8 @@ void JuggernautAttack::update(BulletManager& bulletManager, const Vector2& targe
             pierce + attackBuff.pierce, 
             lifeSpan * attackBuff.lifeSpanRatio, 
             properties + attackBuff.properties, 
+            normalDebuff + attackBuff.extraNormalDebuff,
+            moabDebuff + attackBuff.extraMoabDebuff,
             attackBuff,
             towerId);
         

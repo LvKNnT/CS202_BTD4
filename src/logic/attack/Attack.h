@@ -26,12 +26,13 @@ protected:
     int pierce; 
     float lifeSpan;
     BulletProperties properties; 
+    BloonDebuff normalDebuff; 
+    BloonDebuff moabDebuff; 
 
     std::string tag;    
     int towerId; // ID of the tower that created this attack, if applicable
 public:
-    Attack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties);
-    Attack(const Attack& other) = default;
+    Attack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff);    Attack(const Attack& other) = default;
     virtual ~Attack() = default;
 
     virtual std::unique_ptr<Attack> clone() const = 0; // Pure virtual function for cloning the attack

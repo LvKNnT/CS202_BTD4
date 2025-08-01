@@ -14,6 +14,7 @@
 class Enemy : public GameObject {
 // should be only accessible by LogicManager and Spawner
     friend class LogicManager; 
+    friend class EnemyManager;
     friend class EnemySpawner;
 
 public:
@@ -27,6 +28,7 @@ public:
     // Different enemies can have different behaviors when taking damage
     virtual bool hit(int damage) = 0; // Pure virtual function for handling damage
     virtual void die() = 0; // Pure virtual function for handling death by end of track
+    virtual void setDebuff(const BloonDebuff& normalDebuff, const BloonDebuff& moabDebuff) = 0; // Pure virtual function for setting debuffs
     virtual void setRotation(float rotation) = 0; // Pure virtual function for setting rotation
     virtual void setModifies(const EnemyModifies& modifies) = 0; // Pure virtual function for setting enemy modifiers
     virtual void setProperties(const BloonProperties& properties) = 0; // Pure virtual function for setting bloon properties
@@ -37,6 +39,8 @@ public:
 protected:
     BloonType type;
     BloonProperties properties; // Properties of the bloon, such as fortified, camo, regrow
+    BloonDebuff debuff;
+
     int health;
     int speed;
     int reward; // Reward for popping this bloon

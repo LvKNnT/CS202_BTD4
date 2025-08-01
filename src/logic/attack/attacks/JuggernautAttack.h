@@ -5,7 +5,7 @@
 
 class JuggernautAttack : public Attack {
 public:
-    JuggernautAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties);
+    JuggernautAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff);
     ~JuggernautAttack() override = default;
 
     std::unique_ptr<Attack> clone() const override;

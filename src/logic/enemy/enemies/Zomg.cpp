@@ -97,6 +97,11 @@ void Zomg::setRotation(float rotation) {
     return;
 }
 
+void Zomg::setDebuff(const BloonDebuff& normalDebuff, const BloonDebuff& moabDebuff) {
+    // Since it is a MOAB class 
+    debuff += moabDebuff; 
+}
+
 void Zomg::setModifies(const EnemyModifies& modifies) {
     // Set the enemy modifiers for the Zomg bloon
     speed = static_cast<int>(speed * modifies.speed);

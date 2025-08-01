@@ -97,6 +97,11 @@ void Ddt::setRotation(float rotation) {
     return;
 }
 
+void Ddt::setDebuff(const BloonDebuff& normalDebuff, const BloonDebuff& moabDebuff) {
+    // Since it is a MOAB class bloon
+    debuff += moabDebuff; 
+}
+
 void Ddt::setModifies(const EnemyModifies& modifies) {
     // Set the enemy modifiers for the Ddt bloon
     speed = static_cast<int>(speed * modifies.speed);

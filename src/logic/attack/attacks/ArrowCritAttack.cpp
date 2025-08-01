@@ -5,8 +5,8 @@
 
 #include <cmath>
 
-ArrowCritAttack::ArrowCritAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, int maxCounter)
-    : Attack(range, cooldown, position, towerId, damage, speed, pierce, lifeSpan, properties), counter(0), maxCounter(maxCounter) {
+ArrowCritAttack::ArrowCritAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff, int maxCounter)
+    : Attack(range, cooldown, position, towerId, damage, speed, pierce, lifeSpan, properties, normalDebuff, moabDebuff), counter(0), maxCounter(maxCounter) {
     // Constructor implementation can be extended if needed
     tag = "ArrowCritAttack";
 }
@@ -60,6 +60,8 @@ void ArrowCritAttack::update(BulletManager& bulletManager, const Vector2& target
                 pierce + attackBuff.pierce,
                 lifeSpan * attackBuff.lifeSpanRatio,
                 properties + attackBuff.properties,
+                normalDebuff + attackBuff.extraNormalDebuff,
+                moabDebuff + attackBuff.extraMoabDebuff,
                 attackBuff,
                 towerId);
             counter++;
@@ -70,6 +72,8 @@ void ArrowCritAttack::update(BulletManager& bulletManager, const Vector2& target
                 pierce + attackBuff.pierce,
                 lifeSpan * attackBuff.lifeSpanRatio,
                 properties + attackBuff.properties,
+                normalDebuff + attackBuff.extraNormalDebuff,
+                moabDebuff + attackBuff.extraMoabDebuff,
                 attackBuff,
                 towerId);
             counter = 0; // Reset counter after firing a crit

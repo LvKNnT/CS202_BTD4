@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "../../core/Game.h"
+#include "raymath.h"
 
 Map::Map() 
     : enemyPath(MAXPATHS) { 
@@ -44,6 +45,21 @@ Point::Type Map::getPointType(int index, int pathIdx, bool isReverse) const {
 
     if(index < 0 || index >= (int) enemyPath[pathIdx].size()) return Point::Type::None;
     return enemyPath[pathIdx][index].getType();
+}
+
+float Map::distanceToEndPoint(Vector2 position, int index, int pathIdx) const {
+    float distance = 0.0f;
+
+    Vector2 currentPoint = getCurrentPoint(index, pathIdx);
+    distance += Vector2Distance(position, currentPoint);
+    
+    for(int i = index; i < (int) enemyPath[pathIdx].size(); ++i) {
+        Vector2 nextPoint = getNextPoint(i, pathIdx);
+        distance += Vector2Distance(currentPoint, nextPoint);
+        currentPoint = nextPoint;
+    }
+
+    return distance;
 }
 
 Vector2 Map::getCurrentPoint(int index, int pathIdx) const {

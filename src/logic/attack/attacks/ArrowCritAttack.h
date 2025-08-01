@@ -9,7 +9,7 @@ private:
     int maxCounter;
 
 public:
-    ArrowCritAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, int maxCounter);
+    ArrowCritAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff, int maxCounter);
     ArrowCritAttack(const ArrowCritAttack& other) = default;
     ~ArrowCritAttack() override = default;
 

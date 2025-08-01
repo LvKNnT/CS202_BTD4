@@ -22,6 +22,7 @@ public:
     bool isActive() const override;
     void setActive(bool active) override;
     void setRotation(float rotation) override;
+    void setDebuff(const BloonDebuff& normalDebuff, const BloonDebuff& moabDebuff) override; // Zomg bloon has no special debuff handling
     void setModifies(const EnemyModifies& modifies) override;
     void setProperties(const BloonProperties& properties) override;
 

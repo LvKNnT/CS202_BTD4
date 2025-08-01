@@ -251,6 +251,7 @@ std::vector<std::unique_ptr<Enemy>> EnemySpawner::getChildrenEnemies(Enemy* enem
             childEnemy->regrowLimit = enemy->regrowLimit;
             // childEnemy->regrowTimer = 0.0f;
             childEnemy->properties = enemy->properties;
+            childEnemy->debuff = enemy->debuff;
             childEnemy->position = enemy->position;
             childEnemy->trackIndex = enemy->trackIndex;
             childEnemy->pathIndex = enemy->pathIndex;
@@ -282,7 +283,8 @@ void EnemySpawner::getRegrowEnemy(std::unique_ptr<Enemy>& enemy, EnemyModifies m
     if (it != regrowEnemyTemplates.end()) {
         std::unique_ptr<Enemy> regrowEnemy = it->second->clone();
         regrowEnemy->regrowLimit = enemy->regrowLimit; 
-        regrowEnemy->properties = enemy->properties; 
+        regrowEnemy->properties = enemy->properties;
+        regrowEnemy->debuff = enemy->debuff; 
         regrowEnemy->position = enemy->position; 
         regrowEnemy->trackIndex = enemy->trackIndex;
         regrowEnemy->pathIndex = enemy->pathIndex;

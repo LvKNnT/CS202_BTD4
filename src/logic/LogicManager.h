@@ -26,8 +26,9 @@ public:
     bool upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, UpgradeUnits upgradeUnits);
     void sellTower(ResourceManager& resourceManager, TowerManager& towerManager);
 
+    bool isPlayingRound(ModeManager& modeManager, EnemyManager& enemyManager) const;
     bool playRound(ResourceManager& resourceManager, ModeManager& modeManager, EnemyManager& enemyManager, MapManager& mapManager);
-    void playNextRound(ResourceManager& resourceManager);
+    void playNextRound(ModeManager& modeManager, EnemyManager& enemyManager, ResourceManager& resourceManager);
     void setAutoPlay(ModeManager& modeManager, bool autoPlay);
 
     // Update methods for interactions between game objects
@@ -38,6 +39,7 @@ private:
      * @return -1 if the enemy has reached the end of the path, otherwise returns 0
      */
     int runEnemy(Enemy& enemy, const Map& map);
+    void sortEnemyList(EnemyManager& enemyManager, const Map& map);
     int runBullet(Bullet& bullet);
     bool checkCollision(const Bullet& bullet, const Enemy& enemy) const;
     bool canBulletDestroyEnemy(const Bullet& bullet, const Enemy& enemy) const;

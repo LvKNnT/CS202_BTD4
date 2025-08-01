@@ -92,6 +92,11 @@ void Bad::setActive(bool active) {
     isActiveFlag = active;
 }
     
+void Bad::setDebuff(const BloonDebuff& normalDebuff, const BloonDebuff& moabDebuff) {
+    // Since it is a MOAB class
+    debuff += moabDebuff;
+}
+
 void Bad::setRotation(float rotation) {
     this->rotation = rotation; // Set the rotation angle for the Bad bloon
     return;
