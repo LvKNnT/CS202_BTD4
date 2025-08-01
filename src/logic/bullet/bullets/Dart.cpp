@@ -22,7 +22,7 @@ void Dart::loadTexture() {
     size.y = static_cast<float>(Game::Instance().getTextureManager().getTexture(tag).height);
 }
 
-void Dart::init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties otherProperties, AttackBuff attackBuff, int towerId) {
+void Dart::init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties& properties, BloonDebuff& normalDebuff, BloonDebuff& moabDebuff, AttackBuff& attackBuff, int towerId) {
     this->position = position;
     this->size = size;
     this->rotation = rotation;
@@ -30,9 +30,11 @@ void Dart::init(Vector2 position, Vector2 size, float rotation, int damage, int 
     this->speed = speed;
     this->pierce = pierce;
     this->lifeSpan = lifeSpan;
-    this->properties = otherProperties;
+    this->properties = properties; 
+    this->normalDebuff = normalDebuff;
+    this->moabDebuff = moabDebuff;
     this->attackBuff = attackBuff; 
-    this->towerId = towerId;
+    this->towerId = towerId; 
 }
 
 int Dart::run() {

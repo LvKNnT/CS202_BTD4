@@ -41,7 +41,7 @@ void SharpShooter::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackB
          */
 
         if (attack->getTag() == "ArrowAttack") {
-            attacks.back() = std::make_unique<ArrowCritAttack>(240.0f, 0.475f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 6, 1200, 3, 0.3f, BulletProperties{false, true, true, false, false, true}, 10); 
+            attacks.back() = std::make_unique<ArrowCritAttack>(240.0f, 0.475f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 6, 1200, 3, 0.3f, BulletProperties{false, true, true, false, false, true}, BloonDebuff(), BloonDebuff(), 10); 
         }
     }
 }

@@ -8,7 +8,7 @@ AlternativeRoundSpawner::AlternativeRoundSpawner() {
 void AlternativeRoundSpawner::init() {
     // Initialize the round templates for different rounds
     
-        roundTemplates[1] = Round(121, {
+    roundTemplates[1] = Round(121, {
         {BloonType::Blue, {0, 0, 0}, 10, 0.00f, 23.00f}
     });
     roundTemplates[2] = Round(157, {

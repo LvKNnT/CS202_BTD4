@@ -1,6 +1,7 @@
 #ifndef ENEMYUNITS_H
 #define ENEMYUNITS_H
 
+#include "raylib.h"
 #include <string>
 
 // Bloons types
@@ -72,6 +73,99 @@ public:
         path += "/";
 
         return path;
+    }
+};
+
+class BloonDebuff {
+public:
+    // for normal bloons
+    float slowRatio = 0.0f;
+    float slowDuration = 0.0f;
+    float stunDuration = 0.0f; 
+    float freezeDuration = 0.0f;
+    float knockbackDuration = 0.0f;
+
+    BloonDebuff(float slowRatio = 0.0f, float slowDuration = 0.0f, float stunDuration = 0.0f, float freezeDuration = 0.0f, float knockbackDuration = 0.0f)
+        : slowRatio(slowRatio), slowDuration(slowDuration), stunDuration(stunDuration), freezeDuration(freezeDuration), knockbackDuration(knockbackDuration) {}
+    BloonDebuff(const BloonDebuff& other)
+        : slowRatio(other.slowRatio), slowDuration(other.slowDuration), stunDuration(other.stunDuration), freezeDuration(other.freezeDuration), knockbackDuration(other.knockbackDuration) {}
+    ~BloonDebuff() = default;
+
+    BloonDebuff& operator=(const BloonDebuff& other) {
+        if (this != &other) {
+            slowRatio = other.slowRatio;
+            slowDuration = other.slowDuration;
+            stunDuration = other.stunDuration;
+            freezeDuration = other.freezeDuration;
+            knockbackDuration = other.knockbackDuration;
+        }
+        return *this;
+    }
+
+    BloonDebuff operator+(const BloonDebuff& other) const {
+        return BloonDebuff(
+            (slowRatio < other.slowRatio) ? other.slowRatio : slowRatio,
+            (slowDuration < other.slowDuration) ? other.slowDuration : slowDuration,
+            (stunDuration < other.stunDuration) ? other.stunDuration : stunDuration,
+            (freezeDuration < other.freezeDuration) ? other.freezeDuration : freezeDuration,
+            (knockbackDuration < other.knockbackDuration) ? other.knockbackDuration : knockbackDuration
+        );
+    }
+
+    BloonDebuff& operator+=(const BloonDebuff& other) {
+        slowRatio = (slowRatio < other.slowRatio) ? other.slowRatio : slowRatio;
+        slowDuration = (slowDuration < other.slowDuration) ? other.slowDuration : slowDuration;
+        stunDuration = (stunDuration < other.stunDuration) ? other.stunDuration : stunDuration;
+        freezeDuration = (freezeDuration < other.freezeDuration) ? other.freezeDuration : freezeDuration;
+        knockbackDuration = (knockbackDuration < other.knockbackDuration) ? other.knockbackDuration : knockbackDuration;
+        return *this;
+    }
+
+    BloonDebuff getISlow(float ratio, float duration) const {
+        return *this + BloonDebuff{
+            ratio,
+            duration,
+            0.0f, // stunDuration
+            0.0f, // freezeDuration
+            0.0f  // knockbackDuration
+        };
+    }
+
+    BloonDebuff getIKnockBack(float duration) const {
+        return *this + BloonDebuff{
+            0.0f, // slowRatio
+            0.0f, // slowDuration
+            0.0f, // stunDuration
+            0.0f, // freezeDuration
+            duration // knockbackDuration
+        };
+    }
+
+    void update() {
+        float deltaTime = GetFrameTime();
+
+        slowDuration -= deltaTime;
+        if (slowDuration <= 0.0f) {
+            slowDuration = 0.0f;
+            slowRatio = 0.0f; // Reset slow ratio when duration ends
+        }
+        stunDuration -= deltaTime;
+        if (stunDuration < 0.0f) stunDuration = 0.0f;
+        freezeDuration -= deltaTime;
+        if (freezeDuration < 0.0f) freezeDuration = 0.0f;
+        knockbackDuration -= deltaTime;
+        if (knockbackDuration < 0.0f) knockbackDuration = 0.0f;
+    }
+
+    int calSpeed(int speed) const {
+        if(freezeDuration > 0.0f
+        || stunDuration > 0.0f) return 0;
+        return static_cast<int>(speed * (1.0f - slowRatio));
+    }
+
+    int calKnockbackSpeed(int speed) const {
+        if(knockbackDuration <= 0.0f) return 0;
+        return - speed * 10;
     }
 };
 

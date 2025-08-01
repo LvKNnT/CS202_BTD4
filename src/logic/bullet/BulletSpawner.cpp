@@ -70,13 +70,13 @@ void BulletSpawner::init() {
     // bulletTemplates[BulletType::Shuriken] = std::make_unique<Shuriken>();
 }
 
-std::unique_ptr<Bullet> BulletSpawner::getBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, AttackBuff& attackBuff, int towerId) {
+std::unique_ptr<Bullet> BulletSpawner::getBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties& properties, BloonDebuff& normalDebuff, BloonDebuff& moabDebuff, AttackBuff& attackBuff, int towerId) {
     auto it = bulletTemplates.find(type);
     if (it != bulletTemplates.end()) {
         it->second->loadTexture(); 
         
         std::unique_ptr<Bullet> bullet = it->second->clone();
-        bullet->init(position, size, rotation, damage, speed, pierce, lifeSpan, properties, attackBuff, towerId);
+        bullet->init(position, size, rotation, damage, speed, pierce, lifeSpan, properties, normalDebuff, moabDebuff, attackBuff, towerId);
 
         return bullet;
     }

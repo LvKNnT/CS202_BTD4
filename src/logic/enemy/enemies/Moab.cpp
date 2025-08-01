@@ -97,6 +97,11 @@ void Moab::setRotation(float rotation) {
     return;
 }
 
+void Moab::setDebuff(const BloonDebuff& normalDebuff, const BloonDebuff& moabDebuff) {
+    // Since it is a MOAB class bloon
+    debuff += moabDebuff; 
+}
+
 void Moab::setModifies(const EnemyModifies& modifies) {
     // Set the enemy modifiers for the Moab bloon
     speed = static_cast<int>(speed * modifies.speed);

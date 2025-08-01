@@ -1,6 +1,7 @@
 #include "EnemyManager.h"
 #include <iostream>
 #include <filesystem>
+#include <algorithm>
 
 EnemyManager::EnemyManager(EnemyModifies modifies)
     : currentModifies(modifies) { // Initialize with default EnemyModifies
@@ -70,5 +71,8 @@ void EnemyManager::drawEnemies() const {
 void EnemyManager::updateEnemies() {
     for(auto it = enemyList.begin(); it != enemyList.end(); ++it) {
         enemySpawner->getRegrowEnemy(*it, currentModifies); 
+        
+        // update timer of debuff
+        (*it)->debuff.update();
     }
 }

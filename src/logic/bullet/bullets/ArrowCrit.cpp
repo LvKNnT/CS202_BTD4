@@ -19,7 +19,7 @@ void ArrowCrit::loadTexture() {
     size.y = static_cast<float>(Game::Instance().getTextureManager().getTexture(tag).height);
 }
 
-void ArrowCrit::init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, AttackBuff attackBuff, int towerId) {
+void ArrowCrit::init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties& properties, BloonDebuff& normalDebuff, BloonDebuff& moabDebuff, AttackBuff& attackBuff, int towerId) {
     this->position = position;
     this->size = size;
     this->rotation = rotation;
@@ -28,6 +28,8 @@ void ArrowCrit::init(Vector2 position, Vector2 size, float rotation, int damage,
     this->pierce = pierce;
     this->lifeSpan = lifeSpan;
     this->properties = properties; 
+    this->normalDebuff = normalDebuff;
+    this->moabDebuff = moabDebuff;
     this->attackBuff = attackBuff; 
     this->towerId = towerId; 
 }

@@ -42,13 +42,13 @@ void CrossBow::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff&
          */
 
         if(attack->getTag() == "DartAttack") {
-            attack = std::make_unique<ArrowAttack>(240.0f, 0.95f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 3, 800, 3, 0.31640625f, BulletProperties{false, true, true, false, true, true}); 
+            attack = std::make_unique<ArrowAttack>(240.0f, 0.95f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 3, 800, 3, 0.31640625f, BulletProperties{false, true, true, false, true, true}, BloonDebuff(), BloonDebuff()); 
             isFound = true;    
         }
     }
 
     if(!isFound) {
-        attacks.push_back(std::make_unique<ArrowAttack>(240.0f, 0.95f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 3, 800, 3, 0.31640625f, BulletProperties{false, true, true, false, true, true})); 
+        attacks.push_back(std::make_unique<ArrowAttack>(240.0f, 0.95f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 3, 800, 3, 0.31640625f, BulletProperties{false, true, true, false, true, true}, BloonDebuff(), BloonDebuff())); 
     }
 }
 

@@ -93,6 +93,11 @@ void Lead::setRotation(float rotation) {
     return; // Normal bloon does not need rotation
 }
 
+void Lead::setDebuff(const BloonDebuff& normalDebuff, const BloonDebuff& moabDebuff) {
+    // Since it is a normal bloon
+    debuff += normalDebuff; 
+}
+
 void Lead::setModifies(const EnemyModifies& modifies) {
     // Set the modifications for the normal bloon
     speed = static_cast<int>(speed * modifies.speed);

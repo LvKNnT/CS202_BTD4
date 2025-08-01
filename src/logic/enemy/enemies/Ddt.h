@@ -21,6 +21,7 @@ public:
     Rectangle getBoundingBox() const override;
     bool isActive() const override;
     void setActive(bool active) override;
+    void setDebuff(const BloonDebuff& normalDebuff, const BloonDebuff& moabDebuff) override; // DDT has its own debuff handling
     void setRotation(float rotation) override;
     void setModifies(const EnemyModifies& modifies) override;
     void setProperties(const BloonProperties& properties) override;

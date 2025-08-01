@@ -27,8 +27,8 @@ public:
     virtual void loadTexture() = 0;
 
     // Different bullets can have different behaviors when hitting targets
-    virtual void init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, AttackBuff attackBuff, int towerId) = 0;
-    virtual bool hit(int damage) = 0; // Pure virtual function for handling hit
+    virtual void init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties& properties, BloonDebuff& normalDebuff, BloonDebuff& moabDebuff, AttackBuff& attackBuff, int towerId) = 0;
+    virtual bool hit(int damage) = 0; // Pure virtual function for handling hit&
     virtual int run() = 0; // Pure virtual function for running the bullet logic
     virtual void update(std::vector<std::unique_ptr<Enemy>>& enemyList) = 0; // Pure virtual function for updating the bullet tracing
     virtual void setRotation(float rotation) = 0; // Pure virtual function for setting rotation
@@ -43,6 +43,8 @@ protected:
     float lifeSpan; // Life span of the bullet in frames
     BulletProperties properties; // Properties of the bullet, such as canHitCamo
     AttackBuff attackBuff; // Buffs applied to the bullet, such as range, damage, etc.
+    BloonDebuff normalDebuff; // Debuffs applied to the bullet, such as slow, stun etc.
+    BloonDebuff moabDebuff; // Debuffs applied to the bullet for MOABs
 
     // Position and rotation for movement
     Vector2 position; // Position of the bullet

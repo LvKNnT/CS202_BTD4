@@ -89,6 +89,11 @@ void Black::setActive(bool active) {
     isActiveFlag = active;
 }
 
+void Black::setDebuff(const BloonDebuff& normalDebuff, const BloonDebuff& moabDebuff) {
+    // Since it is a normal bloon
+    debuff += normalDebuff; 
+}
+
 void Black::setRotation(float rotation) {
     return; // Normal bloon does not need rotation
 }

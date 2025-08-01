@@ -8,7 +8,7 @@ void GameLogic::init() {
 
     // Currently working on create new game 
     // parameters
-    const Difficulty difficulty = Difficulty::Impoppable; // Default difficulty for testing
+    const Difficulty difficulty = Difficulty::Hard; // Default difficulty for testing
     const MapType mapType = MapType::MonkeyLane; // Default map type for testing
     const ModeType modeType = ModeType::Classic; // Default mode type for testing
 
@@ -38,6 +38,7 @@ void GameLogic::init() {
 
 void GameLogic::init(Difficulty difficulty, MapType mapType, ModeType modeType) {
     resourceManager.initResource(difficulty);
+    
     mapManager.loadMap(mapType); 
     modeManager.setMode(modeType); 
     
@@ -51,13 +52,15 @@ void GameLogic::init(MapType mapType) {
 
 void GameLogic::init(Difficulty difficulty) {
     resourceManager.initResource(difficulty);
-
+    
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
     towerManager = TowerManager(resourceManager.getTowerModifies());
 }
 
 void GameLogic::init(ModeType modeType) {
     modeManager.setMode(modeType);
+    isTickFast = false;
+    setAutoPlay(true);
 }
 
 void GameLogic::update() {
@@ -98,6 +101,14 @@ void GameLogic::unLoad() {
 
 int GameLogic::isEndGame() const {
     return resourceManager.isEndGame();
+}
+
+bool GameLogic::isRoundRun() {
+    return logicManager.isPlayingRound(modeManager, enemyManager);
+}
+
+void GameLogic::runNextRound() {
+    logicManager.playNextRound(modeManager, enemyManager, resourceManager);
 }
 
 void GameLogic::pickTower(Vector2 position) {

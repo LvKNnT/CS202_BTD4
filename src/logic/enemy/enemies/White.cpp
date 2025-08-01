@@ -93,6 +93,11 @@ void White::setRotation(float rotation) {
     return; // Normal bloon does not need rotation
 }
 
+void White::setDebuff(const BloonDebuff& normalDebuff, const BloonDebuff& moabDebuff) {
+    // Since it is a normal bloon
+    debuff += normalDebuff; 
+}
+
 void White::setModifies(const EnemyModifies& modifies) {
     // Set the modifications for the normal bloon
     speed = static_cast<int>(speed * modifies.speed);

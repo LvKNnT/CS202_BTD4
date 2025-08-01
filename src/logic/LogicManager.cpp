@@ -18,6 +18,8 @@ void LogicManager::updateEnemies(EnemyManager& enemyManager, MapManager& mapMana
         }
         ++it;
     }
+
+    sortEnemyList(enemyManager, mapManager.getCurrentMap()); 
 }
 
 // Logic to move the enemy along the path
@@ -32,7 +34,7 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
     Vector2 position = enemy.position;
     int trackIndex = enemy.trackIndex;
     int pathIndex = enemy.pathIndex; 
-    int speed = enemy.speed;
+    int speed = enemy.debuff.calSpeed(enemy.speed) + enemy.debuff.calKnockbackSpeed(enemy.speed);
 
     Vector2 nextPoint = map.getNextPoint(trackIndex, pathIndex);
     Vector2 direction = {nextPoint.x - position.x, nextPoint.y - position.y};
@@ -74,6 +76,15 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
 
     // If the enemy has not reached the end of the path, return 0
     return 0;
+}
+
+void LogicManager::sortEnemyList(EnemyManager& enemyManager, const Map& map) {
+    // Sort the enemy list based on their position in the path
+    std::sort(enemyManager.enemyList.begin(), enemyManager.enemyList.end(), 
+        [&map](const std::unique_ptr<Enemy>& a, const std::unique_ptr<Enemy>& b) {
+            return map.distanceToEndPoint(a->getPosition(), a->trackIndex, a->pathIndex) < 
+                   map.distanceToEndPoint(b->getPosition(), b->trackIndex, b->pathIndex);
+        });
 }
 
 void LogicManager::updateBullets(BulletManager& bulletManager) {
@@ -146,7 +157,10 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
                 // mark the enemy as hit by this bullet
                 // std::cerr << "Bullet " << (*bulletIt)->tag << " hit enemy " << (*enemyIt)->tag << " id " << (*enemyIt)->enemyId << " with lifeSpan " << (*bulletIt)->lifeSpan << std::endl;
                 // (*bulletIt)->hitEnemies.insert((*enemyIt)->enemyId);
-                hitEnemies.insert((*enemyIt)->enemyId); 
+                hitEnemies.insert((*enemyIt)->enemyId);
+                
+                // Apply the debuff to the enemy
+                (*enemyIt)->setDebuff((*bulletIt)->normalDebuff, (*bulletIt)->moabDebuff);
 
                 int popCount = 0;
                 std::vector<std::unique_ptr<Enemy>> enemyChildren;
@@ -615,6 +629,11 @@ void LogicManager::sellTower(ResourceManager& resourceManager, TowerManager& tow
     }
 }
 
+bool LogicManager::isPlayingRound(ModeManager& modeManager, EnemyManager& enemyManager) const {
+    // Check if the game is in a state where a round can be played
+    return !modeManager.canPlayNextRound(enemyManager.enemyList.empty());
+}
+
 bool LogicManager::playRound(ResourceManager& resourceManager, ModeManager& modeManager, EnemyManager& enemyManager, MapManager& mapManager) {
     // set the roundNumber being played
     int roundNumber = resourceManager.currentResource.currentRound;
@@ -630,7 +649,7 @@ bool LogicManager::playRound(ResourceManager& resourceManager, ModeManager& mode
 
     // end round logic
     bool isSave = false;
-    if (modeManager.canPlayNextRound(enemyManager.enemyList.empty())) {
+    if (!isPlayingRound(modeManager, enemyManager)) {
         // reward cash
         int reward = modeManager.getRoundReward();
         resourceManager.currentResource.cash += reward;
@@ -638,7 +657,7 @@ bool LogicManager::playRound(ResourceManager& resourceManager, ModeManager& mode
 
         // auto play next round
         if(autoPlayRound) {
-            resourceManager.currentResource.currentRound++;
+            playNextRound(modeManager, enemyManager, resourceManager);
             return true;
         }
     }
@@ -646,7 +665,9 @@ bool LogicManager::playRound(ResourceManager& resourceManager, ModeManager& mode
     return isSave;
 }
 
-void LogicManager::playNextRound(ResourceManager& resourceManager) {
+void LogicManager::playNextRound(ModeManager& modeManager, EnemyManager& enemyManager, ResourceManager& resourceManager) {
+    if(isPlayingRound(modeManager, enemyManager)) return;
+
     resourceManager.currentResource.currentRound++;
     std::cerr << "Playing next round: " << resourceManager.currentResource.currentRound << std::endl;
 }

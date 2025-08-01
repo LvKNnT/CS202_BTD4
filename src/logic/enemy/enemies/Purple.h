@@ -24,6 +24,7 @@ public:
 
     // Purple bloon does not need rotation, but we need to implement it
     void setRotation(float rotation) override;
+    void setDebuff(const BloonDebuff& normalDebuff, const BloonDebuff& moabDebuff) override; // Purple bloon has no special debuff handling
     void setModifies(const EnemyModifies& modifies) override;
     void setProperties(const BloonProperties& properties) override;
 

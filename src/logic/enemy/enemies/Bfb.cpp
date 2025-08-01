@@ -91,6 +91,11 @@ void Bfb::setActive(bool active) {
     // Set the active state of the Red bloon
     isActiveFlag = active;
 }
+
+void Bfb::setDebuff(const BloonDebuff& normalDebuff, const BloonDebuff& moabDebuff) {
+    // Since it is a MOAB class
+    debuff += moabDebuff;
+}
     
 void Bfb::setRotation(float rotation) {
     this->rotation = rotation; // Set the rotation angle for the Bfb bloon

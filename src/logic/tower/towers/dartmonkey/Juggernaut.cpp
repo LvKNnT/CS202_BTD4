@@ -40,7 +40,7 @@ void Juggernaut::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuf
          */
         
         if (attack->getTag() == "SpikeOPultAttack") {
-            attack = std::make_unique<JuggernautAttack>(128.0f, 1.0f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 2, 600, 61, 1.0f, BulletProperties{false, false, true, true, true, true}); 
+            attack = std::make_unique<JuggernautAttack>(128.0f, 1.0f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 2, 600, 61, 1.0f, BulletProperties{false, false, true, true, true, true}, BloonDebuff(), BloonDebuff()); 
         }
     }
 }

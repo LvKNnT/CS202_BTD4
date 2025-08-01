@@ -21,7 +21,7 @@ void UltraJuggernautBullet::loadTexture() {
     size.y = static_cast<float>(Game::Instance().getTextureManager().getTexture(tag).height);
 }
 
-void UltraJuggernautBullet::init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, AttackBuff attackBuff, int towerId) {
+void UltraJuggernautBullet::init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties& properties, BloonDebuff& normalDebuff, BloonDebuff& moabDebuff, AttackBuff& attackBuff, int towerId) {
     this->position = position;
     this->size = size;
     this->rotation = rotation;
@@ -29,9 +29,11 @@ void UltraJuggernautBullet::init(Vector2 position, Vector2 size, float rotation,
     this->speed = speed;
     this->pierce = pierce;
     this->lifeSpan = lifeSpan;
-    this->properties = properties; 
-    this->attackBuff = attackBuff; 
-    this->towerId = towerId; 
+    this->properties = properties;
+    this->normalDebuff = normalDebuff;
+    this->moabDebuff = moabDebuff;
+    this->attackBuff = attackBuff;
+    this->towerId = towerId;
 
     this->maxPierce = pierce; 
     this->counter = 0; 
@@ -136,7 +138,7 @@ std::vector<std::unique_ptr<Bullet>> UltraJuggernautBullet::getChild() {
     children.push_back(std::make_unique<JuggernautBullet>());
 
     for(int i = 0; i < 6; ++i) {
-        children[i]->init(position, size, rotation + i * 60.0f, 2, 300, 50, 1.0f, properties, attackBuff, towerId);
+        children[i]->init(position, size, rotation + i * 60.0f, 2, 300, 50, 1.0f, properties, normalDebuff, moabDebuff, attackBuff, towerId);
     }
 
     ++counter;
