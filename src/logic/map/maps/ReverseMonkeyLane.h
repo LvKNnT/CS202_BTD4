@@ -1,15 +1,14 @@
-#ifndef JUNGLE_H
-#define JUNGLE_H
+#ifndef REVERSEMONKEYLANE_H
+#define REVERSEMONKEYLANE_H
 
 #include "../../../core/Game.h"
 #include "../Map.h"
 
-// 0 is normal path 1 is reverse path 
-class Jungle : public Map {
+class ReverseMonkeyLane : public Map {
 public:
-    Jungle();
+    ReverseMonkeyLane();
     std::unique_ptr<Map> clone() const override;
-    ~Jungle() override = default;
+    ~ReverseMonkeyLane() override = default;
 
     void loadTexture() override;
     void update() override;
@@ -17,4 +16,4 @@ public:
     std::pair<Vector2, int> getPositionAndPathIdx(BloonType type) override;
 };
 
-#endif // JUNGLE_H
+#endif // REVERSEMONKEYLANE_H

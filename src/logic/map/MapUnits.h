@@ -3,8 +3,10 @@
 
 // Maps types
 enum class MapType{
+    MonkeyLane,
+    ReverseMonkeyLane,
     Jungle,
-    MonkeyLane
+    ReverseJungle
 };
 
 #endif // MAPUNITS_H

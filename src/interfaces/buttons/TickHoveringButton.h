@@ -22,6 +22,7 @@ public:
 class StartRoundButton : public TickHoveringButton {
 public:
     StartRoundButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+    void handleInput() override;
 };
 
 #endif // TICK_HOVERING_BUTTON_H

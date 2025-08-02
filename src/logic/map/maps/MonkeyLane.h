@@ -4,12 +4,13 @@
 #include "../../../core/Game.h"
 #include "../Map.h"
 
-// 0 is normal path 1 is reverse path 
 class MonkeyLane : public Map {
 public:
     MonkeyLane();
     std::unique_ptr<Map> clone() const override;
     ~MonkeyLane() override = default;
+
+    Point::Type getEnemyPointType(Vector2 position) const override;
 
     void loadTexture() override;
     void update() override;

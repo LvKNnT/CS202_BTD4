@@ -31,6 +31,7 @@ void Game::loadTexture() {
     textureManager.loadTexture("GameStateButton", "../assets/UI/GameStateButton.png");
     textureManager.loadTexture("Start", "../assets/UI/Start.png");
     textureManager.loadTexture("Setting", "../assets/UI/Setting.png");
+    textureManager.loadTexture("Replay", "../assets/UI/Replay.png");
     textureManager.loadTexture("HP", "../assets/UI/HP.png");
     textureManager.loadTexture("Cash", "../assets/UI/Cash.png");
     textureManager.loadTexture("Box", "../assets/UI/Box.png");

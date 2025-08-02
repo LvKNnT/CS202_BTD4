@@ -141,4 +141,3 @@ void Bomb::setRotation(float rotation) {
     this->rotation = rotation; // Assuming rotation is in degrees
     // Additional logic for handling rotation can be added here if needed
 }
-

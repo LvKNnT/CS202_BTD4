@@ -20,8 +20,8 @@ void RegularRoundSpawner::init() {
         {BloonType::Red, {0, 0, 0}, 15, 9.71f, 16.71f}
     });
     roundTemplates[4] = Round(175, {
-        {BloonType::Red, {0, 0, 0}, 25, 0.00f, 12.00f},
         {BloonType::Blue, {0, 0, 0}, 18, 7.90f, 10.40f},
+        {BloonType::Red, {0, 0, 0}, 25, 0.00f, 12.00f},
         {BloonType::Red, {0, 0, 0}, 10, 14.51f, 17.31f}
     });
     roundTemplates[5] = Round(164, {
@@ -70,21 +70,21 @@ void RegularRoundSpawner::init() {
         {BloonType::Green, {0, 0, 0}, 23, 2.21f, 32.21f}
     });
     roundTemplates[14] = Round(259, {
-        {BloonType::Red, {0, 0, 0}, 18, 0.00f, 9.71f},
         {BloonType::Blue, {0, 0, 0}, 5, 2.85f, 3.97f},
         {BloonType::Green, {0, 0, 0}, 5, 5.71f, 6.83f},
         {BloonType::Yellow, {0, 0, 0}, 4, 8.56f, 9.51f},
-        {BloonType::Red, {0, 0, 0}, 31, 9.50f, 26.63f},
+        {BloonType::Red, {0, 0, 0}, 18, 0.00f, 9.71f},
         {BloonType::Blue, {0, 0, 0}, 10, 15.96f, 17.34f},
         {BloonType::Green, {0, 0, 0}, 5, 19.84f, 21.22f},
-        {BloonType::Yellow, {0, 0, 0}, 5, 23.71f, 25.26f}
+        {BloonType::Yellow, {0, 0, 0}, 5, 23.71f, 25.26f},
+        {BloonType::Red, {0, 0, 0}, 31, 9.50f, 26.63f}
     });
     roundTemplates[15] = Round(266, {
-        {BloonType::Red, {0, 0, 0}, 20, 0.00f, 25.00f},
-        {BloonType::Blue, {0, 0, 0}, 15, 2.78f, 22.78f},
+        {BloonType::Pink, {0, 0, 0}, 5, 17.55f, 20.55f},
         {BloonType::Green, {0, 0, 0}, 12, 5.68f, 20.68f},
         {BloonType::Yellow, {0, 0, 0}, 10, 8.87f, 20.87f},
-        {BloonType::Pink, {0, 0, 0}, 5, 17.55f, 20.55f}
+        {BloonType::Blue, {0, 0, 0}, 15, 2.78f, 22.78f},
+        {BloonType::Red, {0, 0, 0}, 20, 0.00f, 25.00f}
     });
     roundTemplates[16] = Round(268, {
         {BloonType::Green, {0, 0, 0}, 20, 0.00f, 10.85f},
@@ -163,8 +163,8 @@ void RegularRoundSpawner::init() {
         {BloonType::Yellow, {0, 0, 0}, 13, 5.34f, 25.34f}
     });
     roundTemplates[34] = Round(912, {
-        {BloonType::Yellow, {0, 0, 0}, 160, 0.00f, 36.00f},
-        {BloonType::Zebra, {0, 0, 0}, 6, 8.62f, 26.70f}
+        {BloonType::Zebra, {0, 0, 0}, 6, 8.62f, 26.70f},
+        {BloonType::Yellow, {0, 0, 0}, 160, 0.00f, 36.00f}
     });
     roundTemplates[35] = Round(1150, {
         {BloonType::White, {0, 0, 0}, 25, 0.00f, 10.03f},
@@ -188,9 +188,9 @@ void RegularRoundSpawner::init() {
     });
     roundTemplates[38] = Round(1277, {
         {BloonType::White, {0, 0, 0}, 17, 0.00f, 3.60f},
-        {BloonType::Pink, {0, 0, 0}, 42, 2.00f, 25.41f},
         {BloonType::Lead, {0, 0, 0}, 14, 4.83f, 13.40f},
         {BloonType::Zebra, {0, 0, 0}, 10, 12.09f, 18.37f},
+        {BloonType::Pink, {0, 0, 0}, 42, 2.00f, 25.41f},
         {BloonType::Ceramic, {0, 0, 0}, 2, 27.06f, 29.06f}
     });
     roundTemplates[39] = Round(1759, {
@@ -242,12 +242,12 @@ void RegularRoundSpawner::init() {
         {BloonType::Ceramic, {0, 0, 0}, 3, 51.72f, 55.72f}
     });
     roundTemplates[49] = Round(4758, {
-        {BloonType::Green, {0, 0, 0}, 343, 0.00f, 50.00f},
         {BloonType::Rainbow, {0, 0, 0}, 10, 4.00f, 9.14f},
         {BloonType::Ceramic, {0, 0, 0}, 18, 15.50f, 22.04f},
         {BloonType::Zebra, {0, 0, 0}, 20, 29.27f, 32.79f},
         {BloonType::Rainbow, {0, 0, 0}, 10, 40.10f, 45.24f},
-        {BloonType::Rainbow, {0, 0, 0}, 10, 41.38f, 46.52f}
+        {BloonType::Rainbow, {0, 0, 0}, 10, 41.38f, 46.52f},
+        {BloonType::Green, {0, 0, 0}, 343, 0.00f, 50.00f}
     });
     roundTemplates[50] = Round(3016, {
         {BloonType::Moab, {0, 0, 0}, 1, 0.50f, 0.50f},
@@ -268,15 +268,15 @@ void RegularRoundSpawner::init() {
         {BloonType::Ceramic, {0, 0, 0}, 5, 18.27f, 20.56f}
     });
     roundTemplates[53] = Round(924, {
-        {BloonType::Pink, {0, 1, 0}, 80, 0.00f, 35.00f},
         {BloonType::Moab, {0, 0, 0}, 1, 20.11f, 20.11f},
         {BloonType::Moab, {0, 0, 0}, 1, 27.57f, 27.57f},
-        {BloonType::Moab, {0, 0, 0}, 1, 31.58f, 31.58f}
+        {BloonType::Moab, {0, 0, 0}, 1, 31.58f, 31.58f},
+        {BloonType::Pink, {0, 1, 0}, 80, 0.00f, 35.00f}
     });
     roundTemplates[54] = Round(2197, {
-        {BloonType::Ceramic, {0, 0, 0}, 35, 0.00f, 19.41f},
         {BloonType::Moab, {0, 0, 0}, 1, 6.73f, 6.73f},
-        {BloonType::Moab, {0, 0, 0}, 1, 12.49f, 12.49f}
+        {BloonType::Moab, {0, 0, 0}, 1, 12.49f, 12.49f},
+        {BloonType::Ceramic, {0, 0, 0}, 35, 0.00f, 19.41f}
     });
     roundTemplates[55] = Round(2483, {
         {BloonType::Ceramic, {0, 0, 0}, 10, 0.00f, 1.16f},
@@ -291,13 +291,13 @@ void RegularRoundSpawner::init() {
     });
     roundTemplates[57] = Round(1859, {
         {BloonType::Moab, {0, 0, 0}, 2, 0.00f, 0.57f},
-        {BloonType::Rainbow, {0, 0, 0}, 40, 0.97f, 26.23f},
-        {BloonType::Moab, {0, 0, 0}, 2, 12.56f, 13.13f}
+        {BloonType::Moab, {0, 0, 0}, 2, 12.56f, 13.13f},
+        {BloonType::Rainbow, {0, 0, 0}, 40, 0.97f, 26.23f}
     });
     roundTemplates[58] = Round(2298, {
         {BloonType::Ceramic, {0, 0, 0}, 15, 0.00f, 22.00f},
-        {BloonType::Moab, {0, 0, 0}, 5, 0.00f, 43.98f},
-        {BloonType::Ceramic, {0, 0, 0}, 10, 23.53f, 43.53f}
+        {BloonType::Ceramic, {0, 0, 0}, 10, 23.53f, 43.53f},
+        {BloonType::Moab, {0, 0, 0}, 5, 0.00f, 43.98f}
     });
     roundTemplates[59] = Round(2159, {
         {BloonType::Ceramic, {0, 0, 0}, 20, 0.00f, 10.00f},
@@ -308,20 +308,20 @@ void RegularRoundSpawner::init() {
         {BloonType::Bfb, {0, 0, 0}, 1, 0.50f, 0.50f}
     });
     roundTemplates[61] = Round(1232, {
-        {BloonType::Zebra, {0, 0, 1}, 150, 0.00f, 20.00f},
-        {BloonType::Moab, {0, 0, 0}, 5, 1.92f, 15.95f}
+        {BloonType::Moab, {0, 0, 0}, 5, 1.92f, 15.95f},
+        {BloonType::Zebra, {0, 0, 1}, 150, 0.00f, 20.00f}
     });
     roundTemplates[62] = Round(1386, {
-        {BloonType::Purple, {0, 0, 0}, 250, 0.00f, 40.00f},
         {BloonType::Moab, {0, 0, 0}, 5, 1.08f, 21.08f},
         {BloonType::Moab, {0, 0, 0}, 2, 32.14f, 37.14f},
+        {BloonType::Purple, {0, 0, 0}, 250, 0.00f, 40.00f},
         {BloonType::Rainbow, {0, 0, 0}, 15, 40.30f, 48.29f}
     });
     roundTemplates[63] = Round(2826, {
-        {BloonType::Lead, {0, 0, 0}, 75, 0.00f, 42.25f},
         {BloonType::Ceramic, {0, 0, 0}, 40, 3.88f, 4.08f},
         {BloonType::Ceramic, {0, 0, 0}, 40, 20.08f, 20.28f},
-        {BloonType::Ceramic, {0, 0, 0}, 42, 36.42f, 36.62f}
+        {BloonType::Ceramic, {0, 0, 0}, 42, 36.42f, 36.62f},
+        {BloonType::Lead, {0, 0, 0}, 75, 0.00f, 42.25f}
     });
     roundTemplates[64] = Round(849, {
         {BloonType::Moab, {0, 0, 0}, 6, 0.00f, 4.00f},
@@ -350,8 +350,8 @@ void RegularRoundSpawner::init() {
         {BloonType::Bfb, {0, 0, 0}, 1, 7.94f, 7.94f}
     });
     roundTemplates[69] = Round(1391, {
-        {BloonType::Lead, {1, 0, 0}, 40, 0.00f, 16.56f},
         {BloonType::Black, {0, 0, 0}, 40, 5.46f, 15.46f},
+        {BloonType::Lead, {1, 0, 0}, 40, 0.00f, 16.56f},
         {BloonType::Ceramic, {0, 0, 0}, 50, 17.13f, 42.13f}
     });
     roundTemplates[70] = Round(2618, {
@@ -360,13 +360,13 @@ void RegularRoundSpawner::init() {
         {BloonType::Moab, {0, 0, 0}, 4, 40.00f, 41.14f}
     });
     roundTemplates[71] = Round(1503, {
-        {BloonType::Ceramic, {0, 0, 0}, 30, 0.00f, 16.55f},
-        {BloonType::Moab, {0, 0, 0}, 10, 4.42f, 9.42f}
+        {BloonType::Moab, {0, 0, 0}, 10, 4.42f, 9.42f},
+        {BloonType::Ceramic, {0, 0, 0}, 30, 0.00f, 16.55f}
     });
     roundTemplates[72] = Round(1504, {
-        {BloonType::Ceramic, {0, 0, 1}, 38, 0.00f, 21.70f},
         {BloonType::Bfb, {0, 0, 0}, 1, 3.67f, 3.67f},
-        {BloonType::Bfb, {0, 0, 0}, 1, 16.37f, 16.37f}
+        {BloonType::Bfb, {0, 0, 0}, 1, 16.37f, 16.37f},
+        {BloonType::Ceramic, {0, 0, 1}, 38, 0.00f, 21.70f}
     });
     roundTemplates[73] = Round(1392, {
         {BloonType::Moab, {0, 0, 0}, 7, 0.00f, 2.28f},
@@ -392,20 +392,20 @@ void RegularRoundSpawner::init() {
         {BloonType::Ceramic, {0, 0, 1}, 60, 0.00f, 1.78f}
     });
     roundTemplates[77] = Round(2540, {
-        {BloonType::Moab, {0, 0, 0}, 11, 0.00f, 58.92f},
-        {BloonType::Bfb, {0, 0, 0}, 5, 26.67f, 31.22f}
+        {BloonType::Bfb, {0, 0, 0}, 5, 26.67f, 31.22f},
+        {BloonType::Moab, {0, 0, 0}, 11, 0.00f, 58.92f}
     });
     roundTemplates[78] = Round(4862, {
-        {BloonType::Rainbow, {0, 0, 0}, 150, 0.00f, 90.00f},
         {BloonType::Ceramic, {0, 0, 0}, 75, 10.00f, 11.17f},
         {BloonType::Bfb, {0, 0, 0}, 1, 44.94f, 44.94f},
+        {BloonType::Ceramic, {0, 0, 0}, 72, 77.92f, 79.12f},
         {BloonType::Purple, {0, 0, 0}, 80, 64.40f, 79.40f},
-        {BloonType::Ceramic, {0, 0, 0}, 72, 77.92f, 79.12f}
+        {BloonType::Rainbow, {0, 0, 0}, 150, 0.00f, 90.00f}
     });
     roundTemplates[79] = Round(6709, {
-        {BloonType::Rainbow, {0, 0, 1}, 500, 0.00f, 60.00f},
         {BloonType::Bfb, {0, 0, 0}, 4, 3.17f, 38.17f},
-        {BloonType::Bfb, {0, 0, 0}, 2, 47.22f, 57.22f}
+        {BloonType::Bfb, {0, 0, 0}, 2, 47.22f, 57.22f},
+        {BloonType::Rainbow, {0, 0, 1}, 500, 0.00f, 60.00f}
     });
     roundTemplates[80] = Round(1400, {
         {BloonType::Zomg, {0, 0, 0}, 1, 1.00f, 1.00f}
@@ -419,10 +419,10 @@ void RegularRoundSpawner::init() {
         {BloonType::Bfb, {0, 0, 0}, 5, 21.68f, 35.68f}
     });
     roundTemplates[83] = Round(4749, {
+        {BloonType::Moab, {0, 0, 0}, 30, 24.94f, 34.94f},
         {BloonType::Ceramic, {0, 0, 0}, 40, 0.00f, 60.00f},
         {BloonType::Ceramic, {0, 0, 0}, 40, 0.10f, 60.10f},
-        {BloonType::Ceramic, {0, 0, 0}, 40, 0.20f, 60.20f},
-        {BloonType::Moab, {0, 0, 0}, 30, 24.94f, 34.94f}
+        {BloonType::Ceramic, {0, 0, 0}, 40, 0.20f, 60.20f}
     });
     roundTemplates[84] = Round(7044, {
         {BloonType::Moab, {0, 0, 0}, 50, 0.00f, 25.00f},
@@ -451,20 +451,20 @@ void RegularRoundSpawner::init() {
         {BloonType::Ddt, {0, 0, 0}, 3, 10.40f, 11.90f}
     });
     roundTemplates[91] = Round(4191, {
-        {BloonType::Ceramic, {1, 0, 0}, 100, 0.00f, 30.00f},
-        {BloonType::Bfb, {0, 0, 0}, 20, 7.38f, 17.38f}
+        {BloonType::Bfb, {0, 0, 0}, 20, 7.38f, 17.38f},
+        {BloonType::Ceramic, {1, 0, 0}, 100, 0.00f, 30.00f}
     });
     roundTemplates[92] = Round(4537, {
-        {BloonType::Moab, {1, 0, 0}, 50, 0.00f, 35.00f},
-        {BloonType::Zomg, {0, 0, 0}, 4, 12.96f, 18.96f}
+        {BloonType::Zomg, {0, 0, 0}, 4, 12.96f, 18.96f},
+        {BloonType::Moab, {1, 0, 0}, 50, 0.00f, 35.00f}
     });
     roundTemplates[93] = Round(1946, {
-        {BloonType::Bfb, {1, 0, 0}, 10, 0.00f, 20.00f},
-        {BloonType::Ddt, {0, 0, 0}, 6, 12.35f, 14.35f}
+        {BloonType::Ddt, {0, 0, 0}, 6, 12.35f, 14.35f},
+        {BloonType::Bfb, {1, 0, 0}, 10, 0.00f, 20.00f}
     });
     roundTemplates[94] = Round(7667, {
-        {BloonType::Bfb, {0, 0, 0}, 25, 0.00f, 15.00f},
-        {BloonType::Zomg, {0, 0, 0}, 6, 1.61f, 14.61f}
+        {BloonType::Zomg, {0, 0, 0}, 6, 1.61f, 14.61f},
+        {BloonType::Bfb, {0, 0, 0}, 25, 0.00f, 15.00f}
     });
     roundTemplates[95] = Round(3718, {
         {BloonType::Purple, {0, 1, 0}, 500, 0.00f, 30.00f},
@@ -484,12 +484,12 @@ void RegularRoundSpawner::init() {
         {BloonType::Zomg, {1, 0, 0}, 2, 0.00f, 5.00f}
     });
     roundTemplates[98] = Round(9653, {
-        {BloonType::Bfb, {1, 0, 0}, 30, 0.00f, 30.00f},
-        {BloonType::Zomg, {0, 0, 0}, 8, 0.00f, 5.00f}
+        {BloonType::Zomg, {0, 0, 0}, 8, 0.00f, 5.00f},
+        {BloonType::Bfb, {1, 0, 0}, 30, 0.00f, 30.00f}
     });
     roundTemplates[99] = Round(2827, {
-        {BloonType::Moab, {0, 0, 0}, 60, 0.00f, 12.00f},
-        {BloonType::Ddt, {1, 0, 0}, 9, 6.51f, 11.51f}
+        {BloonType::Ddt, {1, 0, 0}, 9, 6.51f, 11.51f},
+        {BloonType::Moab, {0, 0, 0}, 60, 0.00f, 12.00f}
     });
     roundTemplates[100] = Round(1534, {
         {BloonType::Bad, {0, 0, 0}, 1, 0.05f, 0.05f}

@@ -26,6 +26,8 @@ int main() {
     {
         if(game.isExit()) break;
         float deltaTime = GetFrameTime();
+        Vector2 mousePos = GetMousePosition();
+        std::cerr<<mousePos.x<<" "<<mousePos.y<<"\n";
         game.update(deltaTime);
         BeginDrawing();
             ClearBackground(RAYWHITE);

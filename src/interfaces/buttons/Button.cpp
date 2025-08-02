@@ -86,16 +86,6 @@ void Exit::handleInput() {
     notify(Event::Type::Exit);
 }
 
-ChooseJungle::ChooseJungle(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
-    : Button(_texture, _fontSize, _height, _width, _position) {
-    attach(Game::Instance().getStateManager());
-}
-
-void ChooseJungle::handleInput() {
-    Button::handleInput();
-    if(!isAvailable || state != Button::State::Clicked) return;
-}
-
 CommingSoon::CommingSoon(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
    : Button(_texture, _fontSize, _height, _width, _position) {
     attach(Game::Instance().getStateManager());

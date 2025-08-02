@@ -1,0 +1,45 @@
+#include "ReverseMonkeyLane.h"
+
+ReverseMonkeyLane::ReverseMonkeyLane() {
+    // Reverse path
+    mapType = MapType::ReverseMonkeyLane;
+    enemyPath[0].push_back(Point(200, 770, Point::Type::SpawnEnenmy)); // enemy goes from there
+    enemyPath[0].push_back(Point(200, 510));
+    enemyPath[0].push_back(Point(230, 510, Point::Type::Invisible));
+    enemyPath[0].push_back(Point(497, 510));
+    enemyPath[0].push_back(Point(730, 500));
+    enemyPath[0].push_back(Point(730, 287));
+    enemyPath[0].push_back(Point(875, 265));
+    enemyPath[0].push_back(Point(875, 162));
+    enemyPath[0].push_back(Point(735, 145));
+    enemyPath[0].push_back(Point(725, 42));
+    enemyPath[0].push_back(Point(205, 42));
+    enemyPath[0].push_back(Point(200, 160));
+    enemyPath[0].push_back(Point(590, 160));
+    enemyPath[0].push_back(Point(605, 373, Point::Type::Invisible));
+    enemyPath[0].push_back(Point(610, 635));
+    enemyPath[0].push_back(Point(610, 660));
+    enemyPath[0].push_back(Point(370, 655));
+    enemyPath[0].push_back(Point(360, 275));
+    enemyPath[0].push_back(Point(203, 275));
+    enemyPath[0].push_back(Point(203, 390));
+    enemyPath[0].push_back(Point(-100, 390, Point::Type::Exit));
+}
+
+std::unique_ptr<Map> ReverseMonkeyLane::clone() const {
+    return std::make_unique<ReverseMonkeyLane>(*this);
+}
+
+void ReverseMonkeyLane::loadTexture() {
+    texture = Game::Instance().getTextureManager().getTexture("MonkeyLaneThumb");
+    mapImage = LoadImage("../assets/map/Monkey_lane_path_mask.png"); // MUST BE LOADED
+    pathImage = LoadImage("../assets/map/Monkey_lane_thumb.png"); // Path image for collision detection
+}
+
+void ReverseMonkeyLane::update() {
+    // This map has no dynamic elements to update
+}
+
+std::pair<Vector2, int> ReverseMonkeyLane::getPositionAndPathIdx(BloonType type) {
+    return {getCurrentPoint(0, 0), 0}; // Default position and path index for this map
+}

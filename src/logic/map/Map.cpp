@@ -38,11 +38,19 @@ Point::Type Map::getTowerPointType(Vector2 position) const {
     return Point::Type::None; // can place tower here
 }
 
-Point::Type Map::getPointType(int index, int pathIdx, bool isReverse) const {
-    int numPaths = 0;
-    for(int i = 0; i < MAXPATHS; i++) numPaths += !enemyPath.empty();
-    pathIdx += numPaths / 2 * isReverse;
+Point::Type Map::getEnemyPointType(Vector2 position) const {
+    if(!Utils::isPositionInMap(position)) return Point::Type::None;
+    Color pixelColor = GetImageColor(mapImage, static_cast<int>(position.x), static_cast<int>(position.y));
+    // Color pathColor = GetImageColor(mapImage, static_cast<int>(enemyPath[0][1].position.x), static_cast<int>(enemyPath[0][1].position.y));
+    Color pathColor = GetImageColor(pathImage, static_cast<int>(position.x), static_cast<int>(position.y));
+    int tolerance = 10;
+    bool isPath = abs(pixelColor.r - pathColor.r) < tolerance && abs(pixelColor.g - pathColor.g) < tolerance && abs(pixelColor.b - pathColor.b) < tolerance;
+    if(isPath) return Point::Type::Enemy;
 
+    return Point::Type::None; // can place tower here
+}
+
+Point::Type Map::getPointType(int index, int pathIdx) const {
     if(index < 0 || index >= (int) enemyPath[pathIdx].size()) return Point::Type::None;
     return enemyPath[pathIdx][index].getType();
 }
@@ -69,6 +77,11 @@ Vector2 Map::getCurrentPoint(int index, int pathIdx) const {
 Vector2 Map::getNextPoint(int index, int pathIdx) const {
     if(index + 1 >= (int) enemyPath[pathIdx].size()) return enemyPath[pathIdx].back().position; 
     return enemyPath[pathIdx][index + 1].position;
+}
+
+Vector2 Map::getPreviousPoint(int index, int pathIdx) const {
+    if(index - 1 < 0) return enemyPath[pathIdx][0].position;
+    return enemyPath[pathIdx][index - 1].position;
 }
 
 bool Map::isLastPoint(int index, int pathIdx) const {

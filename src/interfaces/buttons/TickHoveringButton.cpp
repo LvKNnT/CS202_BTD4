@@ -42,3 +42,13 @@ StartRoundButton::StartRoundButton(const Texture &_texture, int _fontSize, int _
     tickEvent = Event::Type::StartRound;
     untickEvent = Event::Type::None;
 }
+
+void StartRoundButton::handleInput() {
+    Button::handleInput();
+    if(Game::Instance().getGameLogic().isRoundRun()) {
+        isTick = 1;
+    } else isTick = 0;
+
+    if(!isAvailable || state != Button::State::Clicked) return;
+    notify(tickEvent);
+}

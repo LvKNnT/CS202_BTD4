@@ -22,7 +22,6 @@ protected:
     Texture texture;
     std::string title;
     int fontSize;
-    std::list<std::shared_ptr<IObserver>> observers;
     State state;    
     
 public:
@@ -49,12 +48,6 @@ public:
 class Exit : public Button {
 public: 
     Exit(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
-};
-
-class ChooseJungle : public Button {
-public: 
-    ChooseJungle(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
     void handleInput() override;
 };
 

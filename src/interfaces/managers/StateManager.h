@@ -12,6 +12,8 @@
 #include "../states/AreYouSureState.h"
 #include "../states/DifficultySelectionState.h"
 #include "../states/SpecificModeSelectionState.h"
+#include "../states/GameOverState.h"
+#include "../../logic/Map/MapUnits.h"
 #include "../../core/IObserver.h"
 #include "../../core/Event.h"
 
@@ -25,11 +27,13 @@ private:
     std::shared_ptr<State> areYouSureState;
     std::shared_ptr<State> difficultySelectionState;
     std::shared_ptr<State> specificModeSelectionState;
+    std::shared_ptr<State> gameOverState;
 
-private:
+    bool canResume;
     std::string mode;
     std::string modeInfo;
     bool isNewGame;
+    MapType mapType;
 
 public:
     void initialize();

@@ -4,6 +4,7 @@
 #include <fstream>
 
 GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth, Game::Instance().getTextureManager().getTexture("GameStateBackground")) { 
+    attach(Game::Instance().getStateManager());
     curTowerType = 0;
     panel = std::make_unique<Panel>();
     Vector2 SGBPos = {1000, 720 - 59};    
@@ -151,8 +152,8 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
 
 void GameState::draw() const {    
     // Draw
-    DrawTextureEx(background, (Vector2) {0, 0}, 0.0, 1.0, (Color) {140, 140, 140, 255});
     Game::Instance().getGameLogic().draw();
+    DrawTextureEx(background, (Vector2) {0, 0}, 0.0, 1.0, (Color) {140, 140, 140, 255});
 
     if(towerPanel) towerPanel->draw();
     if(roundPanel) roundPanel->draw();
@@ -236,6 +237,7 @@ void GameState::update(Event::Type event) {
 void GameState::handleInput() {
     // update game logic
     Game::Instance().getGameLogic().update();
+    gameOver();
 
     auto preTowerType = clickedTowerType;
     State::handleInput();
@@ -368,3 +370,20 @@ TowerType GameState::getTowerType(int i) const {
     return TowerType::None;
 }
 
+void GameState::gameOver(){
+    if(Game::Instance().getGameLogic().isEndGame()) {
+        notify(Event::Type::ToGameOver);
+    }
+}
+
+void GameState::attach(std::shared_ptr<IObserver> observer) {
+    observers.push_back(observer);
+}
+
+void GameState::detach(std::shared_ptr<IObserver> observer) {
+    observers.remove(observer);
+}
+
+void GameState::notify(Event::Type event) {
+    for(auto observer:observers) observer->update(event);
+}
