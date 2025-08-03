@@ -141,6 +141,10 @@ public:
         };
     }
 
+    void applyStun(float duration) {
+        stunDuration = std::max(stunDuration, duration);
+    }
+
     void update() {
         float deltaTime = GetFrameTime();
 

@@ -2,6 +2,8 @@
 #include <fstream>
 #include <filesystem>
 
+#include "skill/Skill.h"
+
 void GameLogic::init() {
     // testing, should be jajaja whenever enter a new game
     std::cerr << "init jajaja" << std::endl;
@@ -17,9 +19,6 @@ void GameLogic::init() {
     init(mapType);
     init(difficulty);
     init(modeType);
-
-    resourceManager.getResource().cash = 999999;
-    resourceManager.getResource().currentRound = 10;
 
     //putTower(TowerType::DartMonkey, {200.0f, 230.0f}); // draging tower
     putTower(TowerType::DartMonkey, {125.0f, 230.0f}); // draging tower
@@ -53,30 +52,48 @@ void GameLogic::init(MapType mapType) {
 void GameLogic::init(Difficulty difficulty) {
     resourceManager.initResource(difficulty);
     
+    // for testing only
+    // resourceManager.getResource().cash = 999999;
+    // resourceManager.getResource().currentRound = 95;
+    
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
     towerManager = TowerManager(resourceManager.getTowerModifies());
+    bulletManager = BulletManager();
 }
 
 void GameLogic::init(ModeType modeType) {
     modeManager.setMode(modeType);
     isTickFast = false;
     setAutoPlay(true);
+    
+    // Resetting log file
+    std::fstream flog("../logs/log.txt", std::ios::out | std::ios::trunc);  
+
+    if (flog.is_open()) {
+        flog << "Game Logic Initialized" << std::endl;
+        flog.close();
+    } else {
+        std::cerr << "Error: Failed to open log file for writing." << std::endl;
+    }
 }
 
 void GameLogic::update() {
-    for(int i = 0; i < (isTickFast ? 25 : 1); ++i) {
+    for(int i = 0; i < (isTickFast ? 3 : 1); ++i) {
         // Update game result
         if(resourceManager.isEndGame() != 0) {
-            std::cerr << "Game Over! Result: " << resourceManager.isEndGame() << std::endl;
+            // std::cerr << "Game Over! Result: " << resourceManager.isEndGame() << std::endl;
         }
 
         // Update by the managers
         mapManager.updateMap();
         enemyManager.updateEnemies();
 
-        if(resourceManager.isEndGame() == 0 && logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager)) {
+        if(resourceManager.isEndGame() < 10 && logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager)) {
             autoSave(); 
         }
+
+        // testing
+        logicManager.activateSkillTower(towerManager, enemyManager);
         
         logicManager.updateEnemies(enemyManager, mapManager, resourceManager);
         logicManager.updateBullets(bulletManager);

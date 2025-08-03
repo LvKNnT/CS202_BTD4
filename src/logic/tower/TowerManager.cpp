@@ -3,6 +3,8 @@
 #include <fstream>
 #include <algorithm>
 
+#include "../skill/Skill.h"
+
 TowerManager::TowerManager(TowerModifies modifies)
     : currentModifies(modifies), towerIDCounter(0) {
     // Initialize unique_ptr
@@ -87,24 +89,30 @@ void TowerManager::spawnTower(TowerType type, Vector2 position, float rotation) 
 }
 
 void TowerManager::pickTower(Vector2 position) {
-    lastPickedTower = getTowerFromPosition(position);
-    if (lastPickedTower) {
-        std::cout << "Picked tower at position: (" << position.x << ", " << position.y << ")" << std::endl;
+    std::weak_ptr<Tower> tower = getTowerFromPosition(position);
+    if (auto towerPtr = tower.lock()) {
+        lastPickedTower = towerPtr; // Set the last picked tower
+        std::cout << "Picked tower: " << static_cast<int>(towerPtr->type) << std::endl;
     } else {
-        std::cerr << "No tower found at position: (" << position.x << ", " << position.y << ")" << std::endl;
+        std::cerr << "No tower found at position: " << position.x << ", " << position.y << std::endl;
     }
 }
 
 void TowerManager::unPickTower() {
-    if(!lastPickedTower) return;
-
-    std::cout << "Unpicked tower: " << static_cast<int>(lastPickedTower->type) << std::endl;
-    lastPickedTower = nullptr;
+    if (lastPickedTower.lock()) {
+        lastPickedTower.reset(); // Clear the last picked tower
+        std::cout << "Unpicked tower." << std::endl;
+    } else {
+        std::cerr << "No tower was picked to unpick." << std::endl;
+    }
 }
 
 LogicInfo TowerManager::getInfo() const {
-    if(lastPickedTower) return lastPickedTower->getInfo();
-    return LogicInfo(); 
+    if(lastPickedTower.lock()) {
+        return lastPickedTower.lock()->getInfo();
+    }
+    
+    return LogicInfo(); // Return an empty LogicInfo if no tower is picked
 }
 
 LogicInfo TowerManager::getInfoTower(TowerType type) const {
@@ -112,12 +120,11 @@ LogicInfo TowerManager::getInfoTower(TowerType type) const {
 }
 
 LogicInfo TowerManager::getInfoTower(Vector2 position) const {
-    Tower* tower = getTowerFromPosition(position);
-    if (tower) {
-        return tower->getInfo();
+    std::weak_ptr<Tower> tower = getTowerFromPosition(position);
+    if (auto towerPtr = tower.lock()) {
+        return towerPtr->getInfo();
     }
 
-    // should be here only if no tower is found at the position
     std::cerr << "No tower found at position: " << position.x << ", " << position.y << std::endl;
     return LogicInfo(); // Return an empty LogicInfo if no tower is found
 }
@@ -125,7 +132,7 @@ LogicInfo TowerManager::getInfoTower(Vector2 position) const {
 void TowerManager::drawTowers() const {
     for (const auto& tower : towerList) {
         if (tower) {
-            if(tower.get() == lastPickedTower) {
+            if(lastPickedTower.lock() && lastPickedTower.lock() == tower) {
                 tower->drawRange(); 
             } 
             tower->draw(); 
@@ -150,59 +157,64 @@ void TowerManager::updateTowers() {
     }
 }
 
-Tower* TowerManager::getTowerFromPosition(Vector2 position) const {
+std::weak_ptr<Tower> TowerManager::getTowerFromPosition(Vector2 position) const {
     for (const auto& tower : towerList) {
         if (tower && CheckCollisionPointRec(position, tower->getBoundingBox())) {
-            return tower.get(); // Return the tower if the position collides with its bounding box
+            return std::weak_ptr<Tower>(tower); // Return a weak pointer to the tower at the position
         }
     }
-    return nullptr; // No tower found at the given position
+    return std::weak_ptr<Tower>(); // Return an empty weak pointer if no tower is found
 }
 
 void TowerManager::chooseNextPriority() {
-    if (!lastPickedTower) return;
-
-    lastPickedTower->targetPriority = static_cast<TargetPriority>((static_cast<int>(lastPickedTower->targetPriority) + 1) % 4);
+    if (auto towerPtr = lastPickedTower.lock()) {
+        towerPtr->targetPriority = static_cast<TargetPriority>((static_cast<int>(towerPtr->targetPriority) + 1) % 4);
+    }
 }
 
 void TowerManager::chooseNextPriority(Vector2 position) {
-    Tower* tower = getTowerFromPosition(position);
-    if (tower) {
-        tower->targetPriority = static_cast<TargetPriority>((static_cast<int>(tower->targetPriority) + 1) % 4);
-    } else {
+    std::weak_ptr<Tower> tower = getTowerFromPosition(position);
+    if (auto towerPtr = tower.lock()) {
+        towerPtr->targetPriority = static_cast<TargetPriority>((static_cast<int>(towerPtr->targetPriority) + 1) % 4);
+    } 
+    else {
         std::cerr << "No tower found at position: " << position.x << ", " << position.y << std::endl;
     }
 }
 
 void TowerManager::choosePreviousPriority() {
-    if (!lastPickedTower) return;
-
-    lastPickedTower->targetPriority = static_cast<TargetPriority>((static_cast<int>(lastPickedTower->targetPriority) + 3) % 4);
+    if (auto towerPtr = lastPickedTower.lock()) {
+        towerPtr->targetPriority = static_cast<TargetPriority>((static_cast<int>(towerPtr->targetPriority) + 3) % 4);
+    }
 }
 
 void TowerManager::choosePreviousPriority(Vector2 position) {
-    Tower* tower = getTowerFromPosition(position);
-    if (tower) {
-        tower->targetPriority = static_cast<TargetPriority>((static_cast<int>(tower->targetPriority) + 3) % 4);
-    } else {
+    std::weak_ptr<Tower> tower = getTowerFromPosition(position);
+    if (auto towerPtr = tower.lock()) {
+        towerPtr->targetPriority = static_cast<TargetPriority>((static_cast<int>(towerPtr->targetPriority) + 3) % 4);
+    } 
+    else {
         std::cerr << "No tower found at position: " << position.x << ", " << position.y << std::endl;
     }
 }
 
 int TowerManager::sellTower() {
-    if (!lastPickedTower) {
+    auto towerPtr = lastPickedTower.lock();
+    if (!towerPtr) {
         std::cerr << "No tower selected to sell." << std::endl;
         return 0; // No tower to sell
     }
 
-    int sellValue = std::stoi(lastPickedTower->getInfo()["sell"]);
+    int sellValue = std::stoi(towerPtr->getInfo()["sell"]);
 
     // Remove the tower from the list
     auto it = std::remove_if(towerList.begin(), towerList.end(),
-                             [this](const std::unique_ptr<Tower>& tower) { return tower.get() == lastPickedTower; });
+        [&towerPtr](const std::shared_ptr<Tower>& tower) {
+            return tower && tower->towerId == towerPtr->towerId; // Match by tower ID
+        });
     towerList.erase(it, towerList.end());
 
-    lastPickedTower = nullptr; // Clear the last picked tower
+    lastPickedTower.reset(); // Clear the last picked tower
     return sellValue; // Return the sell value
 }
 

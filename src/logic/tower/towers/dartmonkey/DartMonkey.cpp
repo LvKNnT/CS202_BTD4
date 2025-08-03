@@ -4,6 +4,7 @@
 
 #include "../../../attack/attacks/DartAttack.h"
 #include "../../../attack/patterns/NormalAttack.h"
+#include "../../../skill/skills/SuperMonkeyFanClubSkill.h"
 #include "SharpShots.h"
 #include "QuickShots.h"
 #include "LongRangeDarts.h"
@@ -29,6 +30,7 @@ DartMonkey::DartMonkey(Vector2 position)
      */
     attacks.push_back(std::make_unique<DartAttack>(128.0f, 0.95f, position, towerId, 1, 600, 2, 0.25f, BulletProperties::normal(), BloonDebuff().getISlow(0.5f, 0.25f).getIKnockBack(0.5f), BloonDebuff())); 
     attackPattern = std::make_unique<NormalAttack>(); 
+    skill = std::make_unique<SuperMonkeyFanClubSkill>();
 
     // Upgrade Path
     upgradeTop = std::make_unique<SharpShots>();
@@ -89,6 +91,7 @@ void DartMonkey::update() {
     for(auto& attack : attacks) {
         attack->update();
     }
+    skill->update(); 
 }
 
 void DartMonkey::setRotation(float rotation) {

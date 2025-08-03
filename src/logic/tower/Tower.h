@@ -12,6 +12,9 @@
 #include "../level/TowerModifies.h"
 #include "../LogicInfo.h"
 
+// Some pre-declarations
+class Skill;
+
 #include <memory>
 #include <vector>
 
@@ -20,12 +23,15 @@ class Tower : public GameObject {
     friend class LogicManager; 
     friend class TowerManager;
     friend class TowerSpawner;
+    friend class SkillSpawner;
+    friend class SkillFriendAccess; 
 
 public:
     Tower(Vector2 position, Vector2 size, float rotation, TowerType type, int cost);
     Tower(const Tower& other);
     virtual ~Tower() = default;
     
+    Tower& operator=(const Tower& other) = default;
     virtual std::unique_ptr<Tower> clone() const = 0;
     
     // Basic loaders
@@ -50,6 +56,7 @@ protected:
     TargetPriority targetPriority; 
     AttackBuff attackBuff; 
     std::unique_ptr<AttackPattern> attackPattern;
+    std::unique_ptr<Skill> skill; // Skill for the tower
 
     int cost; 
     float upgradeCost;
