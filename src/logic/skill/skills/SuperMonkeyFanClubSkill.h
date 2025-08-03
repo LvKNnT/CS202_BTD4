@@ -15,6 +15,8 @@ public:
     // Clone method for polymorphism
     std::unique_ptr<Skill> clone() const override;
 
+    void loadTexture() override;
+
     void update() override;
     bool canActivateSkill() const override;
     float getCooldown() const override;

@@ -3,6 +3,8 @@
 #include "raymath.h"
 #include <algorithm>
 
+#include "../../../core/Game.h"
+
 SuperMonkeyFanClubSkill::SuperMonkeyFanClubSkill()
     : Skill(10.0f, "Super Monkey Fan Club") {
     // Instant cooldown
@@ -12,6 +14,11 @@ SuperMonkeyFanClubSkill::SuperMonkeyFanClubSkill()
 
 std::unique_ptr<Skill> SuperMonkeyFanClubSkill::clone() const {
     return std::make_unique<SuperMonkeyFanClubSkill>(*this);
+}
+
+void SuperMonkeyFanClubSkill::loadTexture() {
+    // Load the texture for the Super Monkey Fan Club skill
+    Game::Instance().getTextureManager().loadTexture(name, "../assets/tower/Dart_Monkey/SuperMonkeyFanClubUpgradeIcon.png");
 }
 
 void SuperMonkeyFanClubSkill::update() {

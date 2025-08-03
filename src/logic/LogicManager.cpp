@@ -74,7 +74,11 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
     enemy.position = position; 
     enemy.trackIndex = trackIndex; 
     enemy.setRotation(atan2f(direction.y, direction.x) * (180.0f / PI)); // Set the rotation based on the direction
-    enemy.isActiveFlag = map.getPointType(trackIndex, pathIndex) != Point::Type::Invisible; // Check if the enemy is still active based on the point type
+
+    if(static_cast<int>(enemy.type) < 12) { // for normal bloons
+        enemy.isActiveFlag = map.getPointType(trackIndex, pathIndex) != Point::Type::Invisible; // Check if the enemy is still active based on the point type
+    }
+    else enemy.isActiveFlag = true; // for moab class
 
     // If the enemy has not reached the end of the path, return 0
     return 0;

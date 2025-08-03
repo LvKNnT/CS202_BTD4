@@ -50,9 +50,11 @@ public:
     void chooseNextPriority();
     void choosePreviousPriority();
 
+    void startPlayRound();
     void setAutoPlay(bool autoPlay);
     void activeAutoPlay();
     void unactiveAutoPlay();
+    void replay(); // actually is a re-init with the same map and mode
     void setTickFast(bool isTickFast);
     void activeTickFast();
     void unactiveTickFast();
@@ -81,6 +83,7 @@ private:
 
     // game state
     bool isTickFast = false;
+    bool isStarted = false;
 
     // save/load path
     std::string savePath = "../save/"; 

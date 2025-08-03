@@ -94,6 +94,7 @@ void TowerManager::pickTower(Vector2 position) {
         lastPickedTower = towerPtr; // Set the last picked tower
         std::cout << "Picked tower: " << static_cast<int>(towerPtr->type) << std::endl;
     } else {
+        lastPickedTower.reset(); // Clear the last picked tower if none found
         std::cerr << "No tower found at position: " << position.x << ", " << position.y << std::endl;
     }
 }

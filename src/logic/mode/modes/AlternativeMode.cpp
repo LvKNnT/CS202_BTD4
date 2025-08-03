@@ -26,7 +26,7 @@ std::vector<std::pair<BloonType, BloonProperties>> AlternativeModePlayer::getEne
 
         // special case
         if(count == 1) {
-            if(bloonCount == 0 || timer < startTime) continue;
+            if(bloonCount > 0 || timer < startTime) continue;
 
             bloonCount = 2;
             bloonList.emplace_back(type, properties);

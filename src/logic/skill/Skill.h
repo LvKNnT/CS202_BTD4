@@ -21,11 +21,17 @@ public:
 
     virtual std::unique_ptr<Skill> clone() const = 0; 
 
+    virtual void loadTexture() = 0; // Load the texture for the skill
+
     virtual void update() = 0;
     virtual bool canActivateSkill() const = 0;
     virtual float getCooldown() const = 0;
     virtual void activateSkill(std::shared_ptr<Tower> tower, std::vector<std::unique_ptr<Enemy>>& enemies, std::vector<std::shared_ptr<Tower>>& towers) = 0;
     virtual void inActivateSkill() = 0; 
+
+    const std::string& getName() const;
+    float getCooldownTime() const;
+    float getTimer() const;
 };
 
 #endif // SKIL_H

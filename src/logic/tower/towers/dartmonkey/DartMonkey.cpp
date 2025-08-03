@@ -75,6 +75,7 @@ void DartMonkey::loadTexture() {
     // Load the texture for the Dart Monkey tower
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/DartMonkey.png");
     Game::Instance().getTextureManager().loadTexture("NoUpgrade", "../assets/tower/NoUpgradeIcon.png");
+    skill->loadTexture(); 
     
     // Update size based on the loaded texture
     size.x = Game::Instance().getTextureManager().getTexture(tag).width;
@@ -172,6 +173,11 @@ LogicInfo DartMonkey::getInfo() {
             info["targetPriority"] = "Unknown";
             break;
     }
+
+    // for skill
+    info["skillName"] = skill->getName();
+    info["skillCooldown"] = std::to_string(skill->getCooldownTime());
+    info["skillTimer"] = std::to_string(skill->getTimer());
     
     return this->info;
 }

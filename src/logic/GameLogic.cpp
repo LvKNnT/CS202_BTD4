@@ -54,7 +54,7 @@ void GameLogic::init(Difficulty difficulty) {
     
     // for testing only
     // resourceManager.getResource().cash = 999999;
-    // resourceManager.getResource().currentRound = 95;
+    // resourceManager.getResource().currentRound = 40;
     
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
     towerManager = TowerManager(resourceManager.getTowerModifies());
@@ -64,8 +64,9 @@ void GameLogic::init(Difficulty difficulty) {
 void GameLogic::init(ModeType modeType) {
     modeManager.setMode(modeType);
     isTickFast = false;
-    setAutoPlay(true);
-    
+    isStarted = false;
+    setAutoPlay(false);
+
     // Resetting log file
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::trunc);  
 
@@ -75,6 +76,36 @@ void GameLogic::init(ModeType modeType) {
     } else {
         std::cerr << "Error: Failed to open log file for writing." << std::endl;
     }
+}
+
+void GameLogic::replay() {
+    std::string filePath = savePath + "autosave.txt";
+    std::cerr << "Loading replay from save: " << filePath << std::endl;
+
+    std::fstream file(filePath, std::ios::in);
+    if (!file.is_open()) {
+        std::cerr << "Error: Failed to open file for loading map." << std::endl;
+        return;    
+    }
+
+    // Map
+    int mapTypeInt;
+    file >> mapTypeInt; 
+    std::cerr << "Loading map type: " << mapTypeInt << std::endl;
+    MapType mapType = static_cast<MapType>(mapTypeInt);
+    init(mapType);
+
+    // Difficulty
+    int difficultyInt;
+    file >> difficultyInt; 
+    Difficulty currentDifficulty = static_cast<Difficulty>(difficultyInt);
+    init(currentDifficulty);
+
+    // Mode
+    int modeTypeInt;
+    file >> modeTypeInt; 
+    ModeType modeType = static_cast<ModeType>(modeTypeInt);
+    init(modeType);
 }
 
 void GameLogic::update() {
@@ -88,7 +119,7 @@ void GameLogic::update() {
         mapManager.updateMap();
         enemyManager.updateEnemies();
 
-        if(resourceManager.isEndGame() < 10 && logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager)) {
+        if(resourceManager.isEndGame() == 0 && isStarted && logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager)) {
             autoSave(); 
         }
 
@@ -179,6 +210,10 @@ void GameLogic::chooseNextPriority() {
 
 void GameLogic::choosePreviousPriority() {
     towerManager.choosePreviousPriority();
+}
+
+void GameLogic::startPlayRound() {
+    isStarted = true; // Set the game as started
 }
 
 // same same but different

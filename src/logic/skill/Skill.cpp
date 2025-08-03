@@ -9,3 +9,15 @@ Skill::Skill(float cooldown, const std::string& name)
 Skill::~Skill() {
     // Destructor implementation can be extended if needed
 }
+
+const std::string& Skill::getName() const {
+    return name; // Return the name of the skill
+}
+
+float Skill::getCooldownTime() const {
+    return cooldown; // Return the cooldown time of the skill
+}
+
+float Skill::getTimer() const {
+    return timer; // Return the current timer of the skill
+}
