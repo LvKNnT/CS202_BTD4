@@ -239,15 +239,17 @@ std::unique_ptr<Enemy> EnemySpawner::getEnemy(BloonType type, BloonProperties pr
     return nullptr;
 }
 
-std::vector<std::unique_ptr<Enemy>> EnemySpawner::getChildrenEnemies(Enemy* enemy, EnemyModifies modifies) {
+std::vector<std::unique_ptr<Enemy>> EnemySpawner::getChildrenEnemies(Enemy* enemy, int round, EnemyModifies modifies) {
     if (!enemy) return {};
 
     auto it = enemyChildrenTemplates.find(enemy->type);
     if (it != enemyChildrenTemplates.end()) {
         std::vector<std::unique_ptr<Enemy>> childrenEnemies;
 
-        for (const auto& child : it->second) {
-            std::unique_ptr<Enemy> childEnemy = child->clone();
+        int maxChildren = round < 60 ? 1 : round < 80 ? 2 : 4;
+
+        for (int i = 0; i < it->second.size() / maxChildren; ++i) {
+            std::unique_ptr<Enemy> childEnemy = (it->second)[i]->clone();
             childEnemy->regrowLimit = enemy->regrowLimit;
             // childEnemy->regrowTimer = 0.0f;
             childEnemy->properties = enemy->properties;
@@ -257,6 +259,7 @@ std::vector<std::unique_ptr<Enemy>> EnemySpawner::getChildrenEnemies(Enemy* enem
             childEnemy->pathIndex = enemy->pathIndex;
             childEnemy->enemyId = enemy->enemyId; 
 
+            modifies.health *= maxChildren;
             childEnemy->setModifies(modifies);
             childEnemy->loadTexture();
 

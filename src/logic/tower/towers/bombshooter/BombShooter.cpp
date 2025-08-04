@@ -1,6 +1,7 @@
 #include "BombShooter.h"
 
 #include "../../../../core/Game.h"
+#include "../../../skill/Skill.h"
 
 #include "../../../attack/attacks/BombAttack.h"
 #include "../../../attack/patterns/NormalAttack.h"

@@ -5,6 +5,8 @@
 #include "TowerSpawner.h"
 #include "../level/TowerModifies.h"
 
+#include "../skill/Skill.h"
+
 class TowerManager {
     friend class LogicManager; // Allow LogicManager to access private members
     friend LogicInfo;
@@ -42,8 +44,8 @@ public:
 private:
     TowerModifies currentModifies; // Current tower modifies
     
-    std::vector<std::unique_ptr<Tower>> towerList; // Collection to hold all active towers
-    Tower* lastPickedTower = nullptr;
+    std::vector<std::shared_ptr<Tower>> towerList; // Collection to hold all active towers
+    std::weak_ptr<Tower> lastPickedTower;
     std::unique_ptr<Tower> putTower;
 
     std::unique_ptr<TowerSpawner> towerSpawner; // Factory to create towers based on type
@@ -51,7 +53,7 @@ private:
     int towerIDCounter; // Counter for ID tower
 
     // Helper methods
-    Tower* getTowerFromPosition(Vector2 position) const;
+    std::weak_ptr<Tower> getTowerFromPosition(Vector2 position) const;
 };
 
 #endif // TOWER_MANAGER_H

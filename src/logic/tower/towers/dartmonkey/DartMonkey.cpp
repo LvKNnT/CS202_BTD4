@@ -4,6 +4,7 @@
 
 #include "../../../attack/attacks/DartAttack.h"
 #include "../../../attack/patterns/NormalAttack.h"
+#include "../../../skill/skills/SuperMonkeyFanClubSkill.h"
 #include "SharpShots.h"
 #include "QuickShots.h"
 #include "LongRangeDarts.h"
@@ -29,6 +30,7 @@ DartMonkey::DartMonkey(Vector2 position)
      */
     attacks.push_back(std::make_unique<DartAttack>(128.0f, 0.95f, position, towerId, 1, 600, 2, 0.25f, BulletProperties::normal(), BloonDebuff().getISlow(0.5f, 0.25f).getIKnockBack(0.5f), BloonDebuff())); 
     attackPattern = std::make_unique<NormalAttack>(); 
+    skill = std::make_unique<SuperMonkeyFanClubSkill>();
 
     // Upgrade Path
     upgradeTop = std::make_unique<SharpShots>();
@@ -73,6 +75,7 @@ void DartMonkey::loadTexture() {
     // Load the texture for the Dart Monkey tower
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/DartMonkey.png");
     Game::Instance().getTextureManager().loadTexture("NoUpgrade", "../assets/tower/NoUpgradeIcon.png");
+    skill->loadTexture(); 
     
     // Update size based on the loaded texture
     size.x = Game::Instance().getTextureManager().getTexture(tag).width;
@@ -89,6 +92,7 @@ void DartMonkey::update() {
     for(auto& attack : attacks) {
         attack->update();
     }
+    skill->update(); 
 }
 
 void DartMonkey::setRotation(float rotation) {
@@ -169,6 +173,11 @@ LogicInfo DartMonkey::getInfo() {
             info["targetPriority"] = "Unknown";
             break;
     }
+
+    // for skill
+    info["skillName"] = skill->getName();
+    info["skillCooldown"] = std::to_string(skill->getCooldownTime());
+    info["skillTimer"] = std::to_string(skill->getTimer());
     
     return this->info;
 }

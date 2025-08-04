@@ -19,33 +19,24 @@ std::vector<std::pair<BloonType, BloonProperties>> ClassicModePlayer::getEnemies
     std::vector<std::pair<BloonType, BloonProperties>> bloonList;
 
     // playing round
-    int counter = 0;
     timer += GetFrameTime();
-    for(auto& [type, properties, count, startTime, endTime] : currentRound.bloonTypes) {
-        if(timer < startTime) continue;
+    for(auto& [type, properties, count, startTime, endTime, bloonCount] : currentRound.bloonTypes) {
+        if(bloonCount > count) continue;
 
-        // No more enemies
-        if(count == 0) {
-            ++counter;
-            continue;
-        }
-
-        // An edge case of this approach
-        // Unlucky tho...
+        // special case
         if(count == 1) {
-            if(timer > startTime) {
-                bloonList.emplace_back(type, properties);
-                count = 0;
-            }
+            if(bloonCount > 0 || timer < startTime) continue;
+
+            bloonCount = 2;
+            bloonList.emplace_back(type, properties);
+
             continue;
         }
 
         float interval = (endTime - startTime) / (count - 1);
-        int lastIndex = static_cast<int>(floor((timer - startTime) / interval));
-        for(int i = 0; i <= lastIndex; ++i) {
+        for(float spawnTime = startTime + bloonCount * interval; spawnTime <= timer && bloonCount <= count; spawnTime += interval) {
             bloonList.emplace_back(type, properties);
-            --count;
-            startTime += interval; 
+            bloonCount++;
         }
     }
 
@@ -53,7 +44,14 @@ std::vector<std::pair<BloonType, BloonProperties>> ClassicModePlayer::getEnemies
 }
 
 bool ClassicModePlayer::canPlayNextRound(bool isClear) const {
-    return timer >= currentRound.bloonTypes.back().endTime && isClear;
+    if(!isClear) return false;
+
+    for(const auto& wave : currentRound.bloonTypes) {
+        if(wave.bloonCount < wave.count) {
+            return false; // Not all bloons in the current round have been cleared
+        }
+    }
+    return true; // All bloons in the current round have been cleared
 }
 
 int ClassicModePlayer::getRoundReward() {

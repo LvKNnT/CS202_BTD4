@@ -2,7 +2,7 @@
 
 void TextureManager::loadTexture(std::string name, std::string path) {
     if(textures.find(name) != textures.end()) {
-        std::cerr << "Warning: Texture " << name << " already loaded!\n";
+        // std::cerr << "Warning: Texture " << name << " already loaded!\n";
         return;
     }
 

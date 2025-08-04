@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <fstream>
 
+#include "skill/Skill.h"
+
 void LogicManager::updateEnemies(EnemyManager& enemyManager, MapManager& mapManager, ResourceManager& resourceManager) {
     for (auto it = enemyManager.enemyList.begin(); it != enemyManager.enemyList.end(); ) {
         int result = runEnemy(**it, mapManager.getCurrentMap());
@@ -72,7 +74,11 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
     enemy.position = position; 
     enemy.trackIndex = trackIndex; 
     enemy.setRotation(atan2f(direction.y, direction.x) * (180.0f / PI)); // Set the rotation based on the direction
-    enemy.isActiveFlag = map.getPointType(trackIndex, pathIndex) != Point::Type::Invisible; // Check if the enemy is still active based on the point type
+
+    if(static_cast<int>(enemy.type) < 12) { // for normal bloons
+        enemy.isActiveFlag = map.getPointType(trackIndex, pathIndex) != Point::Type::Invisible; // Check if the enemy is still active based on the point type
+    }
+    else enemy.isActiveFlag = true; // for moab class
 
     // If the enemy has not reached the end of the path, return 0
     return 0;
@@ -100,10 +106,8 @@ void LogicManager::updateBullets(BulletManager& bulletManager) {
         
         // Update the life span of the bullet
         (*it)->lifeSpan -= GetFrameTime();
-        std::cerr << "Bullet " << (*it)->tag << " has lifeSpan " << (*it)->lifeSpan << std::endl;
         
         if ((*it)->lifeSpan <= 0) {
-            std::cerr << "Bullet " << (*it)->tag << " has reached the end of its lifeSpan " << (*it)->lifeSpan << std::endl;
             // Bullet has reached the end of its life span — remove and destroy it
             
             // first, remove all pierce left
@@ -276,7 +280,7 @@ std::vector<std::unique_ptr<Enemy>> LogicManager::getChildrenEnemies(EnemyManage
     resourceManager.currentResource.cash += enemy.reward; // Add reward for popping the enemy
 
     std::vector<std::unique_ptr<Enemy>> childrenEnemies;
-    childrenEnemies = enemyManager.spawnChildrenEnemies(&enemy);
+    childrenEnemies = enemyManager.spawnChildrenEnemies(&enemy, resourceManager.currentResource.currentRound);
     
     int remainingHealth = -enemy.health; // Get the remaining health after damage
     int finalPopCount = damage - remainingHealth; // Calculate the pop count`
@@ -433,7 +437,7 @@ void LogicManager::updateTowers(TowerManager& towerManager, EnemyManager& enemyM
 
 bool LogicManager::isSpawnTower(const ResourceManager& resourceManager, const TowerManager& towerManager, const MapManager& mapManager) const {
     if(towerManager.putTower == nullptr) {
-        std::cerr << "No tower selected to spawn." << std::endl;
+        // std::cerr << "No tower selected to spawn." << std::endl;
         return false; // No tower selected to spawn
     }
 
@@ -444,7 +448,7 @@ bool LogicManager::isSpawnTower(const ResourceManager& resourceManager, const To
     // Checking collision with the map boundaries
     if(!Utils::isPositionInMap({towerBoundingBox.x, towerBoundingBox.y})
     || !Utils::isPositionInMap({towerBoundingBox.x + towerBoundingBox.width, towerBoundingBox.y + towerBoundingBox.height})) {
-        std::cerr << "Cannot put tower outside of the map boundaries." << std::endl;
+        // std::cerr << "Cannot put tower outside of the map boundaries." << std::endl;
         
         towerManager.putTower->setActive(false);
         return false; 
@@ -456,7 +460,6 @@ bool LogicManager::isSpawnTower(const ResourceManager& resourceManager, const To
             Vector2 point = {static_cast<float>(x), static_cast<float>(y)};
             if(mapManager.getCurrentMap().getTowerPointType(point) != Point::Type::None) {
                 std::cerr << "Cannot put tower due to path" << std::endl;
-                
                 towerManager.putTower->setActive(false);
                 return false; // Collision with the path
             }
@@ -479,7 +482,7 @@ bool LogicManager::isSpawnTower(const ResourceManager& resourceManager, const To
     // Checking collision with other towers
     for (const auto& tower : towerManager.towerList) {
         if (tower->isActive() && CheckCollisionRecs(tower->getBoundingBox(), towerBoundingBox)) {
-            std::cerr << "Cannot put tower due to other towers" << std::endl;
+            // std::cerr << "Cannot put tower due to other towers" << std::endl;
             
             towerManager.putTower->setActive(false);
             return false; // Collision with another tower
@@ -489,8 +492,8 @@ bool LogicManager::isSpawnTower(const ResourceManager& resourceManager, const To
     // Check if the player has enough resources to spawn the tower
     int towerCost = towerManager.putTower->cost;
     if(resourceManager.currentResource.cash < towerCost) {
-        std::cerr << "Current cash: " << resourceManager.currentResource.cash << ", Tower cost: " << towerCost << std::endl;
-        std::cerr << "Not enough resources to spawn tower." << std::endl;
+        // std::cerr << "Current cash: " << resourceManager.currentResource.cash << ", Tower cost: " << towerCost << std::endl;
+        // std::cerr << "Not enough resources to spawn tower." << std::endl;
         
         towerManager.putTower->setActive(false);
         return false; // Not enough resources
@@ -530,26 +533,27 @@ bool LogicManager::spawnTower(ResourceManager& resourceManager, TowerManager& to
 }
 
 bool LogicManager::isUpgradeTower(const ResourceManager& resourceManager, const TowerManager& towerManager, UpgradeUnits upgradeUnits) const {
-    Tower* tower = towerManager.lastPickedTower;
-    if(!tower) return false; // No tower selected for upgrade
+    std::weak_ptr<Tower> tower = towerManager.lastPickedTower;
+    auto towerPtr = tower.lock();
+    if(!towerPtr) return false; // No tower selected for upgrade
 
     // Sadly, another switch/case here.
     switch (upgradeUnits) {
         case UpgradeUnits::Top:
-            if (tower->upgradeTop->getCost() * tower->upgradeCost <= resourceManager.currentResource.cash 
-            && tower->upgradeTop->getName() != "NoUpgrade") {
+            if (towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost <= resourceManager.currentResource.cash 
+            && towerPtr->upgradeTop->getName() != "NoUpgrade") {
                 return true;
             }
             break;
         case UpgradeUnits::Middle:
-            if (tower->upgradeMiddle->getCost() * tower->upgradeCost <= resourceManager.currentResource.cash 
-            && tower->upgradeMiddle->getName() != "NoUpgrade") {
+            if (towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost <= resourceManager.currentResource.cash 
+            && towerPtr->upgradeMiddle->getName() != "NoUpgrade") {
                 return true;
             }
             break;
         case UpgradeUnits::Bottom:
-            if (tower->upgradeBottom->getCost() * tower->upgradeCost <= resourceManager.currentResource.cash 
-            && tower->upgradeBottom->getName() != "NoUpgrade") {
+            if (towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost <= resourceManager.currentResource.cash 
+            && towerPtr->upgradeBottom->getName() != "NoUpgrade") {
                 return true;
             }
             break;
@@ -561,64 +565,80 @@ bool LogicManager::isUpgradeTower(const ResourceManager& resourceManager, const 
 }
 
 bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, UpgradeUnits upgradeUnits) {
-    Tower* tower = towerManager.lastPickedTower;
-    if(!tower) return false;
+    std::weak_ptr<Tower> tower = towerManager.lastPickedTower;
+    auto towerPtr = tower.lock();
+    if(!towerPtr) return false; // No tower selected for upgrade
 
     // Sadly, another switch/case here.
     switch (upgradeUnits) {
         case UpgradeUnits::Top:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Top)) {
-                tower->upgradeTop->update(tower->attacks, tower->attackBuff, tower->attackPattern);
-                tower->info["nameTop"] = tower->upgradeTop->getName();
-                tower->info["descriptionTop"] = tower->upgradeTop->getDescription();
-                tower->cost += tower->upgradeTop->getCost() * tower->upgradeCost;
-                resourceManager.currentResource.cash -= tower->upgradeTop->getCost() * tower->upgradeCost;
+                towerPtr->upgradeTop->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->attackPattern);
+                towerPtr->info["nameTop"] = towerPtr->upgradeTop->getName();
+                towerPtr->info["descriptionTop"] = towerPtr->upgradeTop->getDescription();
+                towerPtr->cost += towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost;
+                resourceManager.currentResource.cash -= towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost;
 
-                tower->upgradeTop = tower->upgradeTop->buy();
-                tower->upgradeTop->loadTexture();
-                tower->info["upgradeNameTop"] = tower->upgradeTop->getName();
-                tower->info["upgradeCostTop"] = std::to_string(tower->upgradeTop->getCost() * tower->upgradeCost);
-                tower->info["upgradeDescriptionTop"] = tower->upgradeTop->getDescription();
+                towerPtr->upgradeTop = towerPtr->upgradeTop->buy();
+                towerPtr->upgradeTop->loadTexture();
+                towerPtr->info["upgradeNameTop"] = towerPtr->upgradeTop->getName();
+                towerPtr->info["upgradeCostTop"] = std::to_string(towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost);
+                towerPtr->info["upgradeDescriptionTop"] = towerPtr->upgradeTop->getDescription();
 
                 return true;
             }
             break;
         case UpgradeUnits::Middle:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Middle)) {
-                tower->upgradeMiddle->update(tower->attacks, tower->attackBuff, tower->attackPattern);
-                tower->info["nameMiddle"] = tower->upgradeMiddle->getName();
-                tower->info["descriptionMiddle"] = tower->upgradeMiddle->getDescription();
-                tower->cost += tower->upgradeMiddle->getCost() * tower->upgradeCost;
-                resourceManager.currentResource.cash -= tower->upgradeMiddle->getCost() * tower->upgradeCost;
+                towerPtr->upgradeMiddle->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->attackPattern);
+                towerPtr->info["nameMiddle"] = towerPtr->upgradeMiddle->getName();
+                towerPtr->info["descriptionMiddle"] = towerPtr->upgradeMiddle->getDescription();
+                towerPtr->cost += towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost;
+                resourceManager.currentResource.cash -= towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost;
 
-                tower->upgradeMiddle = tower->upgradeMiddle->buy();
-                tower->upgradeMiddle->loadTexture();
-                tower->info["upgradeNameMiddle"] = tower->upgradeMiddle->getName();
-                tower->info["upgradeCostMiddle"] = std::to_string(tower->upgradeMiddle->getCost() * tower->upgradeCost);
-                tower->info["upgradeDescriptionMiddle"] = tower->upgradeMiddle->getDescription();
+                towerPtr->upgradeMiddle = towerPtr->upgradeMiddle->buy();
+                towerPtr->upgradeMiddle->loadTexture();
+                towerPtr->info["upgradeNameMiddle"] = towerPtr->upgradeMiddle->getName();
+                towerPtr->info["upgradeCostMiddle"] = std::to_string(towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost);
+                towerPtr->info["upgradeDescriptionMiddle"] = towerPtr->upgradeMiddle->getDescription();
 
                 return true;
             }
             break;
         case UpgradeUnits::Bottom:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Bottom)) {
-                tower->upgradeBottom->update(tower->attacks, tower->attackBuff, tower->attackPattern);
-                tower->info["nameBottom"] = tower->upgradeBottom->getName();
-                tower->info["descriptionBottom"] = tower->upgradeBottom->getDescription();
-                tower->cost += tower->upgradeBottom->getCost() * tower->upgradeCost;
-                resourceManager.currentResource.cash -= tower->upgradeBottom->getCost() * tower->upgradeCost;
+                towerPtr->upgradeBottom->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->attackPattern);
+                towerPtr->info["nameBottom"] = towerPtr->upgradeBottom->getName();
+                towerPtr->info["descriptionBottom"] = towerPtr->upgradeBottom->getDescription();
+                towerPtr->cost += towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost;
+                resourceManager.currentResource.cash -= towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost;
 
-                tower->upgradeBottom = tower->upgradeBottom->buy();
-                tower->upgradeBottom->loadTexture();
-                tower->info["upgradeNameBottom"] = tower->upgradeBottom->getName();
-                tower->info["upgradeCostBottom"] = std::to_string(tower->upgradeBottom->getCost() * tower->upgradeCost);
-                tower->info["upgradeDescriptionBottom"] = tower->upgradeBottom->getDescription();
+                towerPtr->upgradeBottom = towerPtr->upgradeBottom->buy();
+                towerPtr->upgradeBottom->loadTexture();
+                towerPtr->info["upgradeNameBottom"] = towerPtr->upgradeBottom->getName();
+                towerPtr->info["upgradeCostBottom"] = std::to_string(towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost);
+                towerPtr->info["upgradeDescriptionBottom"] = towerPtr->upgradeBottom->getDescription();
 
                 return true;
             }
             break;
         default:
             break;
+    }
+
+    return false;
+}
+
+bool LogicManager::activateSkillTower(TowerManager& towerManager, EnemyManager& enemyManager) {
+    std::weak_ptr<Tower> tower = towerManager.lastPickedTower;
+    auto towerPtr = tower.lock();
+    if(!towerPtr) return false; // No tower selected for skill activation
+
+    if(towerPtr->skill && towerPtr->skill->canActivateSkill()) {
+        // Activate the skill
+        towerPtr->skill->activateSkill(towerPtr, enemyManager.enemyList, towerManager.towerList);
+        // std::cerr << "Activated skill: " << tower->skill->name << std::endl;
+        return true;
     }
 
     return false;
@@ -642,7 +662,7 @@ bool LogicManager::playRound(ResourceManager& resourceManager, ModeManager& mode
     modeManager.playRound(roundNumber);
 
     std::vector<std::pair<BloonType, BloonProperties>> enemies = modeManager.getEnemies();
-    // std::cerr << "Playing round " << roundNumber << " with " << enemies.size() << " enemies." << std::endl;
+    // if(!enemies.empty()) std::cerr << "Playing round " << roundNumber << " with " << enemies.size() << " enemies." << std::endl;
     for(const auto& [type, properties] : enemies) {
         // Spawn each enemy with the given type and properties
         auto [position, pathIdx] = mapManager.getCurrentMap().getPositionAndPathIdx(type);
