@@ -38,7 +38,7 @@ void CrossbowMaster::update(std::vector<std::unique_ptr<Attack>>& attacks, Attac
          */
 
         if (attack->getTag() == "ArrowCritAttack") {
-            attacks.back() = std::make_unique<ArrowCritAttack>(320.0f, 0.2375f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 8, 900, 8, 0.3f, BulletProperties{false, true, true, false, true, true}, BloonDebuff(), BloonDebuff(), 5); 
+            attacks.back() = std::make_unique<ArrowCritAttack>(320.0f, 0.2375f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 8, 900, 8, 0.4f, BulletProperties{false, true, true, false, true, true}, BloonDebuff(), BloonDebuff(), 5); 
         }
     }
 }

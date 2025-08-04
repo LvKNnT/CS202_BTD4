@@ -1,6 +1,8 @@
 #include "TowerSpawner.h"
 #include <iostream>
 
+#include "../skill/Skill.h"
+
 // headers of towers
 #include "towers/dartmonkey/DartMonkey.h"
 #include "towers/bombshooter/BombShooter.h"

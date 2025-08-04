@@ -23,7 +23,7 @@ public:
 
     // Methods
     void spawnEnemy(BloonType type, BloonProperties properties, Vector2 position, int pathIndex = 0);
-    std::vector<std::unique_ptr<Enemy> > spawnChildrenEnemies(Enemy* enemy);
+    std::vector<std::unique_ptr<Enemy> > spawnChildrenEnemies(Enemy* enemy, int round);
     void drawEnemies() const;
     void updateEnemies();
 

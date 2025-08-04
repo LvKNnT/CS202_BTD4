@@ -318,10 +318,10 @@ void RegularRoundSpawner::init() {
         {BloonType::Rainbow, {0, 0, 0}, 15, 40.30f, 48.29f}
     });
     roundTemplates[63] = Round(2826, {
-        {BloonType::Lead, {0, 0, 0}, 75, 0.00f, 42.25f},
         {BloonType::Ceramic, {0, 0, 0}, 40, 3.88f, 4.08f},
         {BloonType::Ceramic, {0, 0, 0}, 40, 20.08f, 20.28f},
-        {BloonType::Ceramic, {0, 0, 0}, 42, 36.42f, 36.62f}
+        {BloonType::Ceramic, {0, 0, 0}, 42, 36.42f, 36.62f},
+        {BloonType::Lead, {0, 0, 0}, 75, 0.00f, 42.25f}
     });
     roundTemplates[64] = Round(849, {
         {BloonType::Moab, {0, 0, 0}, 6, 0.00f, 4.00f},
@@ -448,7 +448,7 @@ void RegularRoundSpawner::init() {
     });
     roundTemplates[90] = Round(339, {
         {BloonType::Lead, {0, 1, 0}, 50, 0.00f, 10.00f},
-        {BloonType::Ddt, {0, 0, 0}, 3, 10.40f, 11.90f}
+        {BloonType::Ddt, {0, 1, 0}, 3, 10.40f, 11.90f}
     });
     roundTemplates[91] = Round(4191, {
         {BloonType::Ceramic, {1, 0, 0}, 100, 0.00f, 30.00f},
@@ -460,7 +460,7 @@ void RegularRoundSpawner::init() {
     });
     roundTemplates[93] = Round(1946, {
         {BloonType::Bfb, {1, 0, 0}, 10, 0.00f, 20.00f},
-        {BloonType::Ddt, {0, 0, 0}, 6, 12.35f, 14.35f}
+        {BloonType::Ddt, {0, 1, 0}, 6, 12.35f, 14.35f}
     });
     roundTemplates[94] = Round(7667, {
         {BloonType::Bfb, {0, 0, 0}, 25, 0.00f, 15.00f},
@@ -470,7 +470,7 @@ void RegularRoundSpawner::init() {
         {BloonType::Purple, {0, 1, 0}, 500, 0.00f, 30.00f},
         {BloonType::Lead, {0, 0, 1}, 250, 0.00f, 30.00f},
         {BloonType::Moab, {0, 0, 0}, 50, 30.81f, 50.81f},
-        {BloonType::Ddt, {0, 0, 0}, 30, 30.81f, 50.81f}
+        {BloonType::Ddt, {0, 1, 0}, 30, 30.81f, 50.81f}
     });
     roundTemplates[96] = Round(9955, {
         {BloonType::Bfb, {0, 0, 0}, 10, 0.00f, 5.00f},
@@ -489,7 +489,7 @@ void RegularRoundSpawner::init() {
     });
     roundTemplates[99] = Round(2827, {
         {BloonType::Moab, {0, 0, 0}, 60, 0.00f, 12.00f},
-        {BloonType::Ddt, {1, 0, 0}, 9, 6.51f, 11.51f}
+        {BloonType::Ddt, {1, 1, 0}, 9, 6.51f, 11.51f}
     });
     roundTemplates[100] = Round(1534, {
         {BloonType::Bad, {0, 0, 0}, 1, 0.05f, 0.05f}

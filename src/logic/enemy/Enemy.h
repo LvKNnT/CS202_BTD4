@@ -16,6 +16,7 @@ class Enemy : public GameObject {
     friend class LogicManager; 
     friend class EnemyManager;
     friend class EnemySpawner;
+    friend class SkillFriendAccess; 
 
 public:
     Enemy(Vector2 position, Vector2 size, float rotation, BloonType type, int health, int speed, int reward, int livesLost);

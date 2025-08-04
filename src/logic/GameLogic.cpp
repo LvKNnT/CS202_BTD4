@@ -2,6 +2,8 @@
 #include <fstream>
 #include <filesystem>
 
+#include "skill/Skill.h"
+
 void GameLogic::init() {
     // testing, should be jajaja whenever enter a new game
     std::cerr << "init jajaja" << std::endl;
@@ -17,9 +19,6 @@ void GameLogic::init() {
     init(mapType);
     init(difficulty);
     init(modeType);
-
-    resourceManager.getResource().cash = 999999;
-    resourceManager.getResource().currentRound = 10;
 
     //putTower(TowerType::DartMonkey, {200.0f, 230.0f}); // draging tower
     putTower(TowerType::DartMonkey, {125.0f, 230.0f}); // draging tower
@@ -53,30 +52,79 @@ void GameLogic::init(MapType mapType) {
 void GameLogic::init(Difficulty difficulty) {
     resourceManager.initResource(difficulty);
     
+    // for testing only
+    // resourceManager.getResource().cash = 999999;
+    // resourceManager.getResource().currentRound = 40;
+    
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
     towerManager = TowerManager(resourceManager.getTowerModifies());
+    bulletManager = BulletManager();
 }
 
 void GameLogic::init(ModeType modeType) {
     modeManager.setMode(modeType);
     isTickFast = false;
-    setAutoPlay(true);
+    isStarted = false;
+    setAutoPlay(false);
+
+    // Resetting log file
+    std::fstream flog("../logs/log.txt", std::ios::out | std::ios::trunc);  
+
+    if (flog.is_open()) {
+        flog << "Game Logic Initialized" << std::endl;
+        flog.close();
+    } else {
+        std::cerr << "Error: Failed to open log file for writing." << std::endl;
+    }
+}
+
+void GameLogic::replay() {
+    std::string filePath = savePath + "autosave.txt";
+    std::cerr << "Loading replay from save: " << filePath << std::endl;
+
+    std::fstream file(filePath, std::ios::in);
+    if (!file.is_open()) {
+        std::cerr << "Error: Failed to open file for loading map." << std::endl;
+        return;    
+    }
+
+    // Map
+    int mapTypeInt;
+    file >> mapTypeInt; 
+    std::cerr << "Loading map type: " << mapTypeInt << std::endl;
+    MapType mapType = static_cast<MapType>(mapTypeInt);
+    init(mapType);
+
+    // Difficulty
+    int difficultyInt;
+    file >> difficultyInt; 
+    Difficulty currentDifficulty = static_cast<Difficulty>(difficultyInt);
+    init(currentDifficulty);
+
+    // Mode
+    int modeTypeInt;
+    file >> modeTypeInt; 
+    ModeType modeType = static_cast<ModeType>(modeTypeInt);
+    init(modeType);
 }
 
 void GameLogic::update() {
-    for(int i = 0; i < (isTickFast ? 25 : 1); ++i) {
+    for(int i = 0; i < (isTickFast ? 3 : 1); ++i) {
         // Update game result
         if(resourceManager.isEndGame() != 0) {
-            std::cerr << "Game Over! Result: " << resourceManager.isEndGame() << std::endl;
+            // std::cerr << "Game Over! Result: " << resourceManager.isEndGame() << std::endl;
         }
 
         // Update by the managers
         mapManager.updateMap();
         enemyManager.updateEnemies();
 
-        if(resourceManager.isEndGame() == 0 && logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager)) {
+        if(resourceManager.isEndGame() == 0 && isStarted && logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager)) {
             autoSave(); 
         }
+
+        // testing
+        logicManager.activateSkillTower(towerManager, enemyManager);
         
         logicManager.updateEnemies(enemyManager, mapManager, resourceManager);
         logicManager.updateBullets(bulletManager);
@@ -162,6 +210,10 @@ void GameLogic::chooseNextPriority() {
 
 void GameLogic::choosePreviousPriority() {
     towerManager.choosePreviousPriority();
+}
+
+void GameLogic::startPlayRound() {
+    isStarted = true; // Set the game as started
 }
 
 // same same but different

@@ -1,4 +1,6 @@
 #include "Tower.h"
+#include "../skill/Skill.h"
+
 #include <iostream>
 
 Tower::Tower(Vector2 position, Vector2 size, float rotation, TowerType type, int cost)
@@ -14,6 +16,7 @@ Tower::Tower(const Tower& other)
         attacks.push_back(attack->clone()); // Clone each attack
     }
     attackPattern = other.attackPattern ? other.attackPattern->clone() : nullptr; // Clone the attack pattern
+    skill = other.skill ? other.skill->clone() : nullptr; // Clone the skill if it exists
 
     // Clone the upgrades
     upgradeTop = other.upgradeTop ? other.upgradeTop->clone() : std::make_unique<Upgrade>();
