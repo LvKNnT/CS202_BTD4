@@ -33,19 +33,36 @@ std::unique_ptr<Map> MonkeyLane::clone() const {
 }
 
 Point::Type MonkeyLane::getEnemyPointType(Vector2 position) const {
-    // 610 435
     if(!Utils::isPositionInMap(position)) return Point::Type::None;
     int tolerance = 10;
 
     // check Invisible 
     Color pixelColor = GetImageColor(mapImage, static_cast<int>(position.x), static_cast<int>(position.y));
-    Color tunnelColor = GetImageColor(mapImage, 610, 435);
-    bool isTunnel = abs(pixelColor.r - tunnelColor.r) < tolerance && abs(pixelColor.g - tunnelColor.g) < tolerance && abs(pixelColor.b - tunnelColor.b) < tolerance;
+    Color tunnelColor = GetImageColor(mapImage, 610, 435); // 610 435 - an invisible point
+    bool isTunnel = Utils::isColorDiffByTolerance(tunnelColor, pixelColor, tolerance);
     if(isTunnel) return Point::Type::Invisible;
 
     // check for path
-    Color pathColor = GetImageColor(pathImage, static_cast<int>(position.x), static_cast<int>(position.y));
-    bool isPath = abs(pixelColor.r - pathColor.r) < tolerance && abs(pixelColor.g - pathColor.g) < tolerance && abs(pixelColor.b - pathColor.b) < tolerance;
+    Color pathColor = GetImageColor(mapImage, 203, 390); // 203 390 - an enemy path point
+    bool isPath = Utils::isColorDiffByTolerance(pathColor, pixelColor, tolerance);
+    if(isPath) return Point::Type::Enemy;
+
+    return Point::Type::None; // can place tower here
+}
+
+Point::Type MonkeyLane::getTowerPointType(Vector2 position) const {
+    if(!Utils::isPositionInMap(position)) return Point::Type::None;
+    int tolerance = 10;
+
+    // check Invisible 
+    Color pixelColor = GetImageColor(mapImage, static_cast<int>(position.x), static_cast<int>(position.y));
+    Color tunnelColor = GetImageColor(mapImage, 610, 435); // 610 435 - an invisible point
+    bool isTunnel = Utils::isColorDiffByTolerance(tunnelColor, pixelColor, tolerance);
+    if(isTunnel) return Point::Type::Invisible;
+
+    // check for path
+    Color pathColor = GetImageColor(mapImage, 203, 390); // 203 390 - an enemy path point
+    bool isPath = Utils::isColorDiffByTolerance(pathColor, pixelColor, tolerance);
     if(isPath) return Point::Type::Enemy;
 
     return Point::Type::None; // can place tower here

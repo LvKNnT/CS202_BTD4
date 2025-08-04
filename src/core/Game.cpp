@@ -48,6 +48,9 @@ void Game::loadTexture() {
     textureManager.loadTexture("GreenRect", "../assets/UI/GreenRect.png");
     textureManager.loadTexture("GreyRect", "../assets/UI/GreyRect.png");
     textureManager.loadTexture("Info", "../assets/UI/Info.png");
+    textureManager.loadTexture("Victory", "../assets/UI/Victory.png");
+    textureManager.loadTexture("GameOver", "../assets/UI/GameOver.png");
+    
     
     //Sound
     textureManager.loadTexture("Volume100", "../assets/UI/Volume100.png");

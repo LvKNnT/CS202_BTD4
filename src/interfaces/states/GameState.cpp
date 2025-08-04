@@ -83,9 +83,9 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
     }
     
     upgradeInfoTextbox = std::make_shared<MovableTextbox>("", Game::Instance().getFontManager().getFont("Small"), WHITE, 20, 150);
-    buttonInfoTextbox = std::make_shared<MovableTextbox>("", Game::Instance().getFontManager().getFont("Small"), WHITE, 20, 150);
+    towerInfoTextbox = std::make_shared<MovableTextbox>("", Game::Instance().getFontManager().getFont("Small"), WHITE, 20, 150);
     panel->addPanelElement(upgradeInfoTextbox);
-    panel->addPanelElement(buttonInfoTextbox);
+    panel->addPanelElement(towerInfoTextbox);
     
     // Round Info 
     roundPanel = std::make_unique<Panel>();
@@ -237,7 +237,7 @@ void GameState::update(Event::Type event) {
 void GameState::handleInput() {
     // update game logic
     Game::Instance().getGameLogic().update();
-    gameOver();
+    gameEnd();
 
     auto preTowerType = clickedTowerType;
     State::handleInput();
@@ -328,13 +328,13 @@ void GameState::handleInput() {
     bool drawButtonInfoBox = false;
     for(int i = 0; i < maxTowerTypes; i++) {
         if(std::dynamic_pointer_cast<Button>(towerInfoButton[i])->getState() != Button::State::None) {
-            auto infos = Game::Instance().getGameLogic().getInfoTower(static_cast<TowerType>(i + 1));
-            std::dynamic_pointer_cast<MovableTextbox>(buttonInfoTextbox)->setText(infos["description"]);
+            auto infos = Game::Instance().getGameLogic().getInfoTower(getTowerType(i));
+            std::dynamic_pointer_cast<MovableTextbox>(towerInfoTextbox)->setText(infos["description"]);
             drawButtonInfoBox = true;
             break;
         }
     }
-    buttonInfoTextbox->setAvailable(drawButtonInfoBox);
+    towerInfoTextbox->setAvailable(drawButtonInfoBox);
 }
 
 void GameState::pickTower() {
@@ -370,9 +370,12 @@ TowerType GameState::getTowerType(int i) const {
     return TowerType::None;
 }
 
-void GameState::gameOver(){
-    if(Game::Instance().getGameLogic().isEndGame()) {
+void GameState::gameEnd(){
+    int endState = Game::Instance().getGameLogic().isEndGame();
+    if(endState == -1) {
         notify(Event::Type::ToGameOver);
+    } else if(endState == 1) {
+        notify(Event::Type::ToVictory);
     }
 }
 

@@ -24,6 +24,9 @@ Jungle::Jungle() {
     enemyPath[0].push_back(Point(760, 347));
     enemyPath[0].push_back(Point(761, 360));
     enemyPath[0].push_back(Point(757, 378));
+    enemyPath[0].push_back(Point(755, 390));
+    enemyPath[0].push_back(Point(752, 400));
+    enemyPath[0].push_back(Point(749, 410));
     enemyPath[0].push_back(Point(747, 420));
     enemyPath[0].push_back(Point(738, 440));
     enemyPath[0].push_back(Point(733, 455));

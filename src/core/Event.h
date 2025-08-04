@@ -23,6 +23,7 @@ public:
         ToMapSelection, 
         ToSpecificModeSelection, 
         ToGameOver,
+        ToVictory, 
         
         // Game State
         UpgradeTowerLeft,

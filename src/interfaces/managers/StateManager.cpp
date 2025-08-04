@@ -10,6 +10,7 @@ void StateManager::initialize() {
     areYouSureState = std::make_shared<AreYouSureState>();
     difficultySelectionState = std::make_shared<DifficultySelectionState>();
     gameOverState = std::make_shared<GameOverState>();
+    victoryState = std::make_shared<VictoryState>();
     //specificModeSelectionState = std::make_shared<SpecificModeSelectionState>();
     stateStack.pushState(mainMenuState);
 }
@@ -89,6 +90,11 @@ void StateManager::update(Event::Type event) {
         case Event::Type::ToGameOver:
             canResume = false;
             stateStack.pushState(gameOverState);
+            stateStack.setdrawPreviousStates(true);
+            break;
+        case Event::Type::ToVictory:
+            canResume = false;
+            stateStack.pushState(victoryState);
             stateStack.setdrawPreviousStates(true);
             break;
         case Event::Type::Replay:

@@ -41,7 +41,7 @@ public:
     float distanceToEndPoint(Vector2 position, int index, int pathIdx = 0) const; // For enemies
     virtual Point::Type getPointType(int index, int pathIdx = 0) const; // For enemies
     virtual Point::Type getTowerPointType(Vector2 position) const; // For Tower
-    virtual Point::Type getEnemyPointType(Vector2 position) const; // For Tower
+    virtual Point::Type getEnemyPointType(Vector2 position) const; // For enemies
     
     // only pass pathIdx when we are in jungle_lane
     virtual Vector2 getCurrentPoint(int index, int pathIdx = 0) const;

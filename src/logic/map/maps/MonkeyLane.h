@@ -11,6 +11,7 @@ public:
     ~MonkeyLane() override = default;
 
     Point::Type getEnemyPointType(Vector2 position) const override;
+    Point::Type getTowerPointType(Vector2 position) const override; // For Tower
 
     void loadTexture() override;
     void update() override;

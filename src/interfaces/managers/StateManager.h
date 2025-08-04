@@ -13,6 +13,7 @@
 #include "../states/DifficultySelectionState.h"
 #include "../states/SpecificModeSelectionState.h"
 #include "../states/GameOverState.h"
+#include "../states/VictoryState.h"
 #include "../../logic/Map/MapUnits.h"
 #include "../../core/IObserver.h"
 #include "../../core/Event.h"
@@ -28,6 +29,7 @@ private:
     std::shared_ptr<State> difficultySelectionState;
     std::shared_ptr<State> specificModeSelectionState;
     std::shared_ptr<State> gameOverState;
+    std::shared_ptr<State> victoryState;
 
     bool canResume;
     std::string mode;
