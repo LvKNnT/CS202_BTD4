@@ -37,6 +37,7 @@ public:
     int isEndGame() const;
     void runNextRound();
     bool isRoundRun();
+    bool isStartedFirstRound();
 
     // Supplyment methos for Game
     void pickTower(Vector2 position);

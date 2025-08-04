@@ -98,7 +98,12 @@ void StateManager::update(Event::Type event) {
             stateStack.setdrawPreviousStates(true);
             break;
         case Event::Type::Replay:
-            
+            std::cerr<<"Yes\n";
+            Game::Instance().getGameLogic().replay();
+            break;
+        case Event::Type::StartRound:
+            if(Game::Instance().getGameLogic().isStartedFirstRound()) Game::Instance().getGameLogic().runNextRound();
+            Game::Instance().getGameLogic().startPlayRound();
             break;
         default:
             if(Event::Type::ToEasyModeSelection <= event && event <= Event::Type::ToImpoppableModeSelection) {

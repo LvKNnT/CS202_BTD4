@@ -109,7 +109,7 @@ void GameLogic::replay() {
 }
 
 void GameLogic::update() {
-    for(int i = 0; i < (isTickFast ? 3 : 1); ++i) {
+    for(int i = 0; i < (isTickFast ? 10 : 1); ++i) {
         // Update game result
         if(resourceManager.isEndGame() != 0) {
             // std::cerr << "Game Over! Result: " << resourceManager.isEndGame() << std::endl;
@@ -153,6 +153,10 @@ int GameLogic::isEndGame() const {
 
 bool GameLogic::isRoundRun() {
     return logicManager.isPlayingRound(modeManager, enemyManager);
+}
+
+bool GameLogic::isStartedFirstRound() {
+    return isStarted;
 }
 
 void GameLogic::runNextRound() {
