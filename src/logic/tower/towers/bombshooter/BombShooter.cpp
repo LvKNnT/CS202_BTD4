@@ -173,7 +173,7 @@ LogicInfo BombShooter::getInfo() {
 
 Rectangle BombShooter::getBoundingBox() const {
     // Provide the bounding box for collision detection
-    return {position.x - size.x / 2, position.y - size.y / 2, size.x, size.y};
+    return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y};
 }
 
 bool BombShooter::isActive() const {

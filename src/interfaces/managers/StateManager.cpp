@@ -102,7 +102,6 @@ void StateManager::update(Event::Type event) {
             Game::Instance().getGameLogic().replay();
             break;
         case Event::Type::StartRound:
-            if(Game::Instance().getGameLogic().isStartedFirstRound()) Game::Instance().getGameLogic().runNextRound();
             Game::Instance().getGameLogic().startPlayRound();
             break;
         default:

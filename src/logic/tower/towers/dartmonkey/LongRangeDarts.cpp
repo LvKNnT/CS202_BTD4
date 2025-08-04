@@ -25,11 +25,9 @@ void LongRangeDarts::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/LongRangeDartsUpgradeIcon.png");
 }
 
-void LongRangeDarts::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) {
-    for (auto& attack : attacks) {
-        attackBuff.range += 32;
-        attackBuff.lifeSpanRatio *= 1.15f;
-    }
+void LongRangeDarts::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+    attackBuff.range += 32;
+    attackBuff.lifeSpanRatio *= 1.15f;
 }
 
 std::unique_ptr<Upgrade> LongRangeDarts::buy() {

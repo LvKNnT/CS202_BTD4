@@ -27,7 +27,7 @@ void Juggernaut::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/JuggernautUpgradeIcon.png");
 }
 
-void Juggernaut::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) {
+void Juggernaut::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
     for (auto& attack : attacks) {
         /**
          * * range = 128.0f
@@ -36,11 +36,11 @@ void Juggernaut::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuf
          * * speed = 600
          * * pierce = 61
          * * lifeSpan = 1.0f
-         * * properties = {false, false, true, true, true, true} // canHitLead, canHitWhite, canHitBlack, canHitFrozen, canHitCamo, canHitPurple.
+         * * properties = {true, false, true, true, true, true} // canHitLead, canHitWhite, canHitBlack, canHitFrozen, canHitCamo, canHitPurple.
          */
         
         if (attack->getTag() == "SpikeOPultAttack") {
-            attack = std::make_unique<JuggernautAttack>(128.0f, 1.0f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 2, 600, 61, 1.0f, BulletProperties{false, false, true, true, true, true}, BloonDebuff(), BloonDebuff()); 
+            attack = std::make_unique<JuggernautAttack>(128.0f, 1.0f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 2, 600, 61, 1.0f, BulletProperties{true, true, true, true, false, true}, BloonDebuff(), BloonDebuff()); 
         }
     }
 }

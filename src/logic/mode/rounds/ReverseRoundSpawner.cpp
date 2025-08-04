@@ -459,7 +459,7 @@ void ReverseRoundSpawner::init() {
         {BloonType::Moab, {1, 0, 0}, 50, 0.00f, 35.00f}
     });
     roundTemplates[93] = Round(1946, {
-        {BloonType::Ddt, {0, 0, 0}, 6, 5.65f, 7.65f},
+        {BloonType::Ddt, {0, 1, 0}, 6, 5.65f, 7.65f},
         {BloonType::Bfb, {1, 0, 0}, 10, 0.00f, 20.00f}
     });
     roundTemplates[94] = Round(7667, {
@@ -468,7 +468,7 @@ void ReverseRoundSpawner::init() {
     });
     roundTemplates[95] = Round(3718, {
         {BloonType::Moab, {1, 0, 0}, 50, 0.00f, 20.00f},
-        {BloonType::Ddt, {0, 0, 0}, 30, 0.00f, 20.00f},
+        {BloonType::Ddt, {0, 1, 0}, 30, 0.00f, 20.00f},
         {BloonType::Purple, {0, 0, 0}, 500, 20.81f, 50.81f},
         {BloonType::Lead, {0, 0, 0}, 250, 20.81f, 50.81f}
     });
@@ -488,7 +488,7 @@ void ReverseRoundSpawner::init() {
         {BloonType::Zomg, {0, 0, 0}, 8, 25.00f, 30.00f}
     });
     roundTemplates[99] = Round(2827, {
-        {BloonType::Ddt, {1, 0, 0}, 9, 0.49f, 5.49f},
+        {BloonType::Ddt, {1, 1, 0}, 9, 0.49f, 5.49f},
         {BloonType::Moab, {0, 0, 0}, 60, 0.00f, 12.00f}
     });
     roundTemplates[100] = Round(1534, {

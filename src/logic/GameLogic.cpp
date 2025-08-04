@@ -3,6 +3,7 @@
 #include <filesystem>
 
 #include "skill/Skill.h"
+#include "../utils/Properties.h"
 
 void GameLogic::init() {
     // testing, should be jajaja whenever enter a new game
@@ -53,7 +54,7 @@ void GameLogic::init(Difficulty difficulty) {
     resourceManager.initResource(difficulty);
     
     // for testing only
-    // resourceManager.getResource().cash = 999999;
+    resourceManager.getResource().cash = 999999;
     // resourceManager.getResource().currentRound = 40;
     
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
@@ -63,9 +64,7 @@ void GameLogic::init(Difficulty difficulty) {
 
 void GameLogic::init(ModeType modeType) {
     modeManager.setMode(modeType);
-    isTickFast = false;
     isStarted = false;
-    setAutoPlay(false);
 
     // Resetting log file
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::trunc);  
@@ -76,6 +75,8 @@ void GameLogic::init(ModeType modeType) {
     } else {
         std::cerr << "Error: Failed to open log file for writing." << std::endl;
     }
+
+    autoSave();
 }
 
 void GameLogic::replay() {
@@ -98,12 +99,18 @@ void GameLogic::replay() {
     // Difficulty
     int difficultyInt;
     file >> difficultyInt; 
+    std::cerr << "Loading difficulty: " << difficultyInt << std::endl;
     Difficulty currentDifficulty = static_cast<Difficulty>(difficultyInt);
     init(currentDifficulty);
+
+    // skipping 3 lines
+    int a, b, c;
+    file >> a >> b >> c; // Read the next three integers, which are not used here
 
     // Mode
     int modeTypeInt;
     file >> modeTypeInt; 
+    std::cerr << "Loading mode type: " << modeTypeInt << std::endl;
     ModeType modeType = static_cast<ModeType>(modeTypeInt);
     init(modeType);
 }
@@ -119,18 +126,20 @@ void GameLogic::update() {
         mapManager.updateMap();
         enemyManager.updateEnemies();
 
-        if(resourceManager.isEndGame() == 0 && isStarted && logicManager.playRound(resourceManager, modeManager, enemyManager, mapManager)) {
+        if(resourceManager.isEndGame() == 0 && isStarted && logicManager.playRound(resourceManager, modeManager, enemyManager, bulletManager, mapManager)) {
             autoSave(); 
         }
 
-        // testing
-        logicManager.activateSkillTower(towerManager, enemyManager);
-        
         logicManager.updateEnemies(enemyManager, mapManager, resourceManager);
         logicManager.updateBullets(bulletManager);
         logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager, resourceManager);
-        logicManager.updateTowers(towerManager, enemyManager, bulletManager);
-        towerManager.updateTowers();
+        if(isRoundRun()) {
+            // testing
+            logicManager.activateSkillTower(towerManager, enemyManager);
+            
+            logicManager.updateTowers(towerManager, enemyManager, bulletManager);
+            towerManager.updateTowers();
+        }
     }
 }
 
@@ -160,7 +169,8 @@ bool GameLogic::isStartedFirstRound() {
 }
 
 void GameLogic::runNextRound() {
-    logicManager.playNextRound(modeManager, enemyManager, resourceManager);
+    if(isRoundRun()) return;
+    logicManager.playNextRound(modeManager, enemyManager, bulletManager, resourceManager);
 }
 
 void GameLogic::pickTower(Vector2 position) {
@@ -218,7 +228,8 @@ void GameLogic::choosePreviousPriority() {
 
 void GameLogic::startPlayRound() {
     if(isStarted == false) {
-        isTickFast = true;
+        std::cerr << "Start playing round" << std::endl;
+        isStarted = true;
     }
     else {
         runNextRound();

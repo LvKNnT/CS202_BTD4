@@ -72,7 +72,7 @@ void Dart::draw() const {
         return; 
     }
 
-    DrawCircleV(position, 10, RED); // Example drawing a red circle for the dart
+    // DrawCircleV(position, 10, RED); // Example drawing a red circle for the dart
 
     // Rounded draw position
     Vector2 draw_position = {
@@ -81,7 +81,7 @@ void Dart::draw() const {
     };    
 
     DrawTexturePro(Game::Instance().getTextureManager().getTexture(tag), 
-                   {0, 0, size.x, size.y},
+                   {0, 0, (float) Game::Instance().getTextureManager().getTexture(tag).width, (float) Game::Instance().getTextureManager().getTexture(tag).height},
                    {draw_position.x, draw_position.y, size.x, size.y},
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,
@@ -104,12 +104,7 @@ std::vector<std::unique_ptr<Bullet>> Dart::getChild() {
 }
 
 Rectangle Dart::getBoundingBox() const {
-    return {
-        position.x - size.x / 2.0f,
-        position.y - size.y / 2.0f,
-        size.x,
-        size.y
-    }; 
+    return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y};
 }
 
 bool Dart::isActive() const {

@@ -52,7 +52,7 @@ void SpikeOPultAttack::update(BulletManager& bulletManager, const Vector2& targe
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
         
-        attackPattern.execute(bulletManager, BulletType::SpikeOPult, position, {10.0f, 10.0f}, angle, 
+        attackPattern.execute(bulletManager, BulletType::SpikeOPult, position, {50.0f, 50.0f}, angle, 
             damage + attackBuff.damage, 
             speed * attackBuff.speedRatio, 
             pierce + attackBuff.pierce, 

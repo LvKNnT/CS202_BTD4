@@ -20,13 +20,13 @@ std::vector<std::pair<BloonType, BloonProperties>> ReverseModePlayer::getEnemies
     // playing round
     timer += GetFrameTime();
     for(auto& [type, properties, count, startTime, endTime, bloonCount] : currentRound.bloonTypes) {
-        if(bloonCount > count) continue;
+        if(bloonCount >= count) continue;
 
         // special case
         if(count == 1) {
             if(bloonCount > 0 || timer < startTime) continue;
 
-            bloonCount = 2;
+            bloonCount = 1;
             bloonList.emplace_back(type, properties);
 
             continue;

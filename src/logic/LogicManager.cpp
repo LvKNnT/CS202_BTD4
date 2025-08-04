@@ -573,7 +573,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
     switch (upgradeUnits) {
         case UpgradeUnits::Top:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Top)) {
-                towerPtr->upgradeTop->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->attackPattern);
+                towerPtr->upgradeTop->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->attackPattern, towerPtr->skill);
                 towerPtr->info["nameTop"] = towerPtr->upgradeTop->getName();
                 towerPtr->info["descriptionTop"] = towerPtr->upgradeTop->getDescription();
                 towerPtr->cost += towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost;
@@ -590,7 +590,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
             break;
         case UpgradeUnits::Middle:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Middle)) {
-                towerPtr->upgradeMiddle->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->attackPattern);
+                towerPtr->upgradeMiddle->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->attackPattern, towerPtr->skill);
                 towerPtr->info["nameMiddle"] = towerPtr->upgradeMiddle->getName();
                 towerPtr->info["descriptionMiddle"] = towerPtr->upgradeMiddle->getDescription();
                 towerPtr->cost += towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost;
@@ -607,7 +607,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
             break;
         case UpgradeUnits::Bottom:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Bottom)) {
-                towerPtr->upgradeBottom->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->attackPattern);
+                towerPtr->upgradeBottom->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->attackPattern, towerPtr->skill);
                 towerPtr->info["nameBottom"] = towerPtr->upgradeBottom->getName();
                 towerPtr->info["descriptionBottom"] = towerPtr->upgradeBottom->getDescription();
                 towerPtr->cost += towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost;
@@ -656,7 +656,7 @@ bool LogicManager::isPlayingRound(ModeManager& modeManager, EnemyManager& enemyM
     return !modeManager.canPlayNextRound(enemyManager.enemyList.empty());
 }
 
-bool LogicManager::playRound(ResourceManager& resourceManager, ModeManager& modeManager, EnemyManager& enemyManager, MapManager& mapManager) {
+bool LogicManager::playRound(ResourceManager& resourceManager, ModeManager& modeManager, EnemyManager& enemyManager, BulletManager& bulletManager, MapManager& mapManager) {
     // set the roundNumber being played
     int roundNumber = resourceManager.currentResource.currentRound;
     modeManager.playRound(roundNumber);
@@ -679,7 +679,7 @@ bool LogicManager::playRound(ResourceManager& resourceManager, ModeManager& mode
 
         // auto play next round
         if(autoPlayRound) {
-            playNextRound(modeManager, enemyManager, resourceManager);
+            playNextRound(modeManager, enemyManager, bulletManager, resourceManager);
             return true;
         }
     }
@@ -687,8 +687,10 @@ bool LogicManager::playRound(ResourceManager& resourceManager, ModeManager& mode
     return isSave;
 }
 
-void LogicManager::playNextRound(ModeManager& modeManager, EnemyManager& enemyManager, ResourceManager& resourceManager) {
+void LogicManager::playNextRound(ModeManager& modeManager, EnemyManager& enemyManager, BulletManager& bulletManager, ResourceManager& resourceManager) {
     if(isPlayingRound(modeManager, enemyManager)) return;
+
+    bulletManager.bulletList.clear(); 
 
     resourceManager.currentResource.currentRound++;
     std::cerr << "Playing next round: " << resourceManager.currentResource.currentRound << std::endl;

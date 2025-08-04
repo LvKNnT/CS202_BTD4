@@ -25,7 +25,7 @@ void UltraJuggernaut::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/UltraJuggernautUpgradeIcon.png");
 }
 
-void UltraJuggernaut::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) {
+void UltraJuggernaut::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
     for (auto& attack : attacks) {
         /**
          * * range = 128.0f

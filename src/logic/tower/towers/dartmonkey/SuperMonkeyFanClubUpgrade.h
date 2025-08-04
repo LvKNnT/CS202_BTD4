@@ -1,14 +1,14 @@
-#ifndef JUGGERNAUT_H
-#define JUGGERNAUT_H
+#ifndef SUPER_MONKEY_FAN_CLUB_UPGRADE_H
+#define SUPER_MONKEY_FAN_CLUB_UPGRADE_H
 
 #include "../../Upgrade.h"
 
-class Juggernaut : public Upgrade {
+class SuperMonkeyFanClubUpgrade : public Upgrade {
 public:
-    Juggernaut();
-    Juggernaut(const Juggernaut& other);
+    SuperMonkeyFanClubUpgrade();
+    SuperMonkeyFanClubUpgrade(const SuperMonkeyFanClubUpgrade& other);
     std::unique_ptr<Upgrade> clone() const override;
-    ~Juggernaut() override = default;
+    ~SuperMonkeyFanClubUpgrade() override = default;
 
     // Override all methods from Upgrade
     void loadTexture() override;
@@ -18,4 +18,4 @@ public:
     std::unique_ptr<Upgrade> buy() override;
 };
 
-#endif // JUGGERNAUT_H
+#endif // SUPER_MONKEY_FAN_CLUB_UPGRADE_H

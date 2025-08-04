@@ -28,8 +28,8 @@ public:
     void sellTower(ResourceManager& resourceManager, TowerManager& towerManager);
 
     bool isPlayingRound(ModeManager& modeManager, EnemyManager& enemyManager) const;
-    bool playRound(ResourceManager& resourceManager, ModeManager& modeManager, EnemyManager& enemyManager, MapManager& mapManager);
-    void playNextRound(ModeManager& modeManager, EnemyManager& enemyManager, ResourceManager& resourceManager);
+    bool playRound(ResourceManager& resourceManager, ModeManager& modeManager, EnemyManager& enemyManager, BulletManager& bulletManager, MapManager& mapManager);
+    void playNextRound(ModeManager& modeManager, EnemyManager& enemyManager, BulletManager& bulletManager, ResourceManager& resourceManager);
     void setAutoPlay(ModeManager& modeManager, bool autoPlay);
 
     // Update methods for interactions between game objects
@@ -48,7 +48,7 @@ private:
     
     // sub-methods
     float distancePointLine(Vector2 point, Vector2 lineStart, Vector2 lineEnd) const;
-    bool autoPlayRound = true;
+    bool autoPlayRound = false;
 };
 
 #endif // LOGICMANAGER_H

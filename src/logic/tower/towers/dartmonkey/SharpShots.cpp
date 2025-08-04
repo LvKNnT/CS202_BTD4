@@ -25,11 +25,8 @@ void SharpShots::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/SharpShotsUpgradeIcon.png");
 }
 
-void SharpShots::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) {
-    for(auto& attack : attacks) {
-        // Increase the pierce of each dart attack by 1
-        attackBuff.pierce += 1;
-    }
+void SharpShots::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+    attackBuff.pierce += 1;
 }
 
 std::unique_ptr<Upgrade> SharpShots::buy() {

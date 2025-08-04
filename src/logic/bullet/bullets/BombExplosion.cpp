@@ -103,12 +103,7 @@ std::vector<std::unique_ptr<Bullet>> BombExplosion::getChild() {
 }
 
 Rectangle BombExplosion::getBoundingBox() const {
-    return {
-        position.x - size.x / 2.0f,
-        position.y - size.y / 2.0f,
-        size.x,
-        size.y
-    }; 
+    return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y};
 }
 
 bool BombExplosion::isActive() const {

@@ -56,12 +56,14 @@ void BulletManager::spawnChildBullet(std::unique_ptr<Bullet> bullet) {
 void BulletManager::drawBullets() const {
     for (const auto& bullet : bulletList) {
         if(bullet) {
-            bullet->draw();
-
             // draw bounding box for debugging
             Rectangle boundingBox = bullet->getBoundingBox();
             float rotation = bullet->rotation;
+            boundingBox.x += bullet->size.x / 2.0f; // Adjust bounding box position
+            boundingBox.y += bullet->size.y / 2.0f; // Adjust bounding
             DrawRectanglePro(boundingBox, {boundingBox.width / 2.0f, boundingBox.height / 2.0f}, rotation, RED);
+            
+            bullet->draw();
         } else {
             std::cerr << "Bullet is null!" << std::endl;
         }
