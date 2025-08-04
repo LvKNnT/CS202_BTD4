@@ -7,6 +7,7 @@
 namespace Utils {
     bool isMouseInMap();
     bool isPositionInMap(Vector2 position);
+    bool isColorDiffByTolerance(Color a, Color b, float tolerance);
 };
 
 #endif // UTILS_H

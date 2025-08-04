@@ -8,13 +8,17 @@
 #include "../../logic/tower/TowerUnits.h"
 #include "../../logic/LogicInfo.h"
 
-class GameState : public State {
+class GameState : public State, public ISubject {
 public:
     GameState();
     void draw() const override;
     void update(Event::Type event) override;
-    void handleInput() override;
+    void handleInput() override;    
 
+    // ISubject
+    void attach(std::shared_ptr<IObserver> observer) override;
+    void detach(std::shared_ptr<IObserver> observer) override;
+    void notify(Event::Type event) override;
 private:
     TowerType clickedTowerType = TowerType::None;
     static const int maxTowerTypes = 12;
@@ -57,13 +61,14 @@ private:
     std::shared_ptr<PanelElement> sellPrice;
     std::shared_ptr<PanelElement> skillButton;
     std::shared_ptr<PanelElement> skillInfoTextbox;
-    std::shared_ptr<PanelElement> buttonInfoTextbox;
+    std::shared_ptr<PanelElement> towerInfoTextbox;
     std::shared_ptr<PanelElement> upgradeInfoTextbox;
 
     // Functions
     void pickTower();
     void unpickTower();
     TowerType getTowerType(int i) const;
+    void gameEnd();
 };
 
 #endif // GAME_STATE_H

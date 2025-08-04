@@ -31,6 +31,7 @@ void Game::loadTexture() {
     textureManager.loadTexture("GameStateButton", "../assets/UI/GameStateButton.png");
     textureManager.loadTexture("Start", "../assets/UI/Start.png");
     textureManager.loadTexture("Setting", "../assets/UI/Setting.png");
+    textureManager.loadTexture("Replay", "../assets/UI/Replay.png");
     textureManager.loadTexture("HP", "../assets/UI/HP.png");
     textureManager.loadTexture("Cash", "../assets/UI/Cash.png");
     textureManager.loadTexture("Box", "../assets/UI/Box.png");
@@ -47,6 +48,9 @@ void Game::loadTexture() {
     textureManager.loadTexture("GreenRect", "../assets/UI/GreenRect.png");
     textureManager.loadTexture("GreyRect", "../assets/UI/GreyRect.png");
     textureManager.loadTexture("Info", "../assets/UI/Info.png");
+    textureManager.loadTexture("Victory", "../assets/UI/Victory.png");
+    textureManager.loadTexture("GameOver", "../assets/UI/GameOver.png");
+    
     
     //Sound
     textureManager.loadTexture("Volume100", "../assets/UI/Volume100.png");

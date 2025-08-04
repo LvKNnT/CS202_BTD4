@@ -2,6 +2,9 @@
 
 // headers of maps
 #include "maps/MonkeyLane.h"
+#include "maps/ReverseMonkeyLane.h"
+#include "maps/Jungle.h"
+#include "maps/ReverseJungle.h"
 
 MapSpawner::MapSpawner() {
     /**
@@ -52,6 +55,9 @@ std::unique_ptr<MapSpawner> MapSpawner::clone() const {
 // Initialize map templates
 void MapSpawner::init() {
     mapTemplates[MapType::MonkeyLane] = std::make_unique<MonkeyLane>();
+    mapTemplates[MapType::ReverseMonkeyLane] = std::make_unique<ReverseMonkeyLane>();
+    mapTemplates[MapType::Jungle] = std::make_unique<Jungle>();
+    mapTemplates[MapType::ReverseJungle] = std::make_unique<ReverseJungle>();
 }
 
 std::unique_ptr<Map> MapSpawner::getMap(MapType type) {

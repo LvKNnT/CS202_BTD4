@@ -3,11 +3,14 @@
 
 void StateManager::initialize() {
     isNewGame = false;
+    canResume = false;
     mainMenuState = std::make_shared<MainMenuState>();
     mapSelectionState = std::make_shared<MapSelectionState>();
     optionsState = std::make_shared<OptionsState>();
     areYouSureState = std::make_shared<AreYouSureState>();
     difficultySelectionState = std::make_shared<DifficultySelectionState>();
+    gameOverState = std::make_shared<GameOverState>();
+    victoryState = std::make_shared<VictoryState>();
     //specificModeSelectionState = std::make_shared<SpecificModeSelectionState>();
     stateStack.pushState(mainMenuState);
 }
@@ -37,7 +40,14 @@ void StateManager::update(Event::Type event) {
         case Event::Type::ToMonkeyLane:
             stateStack.pushState(difficultySelectionState);
             stateStack.setdrawPreviousStates(true);
+            mapType = MapType::MonkeyLane;
             Game::Instance().getGameLogic().init(MapType::MonkeyLane);
+            break;
+        case Event::Type::ToJungleLane:
+            stateStack.pushState(difficultySelectionState);
+            stateStack.setdrawPreviousStates(true);
+            mapType = MapType::Jungle;
+            Game::Instance().getGameLogic().init(MapType::Jungle);
             break;
         case Event::Type::ToAreYouSure:
             stateStack.pushState(areYouSureState);
@@ -52,6 +62,7 @@ void StateManager::update(Event::Type event) {
             Game::Instance().getGameLogic().unactiveTickFast();
             break;
         case Event::Type::ToGameState:
+            canResume = true;
             if(isNewGame) gameState = std::make_shared<GameState>();
             stateStack.pushState(gameState);
             break;
@@ -61,7 +72,7 @@ void StateManager::update(Event::Type event) {
         case Event::Type::Continue: 
             break;
         case Event::Type::Resume:
-            stateStack.pushState(gameState);
+            if(canResume) stateStack.pushState(gameState);
             break;
         case Event::Type::StandardMode:
             Game::Instance().getGameLogic().init(ModeType::Classic);
@@ -70,10 +81,24 @@ void StateManager::update(Event::Type event) {
             Game::Instance().getGameLogic().init(ModeType::Alternative);
             break;
         case Event::Type::ReverseMode:
+            Game::Instance().getGameLogic().init(static_cast<MapType>(static_cast<int>(mapType) + 1));
             Game::Instance().getGameLogic().init(ModeType::Reverse);
             break;
         case Event::Type::ApopalyseMode:
             Game::Instance().getGameLogic().init(ModeType::Apopalypse);
+            break;
+        case Event::Type::ToGameOver:
+            canResume = false;
+            stateStack.pushState(gameOverState);
+            stateStack.setdrawPreviousStates(true);
+            break;
+        case Event::Type::ToVictory:
+            canResume = false;
+            stateStack.pushState(victoryState);
+            stateStack.setdrawPreviousStates(true);
+            break;
+        case Event::Type::Replay:
+            
             break;
         default:
             if(Event::Type::ToEasyModeSelection <= event && event <= Event::Type::ToImpoppableModeSelection) {

@@ -22,6 +22,8 @@ public:
         CancelCurrentState,
         ToMapSelection, 
         ToSpecificModeSelection, 
+        ToGameOver,
+        ToVictory, 
         
         // Game State
         UpgradeTowerLeft,
@@ -31,6 +33,7 @@ public:
         NextPriority, 
         PreviousPriority,
         SellTower,
+        Replay,
         
         // Mode
         HoveringStandardMode,

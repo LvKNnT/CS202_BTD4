@@ -50,6 +50,12 @@ ChooseMonkeyLane::ChooseMonkeyLane(const Texture &_texture, int _fontSize, int _
     event = Event::Type::ToMonkeyLane;
 }
 
+ChooseJungle::ChooseJungle(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+    : SingleEventButton(_texture, _fontSize, _height, _width, _position) {
+    attach(Game::Instance().getStateManager());
+    event = Event::Type::ToJungleLane;
+}
+
 GameOptions::GameOptions(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
     : SingleEventButton(_texture, _fontSize, _height, _width, _position) {
     attach(Game::Instance().getStateManager());
@@ -121,4 +127,10 @@ SellButton::SellButton(const Texture &_texture, int _fontSize, int _height, int 
     title = "SELL";
     attach(Game::Instance().getStateManager());
     event = Event::Type::SellTower;
+}
+
+ReplayButton::ReplayButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+    : SingleEventButton(_texture, _fontSize, _height, _width, _position) {
+    attach(Game::Instance().getStateManager());
+    event = Event::Type::Replay;
 }

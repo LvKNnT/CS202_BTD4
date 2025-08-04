@@ -440,7 +440,7 @@ bool LogicManager::isSpawnTower(const ResourceManager& resourceManager, const To
         // std::cerr << "No tower selected to spawn." << std::endl;
         return false; // No tower selected to spawn
     }
-    
+
     auto enemyPath = mapManager.currentMap->enemyPath;
     Rectangle towerBoundingBox = towerManager.putTower->getBoundingBox();
     float pathWidth = 25.0f; // Considerable size
@@ -454,31 +454,30 @@ bool LogicManager::isSpawnTower(const ResourceManager& resourceManager, const To
         return false; 
     }
 
-    // Checking collision with the path
-    // for(int x = towerBoundingBox.x; x <= towerBoundingBox.x + towerBoundingBox.width; ++x) {
-    //     for(int y = towerBoundingBox.y; y <= towerBoundingBox.y + towerBoundingBox.height; ++y) {
-    //         Vector2 point = {static_cast<float>(x), static_cast<float>(y)};
-    //         if(mapManager.getCurrentMap().canPlaceTowerHere(point)) {
-    //             std::cerr << "Cannot put tower due to path" << std::endl;
-                
-    //             towerManager.putTower->setActive(false);
-    //             return false; // Collision with the path
-    //         }
-    //     }
-    // }
-    for(const auto& path : enemyPath) {
-        for(int i = 0; i + 1 < path.size(); ++i) {
-            if(distancePointLine({towerBoundingBox.x, towerBoundingBox.y}, path[i].position, path[i + 1].position) < pathWidth
-            || distancePointLine({towerBoundingBox.x + towerBoundingBox.width, towerBoundingBox.y}, path[i].position, path[i + 1].position) < pathWidth
-            || distancePointLine({towerBoundingBox.x, towerBoundingBox.y + towerBoundingBox.height}, path[i].position, path[i + 1].position) < pathWidth
-            || distancePointLine({towerBoundingBox.x + towerBoundingBox.width, towerBoundingBox.y + towerBoundingBox.height}, path[i].position, path[i + 1].position) < pathWidth) {
-                // std::cerr << "Cannot put tower due to path" << std::endl;
-
+    //Checking collision with the path
+    for(int x = towerBoundingBox.x; x <= towerBoundingBox.x + towerBoundingBox.width; ++x) {
+        for(int y = towerBoundingBox.y; y <= towerBoundingBox.y + towerBoundingBox.height; ++y) {
+            Vector2 point = {static_cast<float>(x), static_cast<float>(y)};
+            if(mapManager.getCurrentMap().getTowerPointType(point) != Point::Type::None) {
+                std::cerr << "Cannot put tower due to path" << std::endl;
                 towerManager.putTower->setActive(false);
-                return false; 
+                return false; // Collision with the path
             }
         }
     }
+    // for(const auto& path : enemyPath) {
+    //     for(int i = 0; i + 1 < path.size(); ++i) {
+    //         if(distancePointLine({towerBoundingBox.x, towerBoundingBox.y}, path[i].position, path[i + 1].position) < pathWidth
+    //         || distancePointLine({towerBoundingBox.x + towerBoundingBox.width, towerBoundingBox.y}, path[i].position, path[i + 1].position) < pathWidth
+    //         || distancePointLine({towerBoundingBox.x, towerBoundingBox.y + towerBoundingBox.height}, path[i].position, path[i + 1].position) < pathWidth
+    //         || distancePointLine({towerBoundingBox.x + towerBoundingBox.width, towerBoundingBox.y + towerBoundingBox.height}, path[i].position, path[i + 1].position) < pathWidth) {
+    //             std::cerr << "Cannot put tower due to path" << std::endl;
+
+    //             towerManager.putTower->setActive(false);
+    //             return false; 
+    //         }
+    //     }
+    // }
     
     // Checking collision with other towers
     for (const auto& tower : towerManager.towerList) {

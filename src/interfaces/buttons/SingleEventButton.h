@@ -33,6 +33,11 @@ public:
     ChooseMonkeyLane(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
+class ChooseJungle : public SingleEventButton {
+public: 
+    ChooseJungle(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
 class Options : public SingleEventButton {
 public: 
     Options(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
@@ -102,4 +107,11 @@ class SellButton : public SingleEventButton {
 public:
     SellButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
+
+class ReplayButton : public SingleEventButton {
+public:
+    ReplayButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+
 #endif // SINGLE_EVENT_BUTTON_H
