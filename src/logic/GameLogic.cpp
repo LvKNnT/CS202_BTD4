@@ -213,7 +213,12 @@ void GameLogic::choosePreviousPriority() {
 }
 
 void GameLogic::startPlayRound() {
-    isStarted = true; // Set the game as started
+    if(isStarted == false) {
+        isTickFast = true;
+    }
+    else {
+        runNextRound();
+    }
 }
 
 // same same but different
