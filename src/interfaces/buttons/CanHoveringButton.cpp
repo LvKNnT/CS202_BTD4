@@ -74,6 +74,13 @@ ChooseBombShooterTower::ChooseBombShooterTower(const Texture &_texture, int _fon
 ChooseDartMonkeyTower::ChooseDartMonkeyTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
     : CanHoveringButton(_texture, _fontSize, _height, _width, _position){
     attach(Game::Instance().getStateManager());
-    hoveringEvent = Event::Type::HoveringChooseDartMoneky;
+    hoveringEvent = Event::Type::HoveringChooseDartMonkey;
     clickedEvent = Event::Type::ClickedChooseDartMonkey;
+}
+
+ChooseNinjaMonkeyTower::ChooseNinjaMonkeyTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+    : CanHoveringButton(_texture, _fontSize, _height, _width, _position){
+    attach(Game::Instance().getStateManager());
+    hoveringEvent = Event::Type::HoveringChooseNinjaMonkey;
+    clickedEvent = Event::Type::ClickedChooseNinjaMonkey;
 }

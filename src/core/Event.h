@@ -43,11 +43,13 @@ public:
         
         //UI towers
         //Hovering
-        HoveringChooseDartMoneky,
+        HoveringChooseDartMonkey,
         HoveringChooseBomb,
+        HoveringChooseNinjaMonkey,
         //Clicked
         ClickedChooseBomb, // player begins to place Tower, we should know the valid points on the map
         ClickedChooseDartMonkey, 
+        ClickedChooseNinjaMonkey,
         
 /*----------------------------------------------------------------------LOGIC------------------------------------------------------------------*/
         // Options (later)

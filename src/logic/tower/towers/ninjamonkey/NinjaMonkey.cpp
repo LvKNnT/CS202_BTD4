@@ -1,0 +1,196 @@
+#include "NinjaMonkey.h"
+
+#include "../../../../core/Game.h"
+
+#include "../../../attack/attacks/ShurikenAttack.h"
+#include "../../../attack/patterns/NormalAttack.h"
+#include "../../../skill/skills/SuperMonkeyFanClubSkill.h"
+
+#include "NinjaDiscipline.h"
+#include "Distraction.h"
+
+NinjaMonkey::NinjaMonkey(Vector2 position)
+    : Tower(position, {0.0f, 0.0f}, 0.0f, TowerType::NinjaMonkey, 400) {
+    /**
+     * cost = 400
+     */
+
+    tag = "NinjaMonkey";
+    isActiveFlag = true; // Set the tower to be active by default
+
+    // Basic attack
+    /**
+     * * range = 120.0f
+     * * cooldown = 0.62f
+     * * * damage = 1
+     * * * speed = 750
+     * * * pierce = 2
+     * * * lifeSpan = 0.25f
+     * * * properties = BulletProperties::normal()
+     */
+    attacks.push_back(std::make_unique<ShurikenAttack>(120.0f, 0.62f, position, towerId, 1, 750, 2, 0.25f, BulletProperties::normal(), BloonDebuff(), BloonDebuff())); 
+    attackPattern = std::make_unique<NormalAttack>(); 
+    skill = std::make_unique<SuperMonkeyFanClubSkill>();
+
+    // Upgrade Path
+    upgradeTop = std::make_unique<NinjaDiscipline>();
+    upgradeMiddle = std::make_unique<Distraction>();
+    upgradeBottom = std::make_unique<Upgrade>();
+
+    // Info section
+    info["name"] = "Ninja Monkey";
+    info["description"] = "Stealthy and fast Monkey that throws bladed shurikens to pop the Bloons. Can target Camo Bloons.";
+    info["cost"] = std::to_string(cost);
+    info["popCount"] = std::to_string(popCount);
+    info["sellPrice"] = std::to_string(static_cast<int>(cost * 0.75f));
+
+    // At the beginning, no upgrades are available
+    info["nameTop"] = "NoUpgrade";
+    info["nameMiddle"] = "NoUpgrade";
+    info["nameBottom"] = "NoUpgrade";
+    info["descriptionTop"] = "";
+    info["descriptionMiddle"] = "";
+    info["descriptionBottom"] = "";
+    
+    info["upgradeNameTop"] = upgradeTop->getName();
+    info["upgradeCostTop"] = std::to_string(upgradeTop->getCost());
+    info["upgradeDescriptionTop"] = upgradeTop->getDescription();
+    info["upgradeNameMiddle"] = upgradeMiddle->getName();
+    info["upgradeDescriptionMiddle"] = upgradeMiddle->getDescription();
+    info["upgradeCostMiddle"] = std::to_string(upgradeMiddle->getCost());
+    info["upgradeNameBottom"] = upgradeBottom->getName();
+    info["upgradeDescriptionBottom"] = upgradeBottom->getDescription();
+    info["upgradeCostBottom"] = std::to_string(upgradeBottom->getCost());
+}
+
+NinjaMonkey::NinjaMonkey(const NinjaMonkey& other)
+: Tower(other) {
+}
+
+std::unique_ptr<Tower> NinjaMonkey::clone() const {
+    return std::make_unique<NinjaMonkey>(*this);
+}
+
+void NinjaMonkey::loadTexture() {
+    // Load the texture for the Dart Monkey tower
+    Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/Ninja_Monkey.png");
+    Game::Instance().getTextureManager().loadTexture("NoUpgrade", "../assets/tower/NoUpgradeIcon.png");
+    skill->loadTexture(); 
+    
+    // Update size based on the loaded texture
+    size.x = Game::Instance().getTextureManager().getTexture(tag).width;
+    size.y = Game::Instance().getTextureManager().getTexture(tag).height;
+
+    // Get texture for the upgrade
+    upgradeTop->loadTexture();
+    upgradeMiddle->loadTexture();
+    upgradeBottom->loadTexture();
+}
+
+void NinjaMonkey::update() {
+    // Dart Monkey has no special update.
+    for(auto& attack : attacks) {
+        attack->update();
+    }
+    skill->update(); 
+}
+
+void NinjaMonkey::setRotation(float rotation) {
+    this->rotation = rotation;
+}
+
+void NinjaMonkey::draw() const {
+    // Draw the Dart Monkey tower using raylib functions
+    DrawCircleV(position, 10, YELLOW); // Example drawing a yellow circle for the tower
+
+    // Rounded draw position
+    Vector2 draw_position = {
+        roundf(position.x),
+        roundf(position.y)
+    };    
+
+    DrawTexturePro(Game::Instance().getTextureManager().getTexture(tag), 
+                   {0, 0, size.x, size.y},
+                   {draw_position.x, draw_position.y, size.x, size.y},
+                   {size.x / 2.0f, size.y / 2.0f},
+                   rotation,
+                   WHITE); // Draw the Dart Monkey texture with the specified position and rotation
+
+    // draw the hitbox
+    Rectangle hitbox = getBoundingBox();
+    DrawRectangleLinesEx(hitbox, 2.0f, RED); // Draw the hitbox in red for visibility
+}
+
+void NinjaMonkey::drawRange() const {
+    // Draw the range of attacks
+    for(const auto& attack : attacks) {
+        DrawCircleV(position, attack->getRange() * attackBuff.rangeRatio + attackBuff.range, Fade(GRAY, 0.5f)); // Draw the attack range
+    }
+}
+
+void NinjaMonkey::drawPut() const {
+    // Draw the range of attacks
+    for(const auto& attack : attacks) {
+        if(isActive()) {
+            DrawCircleV(position, attack->getRange(), Fade(GRAY, 0.5f)); // Draw the attack range
+        }
+        else DrawCircleV(position, attack->getRange(), Fade(RED, 0.5f)); // Draw the attack range
+    }
+}
+
+void NinjaMonkey::setModifies(const TowerModifies& modifies) {
+    // Set the tower modifies for the Dart Monkey
+    cost = static_cast<int>(cost * modifies.cost);
+    upgradeCost = modifies.upgradeCost;
+
+    // Update the info with the modified cost
+    info["cost"] = std::to_string(cost);
+    info["upgradeCostTop"] = std::to_string(static_cast<int>(upgradeTop->getCost() * upgradeCost));
+    info["upgradeCostMiddle"] = std::to_string(static_cast<int>(upgradeMiddle->getCost() * upgradeCost));
+    info["upgradeCostBottom"] = std::to_string(static_cast<int>(upgradeBottom->getCost() * upgradeCost));
+}
+
+LogicInfo NinjaMonkey::getInfo() {
+    // info that need to be live-updated
+    info["popCount"] = std::to_string(popCount);
+    info["sell"] = std::to_string(static_cast<int>(cost * 0.70f));
+
+    // sadly, using switch/case here
+    switch (targetPriority) {
+        case TargetPriority::First:
+            info["targetPriority"] = "First";
+            break;
+        case TargetPriority::Last:
+            info["targetPriority"] = "Last";
+            break;
+        case TargetPriority::Close:
+            info["targetPriority"] = "Close";
+            break;
+        case TargetPriority::Strong:
+            info["targetPriority"] = "Strong";
+            break;
+        default:
+            info["targetPriority"] = "Unknown";
+            break;
+    }
+
+    // for skill
+    info["skillName"] = skill->getName();
+    info["skillCooldown"] = std::to_string(skill->getCooldownTime());
+    info["skillTimer"] = std::to_string(skill->getTimer());
+    
+    return this->info;
+}
+
+Rectangle NinjaMonkey::getBoundingBox() const {
+    // Provide the bounding box for collision detection
+    return {position.x - size.x / 2, position.y - size.y / 2, size.x, size.y};
+}
+
+bool NinjaMonkey::isActive() const {
+    return isActiveFlag;
+}
+
+void NinjaMonkey::setActive(bool active) {
+    isActiveFlag = active;
+}

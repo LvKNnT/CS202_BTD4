@@ -15,6 +15,8 @@ public:
     void update() override;
 
     std::pair<Vector2, int> getPositionAndPathIdx(BloonType type) override;
+private:
+    int pathIdxCount;
 };
 
 #endif // JUNGLE_H

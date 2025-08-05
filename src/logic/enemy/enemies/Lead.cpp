@@ -32,6 +32,8 @@ void Lead::loadTexture() {
 }
 
 bool Lead::hit(int damage) {
+    MySound popSound("LeadBloon");
+    popSound.start();
     health -= damage;
 
     if (health <= 0) {

@@ -139,9 +139,9 @@ void BombShooter::setModifies(const TowerModifies& modifies) {
 
     // Update the info with the modified cost
     info["cost"] = std::to_string(cost);
-    info["upgradeCostTop"] = std::to_string(upgradeTop->getCost() * upgradeCost);
-    info["upgradeCostMiddle"] = std::to_string(upgradeMiddle->getCost() * upgradeCost);
-    info["upgradeCostBottom"] = std::to_string(upgradeBottom->getCost() * upgradeCost);
+    info["upgradeCostTop"] = std::to_string(static_cast<int>(upgradeTop->getCost() * upgradeCost));
+    info["upgradeCostMiddle"] = std::to_string(static_cast<int>(upgradeMiddle->getCost() * upgradeCost));
+    info["upgradeCostBottom"] = std::to_string(static_cast<int>(upgradeBottom->getCost() * upgradeCost));
 }
 
 LogicInfo BombShooter::getInfo() {

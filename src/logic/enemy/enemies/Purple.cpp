@@ -32,6 +32,8 @@ void Purple::loadTexture() {
 }
 
 bool Purple::hit(int damage) {
+    MySound popSound("PurpleBloon");
+    popSound.start();
     health -= damage;
 
     if (health <= 0) {

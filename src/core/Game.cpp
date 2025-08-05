@@ -14,6 +14,7 @@ Game::~Game() {
 
 void Game::LoadContent() {
     loadTexture();
+    loadTowerTexture();
     loadFont();
     loadSound();
 }
@@ -67,13 +68,6 @@ void Game::loadTexture() {
     textureManager.loadTexture("CommingSoon2", "../assets/map/CommingSoon2.png");
     textureManager.loadTexture("GameStateBackground", "../assets/states/GameStateBackground.png");
 
-    // Load tower
-    textureManager.loadTexture("Dart Monkey Icon", "../assets/tower/Dart_Monkey_Mobile.png");
-    textureManager.loadTexture("Bomb Shooter Icon", "../assets/tower/Boom_Shooter/Bomb_Shooter.png");
-    textureManager.loadTexture("Dart Monkey Info", "../assets/tower/Dart_Monkey/000-DartMonkey.png");
-    textureManager.loadTexture("CrossbowMasterUpgradeIcon", "../assets/tower/Dart_Monkey/CrossbowMasterUpgradeIcon.png");
-    textureManager.loadTexture("Sharp Shots Upgrade Icon", "../assets/tower/Dart_Monkey/SharpShotsUpgradeIcon.png");
-
     // Load mode icons
     textureManager.loadTexture("Easy", "../assets/mode/Easy.png");
     textureManager.loadTexture("Medium", "../assets/mode/Medium.png");
@@ -100,8 +94,34 @@ void Game::loadFont() {
 
 void Game::loadSound() {
     // for loadSound() we need to pass number of maxSounds or default will be 1 
-    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("Kuru Kuru", "../assets/sounds/music/Kuru Kururin.wav", 2); 
-    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadMusic("Kuru Kuru", "../assets/sounds/music/Kuru Kururin.wav");
+
+    // SFX
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("NormalBloon", "../assets/sounds/sfx/NormalBloon.wav", 20); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("CeramicBloon", "../assets/sounds/sfx/CeramicBloon.wav", 10); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("PurpleBloon", "../assets/sounds/sfx/PurpleBloon.wav", 10); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("LeadBloon", "../assets/sounds/sfx/LeadBloon.wav", 10); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("MOABBloon", "../assets/sounds/sfx/MOABBloon.wav", 10); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("DestroyingMOABBloon", "../assets/sounds/sfx/DestroyingMOABBloon.wav", 1); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("Cash", "../assets/sounds/sfx/Cash.wav"); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("Placing", "../assets/sounds/sfx/PLacing.wav"); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("Upgrade", "../assets/sounds/sfx/Upgrade.wav"); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("Victory", "../assets/sounds/sfx/Victory.wav"); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("GameOver", "../assets/sounds/sfx/GameOver.wav"); 
+    
+    // Music
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadMusic("BTD5Theme", "../assets/sounds/music/Jazz Theme - Bloons TD 5.mp3"); 
+}
+
+void Game::loadTowerTexture() {
+     // Load tower
+    textureManager.loadTexture("Dart Monkey Icon", "../assets/tower/Dart_Monkey_Mobile.png");
+    textureManager.loadTexture("Bomb Shooter Icon", "../assets/tower/Boom_Shooter/Bomb_Shooter.png");
+    textureManager.loadTexture("Ninja Monkey Icon", "../assets/tower/Ninja_Monkey/Ninja_Monkey.png");
+    textureManager.loadTexture("Dart Monkey Info", "../assets/tower/Dart_Monkey/000-DartMonkey.png");
+    textureManager.loadTexture("Bomb Shooter Info", "../assets/tower/Boom_Shooter/Bomb_Shooter_Icon.png");
+    textureManager.loadTexture("Ninja Monkey Info", "../assets/tower/Ninja_Monkey/BTD6_Ninja_Monkey.png");
+    textureManager.loadTexture("CrossbowMasterUpgradeIcon", "../assets/tower/Dart_Monkey/CrossbowMasterUpgradeIcon.png");
+    textureManager.loadTexture("Sharp Shots Upgrade Icon", "../assets/tower/Dart_Monkey/SharpShotsUpgradeIcon.png");
 }
 
 void Game::UnloadContent() {
@@ -115,6 +135,8 @@ void Game::initialize() {
     stateManager = std::make_unique<StateManager>();
     std::static_pointer_cast<StateManager>(stateManager)->initialize();
     std::static_pointer_cast<AudioManager>(audioManager)->initialize();
+    MyMusic gameTheme("BTD5Theme");
+    gameTheme.start();
 }
 
 void Game::render() {

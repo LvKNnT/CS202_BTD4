@@ -3,6 +3,7 @@
 #include <filesystem>
 
 #include "skill/Skill.h"
+#include "../interfaces/audio/MyAudio.h"
 
 void GameLogic::init() {
     // testing, should be jajaja whenever enter a new game

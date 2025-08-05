@@ -58,4 +58,8 @@ public:
     ChooseDartMonkeyTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
+class ChooseNinjaMonkeyTower : public CanHoveringButton {
+public:
+    ChooseNinjaMonkeyTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
 #endif // CAN_HOVERING_BUTTON_H

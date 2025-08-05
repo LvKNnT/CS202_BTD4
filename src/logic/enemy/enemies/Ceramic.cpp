@@ -32,6 +32,8 @@ void Ceramic::loadTexture() {
 }
 
 bool Ceramic::hit(int damage) {
+    MySound popSound("CeramicBloon");
+    popSound.start();
     health -= damage;
 
     if (health <= 0) {

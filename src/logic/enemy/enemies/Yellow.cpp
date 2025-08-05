@@ -32,6 +32,8 @@ void Yellow::loadTexture() {
 }
 
 bool Yellow::hit(int damage) {
+    MySound popSound("NormalBloon");
+    popSound.start();
     health -= damage;
 
     if (health <= 0) {
