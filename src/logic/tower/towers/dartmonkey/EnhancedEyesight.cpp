@@ -25,13 +25,11 @@ void EnhancedEyesight::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/EnhancedEyesightUpgradeIcon.png");
 }
 
-void EnhancedEyesight::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) {
-    for (auto& attack : attacks) {
-        attackBuff.range += 32;
-        attackBuff.lifeSpanRatio *= 1.2f / 1.15f; 
-        attackBuff.speedRatio *= 1.1f;
-        attackBuff.properties.canCamo = true;
-    }
+void EnhancedEyesight::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+    attackBuff.range += 32;
+    attackBuff.lifeSpanRatio *= 1.2f / 1.15f; 
+    attackBuff.speedRatio *= 1.1f;
+    attackBuff.properties.canCamo = true;
 }
 
 std::unique_ptr<Upgrade> EnhancedEyesight::buy() {

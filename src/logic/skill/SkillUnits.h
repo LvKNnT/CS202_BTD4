@@ -9,6 +9,7 @@ public:
     static TowerType& getTowerType(Tower& tower);
     static Vector2& getTowerPosition(Tower& tower);
     static AttackBuff& getAttackBuff(Tower& tower);
+    static std::string& getTag(Tower& tower);
 
     static BloonDebuff& getDebuff(Enemy& enemy);
 };

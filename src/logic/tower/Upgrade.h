@@ -9,6 +9,8 @@
 #include "../../interfaces/Drawable.h"
 #include "../attack/Attack.h"
 
+class Skill;
+
 class Upgrade {
 public:
     Upgrade(const std::string& name = "NoUpgrade", int cost = 0, const std::string& description = "");
@@ -26,7 +28,7 @@ public:
     void setCost(int newCost);
 
     virtual void loadTexture();
-    virtual void update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern); 
+    virtual void update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill); // Update the upgrade effects on attacks and attack pattern
     virtual std::unique_ptr<Upgrade> buy();
 
 protected:

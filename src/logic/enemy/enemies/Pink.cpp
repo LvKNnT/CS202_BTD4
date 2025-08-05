@@ -73,12 +73,7 @@ void Pink::draw() const {
 }
 
 Rectangle Pink::getBoundingBox() const {
-    return Rectangle{
-        position.x - size.x / 2.0f,
-        position.y - size.y / 2.0f,
-        size.x,
-        size.y
-    };
+    return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y};
 }
 
 bool Pink::isActive() const {

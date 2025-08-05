@@ -85,12 +85,13 @@ public:
     float stunDuration = 0.0f; 
     float freezeDuration = 0.0f;
     float knockbackDuration = 0.0f;
-    int knocbackChance = 100;
+    float knockbackSpeed = 1.0f;
+     int knocbackChance = 100;
 
-    BloonDebuff(float slowRatio = 0.0f, float slowDuration = 0.0f, float stunDuration = 0.0f, float freezeDuration = 0.0f, float knockbackDuration = 0.0f, int knocbackChance = 100)
-        : slowRatio(slowRatio), slowDuration(slowDuration), stunDuration(stunDuration), freezeDuration(freezeDuration), knockbackDuration(knockbackDuration), knocbackChance(knocbackChance) {}
+    BloonDebuff(float slowRatio = 0.0f, float slowDuration = 0.0f, float stunDuration = 0.0f, float freezeDuration = 0.0f, float knockbackDuration = 0.0f, float knockbackSpeed = 1.0f, int knocbackChance = 100)
+        : slowRatio(slowRatio), slowDuration(slowDuration), stunDuration(stunDuration), freezeDuration(freezeDuration), knockbackDuration(knockbackDuration), knockbackSpeed(knockbackSpeed), knocbackChance(knocbackChance) {}
     BloonDebuff(const BloonDebuff& other)
-        : slowRatio(other.slowRatio), slowDuration(other.slowDuration), stunDuration(other.stunDuration), freezeDuration(other.freezeDuration), knockbackDuration(other.knockbackDuration), knocbackChance(other.knocbackChance) {}
+        : slowRatio(other.slowRatio), slowDuration(other.slowDuration), stunDuration(other.stunDuration), freezeDuration(other.freezeDuration), knockbackDuration(other.knockbackDuration), knockbackSpeed(other.knockbackSpeed), knocbackChance(knocbackChance) {}
     ~BloonDebuff() = default;
 
     BloonDebuff& operator=(const BloonDebuff& other) {
@@ -100,6 +101,7 @@ public:
             stunDuration = other.stunDuration;
             freezeDuration = other.freezeDuration;
             knockbackDuration = other.knockbackDuration;
+            knockbackSpeed = other.knockbackSpeed;
             knocbackChance = other.knocbackChance;
         }
         return *this;
@@ -112,6 +114,7 @@ public:
             (stunDuration < other.stunDuration) ? other.stunDuration : stunDuration,
             (freezeDuration < other.freezeDuration) ? other.freezeDuration : freezeDuration,
             (knockbackDuration < other.knockbackDuration) ? other.knockbackDuration : knockbackDuration,
+            (knockbackSpeed < other.knockbackSpeed) ? other.knockbackSpeed : knockbackSpeed,
             (knocbackChance > other.knocbackChance) ? other.knocbackChance : knocbackChance
         );
     }
@@ -122,6 +125,7 @@ public:
         stunDuration = (stunDuration < other.stunDuration) ? other.stunDuration : stunDuration;
         freezeDuration = (freezeDuration < other.freezeDuration) ? other.freezeDuration : freezeDuration;
         knockbackDuration = (knockbackDuration < other.knockbackDuration) ? other.knockbackDuration : knockbackDuration;
+        knockbackSpeed = (knockbackSpeed < other.knockbackSpeed) ? other.knockbackSpeed : knockbackSpeed;
         knocbackChance = (knocbackChance > other.knocbackChance) ? other.knocbackChance : knocbackChance;
         return *this;
     }
@@ -133,20 +137,21 @@ public:
             0.0f, // stunDuration
             0.0f, // freezeDuration
             0.0f,  // knockbackDuration
-            100 // knocbackChance
+            1.0f, // knockbackSpeed
+            100 // knockbackChance
         };
     }
 
-    BloonDebuff getIKnockBack(float duration, int knocbackChance = 100) const {
+    BloonDebuff getIKnockBack(float duration, float speed, int knockbackChance = 100) const {
         return *this + BloonDebuff{
             0.0f, // slowRatio
             0.0f, // slowDuration
             0.0f, // stunDuration
             0.0f, // freezeDuration
             duration, // knockbackDuration
-            knocbackChance // knockbackChance
+            speed, // knockbackSpeed
+            knockbackChance // knockbackChance
         };
-    }
 
     void applyStun(float duration) {
         stunDuration = std::max(stunDuration, duration);
@@ -176,7 +181,7 @@ public:
 
     int calKnockbackSpeed(int speed) const {
         if(knockbackDuration <= 0.0f || Utils::rand(1, 100) > knocbackChance) return 0;
-        return - speed * 10;
+        return - speed * knockbackSpeed; // negative speed for knockback
     }
 };
 

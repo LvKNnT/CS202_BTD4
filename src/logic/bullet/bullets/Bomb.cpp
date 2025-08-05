@@ -114,12 +114,7 @@ std::vector<std::unique_ptr<Bullet>> Bomb::getChild() {
 }
 
 Rectangle Bomb::getBoundingBox() const {
-    return {
-        position.x - size.x / 2.0f,
-        position.y - size.y / 2.0f,
-        size.x,
-        size.y
-    }; 
+    return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y};
 }
 
 bool Bomb::isActive() const {

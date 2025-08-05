@@ -437,7 +437,7 @@ void AlternativeRoundSpawner::init() {
     roundTemplates[88] = Round(2703, {
         {BloonType::Bfb, {0, 0, 0}, 12, 0.00f, 5.00f},
         {BloonType::Moab, {0, 0, 0}, 15, 5.84f, 10.84f},
-        {BloonType::Ddt, {0, 0, 0}, 3, 11.55f, 13.05f}
+        {BloonType::Ddt, {0, 1, 0}, 3, 11.55f, 13.05f}
     });
     roundTemplates[89] = Round(2590, {
         {BloonType::Moab, {1, 0, 0}, 15, 0.00f, 7.00f},
@@ -445,7 +445,7 @@ void AlternativeRoundSpawner::init() {
     });
     roundTemplates[90] = Round(817, {
         {BloonType::Ceramic, {0, 0, 1}, 50, 0.00f, 10.00f},
-        {BloonType::Ddt, {0, 0, 0}, 4, 10.40f, 11.90f}
+        {BloonType::Ddt, {0, 1, 0}, 4, 10.40f, 11.90f}
     });
     roundTemplates[91] = Round(3428, {
         {BloonType::Bfb, {0, 0, 0}, 15, 7.38f, 17.38f},
@@ -453,11 +453,11 @@ void AlternativeRoundSpawner::init() {
     });
     roundTemplates[92] = Round(4689, {
         {BloonType::Zomg, {0, 0, 0}, 4, 12.96f, 18.96f},
-        {BloonType::Ddt, {0, 0, 0}, 4, 22.23f, 23.23f},
+        {BloonType::Ddt, {0, 1, 0}, 4, 22.23f, 23.23f},
         {BloonType::Moab, {1, 0, 0}, 50, 0.00f, 35.00f}
     });
     roundTemplates[93] = Round(3052, {
-        {BloonType::Ddt, {1, 0, 0}, 7, 6.79f, 8.79f},
+        {BloonType::Ddt, {1, 1, 0}, 7, 6.79f, 8.79f},
         {BloonType::Bfb, {1, 0, 0}, 17, 0.00f, 20.00f}
     });
     roundTemplates[94] = Round(8887, {
@@ -466,27 +466,27 @@ void AlternativeRoundSpawner::init() {
     });
     roundTemplates[95] = Round(2781, {
         {BloonType::Purple, {0, 1, 0}, 500, 0.00f, 30.00f},
-        {BloonType::Ddt, {0, 0, 0}, 30, 17.82f, 37.82f},
+        {BloonType::Ddt, {0, 1, 0}, 30, 17.82f, 37.82f},
         {BloonType::Moab, {0, 0, 0}, 30, 30.81f, 40.81f}
     });
     roundTemplates[96] = Round(11100, {
         {BloonType::Bfb, {1, 0, 0}, 10, 0.00f, 5.00f},
         {BloonType::Moab, {0, 0, 0}, 20, 5.50f, 10.50f},
         {BloonType::Zomg, {0, 0, 0}, 5, 10.74f, 15.74f},
-        {BloonType::Ddt, {0, 0, 0}, 10, 16.04f, 21.04f},
+        {BloonType::Ddt, {0, 1, 0}, 10, 16.04f, 21.04f},
         {BloonType::Bfb, {0, 0, 0}, 10, 21.62f, 26.62f},
         {BloonType::Zomg, {0, 0, 0}, 6, 27.12f, 32.12f}
     });
     roundTemplates[97] = Round(1722, {
         {BloonType::Zomg, {1, 0, 0}, 2, 0.00f, 4.00f},
-        {BloonType::Ddt, {1, 0, 0}, 8, 1.23f, 4.23f}
+        {BloonType::Ddt, {1, 1, 0}, 8, 1.23f, 4.23f}
     });
     roundTemplates[98] = Round(9959, {
         {BloonType::Zomg, {0, 0, 0}, 11, 0.00f, 5.00f},
         {BloonType::Bfb, {1, 0, 0}, 20, 0.00f, 20.00f}
     });
     roundTemplates[99] = Round(3019, {
-        {BloonType::Ddt, {1, 0, 0}, 9, 6.51f, 11.51f},
+        {BloonType::Ddt, {1, 1, 0}, 9, 6.51f, 11.51f},
         {BloonType::Moab, {0, 0, 0}, 30, 0.00f, 12.00f},
         {BloonType::Bad, {0, 0, 0}, 1, 16.78f, 16.78f}
     });

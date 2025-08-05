@@ -73,12 +73,7 @@ void Blue::draw() const {
 }
 
 Rectangle Blue::getBoundingBox() const {
-    return Rectangle{
-        position.x - size.x / 2.0f,
-        position.y - size.y / 2.0f,
-        size.x,
-        size.y
-    };
+    return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y};
 }
 
 bool Blue::isActive() const {

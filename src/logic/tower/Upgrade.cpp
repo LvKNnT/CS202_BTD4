@@ -21,7 +21,7 @@ void Upgrade::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "assets/tower/NoUpgradeIcon.png");
 }
 
-void Upgrade::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) {
+void Upgrade::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
     // Should do nothin
     std::cerr << "Update NoUpgrade\n";
 }

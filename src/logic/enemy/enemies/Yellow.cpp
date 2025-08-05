@@ -73,12 +73,7 @@ void Yellow::draw() const {
 }
 
 Rectangle Yellow::getBoundingBox() const {
-    return Rectangle{
-        position.x - size.x / 2.0f,
-        position.y - size.y / 2.0f,
-        size.x,
-        size.y
-    };
+    return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y};
 }
 
 bool Yellow::isActive() const {

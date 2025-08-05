@@ -170,11 +170,9 @@ LogicInfo TowerSpawner::getInfoTower(TowerType type, const TowerModifies& modifi
     if (it != towerTemplates.end()) {
         it->second->setModifies(modifies); 
         return it->second->getInfo(); // Return the info of the tower
-    } else {
-        // should not be here
-        std::cerr << "Tower type not found: " << static_cast<int>(type) << std::endl;
-    };
-
+    }
+    
+    // std::cerr << "Tower type not found: " << static_cast<int>(type) << std::endl;
     return LogicInfo();
 }
 

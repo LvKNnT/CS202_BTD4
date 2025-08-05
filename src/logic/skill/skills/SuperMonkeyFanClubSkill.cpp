@@ -6,9 +6,9 @@
 #include "../../../core/Game.h"
 
 SuperMonkeyFanClubSkill::SuperMonkeyFanClubSkill()
-    : Skill(10.0f, "Super Monkey Fan Club") {
+    : Skill(50.0f, "Super Monkey Fan Club") {
     // Instant cooldown
-    duration = 5.0f;
+    duration = 15.0f;
     timer = cooldown;
 }
 
@@ -67,12 +67,13 @@ void SuperMonkeyFanClubSkill::activateSkill(std::shared_ptr<Tower> tower, std::v
     // Buff the closest towers
     for (auto& t : closestTowers) {
         if (auto towerPtr = t.lock()) {
-            SkillFriendAccess::getAttackBuff(*towerPtr).cooldownRatio *= 0.5f; // Halve the cooldown
+            SkillFriendAccess::getAttackBuff(*towerPtr).cooldownRatio *= 0.25f; // Halve the cooldown
+            SkillFriendAccess::getAttackBuff(*towerPtr).range += 32.0f;
+            SkillFriendAccess::getTag(*towerPtr) = "Super Monkey Fan Club Dart"; // Change the tag to Super Monkey Fan Club Dart
         }
     }
 
     // Reset the skill timer after activation
-    duration = 5.0f; 
     timer = 0.0f;
 
     std::cerr << "Activated Super Monkey Fan Club skill for " << closestTowers.size() << " towers." << std::endl;
@@ -85,7 +86,9 @@ void SuperMonkeyFanClubSkill::inActivateSkill() {
     // Reset the attack buffs of the closest towers
     for (auto& t : closestTowers) {
         if (auto towerPtr = t.lock()) {
-            SkillFriendAccess::getAttackBuff(*towerPtr).cooldownRatio /= 0.5f; // Reset to normal cooldown
+            SkillFriendAccess::getAttackBuff(*towerPtr).cooldownRatio /= 0.25f; // Reset to normal cooldown
+            SkillFriendAccess::getAttackBuff(*towerPtr).range -= 32.0f; // Reset range
+            SkillFriendAccess::getTag(*towerPtr) = "DartMonkey"; // Reset the tag to Dart Monkey
         }
     }
 
