@@ -152,6 +152,7 @@ public:
             speed, // knockbackSpeed
             knockbackChance // knockbackChance
         };
+    }
 
     void applyStun(float duration) {
         stunDuration = std::max(stunDuration, duration);

@@ -25,7 +25,7 @@ void GrandmasterNinja::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/GrandmasterNinjaUpgradeIcon.png");
 }
 
-void GrandmasterNinja::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) {
+void GrandmasterNinja::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
     for(auto& attack : attacks) {
         attackPattern = std::make_unique<OctupleAttack>();
         attackBuff.damage += 1;

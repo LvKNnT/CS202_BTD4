@@ -25,7 +25,7 @@ void BloonSabotage::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/BloonSabotageUpgradeIcon.png");
 }
 
-void BloonSabotage::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) {
+void BloonSabotage::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
     for(auto& attack : attacks) {
         // Ability slows down all bloons on screen and any incoming bloons by 50% for 15 seconds. Cannot soak through MOAB-class layers nor affect BADs and Bosses.   
     }
