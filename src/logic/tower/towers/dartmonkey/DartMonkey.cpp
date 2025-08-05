@@ -79,6 +79,7 @@ void DartMonkey::loadTexture() {
     // Update size based on the loaded texture
     size.x = Game::Instance().getTextureManager().getTexture(tag).width;
     size.y = Game::Instance().getTextureManager().getTexture(tag).height;
+    size = {50.0f, 50.0f}; // Set the size of the Dart Monkey tower
 
     // Get texture for the upgrade
     upgradeTop->loadTexture();
