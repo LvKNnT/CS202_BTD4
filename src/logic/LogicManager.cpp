@@ -42,32 +42,57 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
     Vector2 direction = {nextPoint.x - position.x, nextPoint.y - position.y};
     float distance = Vector2Distance(position, nextPoint);
 
-    // Continously move the enemy until it reaches the next point
-    while (elapsedTime > 0.0f || map.isLastPoint(trackIndex, pathIndex)) {
-        nextPoint = map.getNextPoint(trackIndex, pathIndex);
-        direction = {nextPoint.x - position.x, nextPoint.y - position.y};
-        distance = sqrtf(direction.x * direction.x + direction.y * direction.y);
+    // If speed is zero, don't move
+    if (speed == 0) {
+        direction = {0, 0};
+    } else if (speed > 0) {
+        // Move forward along the path
+        while (elapsedTime > 0.0f && !map.isLastPoint(trackIndex, pathIndex)) {
+            nextPoint = map.getNextPoint(trackIndex, pathIndex);
+            direction = {nextPoint.x - position.x, nextPoint.y - position.y};
+            distance = sqrtf(direction.x * direction.x + direction.y * direction.y);
 
-        // Move the enemy towards the next point
-        if (speed * elapsedTime < distance) {
-            position.x += direction.x / distance * speed * elapsedTime;
-            position.y += direction.y / distance * speed * elapsedTime;
-            elapsedTime = 0.0f; // Use all the rest of the time
-        } else {
-            position = nextPoint; // Move to the next point
-            trackIndex++; // Move to the next point in the path
-            elapsedTime -= distance / speed; // Reduce the elapsed time by the time taken to reach the next point
+            if (speed * elapsedTime < distance) {
+                position.x += direction.x / distance * speed * elapsedTime;
+                position.y += direction.y / distance * speed * elapsedTime;
+                elapsedTime = 0.0f;
+            } else {
+                position = nextPoint;
+                trackIndex++;
+                elapsedTime -= distance / speed;
+            }
+
+            if (map.isLastPoint(trackIndex, pathIndex)) {
+                enemy.position = position;
+                enemy.trackIndex = trackIndex;
+                enemy.die();
+                return -1;
+            }
         }
+    } else {
+        // Move backward along the path
+        speed = -speed; // Make speed positive for calculation
+        while (elapsedTime > 0.0f && trackIndex > 0) {
+            Vector2 prevPoint = map.getCurrentPoint(trackIndex, pathIndex);
+            direction = {prevPoint.x - position.x, prevPoint.y - position.y};
+            distance = sqrtf(direction.x * direction.x + direction.y * direction.y);
 
-        if (map.isLastPoint(trackIndex, pathIndex)) {
-            // Before returning, update the enemy's position and track index
-            enemy.position = position;
-            enemy.trackIndex = trackIndex; // Move to the next point in the path
-
-            enemy.die(); // Call the die method to handle reaching the end of the path
-
-            return -1; // Enemy has reached the end of the path
+            if (speed * elapsedTime < distance) {
+                position.x += direction.x / distance * speed * elapsedTime;
+                position.y += direction.y / distance * speed * elapsedTime;
+                elapsedTime = 0.0f;
+            } else {
+                position = prevPoint;
+                trackIndex--;
+                elapsedTime -= distance / speed;
+            }
+            // If we reach the start of the path, stop
+            if (trackIndex == 0) {
+                break;
+            }
         }
+        // Restore speed sign if needed elsewhere
+        speed = -speed;
     }
 
     // Before returning, update the enemy's position and track index
