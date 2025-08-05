@@ -7,6 +7,7 @@
 #include <fstream>
 
 #include "skill/Skill.h"
+#include "../interfaces/audio/MyAudio.h"
 
 void LogicManager::updateEnemies(EnemyManager& enemyManager, MapManager& mapManager, ResourceManager& resourceManager) {
     for (auto it = enemyManager.enemyList.begin(); it != enemyManager.enemyList.end(); ) {
@@ -601,13 +602,13 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 towerPtr->upgradeTop->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->attackPattern, towerPtr->skill);
                 towerPtr->info["nameTop"] = towerPtr->upgradeTop->getName();
                 towerPtr->info["descriptionTop"] = towerPtr->upgradeTop->getDescription();
-                towerPtr->cost += towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost;
-                resourceManager.currentResource.cash -= towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost;
+                towerPtr->cost += static_cast<int>(towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost);
+                resourceManager.currentResource.cash -= static_cast<int>(towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost);
 
                 towerPtr->upgradeTop = towerPtr->upgradeTop->buy();
                 towerPtr->upgradeTop->loadTexture();
                 towerPtr->info["upgradeNameTop"] = towerPtr->upgradeTop->getName();
-                towerPtr->info["upgradeCostTop"] = std::to_string(towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost);
+                towerPtr->info["upgradeCostTop"] = std::to_string(static_cast<int>(towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost));
                 towerPtr->info["upgradeDescriptionTop"] = towerPtr->upgradeTop->getDescription();
 
                 towerPtr->upgradeTextureHandler.upgradeTopTexture();
@@ -620,13 +621,13 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 towerPtr->upgradeMiddle->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->attackPattern, towerPtr->skill);
                 towerPtr->info["nameMiddle"] = towerPtr->upgradeMiddle->getName();
                 towerPtr->info["descriptionMiddle"] = towerPtr->upgradeMiddle->getDescription();
-                towerPtr->cost += towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost;
-                resourceManager.currentResource.cash -= towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost;
+                towerPtr->cost += static_cast<int>(towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost);
+                resourceManager.currentResource.cash -= static_cast<int>(towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost);
 
                 towerPtr->upgradeMiddle = towerPtr->upgradeMiddle->buy();
                 towerPtr->upgradeMiddle->loadTexture();
                 towerPtr->info["upgradeNameMiddle"] = towerPtr->upgradeMiddle->getName();
-                towerPtr->info["upgradeCostMiddle"] = std::to_string(towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost);
+                towerPtr->info["upgradeCostMiddle"] = std::to_string(static_cast<int>(towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost));
                 towerPtr->info["upgradeDescriptionMiddle"] = towerPtr->upgradeMiddle->getDescription();
 
                 towerPtr->upgradeTextureHandler.upgradeMiddleTexture();
@@ -639,13 +640,13 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 towerPtr->upgradeBottom->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->attackPattern, towerPtr->skill);
                 towerPtr->info["nameBottom"] = towerPtr->upgradeBottom->getName();
                 towerPtr->info["descriptionBottom"] = towerPtr->upgradeBottom->getDescription();
-                towerPtr->cost += towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost;
-                resourceManager.currentResource.cash -= towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost;
+                towerPtr->cost += static_cast<int>(towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost);
+                resourceManager.currentResource.cash -= static_cast<int>(towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost);
 
                 towerPtr->upgradeBottom = towerPtr->upgradeBottom->buy();
                 towerPtr->upgradeBottom->loadTexture();
                 towerPtr->info["upgradeNameBottom"] = towerPtr->upgradeBottom->getName();
-                towerPtr->info["upgradeCostBottom"] = std::to_string(towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost);
+                towerPtr->info["upgradeCostBottom"] = std::to_string(static_cast<int>(towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost));
                 towerPtr->info["upgradeDescriptionBottom"] = towerPtr->upgradeBottom->getDescription();
 
                 towerPtr->upgradeTextureHandler.upgradeBottomTexture();
@@ -678,6 +679,8 @@ bool LogicManager::activateSkillTower(TowerManager& towerManager, EnemyManager& 
 void LogicManager::sellTower(ResourceManager& resourceManager, TowerManager& towerManager) {
     int sellValue = towerManager.sellTower();
     if (sellValue > 0) {
+        MySound sellSound("Cash");
+        sellSound.start();
         resourceManager.currentResource.cash += sellValue;
     }
 }
@@ -697,7 +700,7 @@ bool LogicManager::playRound(ResourceManager& resourceManager, ModeManager& mode
     for(const auto& [type, properties] : enemies) {
         // Spawn each enemy with the given type and properties
         auto [position, pathIdx] = mapManager.getCurrentMap().getPositionAndPathIdx(type);
-        enemyManager.spawnEnemy(type, properties, mapManager.getCurrentMap().getCurrentPoint(0));
+        enemyManager.spawnEnemy(type, properties, mapManager.getCurrentMap().getCurrentPoint(0, pathIdx), pathIdx);
     }
 
     // end round logic

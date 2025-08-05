@@ -1,5 +1,6 @@
 #include "GameState.h"
 #include "../../core/Game.h"
+#include "../../interfaces/audio/MyAudio.h"
 
 #include <fstream>
 
@@ -53,13 +54,14 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
 
     towerBoxPos = {1000, 145};
     for(int i = 0; i < maxTowerTypes; i++) {
-        if(i <= 1) {
+        if(i <= 2) {
             auto infos = Game::Instance().getGameLogic().getInfoTower(getTowerType(i));
             towerCost[i] = std::make_shared<TextField>('$' + infos["cost"], Game::Instance().getFontManager().getFont("SmallBold"), WHITE, 20, 100, (Vector2) {towerBoxPos.x, towerBoxPos.y + 103 - 30});
             if(i == 0) chooseTowerButton[i] = std::make_shared<ChooseDartMonkeyTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
             if(i == 1) chooseTowerButton[i] = std::make_shared<ChooseBombShooterTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
+            if(i == 2) chooseTowerButton[i] = std::make_shared<ChooseNinjaMonkeyTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
         }
-        if(i > 1) {
+        if(i > 2) {
             chooseTowerButton[i] = std::make_shared<ChooseBombShooterTower>(Game::Instance().getTextureManager().getTexture("Bomb Shooter Icon"), 1, 103, 100, towerBoxPos);
             towerCost[i] = std::make_shared<TextField>("$6969", Game::Instance().getFontManager().getFont("SmallBold"), WHITE, 20, 100, (Vector2) {towerBoxPos.x, towerBoxPos.y + 103 - 30});
         }
@@ -154,13 +156,14 @@ void GameState::draw() const {
     // Draw
     Game::Instance().getGameLogic().draw();
     DrawTextureEx(background, (Vector2) {0, 0}, 0.0, 1.0, (Color) {140, 140, 140, 255});
-
+    
     if(towerPanel) towerPanel->draw();
     if(roundPanel) roundPanel->draw();
     if(panel) panel->draw();
 }
 
 void GameState::update(Event::Type event) {
+    MySound upgradeSound("Upgrade");
     // Set info for ChooseTowerButton
     switch(event) {
         case Event::Type::MoveNext:
@@ -212,15 +215,17 @@ void GameState::update(Event::Type event) {
         case Event::Type::ClickedChooseBomb:
             clickedTowerType = TowerType::BombShooter;
             break;
+        case Event::Type::ClickedChooseNinjaMonkey:
+            clickedTowerType = TowerType::NinjaMonkey;
+            break;
         case Event::Type::UpgradeTowerLeft:
-            Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Top);
-            std::cout<<Game::Instance().getGameLogic().getInfoTower()["upgradeNameTop"]<<"\n";
+            if(Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Top)) upgradeSound.start();
             break;
         case Event::Type::UpgradeTowerMiddle:
-            Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Middle);
+            if(Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Middle)) upgradeSound.start();
             break;
         case Event::Type::UpgradeTowerRight:
-            Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Bottom);
+            if(Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Bottom)) upgradeSound.start();
             break;
         case Event::Type::SellTower:
             Game::Instance().getGameLogic().sellTower();
@@ -254,7 +259,10 @@ void GameState::handleInput() {
     if(clickedTowerType != TowerType::None) {
         Game::Instance().getGameLogic().putTower(clickedTowerType, GetMousePosition());
         if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-            Game::Instance().getGameLogic().spawnTower();
+            if(Game::Instance().getGameLogic().spawnTower()) {
+                MySound placingSound("Placing");
+                placingSound.start();
+            }
             Game::Instance().getGameLogic().unPutTower();
             pickTower();
             clickedTowerType = TowerType::None;
@@ -366,6 +374,8 @@ TowerType GameState::getTowerType(int i) const {
             return TowerType::DartMonkey;
         case 1:
             return TowerType::BombShooter;
+        case 2: 
+            return TowerType::NinjaMonkey;
     }
     return TowerType::None;
 }

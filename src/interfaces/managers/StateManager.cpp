@@ -1,5 +1,6 @@
 #include "StateManager.h"
 #include "../../core/Game.h"
+#include "../audio/MyAudio.h"
 
 void StateManager::initialize() {
     isNewGame = false;
@@ -24,6 +25,10 @@ void StateManager::handleInput() {
 }
 
 void StateManager::update(Event::Type event) {
+    // Initialize sound
+    MySound victorySound("Victory");
+    MySound gameOverSound("GameOver");
+
     switch(event) {
         case Event::Type::ToMapSelection:
             stateStack.pushState(mapSelectionState);
@@ -91,11 +96,13 @@ void StateManager::update(Event::Type event) {
             canResume = false;
             stateStack.pushState(gameOverState);
             stateStack.setdrawPreviousStates(true);
+            gameOverSound.start();
             break;
         case Event::Type::ToVictory:
             canResume = false;
             stateStack.pushState(victoryState);
             stateStack.setdrawPreviousStates(true);
+            victorySound.start();
             break;
         case Event::Type::Replay:
             std::cerr<<"Yes\n";

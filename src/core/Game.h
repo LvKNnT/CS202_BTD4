@@ -11,6 +11,8 @@
 #include "../interfaces/states/StateStack.h"
 #include "../interfaces/states/MainMenuState.h"
 #include "../interfaces/states/LoadingState.h"
+#include "../interfaces/audio/MyAudio.h"
+
 #include "IObserver.h"
 
 // Logic
@@ -53,6 +55,7 @@ private:
     void loadTexture();
     void loadFont();
     void loadSound();
+    void loadTowerTexture();
 };
 
 #endif // GAME_H
