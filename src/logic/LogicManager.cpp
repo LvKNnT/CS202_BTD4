@@ -585,6 +585,8 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 towerPtr->info["upgradeCostTop"] = std::to_string(towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost);
                 towerPtr->info["upgradeDescriptionTop"] = towerPtr->upgradeTop->getDescription();
 
+                towerPtr->upgradeTextureHandler.upgradeTopTexture();
+
                 return true;
             }
             break;
@@ -602,6 +604,8 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 towerPtr->info["upgradeCostMiddle"] = std::to_string(towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost);
                 towerPtr->info["upgradeDescriptionMiddle"] = towerPtr->upgradeMiddle->getDescription();
 
+                towerPtr->upgradeTextureHandler.upgradeMiddleTexture();
+
                 return true;
             }
             break;
@@ -618,6 +622,8 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 towerPtr->info["upgradeNameBottom"] = towerPtr->upgradeBottom->getName();
                 towerPtr->info["upgradeCostBottom"] = std::to_string(towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost);
                 towerPtr->info["upgradeDescriptionBottom"] = towerPtr->upgradeBottom->getDescription();
+
+                towerPtr->upgradeTextureHandler.upgradeBottomTexture();
 
                 return true;
             }

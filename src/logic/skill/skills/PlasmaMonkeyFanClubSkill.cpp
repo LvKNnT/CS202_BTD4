@@ -46,7 +46,7 @@ void PlasmaMonkeyFanClubSkill::activateSkill(std::shared_ptr<Tower> tower, std::
 
     Vector2 position = SkillFriendAccess::getTowerPosition(*tower);
 
-    // Find 10 towers closest to position
+    // Find 20 towers closest to position
     std::vector<std::pair<float, std::weak_ptr<Tower>>> towerDistances;
     for (auto& t : towers) {
         if(SkillFriendAccess::getTowerType(*t) != TowerType::DartMonkey) continue; // Only activate for Dart Monkeys
@@ -58,8 +58,8 @@ void PlasmaMonkeyFanClubSkill::activateSkill(std::shared_ptr<Tower> tower, std::
     std::sort(towerDistances.begin(), towerDistances.end(),
               [](const auto& a, const auto& b) { return a.first < b.first; });
 
-    // Activate the closest 10 towers
-    for (size_t i = 0; i < std::min(towerDistances.size(), size_t(10)); ++i) {
+    // Activate the closest 20 towers
+    for (size_t i = 0; i < std::min(towerDistances.size(), size_t(20)); ++i) {
         if (auto towerPtr = towerDistances[i].second.lock()) {
             closestTowers.push_back(towerPtr);
         }
@@ -72,6 +72,7 @@ void PlasmaMonkeyFanClubSkill::activateSkill(std::shared_ptr<Tower> tower, std::
             SkillFriendAccess::getAttackBuff(*towerPtr).cooldownRatio *= 0.06f; 
             SkillFriendAccess::getAttackBuff(*towerPtr).damage += 1;
             SkillFriendAccess::getAttackBuff(*towerPtr).pierce += 3; 
+            SkillFriendAccess::getTag(*towerPtr) = "Plasma Monkey Fan Club Dart"; // Change the tag to Plasma Monkey Fan Club Dart
         }
     }
 
@@ -92,6 +93,7 @@ void PlasmaMonkeyFanClubSkill::inActivateSkill() {
             SkillFriendAccess::getAttackBuff(*tower).cooldownRatio /= 0.06f; 
             SkillFriendAccess::getAttackBuff(*tower).damage -= 1; 
             SkillFriendAccess::getAttackBuff(*tower).pierce -= 3; 
+            SkillFriendAccess::getTag(*tower) = "DartMonkey"; // Reset the tag to Dart Monkey
         }
     }
     closestTowers.clear(); // Clear the list of activated towers

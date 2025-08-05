@@ -6,7 +6,7 @@
 #include "PlasmaMonkeyFanClubUpgrade.h"
 
 SuperMonkeyFanClubUpgrade::SuperMonkeyFanClubUpgrade()
-    : Upgrade("Super Monkey Fan Club", 5000, "Temporarily transforms all nearby Dart Monkeys into Super Monkeys.") {
+    : Upgrade("Super Monkey Fan Club", 7200, "Super Monkey Fan Club Ability: Converts up to 10 nearby Dart Monkeys including itself into Super Monkeys for 15 seconds. Regular attack speed also increased.") {
     // Constructor implementation can be extended if needed
     nextUpgrade = std::make_unique<PlasmaMonkeyFanClubUpgrade>(); // Temporary lmao
     tag = "Super Monkey Fan Club";
@@ -25,6 +25,7 @@ std::unique_ptr<Upgrade> SuperMonkeyFanClubUpgrade::clone() const {
 void SuperMonkeyFanClubUpgrade::loadTexture() {
     // Load the texture for Super Monkey Fan Club upgrade
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/SuperMonkeyFanClubUpgradeIcon.png");
+    Game::Instance().getTextureManager().loadTexture("Super Monkey Fan Club Dart", "../assets/tower/Dart_Monkey/Super_Monkey.png");
 }
 
 void SuperMonkeyFanClubUpgrade::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {

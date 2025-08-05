@@ -69,6 +69,7 @@ void SuperMonkeyFanClubSkill::activateSkill(std::shared_ptr<Tower> tower, std::v
         if (auto towerPtr = t.lock()) {
             SkillFriendAccess::getAttackBuff(*towerPtr).cooldownRatio *= 0.25f; // Halve the cooldown
             SkillFriendAccess::getAttackBuff(*towerPtr).range += 32.0f;
+            SkillFriendAccess::getTag(*towerPtr) = "Super Monkey Fan Club Dart"; // Change the tag to Super Monkey Fan Club Dart
         }
     }
 
@@ -87,6 +88,7 @@ void SuperMonkeyFanClubSkill::inActivateSkill() {
         if (auto towerPtr = t.lock()) {
             SkillFriendAccess::getAttackBuff(*towerPtr).cooldownRatio /= 0.25f; // Reset to normal cooldown
             SkillFriendAccess::getAttackBuff(*towerPtr).range -= 32.0f; // Reset range
+            SkillFriendAccess::getTag(*towerPtr) = "DartMonkey"; // Reset the tag to Dart Monkey
         }
     }
 

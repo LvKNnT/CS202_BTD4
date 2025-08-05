@@ -9,6 +9,9 @@ Vector2& SkillFriendAccess::getTowerPosition(Tower& tower) {
 AttackBuff& SkillFriendAccess::getAttackBuff(Tower& tower) {
     return tower.attackBuff; // Access the AttackBuff of the tower
 }
+std::string& SkillFriendAccess::getTag(Tower& tower) {
+    return tower.tag; // Access the tag of the tower
+}
 
 BloonDebuff& SkillFriendAccess::getDebuff(Enemy& enemy) {
     return enemy.debuff; // Access the BloonDebuff of the enemy

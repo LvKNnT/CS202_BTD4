@@ -147,8 +147,8 @@ void GameLogic::draw() const {
     // Draw by the managers
     mapManager.drawMap();
     enemyManager.drawEnemies();
-    towerManager.drawTowers();
     bulletManager.drawBullets();
+    towerManager.drawTowers();
 }
 
 void GameLogic::unLoad() {

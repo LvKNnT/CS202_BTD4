@@ -84,11 +84,12 @@ public:
     float stunDuration = 0.0f; 
     float freezeDuration = 0.0f;
     float knockbackDuration = 0.0f;
+    float knockbackSpeed = 1.0f;
 
-    BloonDebuff(float slowRatio = 0.0f, float slowDuration = 0.0f, float stunDuration = 0.0f, float freezeDuration = 0.0f, float knockbackDuration = 0.0f)
-        : slowRatio(slowRatio), slowDuration(slowDuration), stunDuration(stunDuration), freezeDuration(freezeDuration), knockbackDuration(knockbackDuration) {}
+    BloonDebuff(float slowRatio = 0.0f, float slowDuration = 0.0f, float stunDuration = 0.0f, float freezeDuration = 0.0f, float knockbackDuration = 0.0f, float knockbackSpeed = 1.0f)
+        : slowRatio(slowRatio), slowDuration(slowDuration), stunDuration(stunDuration), freezeDuration(freezeDuration), knockbackDuration(knockbackDuration), knockbackSpeed(knockbackSpeed) {}
     BloonDebuff(const BloonDebuff& other)
-        : slowRatio(other.slowRatio), slowDuration(other.slowDuration), stunDuration(other.stunDuration), freezeDuration(other.freezeDuration), knockbackDuration(other.knockbackDuration) {}
+        : slowRatio(other.slowRatio), slowDuration(other.slowDuration), stunDuration(other.stunDuration), freezeDuration(other.freezeDuration), knockbackDuration(other.knockbackDuration), knockbackSpeed(other.knockbackSpeed) {}
     ~BloonDebuff() = default;
 
     BloonDebuff& operator=(const BloonDebuff& other) {
@@ -98,6 +99,7 @@ public:
             stunDuration = other.stunDuration;
             freezeDuration = other.freezeDuration;
             knockbackDuration = other.knockbackDuration;
+            knockbackSpeed = other.knockbackSpeed;
         }
         return *this;
     }
@@ -108,7 +110,8 @@ public:
             (slowDuration < other.slowDuration) ? other.slowDuration : slowDuration,
             (stunDuration < other.stunDuration) ? other.stunDuration : stunDuration,
             (freezeDuration < other.freezeDuration) ? other.freezeDuration : freezeDuration,
-            (knockbackDuration < other.knockbackDuration) ? other.knockbackDuration : knockbackDuration
+            (knockbackDuration < other.knockbackDuration) ? other.knockbackDuration : knockbackDuration,
+            (knockbackSpeed < other.knockbackSpeed) ? other.knockbackSpeed : knockbackSpeed
         );
     }
 
@@ -118,6 +121,7 @@ public:
         stunDuration = (stunDuration < other.stunDuration) ? other.stunDuration : stunDuration;
         freezeDuration = (freezeDuration < other.freezeDuration) ? other.freezeDuration : freezeDuration;
         knockbackDuration = (knockbackDuration < other.knockbackDuration) ? other.knockbackDuration : knockbackDuration;
+        knockbackSpeed = (knockbackSpeed < other.knockbackSpeed) ? other.knockbackSpeed : knockbackSpeed;
         return *this;
     }
 
@@ -127,17 +131,19 @@ public:
             duration,
             0.0f, // stunDuration
             0.0f, // freezeDuration
-            0.0f  // knockbackDuration
+            0.0f,  // knockbackDuration
+            1.0f // knockbackSpeed
         };
     }
 
-    BloonDebuff getIKnockBack(float duration) const {
+    BloonDebuff getIKnockBack(float duration, float speed) const {
         return *this + BloonDebuff{
             0.0f, // slowRatio
             0.0f, // slowDuration
             0.0f, // stunDuration
             0.0f, // freezeDuration
-            duration // knockbackDuration
+            duration, // knockbackDuration
+            speed // knockbackSpeed
         };
     }
 
@@ -169,7 +175,7 @@ public:
 
     int calKnockbackSpeed(int speed) const {
         if(knockbackDuration <= 0.0f) return 0;
-        return - speed * 10;
+        return - speed * knockbackSpeed; // negative speed for knockback
     }
 };
 

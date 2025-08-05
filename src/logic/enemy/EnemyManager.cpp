@@ -62,11 +62,11 @@ void EnemyManager::drawEnemies() const {
     for (const auto& enemy : enemyList) {
         if(enemy && static_cast<int>(enemy->type) < 12) {
             // draw bounding box for debugging
-            Rectangle boundingBox = enemy->getBoundingBox();
-            float rotation = enemy->rotation;
-            boundingBox.x += enemy->size.x / 2.0f; // Adjust bounding box position
-            boundingBox.y += enemy->size.y / 2.0f; // Adjust bounding
-            DrawRectanglePro(boundingBox, { boundingBox.width / 2.0f, boundingBox.height / 2.0f }, rotation, RED);
+            // Rectangle boundingBox = enemy->getBoundingBox();
+            // float rotation = enemy->rotation;
+            // boundingBox.x += enemy->size.x / 2.0f; // Adjust bounding box position
+            // boundingBox.y += enemy->size.y / 2.0f; // Adjust bounding
+            // DrawRectanglePro(boundingBox, { boundingBox.width / 2.0f, boundingBox.height / 2.0f }, rotation, RED);
             
             enemy->draw();
         }
@@ -75,11 +75,11 @@ void EnemyManager::drawEnemies() const {
     for (const auto& enemy : enemyList) {
         if(enemy && static_cast<int>(enemy->type) > 11) {
             // draw bounding box for debugging
-            Rectangle boundingBox = enemy->getBoundingBox();
-            float rotation = enemy->rotation;
-            boundingBox.x += enemy->size.x / 2.0f; // Adjust bounding box position
-            boundingBox.y += enemy->size.y / 2.0f; // Adjust bounding
-            DrawRectanglePro(boundingBox, { boundingBox.width / 2.0f, boundingBox.height / 2.0f }, rotation, RED);
+            // Rectangle boundingBox = enemy->getBoundingBox();
+            // float rotation = enemy->rotation;
+            // boundingBox.x += enemy->size.x / 2.0f; // Adjust bounding box position
+            // boundingBox.y += enemy->size.y / 2.0f; // Adjust bounding
+            // DrawRectanglePro(boundingBox, { boundingBox.width / 2.0f, boundingBox.height / 2.0f }, rotation, RED);
             
             enemy->draw();
         }
