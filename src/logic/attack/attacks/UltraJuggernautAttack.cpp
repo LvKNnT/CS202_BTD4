@@ -52,7 +52,7 @@ void UltraJuggernautAttack::update(BulletManager& bulletManager, const Vector2& 
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
         
-        attackPattern.execute(bulletManager, BulletType::UltraJuggernaut, position, {10.0f, 10.0f}, angle, 
+        attackPattern.execute(bulletManager, BulletType::UltraJuggernaut, position, {60.0f, 60.0f}, angle, 
             damage + attackBuff.damage, 
             speed * attackBuff.speedRatio, 
             pierce + attackBuff.pierce, 

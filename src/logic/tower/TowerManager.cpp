@@ -3,8 +3,6 @@
 #include <fstream>
 #include <algorithm>
 
-#include "../skill/Skill.h"
-
 TowerManager::TowerManager(TowerModifies modifies)
     : currentModifies(modifies), towerIDCounter(0) {
     // Initialize unique_ptr

@@ -9,6 +9,7 @@
 #include "../attack/AttackPattern.h"
 #include "Upgrade.h"
 #include "UpgradeUnits.h"
+#include "UpgradeTextureHandler.h"
 #include "../level/TowerModifies.h"
 #include "../LogicInfo.h"
 
@@ -51,6 +52,7 @@ protected:
         upgradeTop, 
         upgradeMiddle, 
         upgradeBottom; // Upgrades for the tower
+    UpgradeTextureHandler upgradeTextureHandler; // Handles the textures for upgrades
 
     TowerType type; // Type of the tower
     TargetPriority targetPriority; 

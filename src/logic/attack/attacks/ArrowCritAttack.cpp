@@ -54,7 +54,7 @@ void ArrowCritAttack::update(BulletManager& bulletManager, const Vector2& target
         angle = angle * (180.0f / PI); // Convert radians to degrees
 
         if (counter < maxCounter) {
-            attackPattern.execute(bulletManager, BulletType::Arrow, position, {10.0f, 10.0f}, angle,
+            attackPattern.execute(bulletManager, BulletType::Arrow, position, {50.0f, 12.0f}, angle,
                 damage + attackBuff.damage,
                 speed * attackBuff.speedRatio,
                 pierce + attackBuff.pierce,
@@ -66,7 +66,7 @@ void ArrowCritAttack::update(BulletManager& bulletManager, const Vector2& target
                 towerId);
             counter++;
         } else {
-            attackPattern.execute(bulletManager, BulletType::ArrowCrit, position, {10.0f, 10.0f}, angle,
+            attackPattern.execute(bulletManager, BulletType::ArrowCrit, position, {50.0f, 15.0f}, angle,
                 (damage + attackBuff.damage) * 10,
                 speed * attackBuff.speedRatio,
                 pierce + attackBuff.pierce,

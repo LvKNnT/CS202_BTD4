@@ -69,7 +69,7 @@ void ArrowCrit::draw() const {
         return; 
     }
 
-    DrawCircleV(position, 10, RED); // Example drawing a red circle for the arrow crit
+    // DrawCircleV(position, 10, RED); // Example drawing a red circle for the arrow crit
 
     // Rounded draw position
     Vector2 draw_position = {
@@ -78,7 +78,7 @@ void ArrowCrit::draw() const {
     };    
 
     DrawTexturePro(Game::Instance().getTextureManager().getTexture(tag), 
-                   {0, 0, size.x, size.y},
+                   {0, 0, (float) Game::Instance().getTextureManager().getTexture(tag).width, (float) Game::Instance().getTextureManager().getTexture(tag).height},
                    {draw_position.x, draw_position.y, size.x, size.y},
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,
@@ -97,8 +97,7 @@ std::vector<std::unique_ptr<Bullet>> ArrowCrit::getChild() {
 }
 
 Rectangle ArrowCrit::getBoundingBox() const {
-    return { position.x, position.y, size.x, size.y }; // Return the bounding box of the bullet
-}
+return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y};}
 
 bool ArrowCrit::isActive() const {
     return isActiveFlag; // Return the active status of the bullet

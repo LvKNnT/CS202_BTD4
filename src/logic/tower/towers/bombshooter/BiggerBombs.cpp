@@ -1,7 +1,6 @@
 #include "BiggerBombs.h"
 #include "../../../../core/Game.h"
 
-
 BiggerBombs::BiggerBombs() 
     : Upgrade("Bigger Bombs", 250, "Shoots larger bombs, they have a larger blast area and more popping power.") {
     // Constructor implementation can be extended if needed
@@ -24,7 +23,7 @@ void BiggerBombs::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/BiggerBombsUpgradeIcon.png");
 }
 
-void BiggerBombs::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) {
+void BiggerBombs::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
     for(auto& attack : attacks) {
         attackBuff.range += 6.0f; // Increase range by 6
         attackBuff.pierce += 6;

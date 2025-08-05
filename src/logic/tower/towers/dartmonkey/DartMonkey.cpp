@@ -4,7 +4,7 @@
 
 #include "../../../attack/attacks/DartAttack.h"
 #include "../../../attack/patterns/NormalAttack.h"
-#include "../../../skill/skills/SuperMonkeyFanClubSkill.h"
+#include "../../../skill/Skill.h"
 #include "SharpShots.h"
 #include "QuickShots.h"
 #include "LongRangeDarts.h"
@@ -28,9 +28,9 @@ DartMonkey::DartMonkey(Vector2 position)
      * * * lifeSpan = 0.25f
      * * * properties = BulletProperties::normal()
      */
-    attacks.push_back(std::make_unique<DartAttack>(128.0f, 0.95f, position, towerId, 1, 600, 2, 0.25f, BulletProperties::normal(), BloonDebuff().getISlow(0.5f, 0.25f).getIKnockBack(0.5f), BloonDebuff())); 
+    attacks.push_back(std::make_unique<DartAttack>(128.0f, 0.95f, position, towerId, 1, 600, 2, 0.25f, BulletProperties::normal(), BloonDebuff(), BloonDebuff())); 
     attackPattern = std::make_unique<NormalAttack>(); 
-    skill = std::make_unique<SuperMonkeyFanClubSkill>();
+    skill = nullptr;
 
     // Upgrade Path
     upgradeTop = std::make_unique<SharpShots>();
@@ -75,7 +75,6 @@ void DartMonkey::loadTexture() {
     // Load the texture for the Dart Monkey tower
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/DartMonkey.png");
     Game::Instance().getTextureManager().loadTexture("NoUpgrade", "../assets/tower/NoUpgradeIcon.png");
-    skill->loadTexture(); 
     
     // Update size based on the loaded texture
     size.x = Game::Instance().getTextureManager().getTexture(tag).width;
@@ -85,6 +84,8 @@ void DartMonkey::loadTexture() {
     upgradeTop->loadTexture();
     upgradeMiddle->loadTexture();
     upgradeBottom->loadTexture();
+
+    upgradeTextureHandler.loadTextures();
 }
 
 void DartMonkey::update() {
@@ -92,7 +93,7 @@ void DartMonkey::update() {
     for(auto& attack : attacks) {
         attack->update();
     }
-    skill->update(); 
+    if(skill) skill->update(); 
 }
 
 void DartMonkey::setRotation(float rotation) {
@@ -101,7 +102,7 @@ void DartMonkey::setRotation(float rotation) {
 
 void DartMonkey::draw() const {
     // Draw the Dart Monkey tower using raylib functions
-    DrawCircleV(position, 10, YELLOW); // Example drawing a yellow circle for the tower
+    // DrawCircleV(position, 10, YELLOW); // Example drawing a yellow circle for the tower
 
     // Rounded draw position
     Vector2 draw_position = {
@@ -110,15 +111,20 @@ void DartMonkey::draw() const {
     };    
 
     DrawTexturePro(Game::Instance().getTextureManager().getTexture(tag), 
-                   {0, 0, size.x, size.y},
+                   {0, 0, (float) Game::Instance().getTextureManager().getTexture(tag).width, (float) Game::Instance().getTextureManager().getTexture(tag).height},
                    {draw_position.x, draw_position.y, size.x, size.y},
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,
                    WHITE); // Draw the Dart Monkey texture with the specified position and rotation
 
+    // Draw the upgrades
+    upgradeTextureHandler.draw(getBoundingBox());
+
     // draw the hitbox
-    Rectangle hitbox = getBoundingBox();
-    DrawRectangleLinesEx(hitbox, 2.0f, RED); // Draw the hitbox in red for visibility
+    // Rectangle hitbox = getBoundingBox();
+    // hitbox.x += size.x / 2.0f; // Adjust hitbox position
+    // hitbox.y += size.y / 2.0f; // Adjust hitbox position
+    // DrawRectanglePro(hitbox, {size.x / 2.0f, size.y / 2.0f}, rotation, Fade(GREEN, 0.5f)); // Draw the hitbox with a semi-transparent green color
 }
 
 void DartMonkey::drawRange() const {
@@ -175,16 +181,18 @@ LogicInfo DartMonkey::getInfo() {
     }
 
     // for skill
-    info["skillName"] = skill->getName();
-    info["skillCooldown"] = std::to_string(skill->getCooldownTime());
-    info["skillTimer"] = std::to_string(skill->getTimer());
+    if(skill) {
+        info["skillName"] = skill->getName();
+        info["skillCooldown"] = std::to_string(skill->getCooldownTime());
+        info["skillTimer"] = std::to_string(skill->getTimer());
+    }
     
     return this->info;
 }
 
 Rectangle DartMonkey::getBoundingBox() const {
     // Provide the bounding box for collision detection
-    return {position.x - size.x / 2, position.y - size.y / 2, size.x, size.y};
+    return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y};
 }
 
 bool DartMonkey::isActive() const {

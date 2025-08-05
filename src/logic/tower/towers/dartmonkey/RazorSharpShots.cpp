@@ -25,10 +25,8 @@ void RazorSharpShots::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/RazorSharpShotsUpgradeIcon.png");
 }
 
-void RazorSharpShots::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) {
-    for (auto& attack : attacks) {
-        attackBuff.pierce += 1;
-    }
+void RazorSharpShots::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+    attackBuff.pierce += 1;
 }
 
 std::unique_ptr<Upgrade> RazorSharpShots::buy() {

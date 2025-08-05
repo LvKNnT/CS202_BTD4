@@ -25,10 +25,8 @@ void VeryQuickShots::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/VeryQuickShotsUpgradeIcon.png");
 }
 
-void VeryQuickShots::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) {
-    for (auto& attack : attacks) {
-        attackBuff.cooldownRatio *= 0.8f; // Reduce cooldown by 30%
-    }
+void VeryQuickShots::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+    attackBuff.cooldownRatio *= 0.8f; 
 }
 
 std::unique_ptr<Upgrade> VeryQuickShots::buy() {

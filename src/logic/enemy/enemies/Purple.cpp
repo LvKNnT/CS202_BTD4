@@ -71,12 +71,7 @@ void Purple::draw() const {
 }
 
 Rectangle Purple::getBoundingBox() const {
-    return Rectangle{
-        position.x - size.x / 2.0f,
-        position.y - size.y / 2.0f,
-        size.x,
-        size.y
-    };
+    return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y};
 }
 
 bool Purple::isActive() const {

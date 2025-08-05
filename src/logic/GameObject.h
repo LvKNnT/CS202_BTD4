@@ -7,8 +7,9 @@
 #include <string>
 #include "../interfaces/Drawable.h"
 #include "../interfaces/Updatable.h"
+#include "../utils/Hitbox.h"
 
-class GameObject : public Drawable, public Hitbox {
+class GameObject : public Drawable, public HitBox {
 public:
     GameObject();
     // Constructor with position, size, rotation, and tag

@@ -11,7 +11,7 @@ public:
 
 };
 
-class Hitbox {
+class HitBox {
 public:
     virtual Rectangle getBoundingBox() const = 0;
 };

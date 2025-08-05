@@ -19,16 +19,15 @@ std::vector<std::pair<BloonType, BloonProperties>> AlternativeModePlayer::getEne
     std::vector<std::pair<BloonType, BloonProperties>> bloonList;
 
     // playing round
-    int counter = 0;
     timer += GetFrameTime();
     for(auto& [type, properties, count, startTime, endTime, bloonCount] : currentRound.bloonTypes) {
-        if(bloonCount > count) continue;
+        if(bloonCount >= count) continue;
 
         // special case
         if(count == 1) {
             if(bloonCount > 0 || timer < startTime) continue;
 
-            bloonCount = 2;
+            bloonCount = 1;
             bloonList.emplace_back(type, properties);
 
             continue;
@@ -45,7 +44,14 @@ std::vector<std::pair<BloonType, BloonProperties>> AlternativeModePlayer::getEne
 }
 
 bool AlternativeModePlayer::canPlayNextRound(bool isClear) const {
-    return timer >= currentRound.bloonTypes.back().endTime && isClear;
+    if(!isClear) return false;
+
+    for(const auto& wave : currentRound.bloonTypes) {
+        if(wave.bloonCount < wave.count) {
+            return false; // Not all bloons in the current round have been cleared
+        }
+    }
+    return true; // All bloons in the current round have been cleared
 }
 
 int AlternativeModePlayer::getRoundReward() {

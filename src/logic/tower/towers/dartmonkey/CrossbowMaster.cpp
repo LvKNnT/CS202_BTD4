@@ -25,7 +25,7 @@ void CrossbowMaster::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/CrossbowMasterUpgradeIcon.png");
 }
 
-void CrossbowMaster::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) {
+void CrossbowMaster::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
     for (auto& attack : attacks) {
         /**
          * * range = 320.0f
