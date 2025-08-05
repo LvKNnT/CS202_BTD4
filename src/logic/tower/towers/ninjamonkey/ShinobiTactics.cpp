@@ -25,7 +25,7 @@ void ShinobiTactics::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/ShinobiTacticsUpgradeIcon.png");
 }
 
-void ShinobiTactics::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern) {
+void ShinobiTactics::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
     for(auto& attack : attacks) {
         // Increases attack speed of itself and other Ninjas in range by +8% multiplicatively and pierce by +8% additively. Stacks up to 20 times.
     }
