@@ -28,6 +28,7 @@ void StateManager::update(Event::Type event) {
     // Initialize sound
     MySound victorySound("Victory");
     MySound gameOverSound("GameOver");
+    MySound secretVictorySound("SugoiSugoi");
 
     switch(event) {
         case Event::Type::ToMapSelection:
@@ -102,7 +103,8 @@ void StateManager::update(Event::Type event) {
             canResume = false;
             stateStack.pushState(victoryState);
             stateStack.setdrawPreviousStates(true);
-            victorySound.start();
+            if(Utils::rand(1, 100) > 5) victorySound.start();
+            else secretVictorySound.start(); 
             break;
         case Event::Type::Replay:
             std::cerr<<"Yes\n";

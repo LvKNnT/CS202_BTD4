@@ -33,9 +33,11 @@ public:
     void choosePreviousPriority();
     void choosePreviousPriority(Vector2 position);
     int sellTower();
+    void handleSellNinjaTower(std::shared_ptr<Tower> towerPtr);
 
     void drawTowers() const;
     void updateTowers();
+    void updateNinjaTower(); // update function for ONLY SHINOBI TACTICS UPGRADE
 
     // save/load
     void save(const std::string& filePath) const;

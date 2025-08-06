@@ -27,6 +27,8 @@ public:
     void stop(AudioType audioType, std::string name);
     void increaseVolume(AudioType audioType);
     void decreaseVolume(AudioType audioType);
+    void mute(AudioType audioType);
+    void unmute(AudioType audioType);
     int getVolume(AudioType audioType) const;
 
     void update(Event::Type event) override;

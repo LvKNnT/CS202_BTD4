@@ -14,6 +14,10 @@ public:
         LowerSound,
         HigherMusic,
         LowerMusic,
+        MuteSound,
+        UnmuteSound, 
+        MuteMusic,
+        UnmuteMusic,
         
         // State
         ToOptions, 

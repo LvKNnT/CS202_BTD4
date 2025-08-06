@@ -1,7 +1,10 @@
 #ifndef NINJAMONKEY_H
 #define NINJAMONKEY_H
 
+#include <unordered_map>
+
 #include "../../Tower.h"
+
 
 class NinjaMonkey : public Tower {
 public:
@@ -25,6 +28,20 @@ public:
     Rectangle getBoundingBox() const override;
     bool isActive() const override;
     void setActive(bool active) override;
+
+// For Shinobi Tactics upgrade
+private:
+    const static int MAXShinobiStack = 20;
+    int shinobiStack = 0;
+    bool hasShinobiTactics = false;
+    std::unordered_map<int, bool> appliedShinobiTactics;
+
+public:
+    void addShinobiStatck();
+    void delShinobiStack();
+    void activateShinobiTactics();
+    bool getHasShinobiTactics();
+    bool addApplideShinobiTactics(int towerId);
 };
 
 #endif // NINJAMONKEY_H

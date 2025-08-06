@@ -6,6 +6,7 @@
 // UI/UX
 #include "../interfaces/managers/StateManager.h"
 #include "../interfaces/managers/TextureManager.h"
+#include "../interfaces/managers/AnimationManager.h"
 #include "../interfaces/managers/FontManager.h"
 #include "../interfaces/managers/AudioManager.h"
 #include "../interfaces/states/StateStack.h"
@@ -35,6 +36,7 @@ public:
     bool isExit() const;
 
     TextureManager &getTextureManager();
+    AnimationManager &getAnimationManager();
     FontManager &getFontManager();
     std::shared_ptr<IObserver> getAudioManager();
     std::shared_ptr<IObserver> getStateManager();
@@ -46,6 +48,7 @@ private:
     // Managers
     TextureManager textureManager;
     FontManager fontManager;
+    AnimationManager animationManager;
     // pointer for observer pattern
     std::shared_ptr<IObserver> audioManager;
     std::shared_ptr<IObserver> stateManager;    
@@ -56,6 +59,7 @@ private:
     void loadFont();
     void loadSound();
     void loadTowerTexture();
+    void loadAnimationTexture();
 };
 
 #endif // GAME_H

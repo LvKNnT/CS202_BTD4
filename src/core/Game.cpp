@@ -17,6 +17,7 @@ void Game::LoadContent() {
     loadTowerTexture();
     loadFont();
     loadSound();
+    loadAnimationTexture();
 }
 
 void Game::loadTexture() {
@@ -107,6 +108,7 @@ void Game::loadSound() {
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("Upgrade", "../assets/sounds/sfx/Upgrade.wav"); 
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("Victory", "../assets/sounds/sfx/Victory.wav"); 
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("GameOver", "../assets/sounds/sfx/GameOver.wav"); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("SugoiSugoi", "../assets/sounds/sfx/Sugoi Sugoi!.wav"); 
     
     // Music
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadMusic("BTD5Theme", "../assets/sounds/music/Jazz Theme - Bloons TD 5.mp3"); 
@@ -122,6 +124,10 @@ void Game::loadTowerTexture() {
     textureManager.loadTexture("Ninja Monkey Info", "../assets/tower/Ninja_Monkey/BTD6_Ninja_Monkey.png");
     textureManager.loadTexture("CrossbowMasterUpgradeIcon", "../assets/tower/Dart_Monkey/CrossbowMasterUpgradeIcon.png");
     textureManager.loadTexture("Sharp Shots Upgrade Icon", "../assets/tower/Dart_Monkey/SharpShotsUpgradeIcon.png");
+}
+
+void Game::loadAnimationTexture() {
+    // Load all animation textures
 }
 
 void Game::UnloadContent() {
@@ -146,6 +152,7 @@ void Game::render() {
 void Game::update(float deltaTime) {
     std::static_pointer_cast<StateManager>(stateManager)->handleInput();
     std::static_pointer_cast<AudioManager>(audioManager)->updateMusic();
+    animationManager.update();
 }
 
 void Game::requestExit() {
@@ -158,6 +165,10 @@ bool Game::isExit() const {
 
 TextureManager &Game::getTextureManager() {
     return textureManager;
+}
+
+AnimationManager &Game::getAnimationManager() {
+    return animationManager;
 }
 
 FontManager &Game::getFontManager() {

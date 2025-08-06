@@ -27,7 +27,7 @@ void Distraction::loadTexture() {
 
 void Distraction::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
     for(auto& attack : attacks) {
-        attackBuff.extraNormalDebuff += BloonDebuff().getIKnockBack(0.25, 15);
+        attackBuff.extraNormalDebuff += BloonDebuff().getIKnockBack(1.0f, 2.0f, 15); // Distance Unit 120
     }
 }
 

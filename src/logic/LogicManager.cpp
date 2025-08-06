@@ -37,7 +37,14 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
     Vector2 position = enemy.position;
     int trackIndex = enemy.trackIndex;
     int pathIndex = enemy.pathIndex; 
-    int speed = enemy.debuff.calSpeed(enemy.speed) + enemy.debuff.calKnockbackSpeed(enemy.speed);
+    int speed;
+    if(enemy.debuff.knockbackChance < 100) { // Ninja - Distraction
+        speed = enemy.debuff.calNinjaDistractionKnockbackSpeed(enemy.speed);
+        if(enemy.type == BloonType::Ceramic) speed /= 2;
+    }
+    else {
+        speed = enemy.debuff.calSpeed(enemy.speed) + enemy.debuff.calKnockbackSpeed(enemy.speed);
+    }
 
     Vector2 nextPoint = map.getNextPoint(trackIndex, pathIndex);
     Vector2 direction = {nextPoint.x - position.x, nextPoint.y - position.y};
@@ -166,8 +173,8 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
                 continue;
             }
 
-            // bullet goes through enemies section
-            if((*bulletIt)->properties.canCamo == false && (*enemyIt)->properties.isCamo) {
+            // bullet goes through enemies section 
+            if((*bulletIt)->properties.canCamo == false && (*enemyIt)->properties.isCamo && !(*bulletIt)->attackBuff.canStripCamo) {
                 ++enemyIt; 
                 continue;
             }

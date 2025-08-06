@@ -19,7 +19,7 @@ void Tick::handleInput() {
     isTick = !isTick;
     if(!isTick) {
         notify(untickEvent);
-    texture = Game::Instance().getTextureManager().getTexture("Tick");
+        texture = Game::Instance().getTextureManager().getTexture("Tick");
     }
     else {
         notify(tickEvent);
@@ -32,4 +32,20 @@ AutoNextRound::AutoNextRound(const Texture &_texture, int _fontSize, int _height
     isTick = false;
     tickEvent = Event::Type::AutoNextRound;
     untickEvent = Event::Type::UnAutoNextRound;
+}
+
+MuteSound::MuteSound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+    : Tick(_texture, _fontSize, _height, _width, _position) {
+    isTick = true;
+    untickEvent = Event::Type::MuteSound;
+    tickEvent = Event::Type::UnmuteSound;
+    attach(Game::Instance().getAudioManager());
+}
+
+MuteMusic::MuteMusic(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+    : Tick(_texture, _fontSize, _height, _width, _position) {
+    isTick = true;
+    untickEvent = Event::Type::MuteMusic;
+    tickEvent = Event::Type::UnmuteMusic;
+    attach(Game::Instance().getAudioManager());
 }

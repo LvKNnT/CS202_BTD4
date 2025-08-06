@@ -58,8 +58,8 @@ void ShurikenAttack::update(BulletManager& bulletManager, const Vector2& targetP
         
         attackPattern.execute(bulletManager, BulletType::Shuriken, position, {10.0f, 10.0f}, angle, 
             damage + attackBuff.damage, 
-            speed * attackBuff.speedRatio, 
-            pierce + attackBuff.pierce, 
+            speed * attackBuff.speedRatio,
+            (pierce + attackBuff.pierce) * (attackBuff.pierceRatio + 1.0),
             lifeSpan * attackBuff.lifeSpanRatio, 
             properties + attackBuff.properties, 
             normalDebuff + attackBuff.extraNormalDebuff,
