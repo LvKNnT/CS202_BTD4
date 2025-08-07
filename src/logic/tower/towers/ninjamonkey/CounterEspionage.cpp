@@ -28,7 +28,8 @@ void CounterEspionage::loadTexture() {
 void CounterEspionage::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
     for(auto& attack : attacks) {
         // Ninja attacks can strip camo from Bloons they damage.
-        attackBuff.canStripCamo = true;
+        attackBuff.properties.canStripCamo = true;
+        attackBuff.properties.canCamo = true;
     }
 }
 

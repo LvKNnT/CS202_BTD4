@@ -1,5 +1,7 @@
 #include "raylib.h"
 #include <iostream>
+#include <thread>
+#include <atomic>
 
 #include "utils/Properties.h"
 #include "utils/Timer.h"
@@ -12,6 +14,7 @@
 #include "logic/GameObjectManager.h"
 #include "logic/enemy/Enemy.h"
 
+
 int main() {
     InitWindow(Properties::screenWidth, Properties::screenHeight, "BTD4");
     SetTargetFPS(60);         
@@ -19,18 +22,17 @@ int main() {
     
     InitAudioDevice();  
     Game &game = Game::Instance();
-    game.LoadContent();
+    game.loadLoadingStateContent();
     game.initialize();
-        
+    game.LoadContent();
+    
     while (!WindowShouldClose())    
     {
         if(game.isExit()) break;
         float deltaTime = GetFrameTime();
-        //Vector2 mousePos = GetMousePosition();
-        //std::cerr<<mousePos.x<<" "<<mousePos.y<<"\n";
         game.update(deltaTime);
         BeginDrawing();
-            ClearBackground(RAYWHITE);
+        ClearBackground(RAYWHITE);
             game.render();
         EndDrawing();
     }

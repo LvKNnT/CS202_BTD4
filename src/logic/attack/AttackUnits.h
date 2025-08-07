@@ -25,7 +25,6 @@ public:
     int pierce; 
     float lifeSpanRatio;
     float pierceRatio = 0.0f;
-    bool canStripCamo = false;
 
     BulletProperties properties;
     BloonDebuff extraNormalDebuff;

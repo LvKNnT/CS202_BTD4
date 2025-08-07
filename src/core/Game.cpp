@@ -10,74 +10,83 @@ Game::Game() : exit(false) {
 }
 
 Game::~Game() {
+
 }
 
-void Game::LoadContent() {
+void Game::loadLoadingStateContent() {
+    textureManager.loadTexture("LoadingStateBackground", "../assets/states/LoadingScreen.png");
+    fontManager.loadFont("LoadingStateFont", "../assets/font/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf", 30);
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadMusic("BTD5Theme", "../assets/sounds/music/Jazz Theme - Bloons TD 5.mp3"); 
+}
+
+void Game::LoadContent()
+{
     loadTexture();
     loadTowerTexture();
     loadFont();
     loadSound();
     loadAnimationTexture();
+    loadingDone = true;
 }
 
 void Game::loadTexture() {
-        // Load UI
-    textureManager.loadTexture("MainMenu", "../assets/states/MainMenu.png");
-    textureManager.loadTexture("MainMenuButton", "../assets/UI/MainMenuButton.png");
-    textureManager.loadTexture("Table", "../assets/UI/Table.png");
-    textureManager.loadTexture("XButton", "../assets/UI/XButton.png");
-    textureManager.loadTexture("NextButton", "../assets/UI/Next.png");
-    textureManager.loadTexture("PreviousButton", "../assets/UI/Previous.png");
-    textureManager.loadTexture("PreviousUpButton", "../assets/UI/PreviousUp.png");
-    textureManager.loadTexture("NextDownButton", "../assets/UI/NextDown.png");
-    textureManager.loadTexture("GameStateButton", "../assets/UI/GameStateButton.png");
-    textureManager.loadTexture("Start", "../assets/UI/Start.png");
-    textureManager.loadTexture("Setting", "../assets/UI/Setting.png");
-    textureManager.loadTexture("Replay", "../assets/UI/Replay.png");
-    textureManager.loadTexture("HP", "../assets/UI/HP.png");
-    textureManager.loadTexture("Cash", "../assets/UI/Cash.png");
-    textureManager.loadTexture("Box", "../assets/UI/Box.png");
-    textureManager.loadTexture("Home", "../assets/UI/Home.png");
-    textureManager.loadTexture("Tick", "../assets/UI/Tick.png");
-    textureManager.loadTexture("Untick", "../assets/UI/Untick.png");
-    textureManager.loadTexture("FastForward", "../assets/UI/FastForward.png");
-    textureManager.loadTexture("OkButton", "../assets/UI/OkButton.png");
-    textureManager.loadTexture("Play", "../assets/UI/Play.png");
-    textureManager.loadTexture("PurpleRect", "../assets/UI/PurpleRect.png");
-    textureManager.loadTexture("LeftWhiteTriangle", "../assets/UI/LeftWhiteTriangle.png");
-    textureManager.loadTexture("RightWhiteTriangle", "../assets/UI/RightWhiteTriangle.png");
-    textureManager.loadTexture("RedRect", "../assets/UI/RedRect.png");
-    textureManager.loadTexture("GreenRect", "../assets/UI/GreenRect.png");
-    textureManager.loadTexture("GreyRect", "../assets/UI/GreyRect.png");
-    textureManager.loadTexture("Info", "../assets/UI/Info.png");
-    textureManager.loadTexture("Victory", "../assets/UI/Victory.png");
-    textureManager.loadTexture("GameOver", "../assets/UI/GameOver.png");
+    // Load UI
+    textureManager.loadTextureDraw("MainMenu", "../assets/states/MainMenu.png");
+    textureManager.loadTextureDraw("MainMenuButton", "../assets/UI/MainMenuButton.png");
+    textureManager.loadTextureDraw("Table", "../assets/UI/Table.png");
+    textureManager.loadTextureDraw("XButton", "../assets/UI/XButton.png");
+    textureManager.loadTextureDraw("NextButton", "../assets/UI/Next.png");
+    textureManager.loadTextureDraw("PreviousButton", "../assets/UI/Previous.png");
+    textureManager.loadTextureDraw("PreviousUpButton", "../assets/UI/PreviousUp.png");
+    textureManager.loadTextureDraw("NextDownButton", "../assets/UI/NextDown.png");
+    textureManager.loadTextureDraw("GameStateButton", "../assets/UI/GameStateButton.png");
+    textureManager.loadTextureDraw("Start", "../assets/UI/Start.png");
+    textureManager.loadTextureDraw("Setting", "../assets/UI/Setting.png");
+    textureManager.loadTextureDraw("Replay", "../assets/UI/Replay.png");
+    textureManager.loadTextureDraw("HP", "../assets/UI/HP.png");
+    textureManager.loadTextureDraw("Cash", "../assets/UI/Cash.png");
+    textureManager.loadTextureDraw("Box", "../assets/UI/Box.png");
+    textureManager.loadTextureDraw("Home", "../assets/UI/Home.png");
+    textureManager.loadTextureDraw("Tick", "../assets/UI/Tick.png");
+    textureManager.loadTextureDraw("Untick", "../assets/UI/Untick.png");
+    textureManager.loadTextureDraw("FastForward", "../assets/UI/FastForward.png");
+    textureManager.loadTextureDraw("OkButton", "../assets/UI/OkButton.png");
+    textureManager.loadTextureDraw("Play", "../assets/UI/Play.png");
+    textureManager.loadTextureDraw("PurpleRect", "../assets/UI/PurpleRect.png");
+    textureManager.loadTextureDraw("LeftWhiteTriangle", "../assets/UI/LeftWhiteTriangle.png");
+    textureManager.loadTextureDraw("RightWhiteTriangle", "../assets/UI/RightWhiteTriangle.png");
+    textureManager.loadTextureDraw("RedRect", "../assets/UI/RedRect.png");
+    textureManager.loadTextureDraw("GreenRect", "../assets/UI/GreenRect.png");
+    textureManager.loadTextureDraw("GreyRect", "../assets/UI/GreyRect.png");
+    textureManager.loadTextureDraw("Info", "../assets/UI/Info.png");
+    textureManager.loadTextureDraw("Victory", "../assets/UI/Victory.png");
+    textureManager.loadTextureDraw("GameOver", "../assets/UI/GameOver.png");
     
     
     //Sound
-    textureManager.loadTexture("Volume100", "../assets/UI/Volume100.png");
-    textureManager.loadTexture("Volume80", "../assets/UI/Volume80.png");
-    textureManager.loadTexture("Volume60", "../assets/UI/Volume60.png");
-    textureManager.loadTexture("Volume40", "../assets/UI/Volume40.png");
-    textureManager.loadTexture("Volume20", "../assets/UI/Volume20.png");
-    textureManager.loadTexture("Volume0", "../assets/UI/Volume0.png");
+    textureManager.loadTextureDraw("Volume100", "../assets/UI/Volume100.png");
+    textureManager.loadTextureDraw("Volume80", "../assets/UI/Volume80.png");
+    textureManager.loadTextureDraw("Volume60", "../assets/UI/Volume60.png");
+    textureManager.loadTextureDraw("Volume40", "../assets/UI/Volume40.png");
+    textureManager.loadTextureDraw("Volume20", "../assets/UI/Volume20.png");
+    textureManager.loadTextureDraw("Volume0", "../assets/UI/Volume0.png");
     
     // Load maps
-    textureManager.loadTexture("MonkeyLaneThumb", "../assets/map/Monkey_lane_thumb.png");
-    textureManager.loadTexture("JungleThumb", "../assets/map/Jungle_thumb.png");
-    textureManager.loadTexture("CommingSoon", "../assets/map/CommingSoon.png");
-    textureManager.loadTexture("CommingSoon2", "../assets/map/CommingSoon2.png");
-    textureManager.loadTexture("GameStateBackground", "../assets/states/GameStateBackground.png");
+    textureManager.loadTextureDraw("MonkeyLaneThumb", "../assets/map/Monkey_lane_thumb.png");
+    textureManager.loadTextureDraw("JungleThumb", "../assets/map/Jungle_thumb.png");
+    textureManager.loadTextureDraw("CommingSoon", "../assets/map/CommingSoon.png");
+    textureManager.loadTextureDraw("CommingSoon2", "../assets/map/CommingSoon2.png");
+    textureManager.loadTextureDraw("GameStateBackground", "../assets/states/GameStateBackground.png");
 
     // Load mode icons
-    textureManager.loadTexture("Easy", "../assets/mode/Easy.png");
-    textureManager.loadTexture("Medium", "../assets/mode/Medium.png");
-    textureManager.loadTexture("Hard", "../assets/mode/Hard.png");
-    textureManager.loadTexture("Standard", "../assets/mode/Standard.png");
-    textureManager.loadTexture("Reverse", "../assets/mode/Reverse.png");
-    textureManager.loadTexture("AlternateBloons", "../assets/mode/AlternateBloons.png");
-    textureManager.loadTexture("Impoppable", "../assets/mode/Impoppable.png");
-    textureManager.loadTexture("Apopalyse", "../assets/mode/Apopalypse.png");
+    textureManager.loadTextureDraw("Easy", "../assets/mode/Easy.png");
+    textureManager.loadTextureDraw("Medium", "../assets/mode/Medium.png");
+    textureManager.loadTextureDraw("Hard", "../assets/mode/Hard.png");
+    textureManager.loadTextureDraw("Standard", "../assets/mode/Standard.png");
+    textureManager.loadTextureDraw("Reverse", "../assets/mode/Reverse.png");
+    textureManager.loadTextureDraw("AlternateBloons", "../assets/mode/AlternateBloons.png");
+    textureManager.loadTextureDraw("Impoppable", "../assets/mode/Impoppable.png");
+    textureManager.loadTextureDraw("Apopalyse", "../assets/mode/Apopalypse.png");
 }
 
 void Game::loadFont() {
@@ -91,6 +100,7 @@ void Game::loadFont() {
     fontManager.loadFont("SupperSmallBold", "../assets/font/Source_Sans_3/static/SourceSans3-Bold.ttf", 20);
     fontManager.loadFont("SuperSmall", "../assets/font/Source_Sans_3/static/SourceSans3-Medium.ttf", 15);
     //fontManager.loadFont("SmallBold", "../assets/font/Source_Sans_3/../assets/font/Source_Sans_3/static/SourceSans3-Bold.ttf", 20);
+    drawLoadingScren();
 }
 
 void Game::loadSound() {
@@ -111,23 +121,30 @@ void Game::loadSound() {
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("SugoiSugoi", "../assets/sounds/sfx/Sugoi Sugoi!.wav"); 
     
     // Music
-    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadMusic("BTD5Theme", "../assets/sounds/music/Jazz Theme - Bloons TD 5.mp3"); 
+    drawLoadingScren();
 }
 
 void Game::loadTowerTexture() {
      // Load tower
-    textureManager.loadTexture("Dart Monkey Icon", "../assets/tower/Dart_Monkey_Mobile.png");
-    textureManager.loadTexture("Bomb Shooter Icon", "../assets/tower/Boom_Shooter/Bomb_Shooter.png");
-    textureManager.loadTexture("Ninja Monkey Icon", "../assets/tower/Ninja_Monkey/Ninja_Monkey.png");
-    textureManager.loadTexture("Dart Monkey Info", "../assets/tower/Dart_Monkey/000-DartMonkey.png");
-    textureManager.loadTexture("Bomb Shooter Info", "../assets/tower/Boom_Shooter/Bomb_Shooter_Icon.png");
-    textureManager.loadTexture("Ninja Monkey Info", "../assets/tower/Ninja_Monkey/BTD6_Ninja_Monkey.png");
-    textureManager.loadTexture("CrossbowMasterUpgradeIcon", "../assets/tower/Dart_Monkey/CrossbowMasterUpgradeIcon.png");
-    textureManager.loadTexture("Sharp Shots Upgrade Icon", "../assets/tower/Dart_Monkey/SharpShotsUpgradeIcon.png");
+    textureManager.loadTextureDraw("Dart Monkey Icon", "../assets/tower/Dart_Monkey_Mobile.png");
+    textureManager.loadTextureDraw("Bomb Shooter Icon", "../assets/tower/Boom_Shooter/Bomb_Shooter.png");
+    textureManager.loadTextureDraw("Ninja Monkey Icon", "../assets/tower/Ninja_Monkey/Ninja_Monkey.png");
+    textureManager.loadTextureDraw("Dart Monkey Info", "../assets/tower/Dart_Monkey/000-DartMonkey.png");
+    textureManager.loadTextureDraw("Bomb Shooter Info", "../assets/tower/Boom_Shooter/Bomb_Shooter_Icon.png");
+    textureManager.loadTextureDraw("Ninja Monkey Info", "../assets/tower/Ninja_Monkey/BTD6_Ninja_Monkey.png");
+    textureManager.loadTextureDraw("CrossbowMasterUpgradeIcon", "../assets/tower/Dart_Monkey/CrossbowMasterUpgradeIcon.png");
+    textureManager.loadTextureDraw("Sharp Shots Upgrade Icon", "../assets/tower/Dart_Monkey/SharpShotsUpgradeIcon.png");
 }
 
 void Game::loadAnimationTexture() {
     // Load all animation textures
+    drawLoadingScren();
+}
+
+void Game::drawLoadingScren() {
+    Game::Instance().render();
+    BeginDrawing();
+    EndDrawing();
 }
 
 void Game::UnloadContent() {
@@ -139,7 +156,7 @@ void Game::UnloadContent() {
 
 void Game::initialize() {
     stateManager = std::make_unique<StateManager>();
-    std::static_pointer_cast<StateManager>(stateManager)->initialize();
+    //std::static_pointer_cast<StateManager>(stateManager)->initialize();
     std::static_pointer_cast<AudioManager>(audioManager)->initialize();
     MyMusic gameTheme("BTD5Theme");
     gameTheme.start();
@@ -161,6 +178,10 @@ void Game::requestExit() {
 
 bool Game::isExit() const {
     return exit;
+}
+
+bool Game::isLoadingDone() const {
+    return loadingDone;
 }
 
 TextureManager &Game::getTextureManager() {

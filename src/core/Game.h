@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <memory>
+#include <atomic>
 
 // UI/UX
 #include "../interfaces/managers/StateManager.h"
@@ -26,6 +27,7 @@ public:
     Game();
     ~Game();
 
+    void loadLoadingStateContent();
     void LoadContent();
     void UnloadContent();
 
@@ -34,6 +36,7 @@ public:
     void update(float deltaTime);
     void requestExit();
     bool isExit() const;
+    bool isLoadingDone() const;
 
     TextureManager &getTextureManager();
     AnimationManager &getAnimationManager();
@@ -44,6 +47,7 @@ public:
     GameLogic &getGameLogic();
 private:
     bool exit; // for exit 
+    bool loadingDone = false;
 
     // Managers
     TextureManager textureManager;
@@ -60,6 +64,7 @@ private:
     void loadSound();
     void loadTowerTexture();
     void loadAnimationTexture();
+    void drawLoadingScren();
 };
 
 #endif // GAME_H

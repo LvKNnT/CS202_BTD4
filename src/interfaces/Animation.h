@@ -22,6 +22,7 @@ private:
     float elapsedTime;
     std::vector<Texture2D> frames;
 public:
+    Animation() = default;
     Animation(const std::string &name, Vector2 position, int heght, int width, int numFrames, float frameTime, bool isLooped = false);
     ~Animation();
 

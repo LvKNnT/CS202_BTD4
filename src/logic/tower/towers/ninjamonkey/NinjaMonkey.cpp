@@ -8,6 +8,7 @@
 
 #include "NinjaDiscipline.h"
 #include "Distraction.h"
+#include "SeekingShuriken.h"
 
 NinjaMonkey::NinjaMonkey(Vector2 position)
     : Tower(position, {0.0f, 0.0f}, 0.0f, TowerType::NinjaMonkey, 400), shinobiStack(0), hasShinobiTactics(false) {
@@ -35,7 +36,7 @@ NinjaMonkey::NinjaMonkey(Vector2 position)
     // Upgrade Path
     upgradeTop = std::make_unique<NinjaDiscipline>();
     upgradeMiddle = std::make_unique<Distraction>();
-    upgradeBottom = std::make_unique<Upgrade>();
+    upgradeBottom = std::make_unique<SeekingShuriken>();
 
     // Info section
     info["name"] = "Ninja Monkey";
