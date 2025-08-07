@@ -2,6 +2,7 @@
 #define ENEMYUNITS_H
 
 #include "raylib.h"
+#include "../../utils/Utils.h"
 #include <string>
 
 // Bloons types
@@ -85,7 +86,7 @@ public:
     float freezeDuration = 0.0f;
     float knockbackDuration = 0.0f;
     float knockbackSpeed = 1.0f;
-
+     int knocbackChance = 100;
     // for damage
     int bonusDamage = 0; // Bonus damage for the bloon
     int bonusFortifiedDamage = 0; // Bonus damage for fortified bloon
@@ -96,6 +97,10 @@ public:
         : slowRatio(slowRatio), slowDuration(slowDuration), stunDuration(stunDuration), freezeDuration(freezeDuration), knockbackDuration(knockbackDuration), knockbackSpeed(knockbackSpeed), bonusDamage(bonusDamage), bonusFortifiedDamage(bonusFortifiedDamage), bonusLeadDamage(bonusLeadDamage), bonusCamoDamage(bonusCamoDamage) {}
     BloonDebuff(const BloonDebuff& other)
         : slowRatio(other.slowRatio), slowDuration(other.slowDuration), stunDuration(other.stunDuration), freezeDuration(other.freezeDuration), knockbackDuration(other.knockbackDuration), knockbackSpeed(other.knockbackSpeed), bonusDamage(other.bonusDamage), bonusFortifiedDamage(other.bonusFortifiedDamage), bonusLeadDamage(other.bonusFortifiedDamage), bonusCamoDamage(bonusCamoDamage) {}
+    BloonDebuff(float slowRatio = 0.0f, float slowDuration = 0.0f, float stunDuration = 0.0f, float freezeDuration = 0.0f, float knockbackDuration = 0.0f, float knockbackSpeed = 1.0f, int knocbackChance = 100)
+        : slowRatio(slowRatio), slowDuration(slowDuration), stunDuration(stunDuration), freezeDuration(freezeDuration), knockbackDuration(knockbackDuration), knockbackSpeed(knockbackSpeed), knocbackChance(knocbackChance) {}
+    BloonDebuff(const BloonDebuff& other)
+        : slowRatio(other.slowRatio), slowDuration(other.slowDuration), stunDuration(other.stunDuration), freezeDuration(other.freezeDuration), knockbackDuration(other.knockbackDuration), knockbackSpeed(other.knockbackSpeed), knocbackChance(knocbackChance) {}
     ~BloonDebuff() = default;
 
     BloonDebuff& operator=(const BloonDebuff& other) {
@@ -107,6 +112,7 @@ public:
             knockbackDuration = other.knockbackDuration;
             knockbackSpeed = other.knockbackSpeed;
             bonusDamage = other.bonusDamage;
+            knocbackChance = other.knocbackChance;
         }
         return *this;
     }
@@ -122,7 +128,8 @@ public:
             bonusDamage + other.bonusDamage,
             bonusFortifiedDamage + other.bonusFortifiedDamage,
             bonusLeadDamage + other.bonusLeadDamage,
-            bonusCamoDamage + other.bonusCamoDamage
+            bonusCamoDamage + other.bonusCamoDamage,
+            (knocbackChance > other.knocbackChance) ? other.knocbackChance : knocbackChance
         );
     }
 
@@ -137,6 +144,7 @@ public:
         bonusFortifiedDamage += other.bonusFortifiedDamage;
         bonusLeadDamage += other.bonusLeadDamage;
         bonusCamoDamage += other.bonusCamoDamage;
+        knocbackChance = (knocbackChance > other.knocbackChance) ? other.knocbackChance : knocbackChance;
         return *this;
     }
 
@@ -166,11 +174,12 @@ public:
             0, // bonusDamage
             0, // bonusFortifiedDamage
             0, // bonusLeadDamage
-            0 // bonusCamoDamage
+            0, // bonusCamoDamage
+            100 // knockbackChance
         };
     }
 
-    BloonDebuff getIKnockBack(float duration, float speed) const {
+    BloonDebuff getIKnockBack(float duration, float speed, int knockbackChance = 100) const {
         return *this + BloonDebuff{
             0.0f, // slowRatio
             0.0f, // slowDuration
@@ -196,7 +205,8 @@ public:
             bonusDamage, // bonusDamage
             bonusFortifiedDamage, // bonusFortifiedDamage
             bonusLeadDamage, // bonusLeadDamage
-            bonusCamoDamage // bonusCamoDamage
+            bonusCamoDamage, // bonusCamoDamage
+            knockbackChance // knockbackChance
         };
     }
 
@@ -227,7 +237,7 @@ public:
     }
 
     int calKnockbackSpeed(int speed) const {
-        if(knockbackDuration <= 0.0f) return 0;
+        if(knockbackDuration <= 0.0f || Utils::rand(1, 100) > knocbackChance) return 0;
         return - speed * knockbackSpeed; // negative speed for knockback
     }
 };

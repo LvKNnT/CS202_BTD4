@@ -1,8 +1,7 @@
 #include "Jungle.h"
 
-Jungle::Jungle() {
+Jungle::Jungle() : pathIdxCount(0) {
     mapType = MapType::Jungle; 
-
     //path 0
     enemyPath[0].push_back(Point(-50, 86, Point::Type::SpawnEnenmy));
     enemyPath[0].push_back(Point(0, 86));
@@ -87,5 +86,6 @@ void Jungle::update() {
 }
 
 std::pair<Vector2, int> Jungle::getPositionAndPathIdx(BloonType type) {
-    return {getCurrentPoint(0, 0), 0}; // Default position and path index for this map
+    pathIdxCount = (pathIdxCount + 1) % MAXPATHS;
+    return {getCurrentPoint(0, pathIdxCount), pathIdxCount}; // Default position and path index for this map
 }

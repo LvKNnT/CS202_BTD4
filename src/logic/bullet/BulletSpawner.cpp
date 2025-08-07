@@ -18,6 +18,7 @@
 #include "bullets/FragBombsBullet.h"
 #include "bullets/ClusterBombBullet.h"
 #include "bullets/RecursiveClusterBullet.h"
+#include "bullets/Shuriken.h"
 // #include "bullets/Tack.h"
 // #include "bullets/Ice.h"
 // #include "bullets/MagicBall.h"
@@ -78,6 +79,7 @@ void BulletSpawner::init() {
     bulletTemplates[BulletType::FragBombs] = std::make_unique<FragBombsBullet>();
     bulletTemplates[BulletType::ClusterBomb] = std::make_unique<ClusterBombBullet>();
     bulletTemplates[BulletType::RecursiveClusterBomb] = std::make_unique<RecursiveClusterBullet>();
+    bulletTemplates[BulletType::Shuriken] = std::make_unique<Shuriken>();
     // bulletTemplates[BulletType::Tack] = std::make_unique<Tack>();
     // bulletTemplates[BulletType::Ice] = std::make_unique<Ice>();
     // bulletTemplates[BulletType::MagicBall] = std::make_unique<MagicBall>();

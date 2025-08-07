@@ -3,6 +3,7 @@
 #include <filesystem>
 
 #include "skill/Skill.h"
+#include "../interfaces/audio/MyAudio.h"
 #include "../utils/Properties.h"
 
 void GameLogic::init() {

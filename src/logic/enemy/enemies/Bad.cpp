@@ -35,9 +35,13 @@ void Bad::loadTexture() {
 }
 
 bool Bad::hit(int damage) {
+    MySound popSound("MOABBloon");
+    popSound.start();
     health -= damage;
 
     if (health <= 0) {
+        MySound destroyingSound("DestroyingMOABBloon");
+        destroyingSound.start();
         std::fstream flog("../logs/log.txt", std::ios::out | std::ios::app);
         flog << "Bad bloon popped!" << std::endl;
         flog.close();

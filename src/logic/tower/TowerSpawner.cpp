@@ -7,6 +7,7 @@
 // headers of towers
 #include "towers/dartmonkey/DartMonkey.h"
 #include "towers/bombshooter/BombShooter.h"
+#include "towers/ninjamonkey/NinjaMonkey.h"
 
 TowerSpawner::TowerSpawner() {
     // Initialize tower templates
@@ -56,6 +57,7 @@ void TowerSpawner::init() {
     // Initialize tower templates
     towerTemplates[TowerType::DartMonkey] = std::make_unique<DartMonkey>();
     towerTemplates[TowerType::BombShooter] = std::make_unique<BombShooter>();
+    towerTemplates[TowerType::NinjaMonkey] = std::make_unique<NinjaMonkey>();
 };  
 
 void TowerSpawner::init(TowerModifies modifies) {
@@ -65,6 +67,9 @@ void TowerSpawner::init(TowerModifies modifies) {
     
     towerTemplates[TowerType::BombShooter] = std::make_unique<BombShooter>();
     towerTemplates[TowerType::BombShooter]->setModifies(modifies); // Set modifies for the Bomb Shooter tower
+
+    towerTemplates[TowerType::NinjaMonkey] = std::make_unique<NinjaMonkey>();
+    towerTemplates[TowerType::NinjaMonkey]->setModifies(modifies); // Set modifies for the Ninja Monkey tower
 };
 
 std::unique_ptr<Tower> TowerSpawner::getTower(TowerType type, Vector2 position, int towerID, const TowerModifies& modifies) {
