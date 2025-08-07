@@ -24,10 +24,9 @@ public:
     int speed;
     float speedRatio;
     int pierce; 
-    float pierceRatio;
     float lifeSpanRatio;
     Vector2 size;
-    float pierceRatio = 0.0f;
+    float pierceRatio;
 
     BulletProperties properties;
     BloonDebuff extraNormalDebuff;

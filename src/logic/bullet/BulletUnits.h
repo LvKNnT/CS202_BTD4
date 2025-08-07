@@ -20,8 +20,7 @@ enum class BulletType {
     MagicBall,
     Shuriken,
     BombExplosion,
-    BombFragment
-    BombExplosion, 
+    BombFragment,
     TracingShuriken,
     Caltrops
 };
