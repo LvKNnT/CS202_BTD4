@@ -24,6 +24,8 @@ public:
     float speedRatio;
     int pierce; 
     float lifeSpanRatio;
+    float pierceRatio = 0.0f;
+
     BulletProperties properties;
     BloonDebuff extraNormalDebuff;
     BloonDebuff extraMoabDebuff;

@@ -1,12 +1,12 @@
 #include "ShinobiTactics.h"
 #include "../../../../core/Game.h"
 
-#include "GrandSaboteur.h"
+#include "BloonSabotage.h"
 
 ShinobiTactics::ShinobiTactics() 
     : Upgrade("Shinobi Tactics", 1200, "Increases attack speed and pierce of nearby Ninjas. Stacks 20 times.") {
     // Constructor implementation can be extended if needed
-    nextUpgrade = std::make_unique<GrandSaboteur>(); // Temporary lmao
+    nextUpgrade = std::make_unique<BloonSabotage>(); // Temporary lmao
     tag = "Shinobi Tactics";
 }
 
@@ -28,6 +28,7 @@ void ShinobiTactics::loadTexture() {
 void ShinobiTactics::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
     for(auto& attack : attacks) {
         // Increases attack speed of itself and other Ninjas in range by +8% multiplicatively and pierce by +8% additively. Stacks up to 20 times.
+
     }
 }
 

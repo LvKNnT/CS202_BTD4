@@ -2,10 +2,12 @@
 #define GAME_H
 
 #include <memory>
+#include <atomic>
 
 // UI/UX
 #include "../interfaces/managers/StateManager.h"
 #include "../interfaces/managers/TextureManager.h"
+#include "../interfaces/managers/AnimationManager.h"
 #include "../interfaces/managers/FontManager.h"
 #include "../interfaces/managers/AudioManager.h"
 #include "../interfaces/states/StateStack.h"
@@ -25,6 +27,7 @@ public:
     Game();
     ~Game();
 
+    void loadLoadingStateContent();
     void LoadContent();
     void UnloadContent();
 
@@ -33,8 +36,10 @@ public:
     void update(float deltaTime);
     void requestExit();
     bool isExit() const;
+    bool isLoadingDone() const;
 
     TextureManager &getTextureManager();
+    AnimationManager &getAnimationManager();
     FontManager &getFontManager();
     std::shared_ptr<IObserver> getAudioManager();
     std::shared_ptr<IObserver> getStateManager();
@@ -42,10 +47,12 @@ public:
     GameLogic &getGameLogic();
 private:
     bool exit; // for exit 
+    bool loadingDone = false;
 
     // Managers
     TextureManager textureManager;
     FontManager fontManager;
+    AnimationManager animationManager;
     // pointer for observer pattern
     std::shared_ptr<IObserver> audioManager;
     std::shared_ptr<IObserver> stateManager;    
@@ -56,6 +63,8 @@ private:
     void loadFont();
     void loadSound();
     void loadTowerTexture();
+    void loadAnimationTexture();
+    void drawLoadingScren();
 };
 
 #endif // GAME_H

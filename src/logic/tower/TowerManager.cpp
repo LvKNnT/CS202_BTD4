@@ -5,6 +5,7 @@
 
 #include "../skill/Skill.h"
 #include "../../interfaces/audio/MyAudio.h"
+#include "towers/ninjamonkey/NinjaMonkey.h"
 
 TowerManager::TowerManager(TowerModifies modifies)
     : currentModifies(modifies), towerIDCounter(0) {
@@ -157,6 +158,33 @@ void TowerManager::updateTowers() {
             std::cerr << "Tower is null or inactive." << std::endl;
         }
     }
+
+    updateNinjaTower();
+}
+
+void TowerManager::updateNinjaTower() {
+    std::vector<std::shared_ptr<Tower>> ninjas;
+    for(const auto &tower:towerList) {
+        if(tower->type != TowerType::NinjaMonkey) continue;
+        ninjas.push_back(tower); 
+    }
+
+    for(const auto &ninja:ninjas) {
+        std::dynamic_pointer_cast<NinjaMonkey>(ninja)->activateShinobiTactics();
+        if(!std::dynamic_pointer_cast<NinjaMonkey>(ninja)->getHasShinobiTactics()) {
+            continue;
+        }
+
+        for(const auto &otherNinja:ninjas) {
+            auto tmpNinjaPtr = std::dynamic_pointer_cast<NinjaMonkey>(ninja);
+            if(tmpNinjaPtr->addApplideShinobiTactics(std::dynamic_pointer_cast<NinjaMonkey>(otherNinja)->towerId)) {
+                // can be added
+                if(Utils::isInCirlceRange(tmpNinjaPtr->position, 120.0, std::dynamic_pointer_cast<NinjaMonkey>(otherNinja)->position)) {
+                    std::dynamic_pointer_cast<NinjaMonkey>(otherNinja)->addShinobiStatck();
+                }
+            }
+        }
+    }
 }
 
 std::weak_ptr<Tower> TowerManager::getTowerFromPosition(Vector2 position) const {
@@ -207,6 +235,11 @@ int TowerManager::sellTower() {
         return 0; // No tower to sell
     }
 
+    // handle selling Ninja Tower
+    if(towerPtr->type == TowerType::NinjaMonkey) {
+        handleSellNinjaTower(towerPtr);
+    }
+
     int sellValue = std::stoi(towerPtr->getInfo()["sell"]);
 
     // Remove the tower from the list
@@ -218,6 +251,25 @@ int TowerManager::sellTower() {
 
     lastPickedTower.reset(); // Clear the last picked tower
     return sellValue; // Return the sell value
+}
+
+void TowerManager::handleSellNinjaTower(std::shared_ptr<Tower> towerPtr) {
+    if(!std::dynamic_pointer_cast<NinjaMonkey>(towerPtr)->getHasShinobiTactics()) {
+        return;
+    }
+
+    std::vector<std::shared_ptr<Tower>> ninjas;
+    for(const auto &tower:towerList) {
+        if(tower->type != TowerType::NinjaMonkey) continue;
+        ninjas.push_back(tower); 
+    }
+
+    for(const auto &otherNinja:ninjas) {
+        if(!std::dynamic_pointer_cast<NinjaMonkey>(towerPtr)->addApplideShinobiTactics(std::dynamic_pointer_cast<NinjaMonkey>(otherNinja)->towerId)) {
+            // can be deleted
+            std::dynamic_pointer_cast<NinjaMonkey>(otherNinja)->delShinobiStack();
+        }
+    }
 }
 
 void TowerManager::save(const std::string& filePath) const {

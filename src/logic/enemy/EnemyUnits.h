@@ -86,12 +86,12 @@ public:
     float freezeDuration = 0.0f;
     float knockbackDuration = 0.0f;
     float knockbackSpeed = 1.0f;
-     int knocbackChance = 100;
+    int knockbackChance = 100;
 
-    BloonDebuff(float slowRatio = 0.0f, float slowDuration = 0.0f, float stunDuration = 0.0f, float freezeDuration = 0.0f, float knockbackDuration = 0.0f, float knockbackSpeed = 1.0f, int knocbackChance = 100)
-        : slowRatio(slowRatio), slowDuration(slowDuration), stunDuration(stunDuration), freezeDuration(freezeDuration), knockbackDuration(knockbackDuration), knockbackSpeed(knockbackSpeed), knocbackChance(knocbackChance) {}
+    BloonDebuff(float slowRatio = 0.0f, float slowDuration = 0.0f, float stunDuration = 0.0f, float freezeDuration = 0.0f, float knockbackDuration = 0.0f, float knockbackSpeed = 1.0f, int knockbackChance = 100)
+        : slowRatio(slowRatio), slowDuration(slowDuration), stunDuration(stunDuration), freezeDuration(freezeDuration), knockbackDuration(knockbackDuration), knockbackSpeed(knockbackSpeed), knockbackChance(knockbackChance) {}
     BloonDebuff(const BloonDebuff& other)
-        : slowRatio(other.slowRatio), slowDuration(other.slowDuration), stunDuration(other.stunDuration), freezeDuration(other.freezeDuration), knockbackDuration(other.knockbackDuration), knockbackSpeed(other.knockbackSpeed), knocbackChance(knocbackChance) {}
+        : slowRatio(other.slowRatio), slowDuration(other.slowDuration), stunDuration(other.stunDuration), freezeDuration(other.freezeDuration), knockbackDuration(other.knockbackDuration), knockbackSpeed(other.knockbackSpeed), knockbackChance(other.knockbackChance){}
     ~BloonDebuff() = default;
 
     BloonDebuff& operator=(const BloonDebuff& other) {
@@ -102,7 +102,7 @@ public:
             freezeDuration = other.freezeDuration;
             knockbackDuration = other.knockbackDuration;
             knockbackSpeed = other.knockbackSpeed;
-            knocbackChance = other.knocbackChance;
+            knockbackChance = other.knockbackChance;
         }
         return *this;
     }
@@ -115,7 +115,7 @@ public:
             (freezeDuration < other.freezeDuration) ? other.freezeDuration : freezeDuration,
             (knockbackDuration < other.knockbackDuration) ? other.knockbackDuration : knockbackDuration,
             (knockbackSpeed < other.knockbackSpeed) ? other.knockbackSpeed : knockbackSpeed,
-            (knocbackChance > other.knocbackChance) ? other.knocbackChance : knocbackChance
+            (knockbackChance > other.knockbackChance) ? other.knockbackChance : knockbackChance
         );
     }
 
@@ -126,7 +126,7 @@ public:
         freezeDuration = (freezeDuration < other.freezeDuration) ? other.freezeDuration : freezeDuration;
         knockbackDuration = (knockbackDuration < other.knockbackDuration) ? other.knockbackDuration : knockbackDuration;
         knockbackSpeed = (knockbackSpeed < other.knockbackSpeed) ? other.knockbackSpeed : knockbackSpeed;
-        knocbackChance = (knocbackChance > other.knocbackChance) ? other.knocbackChance : knocbackChance;
+        knockbackChance = (knockbackChance > other.knockbackChance) ? other.knockbackChance : knockbackChance;
         return *this;
     }
 
@@ -138,7 +138,7 @@ public:
             0.0f, // freezeDuration
             0.0f,  // knockbackDuration
             1.0f, // knockbackSpeed
-            100 // knockbackChance
+            knockbackChance // knockbackChance
         };
     }
 
@@ -180,9 +180,35 @@ public:
         return static_cast<int>(speed * (1.0f - slowRatio));
     }
 
-    int calKnockbackSpeed(int speed) const {
-        if(knockbackDuration <= 0.0f || Utils::rand(1, 100) > knocbackChance) return 0;
-        return - speed * knockbackSpeed; // negative speed for knockback
+    int calKnockbackSpeed(int speed) {
+        if(knockbackDuration <= 0.0f) return 0;
+        return -speed * knockbackSpeed;        
+        // No knockback if duration is zero
+        // if(knockbackDuration <= 0.0f) return 0;
+        
+        // // Generate ONE random number
+        // int roll = Utils::rand(1, 100);
+        
+        // // Use that SAME number for both debug and condition
+        // std::cerr << "Speed=" << speed << " Roll=" << roll << " Chance=" << knockbackChance << "\n";
+        
+        // // Check against the chance
+        // if(roll <= knockbackChance) {
+        //     return -speed * knockbackSpeed;
+        // }
+        
+        // knockbackDuration = 0.0f;
+        // return 0; // No knockback
+    }
+
+    int calNinjaDistractionKnockbackSpeed(int speed) {
+        if(knockbackDuration <= 0.0f) return 0;
+        int roll = Utils::rand(1, 100);
+        if(roll <= knockbackChance) {
+            return -knockbackSpeed;
+        }
+        knockbackDuration = 0.0f;
+        return 0;
     }
 };
 

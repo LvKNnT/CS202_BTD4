@@ -12,6 +12,10 @@ void AudioChannel::decreaseVolume() {
     setVolume(std::max(0.0f, volume - 0.2f));
 }
 
+void AudioChannel::unmute() {
+    setVolume(volume);
+}
+
 SoundChannel::SoundChannel() : AudioChannel() {
 }
 
@@ -21,6 +25,12 @@ void SoundChannel::setVolume(float _volume) {
         sound.second.setVolume(volume);
     }
 
+}
+
+void SoundChannel::mute() {
+    for(auto &sound:soundList) {
+        sound.second.setVolume(0.0);
+    }
 }
 
 void SoundChannel::load(std::string name, std::string path, int maxSounds) {
@@ -63,6 +73,12 @@ void MusicChannel::setVolume(float _volume) {
     volume = _volume;
     for(auto &music:musicList) {
         SetMusicVolume(music.second, volume);
+    }
+}
+
+void MusicChannel::mute() {
+    for(auto &music:musicList) {
+        SetMusicVolume(music.second, 0.0);
     }
 }
 

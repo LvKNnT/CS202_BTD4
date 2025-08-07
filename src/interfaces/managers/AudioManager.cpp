@@ -61,6 +61,14 @@ void AudioManager::decreaseVolume(AudioType audioType) {
     audioChannels[audioType]->decreaseVolume();
 }
 
+void AudioManager::mute(AudioType audioType) {
+    audioChannels[audioType]->mute();
+}
+
+void AudioManager::unmute(AudioType audioType) {
+    audioChannels[audioType]->unmute();
+}
+
 int AudioManager::getVolume(AudioType audioType) const {
     return audioChannels.at(audioType)->getVolume();
 }
@@ -82,6 +90,18 @@ void AudioManager::update(Event::Type event) {
             break;
         case Event::Type::LowerSound:
             decreaseVolume(AudioType::SFXSound);
+            break;
+        case Event::Type::MuteMusic:
+            mute(AudioType::MusicSound);
+            break;
+        case Event::Type::UnmuteMusic:
+            unmute(AudioType::MusicSound);
+            break;
+        case Event::Type::MuteSound:
+            mute(AudioType::SFXSound);
+            break;
+        case Event::Type::UnmuteSound:
+            unmute(AudioType::SFXSound);
             break;
     }
 }

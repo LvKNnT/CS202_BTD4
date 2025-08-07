@@ -14,6 +14,7 @@
 #include "../states/SpecificModeSelectionState.h"
 #include "../states/GameOverState.h"
 #include "../states/VictoryState.h"
+#include "../states/LoadingState.h"
 #include "../../logic/Map/MapUnits.h"
 #include "../../core/IObserver.h"
 #include "../../core/Event.h"
@@ -30,14 +31,17 @@ private:
     std::shared_ptr<State> specificModeSelectionState;
     std::shared_ptr<State> gameOverState;
     std::shared_ptr<State> victoryState;
+    std::shared_ptr<State> loadingState;
 
     bool canResume;
     std::string mode;
     std::string modeInfo;
     bool isNewGame;
+    bool isLoadingDone;
     MapType mapType;
 
 public:
+    StateManager();
     void initialize();
     void draw() const;
     void handleInput();

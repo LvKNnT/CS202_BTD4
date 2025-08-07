@@ -2,6 +2,7 @@
 #define UTILS_H
 
 #include "raylib.h"
+#include "raymath.h"
 #include "Properties.h"
 
 #include <iostream>
@@ -14,6 +15,7 @@ namespace Utils {
     bool isPositionInMap(Vector2 position);
     bool isColorDiffByTolerance(Color a, Color b, float tolerance);
     long long rand(long long l, long long r);
+    bool isInCirlceRange(Vector2 centerPos, float range, Vector2 otherPos);
 };
 
 #endif // UTILS_H

@@ -8,9 +8,10 @@
 
 #include "NinjaDiscipline.h"
 #include "Distraction.h"
+#include "SeekingShuriken.h"
 
 NinjaMonkey::NinjaMonkey(Vector2 position)
-    : Tower(position, {0.0f, 0.0f}, 0.0f, TowerType::NinjaMonkey, 400) {
+    : Tower(position, {0.0f, 0.0f}, 0.0f, TowerType::NinjaMonkey, 400), shinobiStack(0), hasShinobiTactics(false) {
     /**
      * cost = 400
      */
@@ -35,7 +36,7 @@ NinjaMonkey::NinjaMonkey(Vector2 position)
     // Upgrade Path
     upgradeTop = std::make_unique<NinjaDiscipline>();
     upgradeMiddle = std::make_unique<Distraction>();
-    upgradeBottom = std::make_unique<Upgrade>();
+    upgradeBottom = std::make_unique<SeekingShuriken>();
 
     // Info section
     info["name"] = "Ninja Monkey";
@@ -88,7 +89,7 @@ void NinjaMonkey::loadTexture() {
 }
 
 void NinjaMonkey::update() {
-    // Dart Monkey has no special update.
+    // Ninja Monkey has no special update.
     for(auto& attack : attacks) {
         attack->update();
     }
@@ -193,4 +194,39 @@ bool NinjaMonkey::isActive() const {
 
 void NinjaMonkey::setActive(bool active) {
     isActiveFlag = active;
+}
+
+void NinjaMonkey::addShinobiStatck() {
+    shinobiStack++;
+    if(shinobiStack <= MAXShinobiStack) {
+        attackBuff.cooldownRatio *= 0.92;
+        attackBuff.pierceRatio += 0.08;
+    }
+}
+
+void NinjaMonkey::delShinobiStack() {
+    shinobiStack--;
+    if(shinobiStack < MAXShinobiStack) {
+        attackBuff.cooldownRatio /= 0.92;
+        attackBuff.pierceRatio -= 0.08;
+    }
+}
+
+void NinjaMonkey::activateShinobiTactics() {
+    // Check whenever this Ninja Monkey has Shinobi Tactics upgrade
+    if(upgradeMiddle->getName() == "Bloon Sabotage" && !hasShinobiTactics) {
+        hasShinobiTactics = true;
+        addApplideShinobiTactics(towerId); // add itself
+        addShinobiStatck();
+    }
+}
+
+bool NinjaMonkey::getHasShinobiTactics() {
+    return hasShinobiTactics;
+}
+
+bool NinjaMonkey::addApplideShinobiTactics(int towerId) {
+    if(!hasShinobiTactics || appliedShinobiTactics[towerId]) return 0;
+    appliedShinobiTactics[towerId] = 1;
+    return 1; 
 }
