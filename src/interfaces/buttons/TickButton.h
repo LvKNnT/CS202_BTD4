@@ -20,4 +20,14 @@ public:
     AutoNextRound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
+class MuteSound : public Tick {
+public:
+    MuteSound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class MuteMusic : public Tick {
+public:
+    MuteMusic(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
 #endif // TICK_BUTTON_H

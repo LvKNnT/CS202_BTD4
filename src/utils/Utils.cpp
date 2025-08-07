@@ -21,3 +21,10 @@ long long Utils::rand(long long l, long long r) {
     std::uniform_int_distribution<long long> dist(l, r);
     return dist(rng);
 }
+
+bool Utils::isInCirlceRange(Vector2 centerPos, float range, Vector2 otherPos) {
+    float distance = Vector2Distance(centerPos, otherPos);
+    
+    // Return true if the distance is less than or equal to the range
+    return distance <= range;
+}

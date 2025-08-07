@@ -2,9 +2,17 @@
 #include "../../core/Game.h"
 #include "../audio/MyAudio.h"
 
-void StateManager::initialize() {
+StateManager::StateManager()
+{
     isNewGame = false;
     canResume = false;
+    isLoadingDone = false;
+    loadingState = std::make_shared<LoadingState>();
+    stateStack.pushState(loadingState);
+}
+
+void StateManager::initialize()
+{
     mainMenuState = std::make_shared<MainMenuState>();
     mapSelectionState = std::make_shared<MapSelectionState>();
     optionsState = std::make_shared<OptionsState>();
@@ -12,7 +20,6 @@ void StateManager::initialize() {
     difficultySelectionState = std::make_shared<DifficultySelectionState>();
     gameOverState = std::make_shared<GameOverState>();
     victoryState = std::make_shared<VictoryState>();
-    //specificModeSelectionState = std::make_shared<SpecificModeSelectionState>();
     stateStack.pushState(mainMenuState);
 }
 
@@ -22,12 +29,18 @@ void StateManager::draw() const {
 
 void StateManager::handleInput() {
     stateStack.handleInput();
+    if(!isLoadingDone && Game::Instance().isLoadingDone()) {
+        isLoadingDone = true;
+        stateStack.popState();
+        initialize();
+    }
 }
 
 void StateManager::update(Event::Type event) {
     // Initialize sound
     MySound victorySound("Victory");
     MySound gameOverSound("GameOver");
+    MySound secretVictorySound("SugoiSugoi");
 
     switch(event) {
         case Event::Type::ToMapSelection:
@@ -102,7 +115,8 @@ void StateManager::update(Event::Type event) {
             canResume = false;
             stateStack.pushState(victoryState);
             stateStack.setdrawPreviousStates(true);
-            victorySound.start();
+            if(Utils::rand(1, 100) > 5) victorySound.start();
+            else secretVictorySound.start(); 
             break;
         case Event::Type::Replay:
             std::cerr<<"Yes\n";

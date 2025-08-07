@@ -1,0 +1,36 @@
+#include "Caltrops.h"
+#include "../../../attack/attacks/CaltropsAttack.h"
+#include "../../../../core/Game.h"
+
+#include "FlashBomb.h"
+
+Caltrops::Caltrops() 
+    : Upgrade("Caltrops", 450, "Throws out spiked caltrops onto the track nearby.") {
+    // Constructor implementation can be extended if needed
+    nextUpgrade = std::make_unique<FlashBomb>(); // Temporary lmao
+    tag = "Caltrops";
+}
+
+Caltrops::Caltrops(const Caltrops& other)
+    : Upgrade(other) {
+    // Copy constructor implementation
+    nextUpgrade = other.nextUpgrade ? other.nextUpgrade->clone() : nullptr;
+}
+
+std::unique_ptr<Upgrade> Caltrops::clone() const {
+    return std::make_unique<Caltrops>(*this);
+}
+
+void Caltrops::loadTexture() {
+    // Load the texture for Sharp Shots upgrade
+    Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/CaltropsUpgradeIcon.png");
+}
+
+void Caltrops::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+    attacks.push_back(std::make_unique<CaltropsAttack>(attacks[0]->getRange(), 3.9f, attacks[0]->getPosition(), attacks[0]->getTowerId(), 1, 0, 6, 35, BulletProperties::normal(), attackBuff.extraNormalDebuff, attackBuff.extraMoabDebuff));
+    std::cerr<<attacks.size()<<"\n";
+}
+
+std::unique_ptr<Upgrade> Caltrops::buy() {
+    return nextUpgrade->clone();
+}

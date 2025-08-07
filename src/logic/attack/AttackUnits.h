@@ -27,6 +27,8 @@ public:
     float pierceRatio;
     float lifeSpanRatio;
     Vector2 size;
+    float pierceRatio = 0.0f;
+
     BulletProperties properties;
     BloonDebuff extraNormalDebuff;
     BloonDebuff extraMoabDebuff;

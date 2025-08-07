@@ -14,6 +14,7 @@ private:
 
 public:
     void loadTexture(std::string name, std::string path);
+    void loadTextureDraw(std::string name, std::string path); // i don't know just because of loading screen
     Texture &getTexture(std::string name);
     void unloadContent();
 };

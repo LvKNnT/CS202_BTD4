@@ -1,4 +1,5 @@
 #include "TextureManager.h"
+#include "../../core/Game.h"
 
 void TextureManager::loadTexture(std::string name, std::string path) {
     if(textures.find(name) != textures.end()) {
@@ -13,6 +14,13 @@ void TextureManager::loadTexture(std::string name, std::string path) {
     }
     SetTextureFilter(newTexture, TEXTURE_FILTER_POINT);
     textures[name] = newTexture;
+}
+
+void TextureManager::loadTextureDraw(std::string name, std::string path) {
+    loadTexture(name, path);
+    Game::Instance().render();
+    BeginDrawing();
+    EndDrawing();
 }
 
 Texture &TextureManager::getTexture(std::string name) {

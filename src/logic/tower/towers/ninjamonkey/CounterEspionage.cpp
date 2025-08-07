@@ -4,10 +4,10 @@
 #include "ShinobiTactics.h"
 
 CounterEspionage::CounterEspionage() 
-    : Upgrade("Counter-Espionage", 400, "Ninja attacks can strip camo from Bloons they damage.") {
+    : Upgrade("Counter Espionage", 400, "Ninja attacks can strip camo from Bloons they damage.") {
     // Constructor implementation can be extended if needed
     nextUpgrade = std::make_unique<ShinobiTactics>(); // Temporary lmao
-    tag = "Counter-Espionage";
+    tag = "Counter Espionage";
 }
 
 CounterEspionage::CounterEspionage(const CounterEspionage& other)
@@ -28,6 +28,8 @@ void CounterEspionage::loadTexture() {
 void CounterEspionage::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
     for(auto& attack : attacks) {
         // Ninja attacks can strip camo from Bloons they damage.
+        attackBuff.properties.canStripCamo = true;
+        attackBuff.properties.canCamo = true;
     }
 }
 

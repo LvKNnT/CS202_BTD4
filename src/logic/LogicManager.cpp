@@ -15,7 +15,7 @@ void LogicManager::updateEnemies(EnemyManager& enemyManager, MapManager& mapMana
         
         if (result == -1) {
             // Enemy reached the end — remove and destroy it
-            resourceManager.currentResource.lives -= (*it)->livesLost; // Update lives lost
+            //resourceManager.currentResource.lives -= (*it)->livesLost; // Update lives lost
             it = enemyManager.enemyList.erase(it);  // erase returns the next iterator
             continue;  // Skip the increment, already moved to next
         }
@@ -37,7 +37,16 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
     Vector2 position = enemy.position;
     int trackIndex = enemy.trackIndex;
     int pathIndex = enemy.pathIndex; 
-    int speed = enemy.debuff.calSpeed(enemy.speed) + enemy.debuff.calKnockbackSpeed(enemy.speed);
+    int speed;
+    if(enemy.debuff.knockbackChance < 100) { // Ninja - Distraction
+        speed = enemy.debuff.calSpeed(enemy.speed) + enemy.debuff.calNinjaDistractionKnockbackSpeed(enemy.speed);
+        if(enemy.type == BloonType::Ceramic) {
+            speed = enemy.debuff.calSpeed(enemy.speed) + enemy.debuff.calNinjaDistractionKnockbackSpeed(enemy.speed) / 2;
+        }
+    }
+    else {
+        speed = enemy.debuff.calSpeed(enemy.speed) + enemy.debuff.calKnockbackSpeed(enemy.speed);
+    }
 
     Vector2 nextPoint = map.getNextPoint(trackIndex, pathIndex);
     Vector2 direction = {nextPoint.x - position.x, nextPoint.y - position.y};
@@ -166,8 +175,8 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
                 continue;
             }
 
-            // bullet goes through enemies section
-            if((*bulletIt)->properties.canCamo == false && (*enemyIt)->properties.isCamo) {
+            // bullet goes through enemies section 
+            if((*bulletIt)->properties.canCamo == false && (*enemyIt)->properties.isCamo && !(*bulletIt)->attackBuff.properties.canStripCamo) {
                 ++enemyIt; 
                 continue;
             }
@@ -180,6 +189,11 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
             
             if (checkCollision(**bulletIt, **enemyIt)) {
                 // bullet touch but cannot destroy enemy
+
+                // If bullet canStripCamo
+                if((*enemyIt)->properties.isCamo && (*bulletIt)->attackBuff.properties.canStripCamo) {
+                    (*enemyIt)->properties.isCamo = false;
+                }
                 if(!canBulletDestroyEnemy(**bulletIt, **enemyIt)) {
                     bulletIt = bulletManager.bulletList.erase(bulletIt);
                     isBulletAlive = false;
