@@ -22,7 +22,7 @@ void Bomb::loadTexture() {
     size.y = static_cast<float>(Game::Instance().getTextureManager().getTexture(tag).height);
 }
 
-void Bomb::init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties& properites, BloonDebuff& normalDebuff, BloonDebuff& moabDebuff, AttackBuff& attackBuff, int towerId) {
+void Bomb::init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties& properties, BloonDebuff& normalDebuff, BloonDebuff& moabDebuff, AttackBuff& attackBuff, int towerId) {
     this->position = position;
     this->size = size;
     this->rotation = rotation;
@@ -30,7 +30,7 @@ void Bomb::init(Vector2 position, Vector2 size, float rotation, int damage, int 
     this->speed = speed;
     this->pierce = pierce;
     this->lifeSpan = lifeSpan;
-    this->properties = properties; 
+    this->properties = properties;
     this->normalDebuff = normalDebuff;
     this->moabDebuff = moabDebuff;
     this->attackBuff = attackBuff; 
@@ -61,9 +61,14 @@ void Bomb::update(std::vector<std::unique_ptr<Enemy>>& enemyList) {
 }
 
 bool Bomb::hit(int damage) {
-    pierce -= damage;
+    // only 1 pierce
     
-    return pierce <= 0; // Indicating that the hit was successful
+    return true;
+}
+
+int Bomb::getDamage(BloonType type, bool isCamo) {
+    // the projectile deals no dmg, only the explosion does
+    return 0;
 }
 
 void Bomb::draw() const {
@@ -81,16 +86,14 @@ void Bomb::draw() const {
     };    
 
     DrawTexturePro(Game::Instance().getTextureManager().getTexture(tag), 
-                   {0, 0, size.x, size.y},
+                   {0, 0, (float) Game::Instance().getTextureManager().getTexture(tag).width, (float) Game::Instance().getTextureManager().getTexture(tag).height},
                    {draw_position.x, draw_position.y, size.x, size.y},
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,
-                   WHITE); // Draw the Bomb texture with the specified position and rotation
+                   WHITE); 
 }
 
 int Bomb::die() {
-    // Logic for when the Bomb bullet reaches the end of its life
-    // For example, you might want to remove it from the game or trigger an event
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::app);
     flog << "Bomb bullet reached the end of its life!" << std::endl;
     flog.close();
@@ -103,13 +106,23 @@ std::vector<std::unique_ptr<Bullet>> Bomb::getChild() {
 
     std::vector<std::unique_ptr<Bullet>> children;
 
-    if(pierce <= 0 || lifeSpan <= 0) {
-        children.push_back(std::make_unique<BombExplosion>());
-        for(int i = 0; i < 1; ++i) {
-            children[i]->loadTexture();
-            children[i]->init(position, size, 0.0f, 1, 0, 22, 0.0f, properties, normalDebuff, moabDebuff, attackBuff, towerId);
-        }
+    children.push_back(std::make_unique<BombExplosion>());
+    for(int i = 0; i < 1; ++i) {
+        children[i]->loadTexture();
+        children[i]->init(position, 
+                          {size.x * 2, size.y * 2}, 
+                          rotation, 
+                          damage, 
+                          0, 
+                          pierce, 
+                          0.1f, 
+                          properties, 
+                          normalDebuff, 
+                          moabDebuff, 
+                          attackBuff, 
+                          towerId);
     }
+
     return children;
 }
 

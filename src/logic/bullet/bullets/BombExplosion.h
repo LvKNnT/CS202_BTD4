@@ -16,6 +16,7 @@ public:
     int run() override;
     void update(std::vector<std::unique_ptr<Enemy>>& enemyList) override;
     bool hit(int damage) override;
+    int getDamage(BloonType type, bool isCamo) override;
 
     void draw() const override;
     int die() override;
@@ -27,7 +28,7 @@ public:
     
     void setRotation(float rotation) override;
 private:
-
+    int initialLifeSpan;
 };
 
 #endif // BOMB_EXPLOSION_H

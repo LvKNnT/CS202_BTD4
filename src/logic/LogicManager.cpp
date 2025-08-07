@@ -195,7 +195,7 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
 
                 int popCount = 0;
                 std::vector<std::unique_ptr<Enemy>> enemyChildren;
-                enemyChildren = getChildrenEnemies(enemyManager, **enemyIt, (*bulletIt)->damage, popCount, resourceManager);
+                enemyChildren = getChildrenEnemies(enemyManager, **enemyIt, (*bulletIt)->getDamage((*enemyIt)->type, (*enemyIt)->properties.isCamo), popCount, resourceManager);
 
                 // Add the pop count to the original tower
                 for (auto& tower : towerManager.towerList) {
@@ -330,8 +330,21 @@ std::vector<std::unique_ptr<Enemy>> LogicManager::getChildrenEnemies(EnemyManage
 }
 
 bool LogicManager::checkCollision(const Bullet& bullet, const Enemy& enemy) const {
+    if((bullet.properties.canNormal == false && enemy.type < BloonType::Moab)
+    || (bullet.properties.canMoab == false && enemy.type >= BloonType::Moab)) {
+        return false; // Bullet cannot hit this type of enemy
+    }
+
     Rectangle bulletBox = bullet.getBoundingBox();
     Rectangle enemyBox = enemy.getBoundingBox();
+
+    // Check if the bounding boxes is too far apart
+    float dx = bulletBox.x + bulletBox.width / 2 - (enemyBox.x + enemyBox.width / 2);
+    float dy = bulletBox.y + bulletBox.height / 2 - (enemyBox.y + enemyBox.height / 2);
+    float distanceSq = dx * dx + dy * dy;
+    float maxRadius = (hypot(bulletBox.width, bulletBox.height) + hypot(enemyBox.width, enemyBox.height)) / 2;
+    if (distanceSq > maxRadius * maxRadius) return false;
+
 
     // Separating Axis Theorem (SAT) for rectangle collision
     // Get the corners of both rectangles
@@ -349,16 +362,15 @@ bool LogicManager::checkCollision(const Bullet& bullet, const Enemy& enemy) cons
         float centerX = rect.x + halfWidth;
         float centerY = rect.y + halfHeight;
 
-        // Define the four corners relative to the center
-        corners[0] = {rect.x, rect.y}; // Top-left
-        corners[1] = {rect.x + rect.width, rect.y}; // Top-right
-        corners[2] = {rect.x + rect.width, rect.y + rect.height}; // Bottom-right
-        corners[3] = {rect.x, rect.y + rect.height}; // Bottom-left
+        corners[0] = { -halfWidth, -halfHeight }; // Top-left
+        corners[1] = {  halfWidth, -halfHeight }; // Top-right
+        corners[2] = {  halfWidth,  halfHeight }; // Bottom-right
+        corners[3] = { -halfWidth,  halfHeight }; // Bottom-left
 
-        // Rotate each corner around the center
+        // Then rotate and translate to world space
         for (int i = 0; i < 4; ++i) {
-            float x = corners[i].x - centerX;
-            float y = corners[i].y - centerY;
+            float x = corners[i].x;
+            float y = corners[i].y;
             corners[i].x = centerX + x * cosTheta - y * sinTheta;
             corners[i].y = centerY + x * sinTheta + y * cosTheta;
         }
@@ -442,7 +454,7 @@ void LogicManager::updateTowers(TowerManager& towerManager, EnemyManager& enemyM
                         case TargetPriority::Strong:
                         targetEnemy = *std::max_element(enemiesInRange.begin(), enemiesInRange.end(),
                         [&](Enemy* a, Enemy* b) {
-                            return a->health < b->health; // Compare health
+                            return a->livesLost < b->livesLost; // Compare health
                         });
                         break;
                     }
@@ -660,14 +672,14 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
     return false;
 }
 
-bool LogicManager::activateSkillTower(TowerManager& towerManager, EnemyManager& enemyManager) {
+bool LogicManager::activateSkillTower(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager) {
     std::weak_ptr<Tower> tower = towerManager.lastPickedTower;
     auto towerPtr = tower.lock();
     if(!towerPtr) return false; // No tower selected for skill activation
 
     if(towerPtr->skill && towerPtr->skill->canActivateSkill()) {
         // Activate the skill
-        towerPtr->skill->activateSkill(towerPtr, enemyManager.enemyList, towerManager.towerList);
+        towerPtr->skill->activateSkill(towerPtr, enemyManager.enemyList, towerManager.towerList, bulletManager);
         // std::cerr << "Activated skill: " << tower->skill->name << std::endl;
         return true;
     }

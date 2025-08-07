@@ -29,7 +29,8 @@ public:
 
     // Different bullets can have different behaviors when hitting targets
     virtual void init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties& properties, BloonDebuff& normalDebuff, BloonDebuff& moabDebuff, AttackBuff& attackBuff, int towerId) = 0;
-    virtual bool hit(int damage) = 0; // Pure virtual function for handling hit&
+    virtual bool hit(int damage) = 0; // Pure virtual function for handling hit
+    virtual int getDamage(BloonType type, bool isCamo);
     virtual int run() = 0; // Pure virtual function for running the bullet logic
     virtual void update(std::vector<std::unique_ptr<Enemy>>& enemyList) = 0; // Pure virtual function for updating the bullet tracing
     virtual void setRotation(float rotation) = 0; // Pure virtual function for setting rotation

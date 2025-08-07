@@ -21,15 +21,18 @@ public:
     
     // Bullet properties
     int damage; 
+    int speed;
     float speedRatio;
     int pierce; 
+    float pierceRatio;
     float lifeSpanRatio;
+    Vector2 size;
     BulletProperties properties;
     BloonDebuff extraNormalDebuff;
     BloonDebuff extraMoabDebuff;
 
-    AttackBuff(float range = 0.0f, float rangeRatio = 1.0f, float cooldownRatio = 1.0f, int damage = 0, float speedRatio = 1.0f, int pierce = 0, float lifeSpanRatio = 1.0f, BulletProperties properties = BulletProperties::classic(), BloonDebuff extraNormalDebuff = BloonDebuff(), BloonDebuff extraMoabDebuff = BloonDebuff())
-        : range(range), rangeRatio(rangeRatio), cooldownRatio(cooldownRatio), damage(damage), speedRatio(speedRatio), pierce(pierce), lifeSpanRatio(lifeSpanRatio), properties(properties), extraNormalDebuff(extraNormalDebuff), extraMoabDebuff(extraMoabDebuff) {}
+    AttackBuff(float range = 0.0f, float rangeRatio = 1.0f, float cooldownRatio = 1.0f, int damage = 0, int speed = 0, float speedRatio = 1.0f, int pierce = 0, float pierceRatio = 1.0f, float lifeSpanRatio = 1.0f, Vector2 size = {0.0f, 0.0f}, BulletProperties properties = BulletProperties::classic(), BloonDebuff extraNormalDebuff = BloonDebuff(), BloonDebuff extraMoabDebuff = BloonDebuff())
+        : range(range), rangeRatio(rangeRatio), cooldownRatio(cooldownRatio), damage(damage), speed(speed), speedRatio(speedRatio), pierce(pierce), pierceRatio(pierceRatio), lifeSpanRatio(lifeSpanRatio), size(size), properties(properties), extraNormalDebuff(extraNormalDebuff), extraMoabDebuff(extraMoabDebuff) {}
     ~AttackBuff() = default;
 };
 

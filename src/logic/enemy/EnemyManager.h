@@ -27,6 +27,7 @@ public:
     void drawEnemies() const;
     void updateEnemies();
 
+    bool isEndGame() const;
 private:
     // Current enemy modifies
     // Note that enemyModifies is constant and should not be modified for each enemyManager instance.

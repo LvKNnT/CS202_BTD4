@@ -79,7 +79,7 @@ void DartMonkey::loadTexture() {
     // Update size based on the loaded texture
     size.x = Game::Instance().getTextureManager().getTexture(tag).width;
     size.y = Game::Instance().getTextureManager().getTexture(tag).height;
-    size = {50.0f, 50.0f}; // Set the size of the Dart Monkey tower
+    size = {60.0f, 60.0f}; // Set the size of the Dart Monkey tower
 
     // Get texture for the upgrade
     upgradeTop->loadTexture();
@@ -186,6 +186,11 @@ LogicInfo DartMonkey::getInfo() {
         info["skillName"] = skill->getName();
         info["skillCooldown"] = std::to_string(skill->getCooldownTime());
         info["skillTimer"] = std::to_string(skill->getTimer());
+    }
+    else {
+        info["skillName"] = "No Skill";
+        info["skillCooldown"] = "0";
+        info["skillTimer"] = "0";
     }
     
     return this->info;

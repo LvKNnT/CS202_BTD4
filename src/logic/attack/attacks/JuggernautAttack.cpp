@@ -3,6 +3,7 @@
 #include "../../bullet/bullets/JuggernautBullet.h"
 
 #include <cmath>
+#include "raymath.h"
 
 JuggernautAttack::JuggernautAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff)
     : Attack(range, cooldown, position, towerId, damage, speed, pierce, lifeSpan, properties, normalDebuff, moabDebuff) {
@@ -52,10 +53,12 @@ void JuggernautAttack::update(BulletManager& bulletManager, const Vector2& targe
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
         
-        attackPattern.execute(bulletManager, BulletType::Juggernaut, position, {60.0f, 60.0f}, angle, 
+        attackPattern.execute(bulletManager, BulletType::Juggernaut, position, 
+            Vector2Add({40.0f, 40.0f}, attackBuff.size),
+            angle, 
             damage + attackBuff.damage, 
-            speed * attackBuff.speedRatio, 
-            pierce + attackBuff.pierce, 
+            speed * attackBuff.speedRatio + attackBuff.speed, 
+            pierce * attackBuff.pierceRatio + attackBuff.pierce, 
             lifeSpan * attackBuff.lifeSpanRatio, 
             properties + attackBuff.properties, 
             normalDebuff + attackBuff.extraNormalDebuff,

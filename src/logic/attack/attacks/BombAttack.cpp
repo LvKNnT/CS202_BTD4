@@ -3,6 +3,7 @@
 #include "../../bullet/bullets/Bomb.h"
 
 #include <cmath>
+#include "raymath.h"
 
 BombAttack::BombAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff)
     : Attack(range, cooldown, position, towerId, damage, speed, pierce, lifeSpan, properties, normalDebuff, moabDebuff) {
@@ -39,7 +40,7 @@ bool BombAttack::isInRange(const Rectangle& rec, const float rotation, bool isCa
     float dy = localCircle.y - closestY;
     float distanceSq = dx * dx + dy * dy;
 
-    float buffedRange = range + attackBuff.range;
+    float buffedRange = range * attackBuff.rangeRatio + attackBuff.range;
     return distanceSq <= buffedRange * buffedRange;
 }
 
@@ -56,14 +57,16 @@ void BombAttack::update(BulletManager& bulletManager, const Vector2& targetPosit
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
         
-        attackPattern.execute(bulletManager, BulletType::Bomb, position, {10.f, 10.f}, angle, 
-            0, 
-            speed * attackBuff.speedRatio, 
-            1, 
+        attackPattern.execute(bulletManager, BulletType::Bomb, position, 
+            Vector2Add({30.0f, 30.0f}, attackBuff.size),
+            angle, 
+            damage + attackBuff.damage,
+            speed * attackBuff.speedRatio + attackBuff.speed,
+            pierce * attackBuff.pierceRatio + attackBuff.pierce,
             lifeSpan * attackBuff.lifeSpanRatio, 
             properties + attackBuff.properties, 
-            normalDebuff,
-            moabDebuff,
+            normalDebuff + attackBuff.extraNormalDebuff,
+            moabDebuff + attackBuff.extraMoabDebuff,
             attackBuff,
             towerId);
         

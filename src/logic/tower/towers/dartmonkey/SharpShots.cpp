@@ -26,7 +26,7 @@ void SharpShots::loadTexture() {
 }
 
 void SharpShots::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
-    attackBuff.pierce += 1;
+    attackBuff.pierceRatio *= 2.0f;
 }
 
 std::unique_ptr<Upgrade> SharpShots::buy() {

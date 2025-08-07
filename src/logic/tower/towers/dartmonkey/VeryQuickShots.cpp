@@ -26,7 +26,7 @@ void VeryQuickShots::loadTexture() {
 }
 
 void VeryQuickShots::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
-    attackBuff.cooldownRatio *= 0.8f; 
+    attackBuff.cooldownRatio *= 2.0f / 3.0f / 0.85f; 
 }
 
 std::unique_ptr<Upgrade> VeryQuickShots::buy() {

@@ -55,7 +55,7 @@ void GameLogic::init(Difficulty difficulty) {
     
     // for testing only
     resourceManager.getResource().cash = 999999;
-    // resourceManager.getResource().currentRound = 40;
+    resourceManager.getResource().currentRound = 40;
     
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
     towerManager = TowerManager(resourceManager.getTowerModifies());
@@ -135,7 +135,7 @@ void GameLogic::update() {
         logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager, resourceManager);
         if(isRoundRun()) {
             // testing
-            logicManager.activateSkillTower(towerManager, enemyManager);
+            logicManager.activateSkillTower(towerManager, enemyManager, bulletManager);
             
             logicManager.updateTowers(towerManager, enemyManager, bulletManager);
             towerManager.updateTowers();
