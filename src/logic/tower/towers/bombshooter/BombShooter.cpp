@@ -6,6 +6,10 @@
 #include "../../../attack/attacks/BombAttack.h"
 #include "../../../attack/patterns/NormalAttack.h"
 
+#include "BiggerBombs.h"
+#include "FasterReload.h"
+#include "ExtraRange.h"
+
 BombShooter::BombShooter(Vector2 position)
     : Tower(position, {0.0f, 0.0f}, 0.0f, TowerType::BombShooter, 375) {
     /**
@@ -20,18 +24,19 @@ BombShooter::BombShooter(Vector2 position)
      * * range = 160.0f
      * * cooldown = 1.5f
      * * * damage = 1
-     * * * speed = 600
+     * * * speed = 360
      * * * pierce = 22
-     * * * lifeSpan = 0.25f
-     * * * properties = {false, false, false, false, false} // canHitCamo, canHitLead, canHitFrozen, canHitRegrow, canHitBlack
+     * * * lifeSpan = 2.0f
+     * * * properties = {true, false, true, false, true} // canHitCamo, canHitLead, canHitFrozen, canHitRegrow, canHitBlack
      */
-    attacks.push_back(std::make_unique<BombAttack>(160.0f, 1.5f, position, towerId, 1, 200, 22, 2.0f, BulletProperties::normal(), BloonDebuff(), BloonDebuff())); 
+    attacks.push_back(std::make_unique<BombAttack>(160.0f, 1.5f, position, towerId, 1, 360, 22, 2.0f, BulletProperties(true, false, true, true, false, true), BloonDebuff(), BloonDebuff())); 
     attackPattern = std::make_unique<NormalAttack>(); 
+    skill = nullptr;
 
     // Upgrade Path
-    upgradeTop = std::make_unique<Upgrade>();
-    upgradeMiddle = std::make_unique<Upgrade>();
-    upgradeBottom = std::make_unique<Upgrade>();
+    upgradeTop = std::make_unique<BiggerBombs>();
+    upgradeMiddle = std::make_unique<FasterReload>();
+    upgradeBottom = std::make_unique<ExtraRange>();
     
     // Info section
     info["name"] = "Bomb Shooter";
@@ -75,11 +80,14 @@ void BombShooter::loadTexture() {
     // Update size based on the loaded texture
     size.x = Game::Instance().getTextureManager().getTexture(tag).width;
     size.y = Game::Instance().getTextureManager().getTexture(tag).height;
+    size = {70.0f, 70.0f}; // Set the size of the Bomb Shooter tower
 
     // Get texture for the upgrade
     upgradeTop->loadTexture();
     upgradeMiddle->loadTexture();
     upgradeBottom->loadTexture();
+
+    upgradeTextureHandler.loadTextures(); 
 }
 
 void BombShooter::update() {
@@ -87,6 +95,7 @@ void BombShooter::update() {
     for(auto& attack : attacks) {
         attack->update();
     }
+    if(skill) skill->update();
 }
 
 void BombShooter::setRotation(float rotation) {
@@ -95,7 +104,7 @@ void BombShooter::setRotation(float rotation) {
 
 void BombShooter::draw() const {
     // Draw the Dart Monkey tower using raylib functions
-    DrawCircleV(position, 10, YELLOW); // Example drawing a yellow circle for the tower
+    // DrawCircleV(position, 10, YELLOW); // Example drawing a yellow circle for the tower
 
     // Rounded draw position
     Vector2 draw_position = {
@@ -103,22 +112,28 @@ void BombShooter::draw() const {
         roundf(position.y)
     };    
 
-    DrawTexturePro(Game::Instance().getTextureManager().getTexture(tag), 
-                   {0, 0, size.x, size.y},
-                   {draw_position.x, draw_position.y, size.x, size.y},
-                   {size.x / 2.0f, size.y / 2.0f},
-                   rotation,
-                   WHITE); // Draw the Bomb Shooter texture with the specified position and rotation
+    DrawTexturePro(
+        Game::Instance().getTextureManager().getTexture(tag),
+        {0, 0, (float) Game::Instance().getTextureManager().getTexture(tag).width, (float) Game::Instance().getTextureManager().getTexture(tag).height},
+        {draw_position.x, draw_position.y, size.x, size.y},
+        {size.x / 2.0f, size.y / 2.0f},
+        rotation,
+        WHITE); // Draw the Bomb Shooter texture with the specified position and rotation
+
+    // Draw the upgrades
+    upgradeTextureHandler.draw(getBoundingBox());
 
     // draw the hitbox
-    Rectangle hitbox = getBoundingBox();
-    DrawRectangleLinesEx(hitbox, 2.0f, RED); // Draw the hitbox in red for visibility
+    // Rectangle hitbox = getBoundingBox();
+    // hitbox.x += size.x / 2.0f; // Adjust hitbox position
+    // hitbox.y += size.y / 2.0f; // Adjust hitbox position
+    // DrawRectanglePro(hitbox, {size.x / 2.0f, size.y / 2.0f}, rotation, Fade(GREEN, 0.5f)); // Draw the hitbox with a semi-transparent green color
 }
 
 void BombShooter::drawRange() const {
     // Draw the range of attacks
     for(const auto& attack : attacks) {
-        DrawCircleV(position, attack->getRange() + attackBuff.range, Fade(GRAY, 0.5f)); // Draw the attack range
+        DrawCircleV(position, attack->getRange() * attackBuff.rangeRatio + attackBuff.range, Fade(GRAY, 0.5f)); // Draw the attack range
     }
 }
 
@@ -166,6 +181,18 @@ LogicInfo BombShooter::getInfo() {
         default:
             info["targetPriority"] = "Unknown";
             break;
+    }
+
+    // for skill
+    if(skill) {
+        info["skillName"] = skill->getName();
+        info["skillCooldown"] = std::to_string(skill->getCooldownTime());
+        info["skillTimer"] = std::to_string(skill->getTimer());
+    }
+    else {
+        info["skillName"] = "No Skill";
+        info["skillCooldown"] = "0";
+        info["skillTimer"] = "0";
     }
     
     return this->info;

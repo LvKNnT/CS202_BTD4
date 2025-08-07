@@ -4,6 +4,7 @@
 #include "../../bullet/bullets/ArrowCrit.h"
 
 #include <cmath>
+#include "raymath.h"
 
 ArrowCritAttack::ArrowCritAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff, int maxCounter)
     : Attack(range, cooldown, position, towerId, damage, speed, pierce, lifeSpan, properties, normalDebuff, moabDebuff), counter(0), maxCounter(maxCounter) {
@@ -54,24 +55,28 @@ void ArrowCritAttack::update(BulletManager& bulletManager, const Vector2& target
         angle = angle * (180.0f / PI); // Convert radians to degrees
 
         if (counter < maxCounter) {
-            attackPattern.execute(bulletManager, BulletType::Arrow, position, {50.0f, 12.0f}, angle,
-                damage + attackBuff.damage,
-                speed * attackBuff.speedRatio,
-                pierce + attackBuff.pierce,
-                lifeSpan * attackBuff.lifeSpanRatio,
-                properties + attackBuff.properties,
+            attackPattern.execute(bulletManager, BulletType::Arrow, position, 
+                Vector2Add({50.0f, 12.0f}, attackBuff.size),
+                angle,
+                damage + attackBuff.damage, 
+                speed * attackBuff.speedRatio + attackBuff.speed, 
+                pierce * attackBuff.pierceRatio + attackBuff.pierce, 
+                lifeSpan * attackBuff.lifeSpanRatio, 
+                properties + attackBuff.properties, 
                 normalDebuff + attackBuff.extraNormalDebuff,
                 moabDebuff + attackBuff.extraMoabDebuff,
                 attackBuff,
                 towerId);
             counter++;
         } else {
-            attackPattern.execute(bulletManager, BulletType::ArrowCrit, position, {50.0f, 15.0f}, angle,
+            attackPattern.execute(bulletManager, BulletType::ArrowCrit, position, 
+                Vector2Add({50.0f, 15.0f}, attackBuff.size),
+                angle,
                 (damage + attackBuff.damage) * 10,
-                speed * attackBuff.speedRatio,
-                pierce + attackBuff.pierce,
-                lifeSpan * attackBuff.lifeSpanRatio,
-                properties + attackBuff.properties,
+                speed * attackBuff.speedRatio + attackBuff.speed, 
+                pierce * attackBuff.pierceRatio + attackBuff.pierce, 
+                lifeSpan * attackBuff.lifeSpanRatio, 
+                properties + attackBuff.properties, 
                 normalDebuff + attackBuff.extraNormalDebuff,
                 moabDebuff + attackBuff.extraMoabDebuff,
                 attackBuff,

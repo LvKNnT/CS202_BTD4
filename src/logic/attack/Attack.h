@@ -58,6 +58,9 @@ public:
 
     Vector2 getPosition() const;
     std::string getTag() const;
+    BulletProperties& getProperties();
+    BloonDebuff& getNormalDebuff();
+    BloonDebuff& getMoabDebuff();
     int getTowerId() const;
 };
 

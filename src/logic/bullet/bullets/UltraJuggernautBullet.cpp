@@ -1,5 +1,6 @@
 #include "UltraJuggernautBullet.h"
 #include "../../../core/Game.h"
+#include "raymath.h"
 
 #include "JuggernautBullet.h"
 
@@ -139,7 +140,18 @@ std::vector<std::unique_ptr<Bullet>> UltraJuggernautBullet::getChild() {
 
     for(int i = 0; i < 6; ++i) {
         children[i]->loadTexture();
-        children[i]->init(position, size, rotation + i * 60.0f, 2, 300, 50, 1.0f, properties, normalDebuff, moabDebuff, attackBuff, towerId);
+        children[i]->init(position, 
+                          Vector2Add(size, Vector2Add(attackBuff.size, {-10.0f, -10.0f})), 
+                          fmodf(rotation + i * 60.0f, 360.0f),
+                          2 + attackBuff.damage * 2, 
+                          300 * attackBuff.speedRatio + attackBuff.speed, 
+                          50 * attackBuff.pierceRatio + attackBuff.pierce, 
+                          1.0f * attackBuff.lifeSpanRatio, 
+                          properties, 
+                          normalDebuff, 
+                          moabDebuff, 
+                          attackBuff, 
+                          towerId);
     }
 
     ++counter;

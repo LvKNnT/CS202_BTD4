@@ -16,6 +16,7 @@ public:
     int run() override;
     void update(std::vector<std::unique_ptr<Enemy>>& enemyList) override;
     bool hit(int damage) override;
+    int getDamage(BloonType type, bool isCamo) override;
 
     void draw() const override;
     int die() override;
@@ -26,8 +27,8 @@ public:
     void setActive(bool active) override;
     
     void setRotation(float rotation) override;
+    
 private:
-
 };
 
 #endif // BOMB_H

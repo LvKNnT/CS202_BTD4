@@ -27,9 +27,11 @@ void EnhancedEyesight::loadTexture() {
 
 void EnhancedEyesight::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
     attackBuff.range += 32;
-    attackBuff.lifeSpanRatio *= 1.2f / 1.15f; 
-    attackBuff.speedRatio *= 1.1f;
+    attackBuff.lifeSpanRatio *= 1.6f / 1.35f; 
+    attackBuff.speed += 100;
     attackBuff.properties.canCamo = true;
+    attackBuff.extraNormalDebuff += BloonDebuff().getIKnockBack(0.0f, 1.5f);
+    attackBuff.extraMoabDebuff += BloonDebuff().getIKnockBack(0.0f, 0.75f);
 }
 
 std::unique_ptr<Upgrade> EnhancedEyesight::buy() {

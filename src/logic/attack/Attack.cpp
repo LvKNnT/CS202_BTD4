@@ -53,6 +53,15 @@ Vector2 Attack::getPosition() const {
 std::string Attack::getTag() const {
     return tag;
 }
+BulletProperties& Attack::getProperties() {
+    return properties;
+}
+BloonDebuff& Attack::getNormalDebuff() {
+    return normalDebuff;
+}
+BloonDebuff& Attack::getMoabDebuff() {
+    return moabDebuff;
+}
 int Attack::getTowerId() const {
     return towerId;
 }

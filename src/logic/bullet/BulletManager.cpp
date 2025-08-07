@@ -57,11 +57,11 @@ void BulletManager::drawBullets() const {
     for (const auto& bullet : bulletList) {
         if(bullet) {
             // draw bounding box for debugging
-            // Rectangle boundingBox = bullet->getBoundingBox();
-            // float rotation = bullet->rotation;
-            // boundingBox.x += bullet->size.x / 2.0f; // Adjust bounding box position
-            // boundingBox.y += bullet->size.y / 2.0f; // Adjust bounding
-            // DrawRectanglePro(boundingBox, {boundingBox.width / 2.0f, boundingBox.height / 2.0f}, rotation, RED);
+            Rectangle boundingBox = bullet->getBoundingBox();
+            float rotation = bullet->rotation;
+            boundingBox.x += bullet->size.x / 2.0f; // Adjust bounding box position
+            boundingBox.y += bullet->size.y / 2.0f; // Adjust bounding
+            DrawRectanglePro(boundingBox, {boundingBox.width / 2.0f, boundingBox.height / 2.0f}, rotation, RED);
             
             bullet->draw();
         } else {

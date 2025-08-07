@@ -29,6 +29,7 @@ void BombExplosion::init(Vector2 position, Vector2 size, float rotation, int dam
     this->speed = speed;
     this->pierce = pierce;
     this->lifeSpan = lifeSpan;
+    this->initialLifeSpan = lifeSpan; // Store the initial life span for later use
     this->properties = properties; 
     this->normalDebuff = normalDebuff;
     this->moabDebuff = moabDebuff;
@@ -65,6 +66,20 @@ bool BombExplosion::hit(int damage) {
     return pierce <= 0; // Indicating that the hit was successful
 }
 
+int BombExplosion::getDamage(BloonType type, bool isCamo) {
+    // only deal dmg at the moment it spawns
+    if(lifeSpan < initialLifeSpan) return 0;
+
+    int damage = this->damage;
+
+    if(isCamo) damage += normalDebuff.bonusCamoDamage;
+    if(type == BloonType::Lead || type == BloonType::Ddt) damage += normalDebuff.bonusLeadDamage;
+
+    if(type < BloonType::Moab) return damage + normalDebuff.bonusDamage; 
+
+    return damage + moabDebuff.bonusDamage; // moab class
+}
+
 void BombExplosion::draw() const {
     // Check if the bullet is active before drawing
     if(!isActiveFlag) {
@@ -80,11 +95,11 @@ void BombExplosion::draw() const {
     };    
 
     DrawTexturePro(Game::Instance().getTextureManager().getTexture(tag), 
-                   {0, 0, size.x, size.y},
+                   {0, 0, (float) Game::Instance().getTextureManager().getTexture(tag).width, (float) Game::Instance().getTextureManager().getTexture(tag).height},
                    {draw_position.x, draw_position.y, size.x, size.y},
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,
-                   WHITE); // Draw the BombExplosion texture with the specified position and rotation
+                   WHITE); 
 }
 
 int BombExplosion::die() {

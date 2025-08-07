@@ -2,6 +2,7 @@
 
 #include "../../bullet/bullets/Arrow.h"
 
+#include "raymath.h"
 #include <cmath>
 
 ArrowAttack::ArrowAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff)
@@ -52,10 +53,12 @@ void ArrowAttack::update(BulletManager& bulletManager, const Vector2& targetPosi
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
         
-        attackPattern.execute(bulletManager, BulletType::Arrow, position, {50.0f, 12.0f}, angle, 
+        attackPattern.execute(bulletManager, BulletType::Arrow, position, 
+            Vector2Add({50.0f, 12.0f}, attackBuff.size),
+            angle, 
             damage + attackBuff.damage, 
-            speed * attackBuff.speedRatio, 
-            pierce + attackBuff.pierce, 
+            speed * attackBuff.speedRatio + attackBuff.speed, 
+            pierce * attackBuff.pierceRatio + attackBuff.pierce, 
             lifeSpan * attackBuff.lifeSpanRatio, 
             properties + attackBuff.properties, 
             normalDebuff + attackBuff.extraNormalDebuff,

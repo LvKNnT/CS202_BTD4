@@ -27,7 +27,7 @@ void LongRangeDarts::loadTexture() {
 
 void LongRangeDarts::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
     attackBuff.range += 32;
-    attackBuff.lifeSpanRatio *= 1.15f;
+    attackBuff.lifeSpanRatio *= 1.35f;
 }
 
 std::unique_ptr<Upgrade> LongRangeDarts::buy() {

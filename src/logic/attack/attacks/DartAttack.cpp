@@ -3,6 +3,7 @@
 #include "../../bullet/bullets/Dart.h"
 
 #include <cmath>
+#include "raymath.h"
 
 DartAttack::DartAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff)
     : Attack(range, cooldown, position, towerId, damage, speed, pierce, lifeSpan, properties, normalDebuff, moabDebuff) {
@@ -56,10 +57,12 @@ void DartAttack::update(BulletManager& bulletManager, const Vector2& targetPosit
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
         
-        attackPattern.execute(bulletManager, BulletType::Dart, position, {50.0f, 50.0f}, angle, 
+        attackPattern.execute(bulletManager, BulletType::Dart, position, 
+            Vector2Add({20.0f, 20.0f}, attackBuff.size),
+            angle, 
             damage + attackBuff.damage, 
-            speed * attackBuff.speedRatio, 
-            pierce + attackBuff.pierce, 
+            speed * attackBuff.speedRatio + attackBuff.speed, 
+            pierce * attackBuff.pierceRatio + attackBuff.pierce, 
             lifeSpan * attackBuff.lifeSpanRatio, 
             properties + attackBuff.properties, 
             normalDebuff + attackBuff.extraNormalDebuff,

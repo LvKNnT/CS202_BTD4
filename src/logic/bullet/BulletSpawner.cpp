@@ -11,7 +11,13 @@
 #include "bullets/Arrow.h"
 #include "bullets/ArrowCrit.h"
 #include "bullets/Bomb.h"
+#include "bullets/ReallyBigBombsBullet.h"
 #include "bullets/BombExplosion.h"
+#include "bullets/MOABAssassinBullet.h"
+#include "bullets/BombFragment.h"
+#include "bullets/FragBombsBullet.h"
+#include "bullets/ClusterBombBullet.h"
+#include "bullets/RecursiveClusterBullet.h"
 #include "bullets/Shuriken.h"
 #include "bullets/TracingShuriken.h"
 #include "bullets/CaltropsBullet.h"
@@ -68,7 +74,13 @@ void BulletSpawner::init() {
     bulletTemplates[BulletType::Arrow] = std::make_unique<Arrow>();
     bulletTemplates[BulletType::ArrowCrit] = std::make_unique<ArrowCrit>();
     bulletTemplates[BulletType::Bomb] = std::make_unique<Bomb>();
+    bulletTemplates[BulletType::ReallyBigBombs] = std::make_unique<ReallyBigBombsBullet>();
     bulletTemplates[BulletType::BombExplosion] = std::make_unique<BombExplosion>();
+    bulletTemplates[BulletType::BombFragment] = std::make_unique<BombFragment>();
+    bulletTemplates[BulletType::MOABAssassin] = std::make_unique<MOABAssassinBullet>();
+    bulletTemplates[BulletType::FragBombs] = std::make_unique<FragBombsBullet>();
+    bulletTemplates[BulletType::ClusterBomb] = std::make_unique<ClusterBombBullet>();
+    bulletTemplates[BulletType::RecursiveClusterBomb] = std::make_unique<RecursiveClusterBullet>();
     bulletTemplates[BulletType::Shuriken] = std::make_unique<Shuriken>();
     bulletTemplates[BulletType::TracingShuriken] = std::make_unique<TracingShuriken>();
     bulletTemplates[BulletType::Caltrops] = std::make_unique<CaltropsBullet>();

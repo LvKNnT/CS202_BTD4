@@ -10,10 +10,17 @@ enum class BulletType {
     Arrow,
     ArrowCrit,
     Bomb,
+    ReallyBigBombs,
+    MOABAssassin,
+    FragBombs,
+    ClusterBomb,
+    RecursiveClusterBomb,
     Tack,
     Ice,
     MagicBall,
     Shuriken,
+    BombExplosion,
+    BombFragment
     BombExplosion, 
     TracingShuriken,
     Caltrops
@@ -28,6 +35,10 @@ public:
     bool canCamo = false;
     bool canPurple = false;
     bool canStripCamo = false;
+
+    // hit specific bloon types
+    bool canNormal = true;
+    bool canMoab = true;
 
     static BulletProperties classic() {
         return BulletProperties{false, false, false, false, false, false, false};
