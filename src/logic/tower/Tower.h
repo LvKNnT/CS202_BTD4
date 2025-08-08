@@ -57,7 +57,6 @@ protected:
     TowerType type; // Type of the tower
     TargetPriority targetPriority; 
     AttackBuff attackBuff; 
-    std::unique_ptr<AttackPattern> attackPattern;
     std::unique_ptr<Skill> skill; // Skill for the tower
 
     int cost; 

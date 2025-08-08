@@ -25,7 +25,7 @@ void StickyBomb::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/StickyBombUpgradeIcon.png");
 }
 
-void StickyBomb::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void StickyBomb::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     for(auto& attack : attacks) {
     }
 }

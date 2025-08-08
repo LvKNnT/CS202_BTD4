@@ -28,8 +28,8 @@ DartMonkey::DartMonkey(Vector2 position)
      * * * lifeSpan = 0.25f
      * * * properties = BulletProperties::normal()
      */
-    attacks.push_back(std::make_unique<DartAttack>(128.0f, 0.95f, position, towerId, 1, 600, 2, 0.25f, BulletProperties::normal(), BloonDebuff(), BloonDebuff())); 
-    attackPattern = std::make_unique<NormalAttack>(); 
+    attacks.push_back(std::make_unique<DartAttack>(128.0f, 0.95f, position, towerId, 1, 600, 2, 0.25f, BulletProperties::normal(), BloonDebuff(), BloonDebuff()));
+    attacks.back()->setAttackPattern(std::make_unique<NormalAttack>()); // Set the attack pattern to NormalAttack 
     skill = nullptr;
 
     // Upgrade Path

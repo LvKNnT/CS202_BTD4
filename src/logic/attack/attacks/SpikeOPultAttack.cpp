@@ -46,15 +46,15 @@ void SpikeOPultAttack::update() {
     }
 }
 
-void SpikeOPultAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) {
+void SpikeOPultAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff) {
     // Update the attack logic, e.g., spawn a spike o pult bullet if the cooldown is over
     if (timer <= 0.0f) {
         // Calculate the rotation towards the target position
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
         
-        attackPattern.execute(bulletManager, BulletType::SpikeOPult, position, 
-            Vector2Add({50.0f, 50.0f}, attackBuff.size),
+        attackPattern->execute(bulletManager, BulletType::SpikeOPult, position, 
+            Vector2Add({30.0f, 30.0f}, attackBuff.size),
             angle, 
             damage + attackBuff.damage, 
             speed * attackBuff.speedRatio + attackBuff.speed, 

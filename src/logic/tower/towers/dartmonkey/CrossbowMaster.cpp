@@ -25,7 +25,7 @@ void CrossbowMaster::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/CrossbowMasterUpgradeIcon.png");
 }
 
-void CrossbowMaster::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void CrossbowMaster::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     for (auto& attack : attacks) {
         /**
          * * range = 320.0f
@@ -38,7 +38,9 @@ void CrossbowMaster::update(std::vector<std::unique_ptr<Attack> >& attacks, Atta
          */
 
         if (attack->getTag() == "ArrowCritAttack") {
+            std::unique_ptr<AttackPattern> attackPattern = std::move(attack->getAttackPattern());
             attacks.back() = std::make_unique<ArrowCritAttack>(320.0f, 0.2375f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 8, 900, 8, 0.4f, BulletProperties{false, true, true, false, true, true}, BloonDebuff(), BloonDebuff(), 5); 
+            attacks.back()->setAttackPattern(std::move(attackPattern));
         }
     }
 }

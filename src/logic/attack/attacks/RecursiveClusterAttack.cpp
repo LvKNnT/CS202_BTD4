@@ -47,7 +47,7 @@ void RecursiveClusterAttack::update() {
     }
 }
 
-void RecursiveClusterAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) {
+void RecursiveClusterAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff) {
     // Update the attack logic, e.g., spawn a cluster bomb bullet if the cooldown is over
     if (timer <= 0.0f) {
         // Calculate the rotation towards the target position
@@ -55,7 +55,7 @@ void RecursiveClusterAttack::update(BulletManager& bulletManager, const Vector2&
         angle = angle * (180.0f / PI); // Convert radians to degrees
 
         if(isRecursive) {
-            attackPattern.execute(bulletManager, BulletType::RecursiveClusterBomb, position, 
+            attackPattern->execute(bulletManager, BulletType::RecursiveClusterBomb, position, 
                 Vector2Add({30.0f, 30.0f}, attackBuff.size),
                 angle, 
                 damage + attackBuff.damage,
@@ -69,7 +69,7 @@ void RecursiveClusterAttack::update(BulletManager& bulletManager, const Vector2&
                 towerId);
         }
         else {
-            attackPattern.execute(bulletManager, BulletType::ClusterBomb, position, 
+            attackPattern->execute(bulletManager, BulletType::ClusterBomb, position, 
                 Vector2Add({30.0f, 30.0f}, attackBuff.size),
                 angle, 
                 damage + attackBuff.damage,

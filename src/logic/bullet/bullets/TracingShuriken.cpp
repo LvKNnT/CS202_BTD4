@@ -96,7 +96,7 @@ void TracingShuriken::draw() const {
         return; 
     }
 
-    DrawCircleV(position, 10, RED); // Example drawing a red circle for the dart
+    // DrawCircleV(position, 10, RED); // Example drawing a red circle for the dart
 
     // Rounded draw position
     Vector2 draw_position = {
@@ -105,11 +105,11 @@ void TracingShuriken::draw() const {
     };    
 
     DrawTexturePro(Game::Instance().getTextureManager().getTexture(tag), 
-                   {0, 0, size.x, size.y},
+                   {0, 0, (float) Game::Instance().getTextureManager().getTexture(tag).width, (float) Game::Instance().getTextureManager().getTexture(tag).height},
                    {draw_position.x, draw_position.y, size.x, size.y},
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,
-                   WHITE); // Draw the TracingShuriken texture with the specified position and rotation
+                   WHITE); 
 }
 
 int TracingShuriken::die() {

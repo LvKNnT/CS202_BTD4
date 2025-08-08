@@ -27,7 +27,7 @@ void SpikeOPult::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/Spike-o-pultUpgradeIcon.png");
 }
 
-void SpikeOPult::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void SpikeOPult::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     attackBuff.rangeRatio *= 1.15f;
     
     bool isFound = false;
@@ -43,12 +43,16 @@ void SpikeOPult::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBu
          */
 
         if (attack->getTag() == "DartAttack") {
+            std::unique_ptr<AttackPattern> attackPattern = std::move(attack->getAttackPattern());
             attack = std::make_unique<SpikeOPultAttack>(128.0f, 1.15f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 1, 300, 19, 1.0f, BulletProperties{false, true, true, true, false, true}, BloonDebuff(), BloonDebuff()); 
+            attack->setAttackPattern(std::move(attackPattern));
             isFound = true;
         }
     }
     if (!isFound) {
+        std::unique_ptr<AttackPattern> attackPattern = attacks.back()->getAttackPattern()->clone();
         attacks.push_back(std::make_unique<SpikeOPultAttack>(128.0f, 1.15f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 1, 300, 19, 1.0f, BulletProperties{false, true, true, true, false, true}, BloonDebuff(), BloonDebuff())); 
+        attacks.back()->setAttackPattern(std::move(attackPattern));
     }
 }
 

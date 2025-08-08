@@ -16,31 +16,9 @@ std::unique_ptr<Attack> CaltropsAttack::clone() const {
 }
 
 bool CaltropsAttack::isInRange(const Rectangle& rec, const float rotation, bool isCamo, AttackBuff& attackBuff) const {
-    // Check if the attack can hit camo targets
-    if (isCamo && !(properties.canCamo || attackBuff.properties.canCamo)) return false;
+    // Always attacking
 
-    // Check if the rotated rectangle (rec, rotation) collides with the circle (position, range)
-    // First, get the center of the rectangle
-    Vector2 rectCenter = { rec.x + rec.width / 2.0f, rec.y + rec.height / 2.0f };
-
-    // Translate circle center to rectangle's local space
-    float s = sinf(-rotation * (PI / 180.0f));
-    float c = cosf(-rotation * (PI / 180.0f));
-    Vector2 localCircle;
-    localCircle.x = c * (position.x - rectCenter.x) - s * (position.y - rectCenter.y) + rectCenter.x;
-    localCircle.y = s * (position.x - rectCenter.x) + c * (position.y - rectCenter.y) + rectCenter.y;
-
-    // Clamp circle center to rectangle bounds
-    float closestX = std::max(rec.x, std::min(localCircle.x, rec.x + rec.width));
-    float closestY = std::max(rec.y, std::min(localCircle.y, rec.y + rec.height));
-
-    // Calculate distance from circle center to closest point
-    float dx = localCircle.x - closestX;
-    float dy = localCircle.y - closestY;
-    float distanceSq = dx * dx + dy * dy;
-
-    float buffedRange = range * attackBuff.rangeRatio + attackBuff.range;
-    return distanceSq <= buffedRange * buffedRange;
+    return true;
 }
 
 void CaltropsAttack::update() {
@@ -49,14 +27,14 @@ void CaltropsAttack::update() {
     }
 }
 
-void CaltropsAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) {
+void CaltropsAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff) {
     // Update the attack logic, e.g., spawn a Shuriken if the cooldown is over
     if (timer <= 0.0f) {
         // Calculate the rotation towards the target position
-        float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
-        angle = angle * (180.0f / PI); // Convert radians to degrees
+        rotation = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
+        rotation = rotation * (180.0f / PI); // Convert radians to degrees
         
-        attackPattern.execute(bulletManager, BulletType::Caltrops, position, {10.0f, 10.0f}, angle, 
+        attackPattern->execute(bulletManager, BulletType::Caltrops, position, {20.0f, 20.0f}, rotation, 
             damage + attackBuff.damage, 
             speed * attackBuff.speedRatio,
             (pierce + attackBuff.pierce) * (attackBuff.pierceRatio + 1.0),
@@ -66,7 +44,18 @@ void CaltropsAttack::update(BulletManager& bulletManager, const Vector2& targetP
             moabDebuff + attackBuff.extraMoabDebuff,
             attackBuff,
             towerId);
+
+        rotation = fmod(rotation, 360.0f); // Ensure rotation is within [0, 360)
         
         timer += cooldown * attackBuff.cooldownRatio; // Reset the timer after spawning
     }
+}
+
+float CaltropsAttack::isRotateTower() {
+    if(rotation < 0.0f) {
+        return -1.0f; // Use default rotation
+    }
+    float rot = rotation;
+    rotation = -1.0f;
+    return rot;
 }

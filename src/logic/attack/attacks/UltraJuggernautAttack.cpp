@@ -46,14 +46,14 @@ void UltraJuggernautAttack::update() {
     }
 }
 
-void UltraJuggernautAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) {
+void UltraJuggernautAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff) {
     // Update the attack logic, e.g., spawn an ultra juggernaut bullet if the cooldown is over
     if (timer <= 0.0f) {
         // Calculate the rotation towards the target position
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
         
-        attackPattern.execute(bulletManager, BulletType::UltraJuggernaut, position, 
+        attackPattern->execute(bulletManager, BulletType::UltraJuggernaut, position, 
             Vector2Add({60.0f, 60.0f}, attackBuff.size),
             angle, 
             damage + attackBuff.damage, 

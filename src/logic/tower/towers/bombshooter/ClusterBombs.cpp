@@ -27,8 +27,7 @@ void ClusterBombs::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Boom_Shooter/ClusterBombsUpgradeIcon.png");
 }
 
-void ClusterBombs::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {    
-    bool hasBombAttack = false;
+void ClusterBombs::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {    
     for (auto& attack : attacks) {
         if (attack->getTag() == "FragBombsAttack") {
             /**
@@ -40,20 +39,13 @@ void ClusterBombs::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackB
              * * lifeSpan = 2.0f
              * * properties = {true, false, true, true, false, true} // canHitLead, canHitBlack, canHitWhite, canHitFrozen, canHitCamo, canHitPurple.
              */
+            std::unique_ptr<AttackPattern> attackPattern = std::move(attack->getAttackPattern());
             attack = std::make_unique<ClusterBombsAttack>(160.0f, 1.5f, attack->getPosition(), attack->getTowerId(), 1, 360, 22, 2.0f,
                 BulletProperties{true, false, true, true, false, true}, 
                 BloonDebuff(), 
                 BloonDebuff());
-
-            hasBombAttack = true;
+            attack->setAttackPattern(std::move(attackPattern));
         }
-    }
-
-    if (!hasBombAttack) {
-        attacks.push_back(std::make_unique<ClusterBombsAttack>(160.0f, 1.5f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 1, 360, 22, 2.0f,
-            BulletProperties{true, false, true, true, false, true}, 
-            BloonDebuff(), 
-            BloonDebuff()));
     }
 }
 

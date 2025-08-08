@@ -15,7 +15,7 @@ public:
     bool isInRange(const Rectangle& rec, const float rotation, bool isCamo, AttackBuff& attackBuff) const override;
 
     void update() override;
-    void update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) override;
+    void update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff) override;
 };
 
 #endif // RECURSIVE_CLUSTER_ATTACK_H

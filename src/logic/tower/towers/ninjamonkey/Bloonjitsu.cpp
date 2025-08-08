@@ -26,9 +26,13 @@ void Bloonjitsu::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/BloonjitsuUpgradeIcon.png");
 }
 
-void Bloonjitsu::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void Bloonjitsu::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     for(auto& attack : attacks) {
-        attackPattern = std::make_unique<QuintupleAttack>();
+        if(attack->getTag() == "ShurikenAttack") {
+            std::unique_ptr<AttackPattern> attackPattern = std::move(attack->getAttackPattern());
+            attack->setAttackPattern(std::make_unique<QuintupleAttack>());
+            attack->setAttackPattern(std::move(attackPattern));
+        }
     }
 }
 

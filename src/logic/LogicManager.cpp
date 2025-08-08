@@ -478,9 +478,13 @@ void LogicManager::updateTowers(TowerManager& towerManager, EnemyManager& enemyM
                 // update the rotation of the tower to face the target enemy
                 if(targetEnemy) {
                     float angle = atan2f(targetEnemy->position.y - tower->position.y, targetEnemy->position.x - tower->position.x);
-                    tower->setRotation(angle * (180.0f / PI) + 90.0f); // Convert radians to degrees
                     
-                    attack->update(bulletManager, targetEnemy->position, tower->attackBuff, *tower->attackPattern);
+                    attack->update(bulletManager, targetEnemy->position, tower->attackBuff);
+                    // std::cerr << "rotation: " << attack->isRotateTower() << std::endl;
+                    if(attack->isRotateTower() == -1.0f) { // using default rotation
+                        tower->setRotation(angle * (180.0f / PI) + 90.0f); // Convert radians to degrees
+                    }
+                    else tower->setRotation(attack->isRotateTower() - 90.0f); 
                 }
             }
         }
@@ -616,7 +620,7 @@ bool LogicManager::isUpgradeTower(const ResourceManager& resourceManager, const 
     return false;
 }
 
-bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, UpgradeUnits upgradeUnits) {
+bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, UpgradeUnits upgradeUnits, MapManager& mapManager) {
     std::weak_ptr<Tower> tower = towerManager.lastPickedTower;
     auto towerPtr = tower.lock();
     if(!towerPtr) return false; // No tower selected for upgrade
@@ -625,7 +629,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
     switch (upgradeUnits) {
         case UpgradeUnits::Top:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Top)) {
-                towerPtr->upgradeTop->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->attackPattern, towerPtr->skill);
+                towerPtr->upgradeTop->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->skill, mapManager, resourceManager);
                 towerPtr->info["nameTop"] = towerPtr->upgradeTop->getName();
                 towerPtr->info["descriptionTop"] = towerPtr->upgradeTop->getDescription();
                 towerPtr->cost += static_cast<int>(towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost);
@@ -644,7 +648,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
             break;
         case UpgradeUnits::Middle:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Middle)) {
-                towerPtr->upgradeMiddle->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->attackPattern, towerPtr->skill);
+                towerPtr->upgradeMiddle->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->skill, mapManager, resourceManager);
                 towerPtr->info["nameMiddle"] = towerPtr->upgradeMiddle->getName();
                 towerPtr->info["descriptionMiddle"] = towerPtr->upgradeMiddle->getDescription();
                 towerPtr->cost += static_cast<int>(towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost);
@@ -663,7 +667,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
             break;
         case UpgradeUnits::Bottom:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Bottom)) {
-                towerPtr->upgradeBottom->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->attackPattern, towerPtr->skill);
+                towerPtr->upgradeBottom->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->skill, mapManager, resourceManager);
                 towerPtr->info["nameBottom"] = towerPtr->upgradeBottom->getName();
                 towerPtr->info["descriptionBottom"] = towerPtr->upgradeBottom->getDescription();
                 towerPtr->cost += static_cast<int>(towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost);

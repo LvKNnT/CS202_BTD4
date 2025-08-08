@@ -49,14 +49,14 @@ void ShurikenAttack::update() {
     }
 }
 
-void ShurikenAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) {
+void ShurikenAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff) {
     // Update the attack logic, e.g., spawn a Shuriken if the cooldown is over
     if (timer <= 0.0f) {
         // Calculate the rotation towards the target position
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
         
-        attackPattern.execute(bulletManager, BulletType::Shuriken, position, {10.0f, 10.0f}, angle, 
+        attackPattern->execute(bulletManager, BulletType::Shuriken, position, {30.0f, 30.0f}, angle, 
             damage + attackBuff.damage, 
             speed * attackBuff.speedRatio,
             (pierce + attackBuff.pierce) * (attackBuff.pierceRatio + 1.0),

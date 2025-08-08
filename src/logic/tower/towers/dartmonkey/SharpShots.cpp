@@ -25,7 +25,7 @@ void SharpShots::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/SharpShotsUpgradeIcon.png");
 }
 
-void SharpShots::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void SharpShots::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     attackBuff.pierceRatio *= 2.0f;
 }
 

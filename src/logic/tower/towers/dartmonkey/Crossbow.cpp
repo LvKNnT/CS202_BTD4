@@ -27,7 +27,7 @@ void CrossBow::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/CrossbowUpgradeIcon.png");
 }
 
-void CrossBow::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void CrossBow::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     bool isFound = false;
 
     for (auto& attack : attacks) {
@@ -42,13 +42,17 @@ void CrossBow::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff
          */
 
         if(attack->getTag() == "DartAttack") {
+            std::unique_ptr<AttackPattern> attackPattern = std::move(attack->getAttackPattern());
             attack = std::make_unique<ArrowAttack>(240.0f, 0.95f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 3, 800, 3, 0.31640625f, BulletProperties{false, true, true, false, true, true}, BloonDebuff(), BloonDebuff()); 
+            attack->setAttackPattern(std::move(attackPattern));
             isFound = true;    
         }
     }
 
     if(!isFound) {
+        std::unique_ptr<AttackPattern> attackPattern = attacks.back()->getAttackPattern()->clone();
         attacks.push_back(std::make_unique<ArrowAttack>(240.0f, 0.95f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 3, 800, 3, 0.31640625f, BulletProperties{false, true, true, false, true, true}, BloonDebuff(), BloonDebuff())); 
+        attacks.back()->setAttackPattern(std::move(attackPattern));
     }
 }
 
