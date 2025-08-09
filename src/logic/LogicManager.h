@@ -34,6 +34,7 @@ public:
 
     // Update methods for interactions between game objects
     void updateBulletsHitEnemies(BulletManager& bulletManager, EnemyManager& enemyManager, TowerManager& towerManager, MapManager& mapManager, ResourceManager& resourceManager);
+    void updateTracingBullets(BulletManager& bulletManager, EnemyManager& enemyManager);
 private:
     // Move should be used the same logic for all enemies
     /**

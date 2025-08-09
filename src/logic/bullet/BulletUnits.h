@@ -1,6 +1,13 @@
 #ifndef BULLETUNITS_H
 #define BULLETUNITS_H
 
+// #include <../enemy/Enemy.h>
+#include <memory>
+#include "../tower/TowerUnits.h"
+#include "raylib.h"
+
+class Enemy;
+
 enum class BulletType {
     Dart,
     TracingDart,
@@ -39,6 +46,12 @@ public:
     bool canNormal = true;
     bool canMoab = true;
 
+    // for tracing bullets
+    bool canTrace = false;
+    std::weak_ptr<Enemy> targetEnemy; 
+    float range = 0.0f;
+    TargetPriority targetPriority = TargetPriority::First;
+
     static BulletProperties classic() {
         return BulletProperties{false, false, false, false, false, false, false};
     }
@@ -58,38 +71,18 @@ public:
 
     BulletProperties() = default;
     BulletProperties(bool canLead, bool canBlack, bool canWhite, bool canFrozen, bool canCamo, bool canPurple, bool canStripCamo = false)
-        : canLead(canLead), canBlack(canBlack), canWhite(canWhite), canFrozen(canFrozen), canCamo(canCamo), canPurple(canPurple), canStripCamo(canStripCamo){}
+        : canLead(canLead), canBlack(canBlack), canWhite(canWhite), canFrozen(canFrozen), canCamo(canCamo), canPurple(canPurple), canStripCamo(canStripCamo) {}
     ~BulletProperties() = default;
 
-    BulletProperties& operator+= (const BulletProperties& other) {
-        canLead = canLead || other.canLead;
-        canBlack = canBlack || other.canBlack;
-        canWhite = canWhite || other.canWhite;
-        canFrozen = canFrozen || other.canFrozen;
-        canCamo = canCamo || other.canCamo;
-        canPurple = canPurple || other.canPurple;
-        canStripCamo = canStripCamo || other.canStripCamo;
-        return *this;
-    }
+    BulletProperties& operator+= (const BulletProperties& other);
 
-    BulletProperties operator+ (const BulletProperties& other) const {
-        BulletProperties result = *this;
-        result += other;
-        return result;
-    }
+    BulletProperties operator+ (const BulletProperties& other);
 
-    BulletProperties& operator= (const BulletProperties& other) {
-        if (this != &other) {
-            canLead = other.canLead;
-            canBlack = other.canBlack;
-            canWhite = other.canWhite;
-            canFrozen = other.canFrozen;
-            canCamo = other.canCamo;
-            canPurple = other.canPurple;
-            canStripCamo = other.canStripCamo;
-        }
-        return *this;
-    }
+    BulletProperties& operator= (const BulletProperties& other);
+
+    BulletProperties& getITracing(float range, TargetPriority targetPriority);
+    BulletProperties& getITracing(std::shared_ptr<Enemy> enemy);
+    float getRotation(float rotation, Vector2 position);
 };
 
 #endif // BULLETUNITS_H

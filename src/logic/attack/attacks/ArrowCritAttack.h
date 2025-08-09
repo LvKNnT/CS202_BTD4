@@ -17,7 +17,7 @@ public:
 
     bool isInRange(const Rectangle& rec, const float rotation, bool isCamo, AttackBuff& attackBuff) const override;
     void update() override;
-    void update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff) override;
+    void update(BulletManager& bulletManager, std::shared_ptr<Enemy>& enemy, AttackBuff& attackBuff) override;
 };
 
 #endif // ARROW_CRIT_ATTACK_H

@@ -122,7 +122,7 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
 void LogicManager::sortEnemyList(EnemyManager& enemyManager, const Map& map) {
     // Sort the enemy list based on their position in the path
     std::sort(enemyManager.enemyList.begin(), enemyManager.enemyList.end(), 
-        [&map](const std::unique_ptr<Enemy>& a, const std::unique_ptr<Enemy>& b) {
+        [&map](const std::shared_ptr<Enemy>& a, const std::shared_ptr<Enemy>& b) {
             return map.distanceToEndPoint(a->getPosition(), a->trackIndex, a->pathIndex) < 
                    map.distanceToEndPoint(b->getPosition(), b->trackIndex, b->pathIndex);
         });
@@ -208,6 +208,11 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
                 // Apply the debuff to the enemy
                 (*enemyIt)->setDebuff((*bulletIt)->normalDebuff, (*bulletIt)->moabDebuff);
 
+                if((*bulletIt)->properties.canTrace && !(*bulletIt)->properties.targetEnemy.expired() && (*bulletIt)->properties.targetEnemy.lock() == *enemyIt) {
+                    (*bulletIt)->properties.targetEnemy.reset();
+                    // std::cerr << "Bullet " << (*bulletIt)->tag << " lost target enemy " << (*enemyIt)->tag << " id " << (*enemyIt)->enemyId << std::endl;
+                }
+
                 int popCount = 0;
                 std::vector<std::unique_ptr<Enemy>> enemyChildren;
                 enemyChildren = getChildrenEnemies(enemyManager, **enemyIt, (*bulletIt)->getDamage((*enemyIt)->type, (*enemyIt)->properties.isCamo), popCount, resourceManager);
@@ -277,11 +282,6 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
 }
 
 bool LogicManager::canBulletDestroyEnemy(const Bullet& bullet, const Enemy& enemy) const {
-    // camo
-    if(!bullet.properties.canCamo && enemy.properties.isCamo) {
-        return false;
-    }
-
     // special properties
     if(bullet.properties.canLead == false
     && (enemy.type == BloonType::Lead || enemy.type == BloonType::Ddt)) {
@@ -344,10 +344,14 @@ std::vector<std::unique_ptr<Enemy>> LogicManager::getChildrenEnemies(EnemyManage
     return finalChildrenEnemies;
 }
 
-bool LogicManager::checkCollision(const Bullet& bullet, const Enemy& enemy) const {
+bool LogicManager::checkCollision(const Bullet& bullet, const Enemy& enemy) const    {
     if((bullet.properties.canNormal == false && enemy.type < BloonType::Moab)
     || (bullet.properties.canMoab == false && enemy.type >= BloonType::Moab)) {
         return false; // Bullet cannot hit this type of enemy
+    }
+
+    if(!bullet.properties.canCamo && enemy.properties.isCamo) {
+        return false; // Bullet is tracing but the target enemy is no longer valid
     }
 
     Rectangle bulletBox = bullet.getBoundingBox();
@@ -433,11 +437,59 @@ bool LogicManager::checkCollision(const Bullet& bullet, const Enemy& enemy) cons
     return true;
 }
 
+// If the bullet is tracing but the target enemy is no longer valid, find a new target
+void LogicManager::updateTracingBullets(BulletManager& bulletManager, EnemyManager& enemyManager) {
+    for (auto& bullet : bulletManager.bulletList) {
+        if (bullet->properties.canTrace && bullet->properties.targetEnemy.expired()) {
+            std::vector<std::shared_ptr<Enemy>> inRangeEnemies;
+
+            for (auto& enemy : enemyManager.enemyList) {
+                if (enemy->isActiveFlag 
+                && bullet->hitEnemies.find(enemy->enemyId) == bullet->hitEnemies.end()
+                && Vector2Distance(bullet->position, enemy->position) <= bullet->properties.range) {
+                    inRangeEnemies.push_back(enemy);
+                }
+            }
+
+            if (!inRangeEnemies.empty()) {
+                // Find the closest enemy based on the target priority
+                std::shared_ptr<Enemy> targetEnemy = nullptr;
+                switch (bullet->properties.targetPriority) {
+                    case TargetPriority::First:
+                        targetEnemy = inRangeEnemies.front();
+                        break;
+                    case TargetPriority::Last:
+                        targetEnemy = inRangeEnemies.back();
+                        break;
+                    case TargetPriority::Close:
+                        targetEnemy = *std::min_element(inRangeEnemies.begin(), inRangeEnemies.end(),
+                            [&](const std::shared_ptr<Enemy>& a, const std::shared_ptr<Enemy>& b) {
+                                return Vector2Distance(bullet->position, a->position) < Vector2Distance(bullet->position, b->position);
+                            });
+                        break;
+                    case TargetPriority::Strong:
+                        targetEnemy = *std::max_element(inRangeEnemies.begin(), inRangeEnemies.end(),
+                            [&](const std::shared_ptr<Enemy>& a, const std::shared_ptr<Enemy>& b) {
+                                return a->livesLost < b->livesLost; // Compare health
+                            });
+                        break;
+                }
+
+                bullet->properties.targetEnemy = targetEnemy; // Update the target enemy
+            }
+            else {
+                bullet->properties.canTrace = false; // No valid target found, stop tracing
+                bullet->properties.targetEnemy.reset(); // Reset the target enemy
+            }
+        }
+    }
+}
+
 void LogicManager::updateTowers(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager) {
     for(auto& tower : towerManager.towerList) {
         if(tower->isActive()) {
             // vector of enemies that are in range of the attack
-            std::vector<Enemy*> enemiesInRange;
+            std::vector<std::shared_ptr<Enemy> > enemiesInRange;
 
             for(auto& attack : tower->attacks) {
                 for(auto& enemy : enemyManager.enemyList) {
@@ -445,13 +497,13 @@ void LogicManager::updateTowers(TowerManager& towerManager, EnemyManager& enemyM
 
                     // std::cerr << "enemy position: " << enemy->position.x << ", " << enemy->position.y << std::endl;
                     if(attack->isInRange(enemy->getBoundingBox(), enemy->rotation, enemy->properties.isCamo, tower->attackBuff)) {
-                        enemiesInRange.push_back(enemy.get());
+                        enemiesInRange.push_back(enemy);
                     }
                 }
                 
                 // Pick one enemy based on the tower's target priority
                 // Sadly have to use switch/case here.
-                Enemy* targetEnemy = nullptr;
+                std::shared_ptr<Enemy> targetEnemy = nullptr;
                 if(!enemiesInRange.empty()) {
                     switch(tower->targetPriority) {
                         case TargetPriority::First:
@@ -462,13 +514,13 @@ void LogicManager::updateTowers(TowerManager& towerManager, EnemyManager& enemyM
                         break;
                         case TargetPriority::Close:
                         targetEnemy = *std::min_element(enemiesInRange.begin(), enemiesInRange.end(),
-                            [&](Enemy* a, Enemy* b) {
+                            [&](std::shared_ptr<Enemy>& a, std::shared_ptr<Enemy>& b) {
                                 return Vector2Distance(a->position, tower->position) < Vector2Distance(b->position, tower->position);
                             });
                         break;
                         case TargetPriority::Strong:
                         targetEnemy = *std::max_element(enemiesInRange.begin(), enemiesInRange.end(),
-                        [&](Enemy* a, Enemy* b) {
+                        [&](std::shared_ptr<Enemy>& a, std::shared_ptr<Enemy>& b) {
                             return a->livesLost < b->livesLost; // Compare health
                         });
                         break;
@@ -479,12 +531,13 @@ void LogicManager::updateTowers(TowerManager& towerManager, EnemyManager& enemyM
                 if(targetEnemy) {
                     float angle = atan2f(targetEnemy->position.y - tower->position.y, targetEnemy->position.x - tower->position.x);
                     
-                    attack->update(bulletManager, targetEnemy->position, tower->attackBuff);
-                    // std::cerr << "rotation: " << attack->isRotateTower() << std::endl;
-                    if(attack->isRotateTower() == -1.0f) { // using default rotation
+                    attack->update(bulletManager, targetEnemy, tower->attackBuff);
+                    if(attack->isRotateTower()) {
                         tower->setRotation(angle * (180.0f / PI) + 90.0f); // Convert radians to degrees
                     }
-                    else tower->setRotation(attack->isRotateTower() - 90.0f); 
+                    else {
+                        tower->setRotation(attack->getRotateTower(tower->rotation)); // Convert radians to degrees
+                    }
                 }
             }
         }

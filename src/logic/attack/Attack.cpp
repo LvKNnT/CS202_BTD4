@@ -77,8 +77,11 @@ void Attack::setAttackPattern(std::unique_ptr<AttackPattern> newAttackPattern) {
 std::unique_ptr<AttackPattern>& Attack::getAttackPattern() {
     return attackPattern;
 }
-float Attack::isRotateTower() {
-    return -1.0f; // means using the default rotation
+bool Attack::isRotateTower() const {
+    return true; // Default implementation assumes rotation is needed
+}
+float Attack::getRotateTower(float rotation) {
+    return rotation; // no change
 }
 int Attack::getTowerId() const {
     return towerId;

@@ -42,6 +42,9 @@ void ClusterBombBullet::init(Vector2 position, Vector2 size, float rotation, int
 int ClusterBombBullet::run() {
     float elapsedTime = GetFrameTime();
 
+    // update rotation if canTracing
+    rotation = properties.getRotation(rotation, position);
+
     Vector2 direction = {cosf(rotation * (PI / 180.0f)), sinf(rotation * (PI / 180.0f))};
     position.x += direction.x * speed * elapsedTime;
     position.y += direction.y * speed * elapsedTime;
@@ -58,7 +61,7 @@ int ClusterBombBullet::run() {
     return 0;
 }
 
-void ClusterBombBullet::update(std::vector<std::unique_ptr<Enemy>>& enemyList) {
+void ClusterBombBullet::update(std::vector<std::shared_ptr<Enemy>>& enemyList) {
     // No special update logic for Cluster Bomb Bullet
 }
 

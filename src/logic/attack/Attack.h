@@ -7,6 +7,8 @@
 #include <memory>
 #include <string>
 
+class Enemy;
+
 // We use Strategy Pattern to create different attack types
 
 class Attack {
@@ -41,7 +43,7 @@ public:
 
     virtual bool isInRange(const Rectangle& rec, const float rotation, bool isCamo, AttackBuff& attackBuff) const = 0; // Pure virtual function to check if the target is in range
     virtual void update() = 0; // for tower update
-    virtual void update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff) = 0; // Pure virtual function for executing the attack
+    virtual void update(BulletManager& bulletManager, std::shared_ptr<Enemy>& enemy, AttackBuff& attackBuff) = 0; // Pure virtual function for executing the attack
 
     // Getters/Setters
     float getRange() const;
@@ -64,7 +66,8 @@ public:
     BloonDebuff& getMoabDebuff();
     void setAttackPattern(std::unique_ptr<AttackPattern> newAttackPattern);
     std::unique_ptr<AttackPattern>& getAttackPattern();
-    virtual float isRotateTower();
+    virtual bool isRotateTower() const;
+    virtual float getRotateTower(float rotation);
     int getTowerId() const;
 };
 

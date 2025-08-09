@@ -273,7 +273,7 @@ std::vector<std::unique_ptr<Enemy>> EnemySpawner::getChildrenEnemies(Enemy* enem
     return {};
 }
 
-void EnemySpawner::getRegrowEnemy(std::unique_ptr<Enemy>& enemy, EnemyModifies modifies) {
+void EnemySpawner::getRegrowEnemy(std::shared_ptr<Enemy>& enemy, EnemyModifies modifies) {
     if(!enemy) return;
     if(enemy->properties.isRegrow == false) return;
     if(enemy->type == enemy->regrowLimit) return; 
