@@ -34,7 +34,9 @@ void Red::loadTexture() {
 bool Red::hit(int damage) {
     MySound popSound("NormalBloon");
     popSound.start();
+
     health -= damage;
+    health -= debuff.bonusDamage; // Apply bonus damage from debuffs
     
     if (health <= 0) {
         std::fstream flog("../logs/log.txt", std::ios::out | std::ios::app);

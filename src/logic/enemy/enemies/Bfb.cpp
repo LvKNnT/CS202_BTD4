@@ -37,7 +37,9 @@ void Bfb::loadTexture() {
 bool Bfb::hit(int damage) {
     MySound popSound("MOABBloon");
     popSound.start();
+
     health -= damage;
+    health -= debuff.bonusDamage; // Apply bonus damage from debuffs
 
     if (health <= 0) {
         MySound destroyingSound("DestroyingMOABBloon");

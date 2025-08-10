@@ -37,7 +37,9 @@ void Moab::loadTexture() {
 bool Moab::hit(int damage) {
     MySound popSound("MOABBloon");
     popSound.start();
+    
     health -= damage;
+    health -= debuff.bonusDamage; // Apply bonus damage from debuffs
 
     if (health <= 0) {
         MySound destroyingSound("DestroyingMOABBloon");
