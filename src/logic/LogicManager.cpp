@@ -273,7 +273,7 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
     }
 }
 
-bool LogicManager::canBulletDestroyEnemy(const Bullet& bullet, const Enemy& enemy) const {
+bool LogicManager::canBulletDestroyEnemy(const Bullet& bullet, Enemy& enemy) {
     // camo
     if(!bullet.properties.canCamo && enemy.properties.isCamo) {
         return false;

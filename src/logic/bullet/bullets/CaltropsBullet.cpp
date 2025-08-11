@@ -60,25 +60,7 @@ int CaltropsBullet::run() {
 }
 
 
-void CaltropsBullet::update(std::vector<std::unique_ptr<Enemy>>& enemyList) {
-     if(!Game::Instance().getGameLogic().isRoundRun()) {
-        die();
-        return;
-    }
-
-    // Rectangle bulletBox = getBoundingBox();
-    // for(auto& enemy : enemyList) {
-    //     if(enemy->isActive() && hitEnemies.find(enemy->getId()) == hitEnemies.end()) {
-    //         Rectangle enemyBox = enemy->getBoundingBox();
-    //         // Simple AABB collision check
-    //         if (CheckCollisionRecs(bulletBox, enemyBox)) {
-    //             std::cerr<<"Yes\n";
-    //             // Bullet has hit this enemy
-    //             speed = 0.0f;
-    //             break;
-    //         }
-    //     }
-    // }
+void CaltropsBullet::update(std::vector<std::shared_ptr<Enemy>>& enemyList) {
 }
 
 bool CaltropsBullet::hit(int damage) {

@@ -40,7 +40,7 @@ float BloonSabotageSkill::getCooldown() const {
     return cooldown;
 }
 
-void BloonSabotageSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector<std::unique_ptr<Enemy>>& enemies, std::vector<std::shared_ptr<Tower>>& towers, BulletManager& bulletManager) {
+void BloonSabotageSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector<std::shared_ptr<Enemy>>& enemies, std::vector<std::shared_ptr<Tower>>& towers, BulletManager& bulletManager) {
     if (!tower) return;
     if (!canActivateSkill()) return;
 
