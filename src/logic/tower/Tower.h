@@ -58,6 +58,7 @@ protected:
     TargetPriority targetPriority; 
     AttackBuff attackBuff; 
     std::unique_ptr<Skill> skill; // Skill for the tower
+    std::unique_ptr<Skill> passiveSkill; // Passive skill for the tower
 
     int cost; 
     float upgradeCost;

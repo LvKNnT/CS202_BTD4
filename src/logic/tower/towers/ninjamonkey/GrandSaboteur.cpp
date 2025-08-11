@@ -23,7 +23,7 @@ void GrandSaboteur::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/GrandSaboteurUpgradeIcon.png");
 }
 
-void GrandSaboteur::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
+void GrandSaboteur::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::unique_ptr<Skill>& passiveSkill, MapManager& mapManager, ResourceManager& resourceManager) {
     for(auto& attack : attacks) {
         // Ability lasts twice as long and MOAB-class bloons spawning from the entrance, BADs included but not Bosses, start with 25% less health. Ability also grants all Shinobis or above on screen +10 range and +2 damage to MOAB-class bloons.
     }

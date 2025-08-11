@@ -25,7 +25,7 @@ void BloonImpact::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Boom_Shooter/BloonImpactUpgradeIcon.png");
 }
 
-void BloonImpact::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
+void BloonImpact::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::unique_ptr<Skill>& passiveSkill, MapManager& mapManager, ResourceManager& resourceManager) {
     for (auto& attack : attacks) {
         if (attack->getTag() == "ReallyBigBombsAttack") {
             attack->setDamage(4);

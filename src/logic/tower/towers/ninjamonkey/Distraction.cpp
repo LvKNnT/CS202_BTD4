@@ -25,7 +25,7 @@ void Distraction::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/DistractionUpgradeIcon.png");
 }
 
-void Distraction::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
+void Distraction::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::unique_ptr<Skill>& passiveSkill, MapManager& mapManager, ResourceManager& resourceManager) {
     attackBuff.extraNormalDebuff += BloonDebuff().getIKnockBack(1.0f, 2.0f, 15); // Distance Unit 120
 }
 

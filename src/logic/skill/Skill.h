@@ -26,7 +26,7 @@ public:
     virtual void update() = 0;
     virtual bool canActivateSkill() const = 0;
     virtual float getCooldown() const = 0;
-    virtual void activateSkill(std::shared_ptr<Tower> tower, std::vector<std::shared_ptr<Enemy>>& enemies, std::vector<std::shared_ptr<Tower>>& towers, BulletManager& bulletManager) = 0;
+    virtual void activateSkill(std::shared_ptr<Tower> tower, std::vector<std::shared_ptr<Enemy>>& enemies, std::vector<std::shared_ptr<Tower>>& towers, BulletManager& bulletManager, ResourceManager& resourceManager) = 0;
     virtual void inActivateSkill() = 0; 
 
     const std::string& getName() const;

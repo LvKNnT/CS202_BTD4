@@ -40,7 +40,7 @@ float PlasmaMonkeyFanClubSkill::getCooldown() const {
     return cooldown;
 }
 
-void PlasmaMonkeyFanClubSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector<std::shared_ptr<Enemy>>& enemies, std::vector<std::shared_ptr<Tower>>& towers, BulletManager& bulletManager) {
+void PlasmaMonkeyFanClubSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector<std::shared_ptr<Enemy>>& enemies, std::vector<std::shared_ptr<Tower>>& towers, BulletManager& bulletManager, ResourceManager& resourceManager) {
     if (!tower) return;
     if (!canActivateSkill()) return;
 

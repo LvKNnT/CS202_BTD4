@@ -4,6 +4,7 @@
 #include "../tower/Tower.h"
 #include "../enemy/Enemy.h"
 #include "../bullet/BulletManager.h"
+#include "../resource/ResourceManager.h" 
 
 class SkillFriendAccess {
 public:

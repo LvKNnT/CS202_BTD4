@@ -26,7 +26,7 @@ void BiggerBombs::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Boom_Shooter/BiggerBombsUpgradeIcon.png");
 }
 
-void BiggerBombs::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
+void BiggerBombs::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::unique_ptr<Skill>& passiveSkill, MapManager& mapManager, ResourceManager& resourceManager) {
     attackBuff.size = Vector2Add(attackBuff.size, {10.0f, 10.0f});
     attackBuff.pierce += 6;
 }

@@ -14,7 +14,7 @@ public:
     void loadTexture() override;
 
     // Upgrade does not need to update attacks, but we need to implement it
-    void update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) override;
+    void update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::unique_ptr<Skill>& passiveSkill, MapManager& mapManager, ResourceManager& resourceManager) override;
     std::unique_ptr<Upgrade> buy() override;
 };
 

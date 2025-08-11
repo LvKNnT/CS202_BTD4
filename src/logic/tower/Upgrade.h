@@ -30,7 +30,7 @@ public:
     void setCost(int newCost);
 
     virtual void loadTexture();
-    virtual void update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager); // Update the upgrade effects on attacks and attack pattern
+    virtual void update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::unique_ptr<Skill>& passiveSkill, MapManager& mapManager, ResourceManager& resourceManager); // Update the upgrade effects on attacks and attack pattern
     virtual std::unique_ptr<Upgrade> buy();
 
 protected:

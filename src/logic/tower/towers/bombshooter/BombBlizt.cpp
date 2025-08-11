@@ -2,12 +2,13 @@
 #include "../../../../core/Game.h"
 
 #include "../../../attack/attacks/BombBliztAttack.h"
+#include "../../../skill/skills/BombBliztSkill.h"
 
 BombBlizt::BombBlizt() 
-    : Upgrade("Recursive Cluster", 23000, "Deals much more damage and gains the passive Bomb Storm Ability - when lives are lost, the Bomb Storm automatically triggers, which destroys all but the biggest of Bloons.") {
+    : Upgrade("Bomb Blitz", 23000, "Deals much more damage and gains the passive Bomb Storm Ability - when lives are lost, the Bomb Storm automatically triggers, which destroys all but the biggest of Bloons.") {
     // Constructor implementation can be extended if needed
     nextUpgrade = std::make_unique<Upgrade>(); // Temporary lmao
-    tag = "Recursive Cluster";
+    tag = "Bomb Blitz";
 }
 
 BombBlizt::BombBlizt(const BombBlizt& other)
@@ -22,10 +23,10 @@ std::unique_ptr<Upgrade> BombBlizt::clone() const {
 
 void BombBlizt::loadTexture() {
     // Load the texture for Cluster Bombs upgrade
-    Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Boom_Shooter/BombBliztUpgradeIcon.png");
+    Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Boom_Shooter/BombBlitzUpgradeIcon.png");
 }
 
-void BombBlizt::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {    
+void BombBlizt::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::unique_ptr<Skill>& passiveSkill, MapManager& mapManager, ResourceManager& resourceManager) {    
     bool hasBombAttack = false;
     for (auto& attack : attacks) {
         if (attack->getTag() == "RecursiveClusterAttack") {
@@ -48,6 +49,8 @@ void BombBlizt::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuf
             hasBombAttack = true;
         }
     }
+
+    passiveSkill = std::make_unique<BombBliztSkill>(resourceManager);
 }
 
 std::unique_ptr<Upgrade> BombBlizt::buy() {

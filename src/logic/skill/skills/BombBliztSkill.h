@@ -1,12 +1,16 @@
-#ifndef MOAB_ASSASSIN_SKILL_H
-#define MOAB_ASSASSIN_SKILL_H
+#ifndef BOMB_BLIZT_SKILL_H
+#define BOMB_BLIZT_SKILL_H
 
 #include "../Skill.h"
 
-class MOABAssassinSkill : public Skill {
+class BombBliztSkill : public Skill {
+private:
+    int currentHealth;
+
 public:
-    MOABAssassinSkill();
-    ~MOABAssassinSkill() override = default;
+    BombBliztSkill();
+    BombBliztSkill(ResourceManager& resourceManager);
+    ~BombBliztSkill() override = default;
 
     // Clone method for polymorphism
     std::unique_ptr<Skill> clone() const override;
@@ -20,4 +24,4 @@ public:
     void inActivateSkill() override;
 };
 
-#endif // MOAB_ASSASSIN_SKILL_H
+#endif // BOMB_BLIZT_SKILL_H
