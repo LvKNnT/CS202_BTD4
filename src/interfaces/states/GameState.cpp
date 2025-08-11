@@ -330,7 +330,7 @@ void GameState::handleInput() {
         if(std::dynamic_pointer_cast<Button>(upgradeInfoButton[i])->getState() != Button::State::None) drawUpgradeInfoBox = true;
         if(std::dynamic_pointer_cast<Button>(nextUpgradeInfoButton[i])->getState() != Button::State::None) drawUpgradeInfoBox = true;
     }
-    upgradeInfoTextbox->setAvailable(drawUpgradeInfoBox);
+    upgradeInfoTextbox->setAvailable(drawUpgradeInfoBox && towerPanel->getIsAvailable());
     
     
     bool drawButtonInfoBox = false;
@@ -365,6 +365,7 @@ void GameState::unpickTower() {
     if(towerPanel->getIsAvailable()) {
         roundPanel->setAvailable(true);
         towerPanel->setAvailable(false);
+        upgradeInfoTextbox->setAvailable(false);
     }
 }
 

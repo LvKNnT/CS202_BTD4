@@ -33,6 +33,10 @@ void SoundChannel::mute() {
     }
 }
 
+bool SoundChannel::isAudioPlaying(std::string name) {
+    return soundList[name].isSoundPlaying();
+}
+
 void SoundChannel::load(std::string name, std::string path, int maxSounds) {
     if(soundList.count(name) > 0) {
         std::cout << "SoundPool with name " << name << " already exists. Unloading old sound pool.\n";
@@ -80,6 +84,10 @@ void MusicChannel::mute() {
     for(auto &music:musicList) {
         SetMusicVolume(music.second, 0.0);
     }
+}
+
+bool MusicChannel::isAudioPlaying(std::string name) {
+    return IsMusicStreamPlaying(musicList[name]);
 }
 
 void MusicChannel::load(std::string name, std::string path) {

@@ -36,7 +36,10 @@ public:
 
     int getId() const;
     Vector2 getPosition() const;
-
+    
+    virtual void updateEffect();
+    virtual void drawEffect() const;
+    virtual void drawDeadEffect();
 protected:
     BloonType type;
     BloonProperties properties; // Properties of the bloon, such as fortified, camo, regrow
@@ -54,6 +57,8 @@ protected:
     float regrowTimer;
 
     int enemyId; // Unique ID for the enemy instance
+
+    EnemyEffect effects; 
 };
 
 #endif // ENEMY_H

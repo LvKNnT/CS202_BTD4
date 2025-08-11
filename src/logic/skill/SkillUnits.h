@@ -19,6 +19,11 @@ public:
     static BloonDebuff& getDebuff(Enemy& enemy);
     static BloonType& getType(Enemy& enemy);
     static int& getLivesLost(Enemy& enemy);
+
+
+    // Enemey
+    static BloonType& getEnemyType(Enemy& enemy);
+    static int& getEnemyHealth (Enemy& enemy);
     
 };
 

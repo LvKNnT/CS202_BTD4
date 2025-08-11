@@ -17,6 +17,7 @@ public:
     SoundPool() = default;
     SoundPool(std::string name, std::string path, int maxSounds = 1);
     ~SoundPool() = default;
+    bool isSoundPlaying();
     void playSound();
     void stopSound();
     void setVolume(float volume);

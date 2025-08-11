@@ -58,6 +58,8 @@ void BombFragment::update(std::vector<std::unique_ptr<Enemy>>& enemyList) {
 }
 
 bool BombFragment::hit(int damage) {
+    MySound hitSound("BombExplosion");
+    hitSound.start();
     pierce -= damage;
     
     return pierce <= 0; // Indicating that the hit was successful

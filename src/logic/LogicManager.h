@@ -43,7 +43,7 @@ private:
     void sortEnemyList(EnemyManager& enemyManager, const Map& map);
     int runBullet(Bullet& bullet);
     bool checkCollision(const Bullet& bullet, const Enemy& enemy) const;
-    bool canBulletDestroyEnemy(const Bullet& bullet, const Enemy& enemy) const;
+    bool canBulletDestroyEnemy(const Bullet& bullet, Enemy& enemy);
     std::vector<std::unique_ptr<Enemy>> getChildrenEnemies(EnemyManager& enemyManager, Enemy& enemy, int damage, int& popCount, ResourceManager& resourceManager) const;
     
     // sub-methods

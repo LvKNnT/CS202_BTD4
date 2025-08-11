@@ -1,5 +1,6 @@
 #include "AudioManager.h"
 #include "../audio/MyAudio.h"
+#include "../../core/Game.h"
 
 AudioManager::AudioManager() {
     audioChannels[AudioType::MusicSound] = std::make_shared<MusicChannel>();
@@ -71,6 +72,10 @@ void AudioManager::unmute(AudioType audioType) {
 
 int AudioManager::getVolume(AudioType audioType) const {
     return audioChannels.at(audioType)->getVolume();
+}
+
+bool AudioManager::isAudioPlaying(AudioType audioType, std::string name) {
+    return audioChannels[audioType]->isAudioPlaying(name);
 }
 
 void AudioManager::updateMusic() {

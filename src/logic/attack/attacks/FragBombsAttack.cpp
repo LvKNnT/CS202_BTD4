@@ -52,7 +52,6 @@ void FragBombsAttack::update(BulletManager& bulletManager, const Vector2& target
         // Calculate the rotation towards the target position
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
-        
         attackPattern.execute(bulletManager, BulletType::FragBombs, position, 
             Vector2Add({30.0f, 30.0f}, attackBuff.size),
             angle, 
