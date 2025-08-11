@@ -1,10 +1,15 @@
 #include "QuintupleAttack.h"
 
+QuintupleAttack::QuintupleAttack(MapManager* mapManager)
+    : AttackPattern(mapManager) {
+    // No use
+}
+
 std::unique_ptr<AttackPattern> QuintupleAttack::clone() const {
     return std::make_unique<QuintupleAttack>(*this);
 }
 
-void QuintupleAttack::execute(BulletManager& bulletManager, BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff, AttackBuff& attackBuff, int towerId) {
+void QuintupleAttack::execute(BulletManager& bulletManager, BulletType type, Vector2 position, Vector2 size, float& rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff, AttackBuff& attackBuff, int towerId) {
     // Create 5 bullets with the specified properties
     for (int i = -2; i <= 2; i++) {
         float angleOffset = i * 15.0f; // Adjust the angle offset as needed

@@ -12,7 +12,13 @@ public:
 
     bool isInRange(const Rectangle& rec, const float rotation, bool isCamo, AttackBuff& attackBuff) const override;
     void update() override; 
-    void update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) override;
+    void update(BulletManager& bulletManager, std::shared_ptr<Enemy>& enemy, AttackBuff& attackBuff) override;
+
+    bool isRotateTower() const override; // CaltropsAttack does not require rotation, so it returns true
+    float getRotateTower(float rotation) override; // CaltropsAttack does not require rotation, so it returns false
+
+private:
+    float rotation;
 };
 
 #endif // CALTROPSATTACK_H

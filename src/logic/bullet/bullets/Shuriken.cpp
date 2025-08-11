@@ -40,6 +40,9 @@ void Shuriken::init(Vector2 position, Vector2 size, float rotation, int damage, 
 int Shuriken::run() {
     float elapsedTime = GetFrameTime();
 
+    // update rotation if canTracing
+    rotation = properties.getRotation(rotation, position);
+
     Vector2 direction = {cosf(rotation * (PI / 180.0f)), sinf(rotation * (PI / 180.0f))};
     position.x += direction.x * speed * elapsedTime;
     position.y += direction.y * speed * elapsedTime;
@@ -56,7 +59,7 @@ int Shuriken::run() {
     return 0;
 }
 
-void Shuriken::update(std::vector<std::unique_ptr<Enemy>>& enemyList) {
+void Shuriken::update(std::vector<std::shared_ptr<Enemy>>& enemyList) {
     // no special update
 }
 
@@ -85,7 +88,7 @@ void Shuriken::draw() const {
                    {draw_position.x, draw_position.y, size.x, size.y},
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,
-                   WHITE); // Draw the Shuriken texture with the specified position and rotation
+                   WHITE); 
 }
 
 int Shuriken::die() {
@@ -104,12 +107,7 @@ std::vector<std::unique_ptr<Bullet>> Shuriken::getChild() {
 }
 
 Rectangle Shuriken::getBoundingBox() const {
-    return {
-        position.x - size.x / 2.0f,
-        position.y - size.y / 2.0f,
-        size.x,
-        size.y
-    }; 
+    return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y}; 
 }
 
 bool Shuriken::isActive() const {

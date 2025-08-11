@@ -34,7 +34,7 @@ public:
     virtual int getDamage(BloonType type, bool isCamo);
     virtual std::string getTag() const;
     virtual int run() = 0; // Pure virtual function for running the bullet logic
-    virtual void update(std::vector<std::unique_ptr<Enemy>>& enemyList) = 0; // Pure virtual function for updating the bullet tracing
+    virtual void update(std::vector<std::shared_ptr<Enemy>>& enemyList) = 0; // Pure virtual function for updating the bullet tracing
     virtual void setRotation(float rotation) = 0; // Pure virtual function for setting rotation
     virtual int die() = 0; // Pure virtual function for handling death or end of life
     virtual std::vector<std::unique_ptr<Bullet>> getChild() = 0;

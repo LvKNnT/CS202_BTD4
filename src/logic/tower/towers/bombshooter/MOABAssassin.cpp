@@ -27,7 +27,7 @@ void MOABAssassin::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Boom_Shooter/MOABAssassinUpgradeIcon.png");
 }
 
-void MOABAssassin::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void MOABAssassin::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     attackBuff.range += 20.0f; 
     attackBuff.lifeSpanRatio *= 1.125f; // Increase lifespan by 50%
     attackBuff.extraMoabDebuff.bonusDamage += 15; 

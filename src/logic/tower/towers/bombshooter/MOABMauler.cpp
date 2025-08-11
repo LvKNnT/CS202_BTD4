@@ -25,7 +25,7 @@ void MOABMauler::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Boom_Shooter/MOABMaulerUpgradeIcon.png");
 }
 
-void MOABMauler::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void MOABMauler::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     attackBuff.range += 20.0f;
     attackBuff.extraMoabDebuff.bonusDamage += 15; // Increase bonus damage to MOAB-Class Bloons
 }

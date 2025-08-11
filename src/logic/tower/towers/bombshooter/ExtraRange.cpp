@@ -24,7 +24,7 @@ void ExtraRange::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Boom_Shooter/ExtraRangeUpgradeIcon.png");
 }
 
-void ExtraRange::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void ExtraRange::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     attackBuff.range += 48.0f;
     attackBuff.lifeSpanRatio *= 1.3f;
 }

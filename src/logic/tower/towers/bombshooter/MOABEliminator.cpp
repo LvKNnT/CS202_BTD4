@@ -25,7 +25,7 @@ void MOABEliminator::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Boom_Shooter/MOABEliminatorUpgradeIcon.png");
 }
 
-void MOABEliminator::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void MOABEliminator::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     attackBuff.range += 30.0f; 
     attackBuff.extraMoabDebuff.bonusDamage += 69; 
 

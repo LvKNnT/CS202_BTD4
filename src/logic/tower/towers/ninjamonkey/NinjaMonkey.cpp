@@ -31,7 +31,7 @@ NinjaMonkey::NinjaMonkey(Vector2 position)
      * * * properties = BulletProperties::normal()
      */
     attacks.push_back(std::make_unique<ShurikenAttack>(120.0f, 0.62f, position, towerId, 1, 750, 2, 0.25f, BulletProperties::shuriken(), BloonDebuff(), BloonDebuff())); 
-    attackPattern = std::make_unique<NormalAttack>(); 
+    attacks.back()->setAttackPattern(std::make_unique<NormalAttack>()); // Set the attack pattern to NormalAttack
     skill = nullptr;
 
     // Upgrade Path

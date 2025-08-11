@@ -5,6 +5,15 @@ Attack::Attack(float range, float cooldown, Vector2 position, int towerId, int d
     // Constructor implementation can be extended if needed
 }
 
+Attack::Attack(const Attack& other)
+    : range(other.range), cooldown(other.cooldown), timer(other.timer), position(other.position), towerId(other.towerId),
+      damage(other.damage), speed(other.speed), pierce(other.pierce), lifeSpan(other.lifeSpan),
+      properties(other.properties), normalDebuff(other.normalDebuff), moabDebuff(other.moabDebuff), tag(other.tag) {
+    if (other.attackPattern) {
+        attackPattern = other.attackPattern->clone();
+    }
+}
+
 float Attack::getRange() const {
     return range;
 }
@@ -61,6 +70,18 @@ BloonDebuff& Attack::getNormalDebuff() {
 }
 BloonDebuff& Attack::getMoabDebuff() {
     return moabDebuff;
+}
+void Attack::setAttackPattern(std::unique_ptr<AttackPattern> newAttackPattern) {
+    attackPattern = std::move(newAttackPattern);
+}
+std::unique_ptr<AttackPattern>& Attack::getAttackPattern() {
+    return attackPattern;
+}
+bool Attack::isRotateTower() const {
+    return true; // Default implementation assumes rotation is needed
+}
+float Attack::getRotateTower(float rotation) {
+    return rotation; // no change
 }
 int Attack::getTowerId() const {
     return towerId;

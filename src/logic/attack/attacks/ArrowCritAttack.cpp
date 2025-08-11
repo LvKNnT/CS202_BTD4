@@ -47,15 +47,16 @@ void ArrowCritAttack::update() {
     }
 }
 
-void ArrowCritAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) {
+void ArrowCritAttack::update(BulletManager& bulletManager, std::shared_ptr<Enemy>& enemy, AttackBuff& attackBuff) {
     // Update the attack logic, e.g., spawn an arrow or arrow crit bullet if the cooldown is over
     if (timer <= 0.0f) {
         // Calculate the rotation towards the target position
+        Vector2 targetPosition = enemy->getPosition();
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
 
         if (counter < maxCounter) {
-            attackPattern.execute(bulletManager, BulletType::Arrow, position, 
+            attackPattern->execute(bulletManager, BulletType::Arrow, position, 
                 Vector2Add({50.0f, 12.0f}, attackBuff.size),
                 angle,
                 damage + attackBuff.damage, 
@@ -69,7 +70,7 @@ void ArrowCritAttack::update(BulletManager& bulletManager, const Vector2& target
                 towerId);
             counter++;
         } else {
-            attackPattern.execute(bulletManager, BulletType::ArrowCrit, position, 
+            attackPattern->execute(bulletManager, BulletType::ArrowCrit, position, 
                 Vector2Add({50.0f, 15.0f}, attackBuff.size),
                 angle,
                 (damage + attackBuff.damage) * 10,

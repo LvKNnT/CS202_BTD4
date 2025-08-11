@@ -23,7 +23,7 @@ public:
     bool isSpawnTower(const ResourceManager& resourceManager, const TowerManager& towerManager, const MapManager& mapManager) const; 
     bool spawnTower(ResourceManager& resourceManager, TowerManager& towerManager, const MapManager& mapManager);
     bool isUpgradeTower(const ResourceManager& resourceManager, const TowerManager& towerManager, UpgradeUnits upgradeUnits) const;
-    bool upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, UpgradeUnits upgradeUnits);
+    bool upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, UpgradeUnits upgradeUnits, MapManager& mapManager);
     bool activateSkillTower(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager);
     void sellTower(ResourceManager& resourceManager, TowerManager& towerManager);
 
@@ -34,6 +34,7 @@ public:
 
     // Update methods for interactions between game objects
     void updateBulletsHitEnemies(BulletManager& bulletManager, EnemyManager& enemyManager, TowerManager& towerManager, MapManager& mapManager, ResourceManager& resourceManager);
+    void updateTracingBullets(BulletManager& bulletManager, EnemyManager& enemyManager);
 private:
     // Move should be used the same logic for all enemies
     /**

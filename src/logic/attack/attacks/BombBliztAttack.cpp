@@ -3,6 +3,8 @@
 #include "../../bullet/bullets/ClusterBombBullet.h"
 #include "../../bullet/bullets/RecursiveClusterBullet.h"
 
+#include "../../../utils/Utils.h"
+
 #include <cmath>
 #include "raymath.h"
 
@@ -47,18 +49,18 @@ void BombBliztAttack::update() {
     }
 }
 
-void BombBliztAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) {
+void BombBliztAttack::update(BulletManager& bulletManager, std::shared_ptr<Enemy>& enemy, AttackBuff& attackBuff) {
     // Update the attack logic, e.g., spawn a cluster bomb bullet if the cooldown is over
     if (timer <= 0.0f) {
         // Calculate the rotation towards the target position
+        Vector2 targetPosition = enemy->getPosition();
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
 
-        // testing
-        bool isRecursive = true;
+        bool isRecursive = Utils::rand(1, 100) <= 25; // 25% chance to be recursive
 
         if(isRecursive) {
-            attackPattern.execute(bulletManager, BulletType::RecursiveClusterBomb, position, 
+            attackPattern->execute(bulletManager, BulletType::RecursiveClusterBomb, position, 
                 Vector2Add({30.0f, 30.0f}, attackBuff.size),
                 angle, 
                 (damage + attackBuff.damage) * 500,
@@ -72,7 +74,7 @@ void BombBliztAttack::update(BulletManager& bulletManager, const Vector2& target
                 towerId);
         }
         else {
-            attackPattern.execute(bulletManager, BulletType::RecursiveClusterBomb, position, 
+            attackPattern->execute(bulletManager, BulletType::RecursiveClusterBomb, position, 
                 Vector2Add({30.0f, 30.0f}, attackBuff.size),
                 angle, 
                 damage + attackBuff.damage,
@@ -85,7 +87,6 @@ void BombBliztAttack::update(BulletManager& bulletManager, const Vector2& target
                 attackBuff,
                 towerId);
         }
-        isRecursive = !isRecursive; 
 
         timer = cooldown; // Reset the timer after spawning the bullet
     }

@@ -26,12 +26,15 @@ void SeekingShuriken::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/SeekingShurikenUpgradeIcon.png");
 }
 
-void SeekingShuriken::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void SeekingShuriken::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
+    attackBuff.range += 7;
+    
+    
     for(auto& attack : attacks) {
         if(attack->getTag() == "Grandmaster Ninja") continue;
-        attackBuff.range += 7;
         
-        if(attack->getTag() == "Shuriken") {
+        if(attack->getTag() == "ShurikenAttack") {
+            attack->getProperties().getITracing(200.0f, TargetPriority::First);
         }
     }
 }

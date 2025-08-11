@@ -37,7 +37,7 @@ private:
     std::unique_ptr<EnemySpawner> enemySpawner; // Factory to create enemies based on type
 
     // Collection to hold all active enemies
-    std::vector<std::unique_ptr<Enemy> > enemyList;
+    std::vector<std::shared_ptr<Enemy> > enemyList;
 
     int currentEnemyId = 0;
 };

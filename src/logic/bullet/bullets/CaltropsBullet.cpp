@@ -40,6 +40,9 @@ void CaltropsBullet::init(Vector2 position, Vector2 size, float rotation, int da
 int CaltropsBullet::run() {
     float elapsedTime = GetFrameTime();
 
+    // update rotation if canTracing
+    rotation = properties.getRotation(rotation, position);
+
     Vector2 direction = {cosf(rotation * (PI / 180.0f)), sinf(rotation * (PI / 180.0f))};
     position.x += direction.x * speed * elapsedTime;
     position.y += direction.y * speed * elapsedTime;
@@ -55,6 +58,7 @@ int CaltropsBullet::run() {
     // If the bullet is still active, return 0
     return 0;
 }
+
 
 void CaltropsBullet::update(std::vector<std::unique_ptr<Enemy>>& enemyList) {
      if(!Game::Instance().getGameLogic().isRoundRun()) {
@@ -89,7 +93,7 @@ void CaltropsBullet::draw() const {
         return; 
     }
 
-    DrawCircleV(position, 10, RED); // Example drawing a red circle for the CaltropsBullet
+    // DrawCircleV(position, 10, RED); // Example drawing a red circle for the CaltropsBullet
 
     // Rounded draw position
     Vector2 draw_position = {
@@ -98,11 +102,11 @@ void CaltropsBullet::draw() const {
     };    
 
     DrawTexturePro(Game::Instance().getTextureManager().getTexture(tag), 
-                   {0, 0, size.x, size.y},
+                   {0, 0, (float) Game::Instance().getTextureManager().getTexture(tag).width, (float) Game::Instance().getTextureManager().getTexture(tag).height},
                    {draw_position.x, draw_position.y, size.x, size.y},
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,
-                   WHITE); // Draw the CaltropsBullet texture with the specified position and rotation
+                   WHITE); // Draw the Arrow texture with the specified position and rotation
 }
 
 int CaltropsBullet::die() {
@@ -121,12 +125,7 @@ std::vector<std::unique_ptr<Bullet>> CaltropsBullet::getChild() {
 }
 
 Rectangle CaltropsBullet::getBoundingBox() const {
-    return {
-        position.x - size.x / 2.0f,
-        position.y - size.y / 2.0f,
-        size.x,
-        size.y
-    }; 
+    return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y};
 }
 
 bool CaltropsBullet::isActive() const {

@@ -25,10 +25,10 @@ void BombBlizt::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Boom_Shooter/BombBlitzUpgradeIcon.png");
 }
 
-void BombBlizt::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {    
+void BombBlizt::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {    
     bool hasBombAttack = false;
     for (auto& attack : attacks) {
-        if (attack->getTag() == "ClusterBombsAttack") {
+        if (attack->getTag() == "RecursiveClusterAttack") {
             /**
              * * range = 160.0f
              * * cooldown = 1.5f
@@ -38,20 +38,15 @@ void BombBlizt::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff
              * * lifeSpan = 2.0f 
              * * properties = {true, false, true, true, false, true} // canHitLead, canHitBlack, canHitWhite, canHitFrozen, canHitCamo, canHitPurple.
              */
+            std::unique_ptr<AttackPattern> attackPattern = std::move(attack->getAttackPattern());
             attack = std::make_unique<BombBliztAttack>(160.0f, 1.5f, attack->getPosition(), attack->getTowerId(), 2, 360, 22, 2.0f,
                 BulletProperties{true, false, true, true, false, true}, 
                 BloonDebuff(), 
                 BloonDebuff());
-
+            attack->setAttackPattern(std::move(attackPattern));
+            
             hasBombAttack = true;
         }
-    }
-
-    if (!hasBombAttack) {
-        attacks.push_back(std::make_unique<BombBliztAttack>(160.0f, 1.5f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 1, 360, 22, 2.0f,
-            BulletProperties{true, false, true, true, false, true}, 
-            BloonDebuff(), 
-            BloonDebuff()));
     }
 }
 

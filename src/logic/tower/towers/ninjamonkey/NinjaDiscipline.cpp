@@ -25,10 +25,8 @@ void NinjaDiscipline::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/NinjaDisciplineUpgradeIcon.png");
 }
 
-void NinjaDiscipline::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
-    for(auto& attack : attacks) {
-        attackBuff.cooldownRatio *= 0.7;
-    }
+void NinjaDiscipline::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
+    attackBuff.cooldownRatio *= 0.7;
 }
 
 std::unique_ptr<Upgrade> NinjaDiscipline::buy() {

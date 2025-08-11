@@ -25,12 +25,17 @@ void GrandmasterNinja::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/GrandmasterNinjaUpgradeIcon.png");
 }
 
-void GrandmasterNinja::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void GrandmasterNinja::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
+    attackBuff.damage += 1;
+    attackBuff.cooldownRatio *= 0.31f;
+    attackBuff.range += 10;
+
     for(auto& attack : attacks) {
-        attackPattern = std::make_unique<OctupleAttack>();
-        attackBuff.damage += 1;
-        attackBuff.cooldownRatio *= 0.31f;
-        attackBuff.range += 10;
+        if(attack->getTag() == "ShurikenAttack") {
+            std::unique_ptr<AttackPattern> attackPattern = std::move(attack->getAttackPattern());
+            attack->setAttackPattern(std::make_unique<OctupleAttack>());
+            attack->setAttackPattern(std::move(attackPattern));
+        }
     }
 }
 

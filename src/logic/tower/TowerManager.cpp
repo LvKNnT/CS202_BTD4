@@ -199,6 +199,10 @@ std::weak_ptr<Tower> TowerManager::getTowerFromPosition(Vector2 position) const 
 void TowerManager::chooseNextPriority() {
     if (auto towerPtr = lastPickedTower.lock()) {
         towerPtr->targetPriority = static_cast<TargetPriority>((static_cast<int>(towerPtr->targetPriority) + 1) % 4);
+        
+        for(auto& attack : towerPtr->attacks) {
+            attack->getProperties().targetPriority = towerPtr->targetPriority; // Update the attack's target priority
+        }
     }
 }
 
@@ -206,6 +210,10 @@ void TowerManager::chooseNextPriority(Vector2 position) {
     std::weak_ptr<Tower> tower = getTowerFromPosition(position);
     if (auto towerPtr = tower.lock()) {
         towerPtr->targetPriority = static_cast<TargetPriority>((static_cast<int>(towerPtr->targetPriority) + 1) % 4);
+
+        for(auto& attack : towerPtr->attacks) {
+            attack->getProperties().targetPriority = towerPtr->targetPriority; // Update the attack's target priority
+        }
     } 
     else {
         std::cerr << "No tower found at position: " << position.x << ", " << position.y << std::endl;
@@ -215,6 +223,10 @@ void TowerManager::chooseNextPriority(Vector2 position) {
 void TowerManager::choosePreviousPriority() {
     if (auto towerPtr = lastPickedTower.lock()) {
         towerPtr->targetPriority = static_cast<TargetPriority>((static_cast<int>(towerPtr->targetPriority) + 3) % 4);
+
+        for(auto& attack : towerPtr->attacks) {
+            attack->getProperties().targetPriority = towerPtr->targetPriority; // Update the attack's target priority
+        }
     }
 }
 
@@ -222,6 +234,10 @@ void TowerManager::choosePreviousPriority(Vector2 position) {
     std::weak_ptr<Tower> tower = getTowerFromPosition(position);
     if (auto towerPtr = tower.lock()) {
         towerPtr->targetPriority = static_cast<TargetPriority>((static_cast<int>(towerPtr->targetPriority) + 3) % 4);
+
+        for(auto& attack : towerPtr->attacks) {
+            attack->getProperties().targetPriority = towerPtr->targetPriority; // Update the attack's target priority
+        }
     } 
     else {
         std::cerr << "No tower found at position: " << position.x << ", " << position.y << std::endl;

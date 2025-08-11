@@ -14,7 +14,7 @@ public:
 
     void init(Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties& properties, BloonDebuff& normalDebuff, BloonDebuff& moabDebuff, AttackBuff& attackBuff, int towerId) override;
     int run() override;
-    void update(std::vector<std::unique_ptr<Enemy>>& enemyList) override;
+    void update(std::vector<std::shared_ptr<Enemy>>& enemyList) override;
     bool hit(int damage) override;
     int getDamage(BloonType type, bool isCamo) override;
 

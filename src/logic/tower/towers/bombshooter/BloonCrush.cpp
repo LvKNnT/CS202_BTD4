@@ -23,7 +23,7 @@ void BloonCrush::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Boom_Shooter/BloonCrushUpgradeIcon.png");
 }
 
-void BloonCrush::update(std::vector<std::unique_ptr<Attack>>& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void BloonCrush::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     for (auto& attack : attacks) {
         if (attack->getTag() == "ReallyBigBombsAttack") {
             attack->setDamage(24);

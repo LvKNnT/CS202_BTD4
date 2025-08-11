@@ -15,7 +15,7 @@ EnemyManager::EnemyManager(const EnemyManager& other) {
         enemySpawner = other.enemySpawner->clone();
 
         enemyList.clear();
-        for(const std::unique_ptr<Enemy>& enemy : other.enemyList) {
+        for(const std::shared_ptr<Enemy>& enemy : other.enemyList) {
             enemyList.push_back(enemy->clone());
         }
     }
@@ -31,7 +31,7 @@ EnemyManager& EnemyManager::operator=(const EnemyManager& other) {
         enemySpawner = other.enemySpawner->clone(); 
 
         enemyList.clear(); 
-        for(const std::unique_ptr<Enemy>& enemy : other.enemyList) {
+        for(const std::shared_ptr<Enemy>& enemy : other.enemyList) {
             enemyList.push_back(enemy->clone());
         }
     }

@@ -49,14 +49,20 @@ void ShurikenAttack::update() {
     }
 }
 
-void ShurikenAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) {
+void ShurikenAttack::update(BulletManager& bulletManager, std::shared_ptr<Enemy>& enemy, AttackBuff& attackBuff) {
     // Update the attack logic, e.g., spawn a Shuriken if the cooldown is over
     if (timer <= 0.0f) {
         // Calculate the rotation towards the target position
+        Vector2 targetPosition = enemy->getPosition();
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
+
+        if(properties.canTrace) {
+            properties.targetEnemy = enemy; // Set the target enemy for tracing
+            // std::cerr << "ShurikenAttack: Tracing enabled for enemy ID: " << enemy->getId() << std::endl;
+        }
         
-        attackPattern.execute(bulletManager, BulletType::Shuriken, position, {30.0f, 30.0f}, angle, 
+        attackPattern->execute(bulletManager, BulletType::Shuriken, position, {30.0f, 30.0f}, angle, 
             damage + attackBuff.damage, 
             speed * attackBuff.speedRatio,
             (pierce + attackBuff.pierce) * (attackBuff.pierceRatio + 1.0),

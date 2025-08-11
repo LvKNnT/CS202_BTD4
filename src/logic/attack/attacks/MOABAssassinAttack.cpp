@@ -45,14 +45,15 @@ void MOABAssassinAttack::update() {
     }
 }
 
-void MOABAssassinAttack::update(BulletManager& bulletManager, const Vector2& targetPosition, AttackBuff& attackBuff, AttackPattern& attackPattern) {
+void MOABAssassinAttack::update(BulletManager& bulletManager, std::shared_ptr<Enemy>& enemy, AttackBuff& attackBuff) {
     // Update the attack logic, e.g., spawn a MOAB Assassin bullet if the cooldown is over
     if (timer <= 0.0f) {
         // Calculate the rotation towards the target position
+        Vector2 targetPosition = enemy->getPosition();
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
         
-        attackPattern.execute(bulletManager, BulletType::MOABAssassin, position, 
+        attackPattern->execute(bulletManager, BulletType::MOABAssassin, position, 
             Vector2Add({40.0f, 40.0f}, attackBuff.size),
             angle, 
             damage + attackBuff.damage,

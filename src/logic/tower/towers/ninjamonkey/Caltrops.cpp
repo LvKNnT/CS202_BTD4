@@ -1,6 +1,8 @@
 #include "Caltrops.h"
-#include "../../../attack/attacks/CaltropsAttack.h"
 #include "../../../../core/Game.h"
+
+#include "../../../attack/attacks/CaltropsAttack.h"
+#include "../../../attack/patterns/CaltropsAttackPattern.h"
 
 #include "FlashBomb.h"
 
@@ -26,8 +28,10 @@ void Caltrops::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/CaltropsUpgradeIcon.png");
 }
 
-void Caltrops::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
-    attacks.push_back(std::make_unique<CaltropsAttack>(attacks[0]->getRange(), 3.9f, attacks[0]->getPosition(), attacks[0]->getTowerId(), 1, 10, 6, 35, BulletProperties::normal(), attackBuff.extraNormalDebuff, attackBuff.extraMoabDebuff));
+void Caltrops::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
+    attacks.push_back(std::make_unique<CaltropsAttack>(attacks[0]->getRange(), 3.9f, attacks[0]->getPosition(), attacks[0]->getTowerId(), 1, 0, 6, 35, BulletProperties::normal(), attackBuff.extraNormalDebuff, attackBuff.extraMoabDebuff));
+    attacks.back()->setAttackPattern(std::make_unique<CaltropsAttackPattern>(&mapManager, attacks.back()->getPosition(), attacks.back()->getRange()));
+    std::cerr<<attacks.size()<<"\n";
 }
 
 std::unique_ptr<Upgrade> Caltrops::buy() {

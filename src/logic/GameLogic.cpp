@@ -76,8 +76,6 @@ void GameLogic::init(ModeType modeType) {
     } else {
         std::cerr << "Error: Failed to open log file for writing." << std::endl;
     }
-
-    autoSave();
 }
 
 void GameLogic::replay() {
@@ -114,6 +112,8 @@ void GameLogic::replay() {
     std::cerr << "Loading mode type: " << modeTypeInt << std::endl;
     ModeType modeType = static_cast<ModeType>(modeTypeInt);
     init(modeType);
+
+    file.close();
 }
 
 void GameLogic::update() {
@@ -134,6 +134,7 @@ void GameLogic::update() {
         logicManager.updateEnemies(enemyManager, mapManager, resourceManager);
         logicManager.updateBullets(bulletManager);
         logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager, resourceManager);
+        logicManager.updateTracingBullets(bulletManager, enemyManager);
         if(isRoundRun()) {
             // testing
             logicManager.activateSkillTower(towerManager, enemyManager, bulletManager);
@@ -203,7 +204,7 @@ bool GameLogic::isUpgradeTower(UpgradeUnits upgradeUnits) const {
 
 bool GameLogic::upgradeTower(UpgradeUnits upgradeUnits) {
     // Upgrade the tower at the given position
-    return logicManager.upgradeTower(resourceManager, towerManager, upgradeUnits);
+    return logicManager.upgradeTower(resourceManager, towerManager, upgradeUnits, mapManager);
 }
 
 void GameLogic::sellTower() {

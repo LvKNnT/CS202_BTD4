@@ -40,6 +40,9 @@ void TracingShuriken::init(Vector2 position, Vector2 size, float rotation, int d
 int TracingShuriken::run() {
     float elapsedTime = GetFrameTime();
 
+    // update rotation if canTracing
+    rotation = properties.getRotation(rotation, position);
+
     Vector2 direction = {cosf(rotation * (PI / 180.0f)), sinf(rotation * (PI / 180.0f))};
     position.x += direction.x * speed * elapsedTime;
     position.y += direction.y * speed * elapsedTime;
@@ -56,7 +59,7 @@ int TracingShuriken::run() {
     return 0;
 }
 
-void TracingShuriken::update(std::vector<std::unique_ptr<Enemy>>& enemyList) {
+void TracingShuriken::update(std::vector<std::shared_ptr<Enemy>>& enemyList) {
     if(tracingId != -1) return;
 
     float distance = 1000000.0f; // just a large number
@@ -96,7 +99,7 @@ void TracingShuriken::draw() const {
         return; 
     }
 
-    DrawCircleV(position, 10, RED); // Example drawing a red circle for the dart
+    // DrawCircleV(position, 10, RED); // Example drawing a red circle for the dart
 
     // Rounded draw position
     Vector2 draw_position = {
@@ -105,11 +108,11 @@ void TracingShuriken::draw() const {
     };    
 
     DrawTexturePro(Game::Instance().getTextureManager().getTexture(tag), 
-                   {0, 0, size.x, size.y},
+                   {0, 0, (float) Game::Instance().getTextureManager().getTexture(tag).width, (float) Game::Instance().getTextureManager().getTexture(tag).height},
                    {draw_position.x, draw_position.y, size.x, size.y},
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,
-                   WHITE); // Draw the TracingShuriken texture with the specified position and rotation
+                   WHITE); 
 }
 
 int TracingShuriken::die() {

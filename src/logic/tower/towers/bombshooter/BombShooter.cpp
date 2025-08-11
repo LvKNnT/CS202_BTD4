@@ -30,7 +30,7 @@ BombShooter::BombShooter(Vector2 position)
      * * * properties = {true, false, true, false, true} // canHitCamo, canHitLead, canHitFrozen, canHitRegrow, canHitBlack
      */
     attacks.push_back(std::make_unique<BombAttack>(160.0f, 1.5f, position, towerId, 1, 360, 22, 2.0f, BulletProperties(true, false, true, true, false, true), BloonDebuff(), BloonDebuff())); 
-    attackPattern = std::make_unique<NormalAttack>(); 
+    attacks.back()->setAttackPattern(std::make_unique<NormalAttack>()); // Set the attack pattern to NormalAttack
     skill = nullptr;
 
     // Upgrade Path

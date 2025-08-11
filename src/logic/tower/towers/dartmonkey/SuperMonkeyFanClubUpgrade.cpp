@@ -28,7 +28,7 @@ void SuperMonkeyFanClubUpgrade::loadTexture() {
     Game::Instance().getTextureManager().loadTexture("Super Monkey Fan Club Dart", "../assets/tower/Dart_Monkey/Super_Monkey.png");
 }
 
-void SuperMonkeyFanClubUpgrade::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void SuperMonkeyFanClubUpgrade::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     attackBuff.cooldownRatio *= 0.5f;
     skill = std::make_unique<SuperMonkeyFanClubSkill>();
 }

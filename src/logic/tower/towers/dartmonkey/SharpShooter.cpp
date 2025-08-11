@@ -27,7 +27,7 @@ void SharpShooter::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/SharpShooterUpgradeIcon.png");
 }
 
-void SharpShooter::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void SharpShooter::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     for (auto& attack : attacks) {
         /**
          * * range = 240.0f
@@ -41,7 +41,9 @@ void SharpShooter::update(std::vector<std::unique_ptr<Attack> >& attacks, Attack
          */
 
         if (attack->getTag() == "ArrowAttack") {
+            std::unique_ptr<AttackPattern> attackPattern = std::move(attack->getAttackPattern());
             attacks.back() = std::make_unique<ArrowCritAttack>(240.0f, 0.475f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 6, 1200, 3, 0.3f, BulletProperties{false, true, true, false, false, true}, BloonDebuff(), BloonDebuff(), 10); 
+            attacks.back()->setAttackPattern(std::move(attackPattern));
         }
     }
 }

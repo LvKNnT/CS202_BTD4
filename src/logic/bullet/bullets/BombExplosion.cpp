@@ -40,6 +40,9 @@ void BombExplosion::init(Vector2 position, Vector2 size, float rotation, int dam
 int BombExplosion::run() {
     float elapsedTime = GetFrameTime();
 
+    // update rotation if canTracing
+    rotation = properties.getRotation(rotation, position);
+
     Vector2 direction = {cosf(rotation * (PI / 180.0f)), sinf(rotation * (PI / 180.0f))};
     position.x += direction.x * speed * elapsedTime;
     position.y += direction.y * speed * elapsedTime;
@@ -56,7 +59,7 @@ int BombExplosion::run() {
     return 0;
 }
 
-void BombExplosion::update(std::vector<std::unique_ptr<Enemy>>& enemyList) {
+void BombExplosion::update(std::vector<std::shared_ptr<Enemy>>& enemyList) {
     // no special update
 }
 

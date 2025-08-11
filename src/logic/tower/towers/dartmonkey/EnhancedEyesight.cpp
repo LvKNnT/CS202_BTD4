@@ -25,7 +25,7 @@ void EnhancedEyesight::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/EnhancedEyesightUpgradeIcon.png");
 }
 
-void EnhancedEyesight::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void EnhancedEyesight::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     attackBuff.range += 32;
     attackBuff.lifeSpanRatio *= 1.6f / 1.35f; 
     attackBuff.speed += 100;

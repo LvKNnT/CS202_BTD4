@@ -27,7 +27,7 @@ void Juggernaut::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Dart_Monkey/JuggernautUpgradeIcon.png");
 }
 
-void Juggernaut::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void Juggernaut::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     for (auto& attack : attacks) {
         /**
          * * range = 128.0f
@@ -40,7 +40,9 @@ void Juggernaut::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBu
          */
         
         if (attack->getTag() == "SpikeOPultAttack") {
+            std::unique_ptr<AttackPattern> attackPattern = std::move(attack->getAttackPattern());
             attack = std::make_unique<JuggernautAttack>(128.0f, 1.0f, attacks.back()->getPosition(), attacks.back()->getTowerId(), 2, 600, 61, 1.0f, BulletProperties{true, true, true, true, false, true}, BloonDebuff().getIKnockBack(0.15f, 6.0f).getIBonusDamage(5, 2, 0, 0), BloonDebuff().getIKnockBack(0.15f, 2.0f).getIBonusDamage(0, 2, 0, 0)); 
+            attack->setAttackPattern(std::move(attackPattern));
         }
     }
 }

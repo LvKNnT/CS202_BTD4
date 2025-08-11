@@ -25,10 +25,8 @@ void SharpShurikens::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/SharpShurikensUpgradeIcon.png");
 }
 
-void SharpShurikens::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
-    for(auto& attack : attacks) {
-        attackBuff.pierce += 2;
-    }
+void SharpShurikens::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
+    attackBuff.pierce += 2;
 }
 
 std::unique_ptr<Upgrade> SharpShurikens::buy() {
