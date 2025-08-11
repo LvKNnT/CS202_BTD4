@@ -32,11 +32,14 @@ void Lead::loadTexture() {
 }
 
 bool Lead::hit(int damage) {
-    MySound popSound("LeadBloon");
-    popSound.start();
+    if(!std::dynamic_pointer_cast<AudioManager>(Game::Instance().getAudioManager())->isAudioPlaying(AudioType::SFXSound, "BombExplosion")) {
+        MySound popSound("LeadBloon");
+        popSound.start();
+    }
     health -= damage;
 
     if (health <= 0) {
+        drawDeadEffect();
         std::fstream flog("../logs/log.txt", std::ios::out | std::ios::app);
         flog << "Lead bloon popped!" << std::endl;
         flog.close();
@@ -69,7 +72,8 @@ void Lead::draw() const {
         roundf(position.y - size.y / 2.0f)
     };    
 
-    DrawTextureV(Game::Instance().getTextureManager().getTexture(tag), draw_position, WHITE); // Draw the bloon texture at its position
+    DrawTextureV(Game::Instance().getTextureManager().getTexture(tag), draw_position, effects.colorTint); // Draw the bloon texture at its position
+    drawEffect();
 }
 
 Rectangle Lead::getBoundingBox() const {

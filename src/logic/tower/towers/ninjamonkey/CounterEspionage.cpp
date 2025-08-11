@@ -29,7 +29,7 @@ void CounterEspionage::update(std::vector<std::unique_ptr<Attack> >& attacks, At
     for(auto& attack : attacks) {
         // Ninja attacks can strip camo from Bloons they damage.
         attackBuff.properties.canStripCamo = true;
-        attackBuff.properties.canCamo = true;
+        attackBuff.extraNormalDebuff.bonusCamoDamage += 2;
     }
 }
 

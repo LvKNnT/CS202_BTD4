@@ -4,10 +4,6 @@
 #include "../Bullet.h"
 
 class CaltropsBullet : public Bullet {
-private:
-    int maxPierce;
-    int counter;
-
 public:
     CaltropsBullet();
     std::unique_ptr<Bullet> clone() const override;

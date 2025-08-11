@@ -5,17 +5,16 @@
 #include "../Animation.h"
 
 #include <unordered_map>
+#include <vector>
 #include <string>
 
 class AnimationManager {
-private:
-    std::unordered_map<std::string, Animation> animations;
+    std::vector<Animation> animations;
 public:
     void loadAllAnimationTextures(std::string name, std::string path, int numFrames);
-    void addAnimation(const std::string& name, const Animation& animation);
-    void startAnimation(const std::string& name);
-    void stopAnimation(const std::string& name);
+    void addAnimation(const Animation& animation);
     void update();
+    void draw() const;
 };
 
 #endif // ANIMATION_MANAGER_H

@@ -30,6 +30,7 @@ public:
     void mute(AudioType audioType);
     void unmute(AudioType audioType);
     int getVolume(AudioType audioType) const;
+    bool isAudioPlaying(AudioType audioType, std::string name);
 
     void update(Event::Type event) override;
     void updateMusic(); // for music 

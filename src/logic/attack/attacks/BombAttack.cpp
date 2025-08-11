@@ -57,6 +57,8 @@ void BombAttack::update(BulletManager& bulletManager, const Vector2& targetPosit
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
         
+        MySound bulletFireSound("CannonFire");
+        bulletFireSound.start();
         attackPattern.execute(bulletManager, BulletType::Bomb, position, 
             Vector2Add({30.0f, 30.0f}, attackBuff.size),
             angle, 
