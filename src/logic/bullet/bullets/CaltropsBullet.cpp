@@ -1,13 +1,12 @@
 #include "CaltropsBullet.h"
 #include "../../../core/Game.h"
-
+#include "../../map/maps/MonkeyLane.h"
 #include "raymath.h"
 #include <fstream>
 
 CaltropsBullet::CaltropsBullet()
     : Bullet(BulletType::Caltrops) {
     tag = "CaltropsBullet";
-    isActiveFlag = true;
 }
 
 std::unique_ptr<Bullet> CaltropsBullet::clone() const {
@@ -60,8 +59,26 @@ int CaltropsBullet::run() {
     return 0;
 }
 
-void CaltropsBullet::update(std::vector<std::shared_ptr<Enemy>>& enemyList) {
-    // no special update
+
+void CaltropsBullet::update(std::vector<std::unique_ptr<Enemy>>& enemyList) {
+     if(!Game::Instance().getGameLogic().isRoundRun()) {
+        die();
+        return;
+    }
+
+    // Rectangle bulletBox = getBoundingBox();
+    // for(auto& enemy : enemyList) {
+    //     if(enemy->isActive() && hitEnemies.find(enemy->getId()) == hitEnemies.end()) {
+    //         Rectangle enemyBox = enemy->getBoundingBox();
+    //         // Simple AABB collision check
+    //         if (CheckCollisionRecs(bulletBox, enemyBox)) {
+    //             std::cerr<<"Yes\n";
+    //             // Bullet has hit this enemy
+    //             speed = 0.0f;
+    //             break;
+    //         }
+    //     }
+    // }
 }
 
 bool CaltropsBullet::hit(int damage) {

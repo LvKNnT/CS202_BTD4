@@ -12,7 +12,15 @@ SoundPool::SoundPool(std::string name, std::string path, int maxSounds)
     }
 }
 
-void SoundPool::playSound() {
+bool SoundPool::isSoundPlaying() {
+    for(auto sound:sounds) {
+        if(IsSoundPlaying(sound)) return 1;
+    }
+    return 0;
+}
+
+void SoundPool::playSound()
+{
     if (!sounds.empty()) {
         PlaySound(sounds[currentIndex]);
         currentIndex = (currentIndex + 1) % sounds.size();

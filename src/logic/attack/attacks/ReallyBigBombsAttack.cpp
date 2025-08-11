@@ -53,7 +53,9 @@ void ReallyBigBombsAttack::update(BulletManager& bulletManager, std::shared_ptr<
         Vector2 targetPosition = enemy->getPosition();
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
-        
+
+        MySound bulletFireSound("CannonFire");
+        bulletFireSound.start();
         attackPattern->execute(bulletManager, BulletType::ReallyBigBombs, position, 
             Vector2Add({40.0f, 40.0f}, attackBuff.size),
             angle, 

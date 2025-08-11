@@ -75,7 +75,7 @@ void Shuriken::draw() const {
         return; 
     }
 
-    // DrawCircleV(position, 10, RED); // Example drawing a red circle for the Shuriken
+    //DrawCircleV(position, 10, RED); // Example drawing a red circle for the Shuriken
 
     // Rounded draw position
     Vector2 draw_position = {

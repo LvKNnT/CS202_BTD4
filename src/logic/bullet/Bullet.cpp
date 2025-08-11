@@ -15,3 +15,7 @@ int Bullet::getDamage(BloonType type, bool isCamo) {
 
     return damage + moabDebuff.bonusDamage; // moab class
 }
+
+std::string Bullet::getTag() const {
+    return tag;
+}

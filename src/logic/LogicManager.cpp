@@ -1,5 +1,5 @@
 #include "LogicManager.h"
-
+#include "../core/Game.h"
 #include "raymath.h"
 
 #include <cfloat>
@@ -12,13 +12,13 @@
 void LogicManager::updateEnemies(EnemyManager& enemyManager, MapManager& mapManager, ResourceManager& resourceManager) {
     for (auto it = enemyManager.enemyList.begin(); it != enemyManager.enemyList.end(); ) {
         int result = runEnemy(**it, mapManager.getCurrentMap());
-        
         if (result == -1) {
             // Enemy reached the end — remove and destroy it
             //resourceManager.currentResource.lives -= (*it)->livesLost; // Update lives lost
             it = enemyManager.enemyList.erase(it);  // erase returns the next iterator
             continue;  // Skip the increment, already moved to next
         }
+        (*it)->updateEffect();
         ++it;
     }
 
@@ -37,16 +37,7 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
     Vector2 position = enemy.position;
     int trackIndex = enemy.trackIndex;
     int pathIndex = enemy.pathIndex; 
-    int speed;
-    if(enemy.debuff.knockbackChance < 100) { // Ninja - Distraction
-        speed = enemy.debuff.calSpeed(enemy.speed) + enemy.debuff.calNinjaDistractionKnockbackSpeed(enemy.speed);
-        if(enemy.type == BloonType::Ceramic) {
-            speed = enemy.debuff.calSpeed(enemy.speed) + enemy.debuff.calNinjaDistractionKnockbackSpeed(enemy.speed) / 2;
-        }
-    }
-    else {
-        speed = enemy.debuff.calSpeed(enemy.speed) + enemy.debuff.calKnockbackSpeed(enemy.speed);
-    }
+    int speed= enemy.debuff.calSpeed(enemy.speed) + enemy.debuff.calKnockbackSpeed(enemy.speed, enemy.debuff.knockbackChance);
 
     Vector2 nextPoint = map.getNextPoint(trackIndex, pathIndex);
     Vector2 direction = {nextPoint.x - position.x, nextPoint.y - position.y};
@@ -191,9 +182,10 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
                 // bullet touch but cannot destroy enemy
 
                 // If bullet canStripCamo
-                if((*enemyIt)->properties.isCamo && (*bulletIt)->attackBuff.properties.canStripCamo) {
-                    (*enemyIt)->properties.isCamo = false;
-                }
+                // if((*enemyIt)->properties.isCamo && (*bulletIt)->attackBuff.properties.canStripCamo) {
+                //     (*enemyIt)->properties.isCamo = false;
+                // }
+                
                 if(!canBulletDestroyEnemy(**bulletIt, **enemyIt)) {
                     bulletIt = bulletManager.bulletList.erase(bulletIt);
                     isBulletAlive = false;
@@ -282,6 +274,16 @@ void LogicManager::updateBulletsHitEnemies(BulletManager& bulletManager, EnemyMa
 }
 
 bool LogicManager::canBulletDestroyEnemy(const Bullet& bullet, const Enemy& enemy) const {
+    // camo
+    if(!bullet.properties.canCamo && enemy.properties.isCamo) {
+        return false;
+    }
+
+    if(enemy.properties.isCamo && bullet.attackBuff.properties.canStripCamo) {
+        enemy.properties.isCamo = false;
+        return false;
+    }
+
     // special properties
     if(bullet.properties.canLead == false
     && (enemy.type == BloonType::Lead || enemy.type == BloonType::Ddt)) {

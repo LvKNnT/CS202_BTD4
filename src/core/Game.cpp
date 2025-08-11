@@ -107,7 +107,7 @@ void Game::loadSound() {
     // for loadSound() we need to pass number of maxSounds or default will be 1 
 
     // SFX
-    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("NormalBloon", "../assets/sounds/sfx/NormalBloon.wav", 20); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("NormalBloon", "../assets/sounds/sfx/NormalBloon.wav", 100); 
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("CeramicBloon", "../assets/sounds/sfx/CeramicBloon.wav", 10); 
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("PurpleBloon", "../assets/sounds/sfx/PurpleBloon.wav", 10); 
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("LeadBloon", "../assets/sounds/sfx/LeadBloon.wav", 10); 
@@ -119,6 +119,10 @@ void Game::loadSound() {
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("Victory", "../assets/sounds/sfx/Victory.wav"); 
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("GameOver", "../assets/sounds/sfx/GameOver.wav"); 
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("SugoiSugoi", "../assets/sounds/sfx/Sugoi Sugoi!.wav"); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("NormalBullet", "../assets/sounds/sfx/NormalBullet.wav", 30); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("BombExplosion", "../assets/sounds/sfx/BombExplosion.wav", 30); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("CannonFire", "../assets/sounds/sfx/CannonFire.wav", 20); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("LaserFire", "../assets/sounds/sfx/LaserFire.wav", 3); 
     
     // Music
     drawLoadingScren();
@@ -138,7 +142,9 @@ void Game::loadTowerTexture() {
 
 void Game::loadAnimationTexture() {
     // Load all animation textures
-    drawLoadingScren();
+    animationManager.loadAllAnimationTextures("stun", "../assets/effect/stun", 4);
+    animationManager.loadAllAnimationTextures("freeze", "../assets/effect/freeze", 10);
+    animationManager.loadAllAnimationTextures("starburst", "../assets/effect/starburst", 4);
 }
 
 void Game::drawLoadingScren() {
@@ -164,6 +170,7 @@ void Game::initialize() {
 
 void Game::render() {
     std::static_pointer_cast<StateManager>(stateManager)->draw();
+    animationManager.draw();
 }
 
 void Game::update(float deltaTime) {

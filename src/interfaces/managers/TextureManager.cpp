@@ -28,7 +28,7 @@ Texture &TextureManager::getTexture(std::string name) {
     if (it != textures.end()) return it->second;
     
     static Texture empty = { 0 };
-    if(!name.empty()) std::cerr << "Warning: Texture " << name << " not found!\n";
+    //if(!name.empty()) std::cout << "Warning: Texture " << name << " not found!\n";
     return empty; 
 }
 

@@ -34,3 +34,11 @@ BloonType& SkillFriendAccess::getType(Enemy& enemy) {
 int& SkillFriendAccess::getLivesLost(Enemy& enemy) {
     return enemy.livesLost; // Access the lives lost by the enemy
 }
+
+BloonType &SkillFriendAccess::getEnemyType(Enemy &enemy) {
+    return enemy.type;
+}
+
+int &SkillFriendAccess::getEnemyHealth(Enemy &enemy) {
+    return enemy.health;
+}

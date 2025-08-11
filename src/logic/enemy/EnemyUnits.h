@@ -3,6 +3,7 @@
 
 #include "raylib.h"
 #include "../../utils/Utils.h"
+#include "../../interfaces/Animation.h"
 #include <string>
 
 // Bloons types
@@ -86,7 +87,7 @@ public:
     float freezeDuration = 0.0f;
     float knockbackDuration = 0.0f;
     float knockbackSpeed = 1.0f;
-     int knockbackChance = 100;
+    int knockbackChance = 100;
     // for damage
     int bonusDamage = 0; // Bonus damage for the bloon
     int bonusFortifiedDamage = 0; // Bonus damage for fortified bloon
@@ -188,7 +189,7 @@ public:
             0, // bonusFortifiedDamage
             0, // bonusLeadDamage
             0, // bonusCamoDamage
-            100
+            knockbackChance
         };
     }
 
@@ -204,7 +205,7 @@ public:
             bonusFortifiedDamage, // bonusFortifiedDamage
             bonusLeadDamage, // bonusLeadDamage
             bonusCamoDamage, // bonusCamoDamage
-            knockbackChance // knockbackChance
+            100 // knockbackChance
         };
     }
 
@@ -234,28 +235,12 @@ public:
         return static_cast<int>(speed * (1.0f - slowRatio));
     }
 
-    int calKnockbackSpeed(int speed) {
-        if(knockbackDuration <= 0.0f) return 0;
-        return -speed * knockbackSpeed;        
-        // No knockback if duration is zero
-        // if(knockbackDuration <= 0.0f) return 0;
-        
-        // // Generate ONE random number
-        // int roll = Utils::rand(1, 100);
-        
-        // // Use that SAME number for both debug and condition
-        // std::cerr << "Speed=" << speed << " Roll=" << roll << " Chance=" << knockbackChance << "\n";
-        
-        // // Check against the chance
-        // if(roll <= knockbackChance) {
-        //     return -speed * knockbackSpeed;
-        // }
-        
-        // knockbackDuration = 0.0f;
-        // return 0; // No knockback
-    }
+    int calKnockbackSpeed(int speed, int knockbackChance) {
+        if(knockbackChance == 100) {
+            if(knockbackDuration <= 0.0f) return 0;
+            return -speed * knockbackSpeed;        
+        } 
 
-    int calNinjaDistractionKnockbackSpeed(int speed) {
         if(knockbackDuration <= 0.0f) return 0;
         int roll = Utils::rand(1, 100);
         if(roll <= knockbackChance) {
@@ -263,6 +248,29 @@ public:
         }
         knockbackDuration = 0.0f;
         return 0;
+    }
+
+};
+
+class EnemyEffect {
+public:
+    Animation stunEffect;
+    Animation freezeEffect;
+    Animation deadEffect;
+    Color slowColor = (Color){ 150, 200, 255, 255 };
+    Color normalColor = WHITE;
+    Color colorTint = WHITE;
+
+    void draw() const{
+        stunEffect.draw();
+        freezeEffect.draw();
+        deadEffect.draw();
+    }
+
+    void update() {
+        stunEffect.update();
+        freezeEffect.update();
+        deadEffect.update();
     }
 };
 

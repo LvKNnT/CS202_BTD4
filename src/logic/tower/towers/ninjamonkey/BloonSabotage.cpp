@@ -1,6 +1,6 @@
 #include "BloonSabotage.h"
 #include "../../../../core/Game.h"
-
+#include "../../../skill/skills/BloonSabotageSkill.h"
 #include "GrandSaboteur.h"
 
 BloonSabotage::BloonSabotage() 
@@ -21,14 +21,13 @@ std::unique_ptr<Upgrade> BloonSabotage::clone() const {
 }
 
 void BloonSabotage::loadTexture() {
-    // Load the texture for Sharp Shots upgrade
+    // Load the texture for Bloon Sabotage upgrade
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/BloonSabotageUpgradeIcon.png");
+    Game::Instance().getTextureManager().loadTexture("Bloon Sabotage Ninja", "../assets/tower/Ninja_Monkey/BloonSabotageNinja.png");
 }
 
-void BloonSabotage::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
-    for(auto& attack : attacks) {
-        // Ability slows down all bloons on screen and any incoming bloons by 50% for 15 seconds. Cannot soak through MOAB-class layers nor affect BADs and Bosses.   
-    }
+void BloonSabotage::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+    skill = std::make_unique<BloonSabotageSkill>();
 }
 
 std::unique_ptr<Upgrade> BloonSabotage::buy() {
