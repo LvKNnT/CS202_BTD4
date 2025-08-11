@@ -25,7 +25,7 @@ void GrandSaboteur::loadTexture() {
     Game::Instance().getTextureManager().loadTexture("Grand Saboteur Ninja", "../assets/tower/Ninja_Monkey/GrandSaboteurNinja.png");
 }
 
-void GrandSaboteur::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<AttackPattern>& attackPattern, std::unique_ptr<Skill>& skill) {
+void GrandSaboteur::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     skill = std::make_unique<GrandSaboteurSkill>();
 }
 
