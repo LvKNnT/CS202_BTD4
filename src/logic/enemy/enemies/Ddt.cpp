@@ -90,7 +90,7 @@ Rectangle Ddt::getBoundingBox() const {
 
 bool Ddt::isActive() const {
     // Check if the bloon is still active (not popped)
-    return health > 0;
+    return isActiveFlag;
 }
 
 void Ddt::setActive(bool active) {

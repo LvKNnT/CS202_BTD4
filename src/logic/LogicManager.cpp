@@ -105,6 +105,15 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
         speed = -speed;
     }
 
+    // Move jingly jingly
+    // Sinusoidal "jiggle" movement perpendicular to the path direction
+    float jiggleAmplitude = 0.4f; // Adjust for more/less jiggle
+    float jiggleFrequency = 1.0f; // Adjust for faster/slower jiggle
+    float jiggle = jiggleAmplitude * sinf(GetTime() * jiggleFrequency + enemy.enemyId);
+    Vector2 normal = { -direction.y / distance, direction.x / distance };
+    position.x += normal.x * jiggle;
+    position.y += normal.y * jiggle;
+
     // Before returning, update the enemy's position and track index
     enemy.position = position; 
     enemy.trackIndex = trackIndex; 
@@ -352,6 +361,14 @@ bool LogicManager::checkCollision(const Bullet& bullet, const Enemy& enemy) cons
 
     if(!bullet.properties.canCamo && enemy.properties.isCamo) {
         return false; // Bullet is tracing but the target enemy is no longer valid
+    }
+
+    // check focus
+    if(bullet.properties.isFocus && !bullet.properties.targetEnemy.expired()) {
+        auto targetEnemy = bullet.properties.targetEnemy.lock();
+        if(targetEnemy && targetEnemy->enemyId != enemy.enemyId) {
+            return false; // Bullet is focused on a different enemy
+        }
     }
 
     Rectangle bulletBox = bullet.getBoundingBox();

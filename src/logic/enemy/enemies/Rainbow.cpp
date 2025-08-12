@@ -81,7 +81,7 @@ Rectangle Rainbow::getBoundingBox() const {
 
 bool Rainbow::isActive() const {
     // Check if the bloon is still active (not popped)
-    return health > 0;
+    return isActiveFlag;
 }
 
 void Rainbow::setActive(bool active) {

@@ -90,7 +90,7 @@ Rectangle Moab::getBoundingBox() const {
 
 bool Moab::isActive() const {
     // Check if the bloon is still active (not popped)
-    return health > 0;
+    return isActiveFlag;
 }
 
 void Moab::setActive(bool active) {

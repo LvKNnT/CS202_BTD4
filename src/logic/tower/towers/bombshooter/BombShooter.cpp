@@ -133,9 +133,12 @@ void BombShooter::draw() const {
 
 void BombShooter::drawRange() const {
     // Draw the range of attacks
+    float maxRange = 0.0f;
     for(const auto& attack : attacks) {
-        DrawCircleV(position, attack->getRange() * attackBuff.rangeRatio + attackBuff.range, Fade(GRAY, 0.5f)); // Draw the attack range
+        maxRange = std::max(maxRange, attack->getRange() * attackBuff.rangeRatio + attackBuff.range);
     }
+
+    DrawCircleV(position, maxRange, Fade(GRAY, 0.5f)); // Draw the attack range
 }
 
 void BombShooter::drawPut() const {

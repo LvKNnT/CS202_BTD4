@@ -80,7 +80,7 @@ Rectangle Lead::getBoundingBox() const {
 
 bool Lead::isActive() const {
     // Check if the bloon is still active (not popped)
-    return health > 0;
+    return isActiveFlag;
 }
 
 void Lead::setActive(bool active) {

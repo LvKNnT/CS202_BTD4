@@ -58,7 +58,7 @@ Point::Type Map::getPointType(int index, int pathIdx) const {
 float Map::distanceToEndPoint(Vector2 position, int index, int pathIdx) const {
     float distance = 0.0f;
 
-    Vector2 currentPoint = getCurrentPoint(index, pathIdx);
+    Vector2 currentPoint = getNextPoint(index, pathIdx);
     distance += Vector2Distance(position, currentPoint);
     
     for(int i = index; i < (int) enemyPath[pathIdx].size(); ++i) {

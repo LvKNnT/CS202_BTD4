@@ -81,7 +81,7 @@ Rectangle Red::getBoundingBox() const {
 
 bool Red::isActive() const {
     // Check if the bloon is still active (not popped)
-    return health > 0;
+    return isActiveFlag;
 }
 
 void Red::setActive(bool active) {

@@ -80,7 +80,7 @@ Rectangle Zebra::getBoundingBox() const {
 
 bool Zebra::isActive() const {
     // Check if the bloon is still active (not popped)
-    return health > 0;
+    return isActiveFlag;
 }
 
 void Zebra::setActive(bool active) {

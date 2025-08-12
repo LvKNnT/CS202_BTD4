@@ -80,7 +80,7 @@ Rectangle Blue::getBoundingBox() const {
 
 bool Blue::isActive() const {
     // Check if the bloon is still active (not popped)
-    return health > 0;
+    return isActiveFlag;
 }
 
 void Blue::setActive(bool active) {

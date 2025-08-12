@@ -185,6 +185,23 @@ public:
         };
     }
 
+    BloonDebuff getIFreeze(float duration) const {
+        return *this + BloonDebuff{
+            0.0f, // slowRatio
+            0.0f, // slowDuration
+            0.0f, // stunDuration
+            duration, // freezeDuration
+            0.0f, // knockbackDuration
+            1.0f, // knockbackSpeed
+            0, // bonusDamage
+            0, // bonusFortifiedDamage
+            0, // bonusLeadDamage
+            0, // bonusCamoDamage
+            0, // bonusOnHitDamage
+            100 // knockbackChance
+        };
+    }
+
     BloonDebuff getIKnockBack(float duration, float speed, int knockbackChance = 100) const {
         return *this + BloonDebuff{
             0.0f, // slowRatio

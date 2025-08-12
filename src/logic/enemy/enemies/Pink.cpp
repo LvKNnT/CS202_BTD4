@@ -80,7 +80,7 @@ Rectangle Pink::getBoundingBox() const {
 
 bool Pink::isActive() const {
     // Check if the bloon is still active (not popped)
-    return health > 0;
+    return isActiveFlag;
 }
 
 void Pink::setActive(bool active) {

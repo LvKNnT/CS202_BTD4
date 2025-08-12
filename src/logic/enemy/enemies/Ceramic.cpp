@@ -80,7 +80,7 @@ Rectangle Ceramic::getBoundingBox() const {
 
 bool Ceramic::isActive() const {
     // Check if the bloon is still active (not popped)
-    return health > 0;
+    return isActiveFlag;
 }
 
 void Ceramic::setActive(bool active) {

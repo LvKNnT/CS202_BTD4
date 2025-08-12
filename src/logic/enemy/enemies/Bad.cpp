@@ -90,7 +90,7 @@ Rectangle Bad::getBoundingBox() const {
 
 bool Bad::isActive() const {
     // Check if the bloon is still active (not popped)
-    return health > 0;
+    return isActiveFlag;
 }
 
 void Bad::setActive(bool active) {
