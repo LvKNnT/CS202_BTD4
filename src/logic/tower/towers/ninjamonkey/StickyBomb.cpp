@@ -27,10 +27,10 @@ void StickyBomb::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/StickyBombUpgradeIcon.png");
 }
 
-void StickyBomb::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
+void StickyBomb::update(std::vector<std::unique_ptr<Attack>> &attacks, AttackBuff &attackBuff, std::unique_ptr<Skill> &skill, std::vector<std::unique_ptr<Skill>> &passiveSkills, MapManager &mapManager, ResourceManager &resourceManager) {
     attacks.push_back(std::make_unique<StickyBombAttack>(attacks[0]->getRange(), 4.5f, attacks[0]->getPosition(), attacks[0]->getTowerId(), 0, attacks[0]->getSpeed(), 11, 3.0f, BulletProperties::normal(), attackBuff.extraNormalDebuff, attackBuff.extraMoabDebuff));
     attacks.back()->setAttackPattern(std::make_unique<NormalAttack>());
-    attacks.back()->getProperties().getITracing(2000.0f, TargetPriority::Strong);
+    attacks.back()->getProperties().getITracing(2000.0f, TargetPriority::Strong, true);
     attacks.back()->getProperties() += BulletProperties{true, true, true, true, false, true}; // canHitLead, canHitBlack, canHitWhite, canHitFrozen, canHitCamo, canHitPurple.
     if(attacks[0]->getNormalDebuff().knockbackChance == 15) {
         // Sticky Bomb has 15% of knockback
@@ -38,6 +38,7 @@ void StickyBomb::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBu
     }
 }
 
-std::unique_ptr<Upgrade> StickyBomb::buy() {
+std::unique_ptr<Upgrade> StickyBomb::buy()
+{
     return nextUpgrade->clone();
 }

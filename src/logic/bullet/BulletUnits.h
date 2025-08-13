@@ -33,6 +33,8 @@ enum class BulletType {
     FlashBomb,
     FlashBombExplosion, 
     StickyBomb,
+    Shrapnel,
+    ShrapnelShot
 };
 
 class BulletProperties {
@@ -51,8 +53,10 @@ public:
 
     // for tracing bullets
     bool canTrace = false;
+    bool isOnlyFollowing = false;
     std::weak_ptr<Enemy> targetEnemy; 
     float range = 0.0f;
+    bool isFocus = false;
     TargetPriority targetPriority = TargetPriority::First;
 
     static BulletProperties classic() {
@@ -65,7 +69,7 @@ public:
         return BulletProperties{true, false, true, true, false, true, false};
     }
     static BulletProperties ice() {
-        return BulletProperties{false, true, false, true, false, true, false};
+        return BulletProperties{false, true, false, false, false, false, true};
     }
     static BulletProperties magic() {
         return BulletProperties{false, true, true, false, false, false, false};
@@ -85,7 +89,8 @@ public:
 
     BulletProperties& operator= (const BulletProperties& other);
 
-    BulletProperties& getITracing(float range, TargetPriority targetPriority);
+    BulletProperties& getITracing(float range, TargetPriority targetPriority, bool isOnlyFollowing = false);
+    BulletProperties& removeITracing();
     BulletProperties& getITracing(std::shared_ptr<Enemy> enemy);
     float getRotation(float rotation, Vector2 position);
 };

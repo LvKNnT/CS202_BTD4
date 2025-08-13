@@ -46,3 +46,10 @@ BloonType &SkillFriendAccess::getEnemyType(Enemy &enemy) {
 int &SkillFriendAccess::getEnemyHealth(Enemy &enemy) {
     return enemy.health;
 }
+
+int& SkillFriendAccess::getTrackIndex(Enemy& enemy) {
+    return enemy.trackIndex; // Access the track index of the enemy
+}
+int& SkillFriendAccess::getPathIndex(Enemy& enemy) {
+    return enemy.pathIndex; // Access the path index of the enemy
+}

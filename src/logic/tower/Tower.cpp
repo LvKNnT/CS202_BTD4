@@ -15,7 +15,12 @@ Tower::Tower(const Tower& other)
     for(const auto& attack : other.attacks) {
         attacks.push_back(attack->clone()); // Clone each attack
     }
+    
     skill = other.skill ? other.skill->clone() : nullptr; // Clone the skill if it exists
+    passiveSkills.clear();
+    for(const auto& passiveSkill : other.passiveSkills) {
+        passiveSkills.push_back(passiveSkill->clone()); // Clone each passive skill
+    }
 
     // Clone the upgrades
     upgradeTop = other.upgradeTop ? other.upgradeTop->clone() : std::make_unique<Upgrade>();

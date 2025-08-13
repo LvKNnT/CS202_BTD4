@@ -37,6 +37,7 @@ bool Red::hit(int damage) {
         popSound.start();
     }
     health -= damage;
+    health -= debuff.bonusOnHitDamage; // Apply bonus damage from debuffs
     
     if (health <= 0) {
         drawDeadEffect();
@@ -83,7 +84,7 @@ Rectangle Red::getBoundingBox() const {
 
 bool Red::isActive() const {
     // Check if the bloon is still active (not popped)
-    return health > 0;
+    return isActiveFlag;
 }
 
 void Red::setActive(bool active) {

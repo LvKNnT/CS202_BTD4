@@ -137,7 +137,8 @@ void GameLogic::update() {
         logicManager.updateTracingBullets(bulletManager, enemyManager);
         if(isRoundRun()) {
             // testing
-            logicManager.activateSkillTower(towerManager, enemyManager, bulletManager);
+            logicManager.activateSkillTower(towerManager, enemyManager, bulletManager, resourceManager, mapManager);
+            logicManager.activatePassiveSkillTower(towerManager, enemyManager, bulletManager, resourceManager, mapManager);
             
             logicManager.updateTowers(towerManager, enemyManager, bulletManager);
             towerManager.updateTowers();

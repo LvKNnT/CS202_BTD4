@@ -62,4 +62,19 @@ class ChooseNinjaMonkeyTower : public CanHoveringButton {
 public:
     ChooseNinjaMonkeyTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
+
+class ChooseSniperMonkeyTower : public CanHoveringButton {
+public:
+    ChooseSniperMonkeyTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class ChooseBoomerangMonkeyTower : public CanHoveringButton {
+public:
+    ChooseBoomerangMonkeyTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class ChooseTackShooterTower : public CanHoveringButton {
+public:
+    ChooseTackShooterTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
 #endif // CAN_HOVERING_BUTTON_H

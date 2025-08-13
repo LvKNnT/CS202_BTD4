@@ -37,6 +37,7 @@ bool Ceramic::hit(int damage) {
         popSound.start();
     }
     health -= damage;
+    health -= debuff.bonusOnHitDamage; // Apply bonus damage from debuffs
 
     if (health <= 0) {
         drawDeadEffect();
@@ -82,7 +83,7 @@ Rectangle Ceramic::getBoundingBox() const {
 
 bool Ceramic::isActive() const {
     // Check if the bloon is still active (not popped)
-    return health > 0;
+    return isActiveFlag;
 }
 
 void Ceramic::setActive(bool active) {

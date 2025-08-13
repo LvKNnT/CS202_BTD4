@@ -24,6 +24,8 @@
 #include "bullets/FlashBombBullet.h"
 #include "bullets/FlashBombExplosionBullet.h"
 #include "bullets/StickyBombBullet.h"
+#include "bullets/Shrapnel.h"
+#include "bullets/ShrapnelShotBullet.h"
 // #include "bullets/Tack.h"
 // #include "bullets/Ice.h"
 // #include "bullets/MagicBall.h"
@@ -90,6 +92,8 @@ void BulletSpawner::init() {
     bulletTemplates[BulletType::FlashBomb] = std::make_unique<FlashBombBullet>();
     bulletTemplates[BulletType::FlashBombExplosion] = std::make_unique<FlashBombExplosionBullet>();
     bulletTemplates[BulletType::StickyBomb] = std::make_unique<StickyBombBullet>();
+    bulletTemplates[BulletType::Shrapnel] = std::make_unique<Shrapnel>();
+    bulletTemplates[BulletType::ShrapnelShot] = std::make_unique<ShrapnelShotBullet>();
     // bulletTemplates[BulletType::Tack] = std::make_unique<Tack>();
     // bulletTemplates[BulletType::Ice] = std::make_unique<Ice>();
     // bulletTemplates[BulletType::MagicBall] = std::make_unique<MagicBall>();

@@ -26,7 +26,7 @@ void FlashBomb::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/FlashBombUpgradeIcon.png");
 }
 
-void FlashBomb::update(std::vector<std::unique_ptr<Attack, std::default_delete<Attack>>>& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill, std::default_delete<Skill>>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
+void FlashBomb::update(std::vector<std::unique_ptr<Attack>> &attacks, AttackBuff &attackBuff, std::unique_ptr<Skill> &skill, std::vector<std::unique_ptr<Skill>> &passiveSkills, MapManager &mapManager, ResourceManager &resourceManager) {
     attacks.push_back(std::make_unique<FlashBombAttack>(attacks[0]->getRange(), 2.48f, attacks[0]->getPosition(), attacks[0]->getTowerId(), 3, attacks[0]->getSpeed(), 30, 0.25f, BulletProperties::normal(), attackBuff.extraNormalDebuff, attackBuff.extraMoabDebuff));
     attacks.back()->setAttackPattern(std::make_unique<NormalAttack>());
     attacks.back()->getProperties() += BulletProperties{true, true, true, true, false, true}; // canHitLead, canHitBlack, canHitWhite, canHitFrozen, canHitCamo, canHitPurple.

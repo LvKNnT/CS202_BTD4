@@ -4,6 +4,8 @@
 #include "../tower/Tower.h"
 #include "../enemy/Enemy.h"
 #include "../bullet/BulletManager.h"
+#include "../resource/ResourceManager.h" 
+#include "../map/MapManager.h"
 
 class SkillFriendAccess {
 public:
@@ -20,6 +22,8 @@ public:
     static BloonType& getType(Enemy& enemy);
     static int& getLivesLost(Enemy& enemy);
     static int getEnemyId(Enemy& enemy);
+    static int& getTrackIndex(Enemy& enemy);
+    static int& getPathIndex(Enemy& enemy);
 
 
     // Enemey

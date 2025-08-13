@@ -32,6 +32,7 @@ BombShooter::BombShooter(Vector2 position)
     attacks.push_back(std::make_unique<BombAttack>(160.0f, 1.5f, position, towerId, 1, 360, 22, 2.0f, BulletProperties(true, false, true, true, false, true), BloonDebuff(), BloonDebuff())); 
     attacks.back()->setAttackPattern(std::make_unique<NormalAttack>()); // Set the attack pattern to NormalAttack
     skill = nullptr;
+    passiveSkills.clear(); // Clear any existing passive skills
 
     // Upgrade Path
     upgradeTop = std::make_unique<BiggerBombs>();
@@ -132,9 +133,12 @@ void BombShooter::draw() const {
 
 void BombShooter::drawRange() const {
     // Draw the range of attacks
+    float maxRange = 0.0f;
     for(const auto& attack : attacks) {
-        DrawCircleV(position, attack->getRange() * attackBuff.rangeRatio + attackBuff.range, Fade(GRAY, 0.5f)); // Draw the attack range
+        maxRange = std::max(maxRange, attack->getRange() * attackBuff.rangeRatio + attackBuff.range);
     }
+
+    DrawCircleV(position, maxRange, Fade(GRAY, 0.5f)); // Draw the attack range
 }
 
 void BombShooter::drawPut() const {

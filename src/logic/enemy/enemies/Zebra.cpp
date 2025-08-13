@@ -37,6 +37,7 @@ bool Zebra::hit(int damage) {
         popSound.start();
     }
     health -= damage;
+    health -= debuff.bonusOnHitDamage; // Apply bonus damage from debuffs
 
     if (health <= 0) {
         drawDeadEffect();
@@ -82,7 +83,7 @@ Rectangle Zebra::getBoundingBox() const {
 
 bool Zebra::isActive() const {
     // Check if the bloon is still active (not popped)
-    return health > 0;
+    return isActiveFlag;
 }
 
 void Zebra::setActive(bool active) {

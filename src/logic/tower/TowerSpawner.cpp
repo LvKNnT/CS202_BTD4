@@ -8,6 +8,11 @@
 #include "towers/dartmonkey/DartMonkey.h"
 #include "towers/bombshooter/BombShooter.h"
 #include "towers/ninjamonkey/NinjaMonkey.h"
+#include "towers/snipermonkey/SniperMonkey.h"
+#include "towers/tackshooter/TackShooter.h"
+#include "towers/boomerangmonkey/BoomerangMonkey.h"
+#include "towers/icemonkey/IceMonkey.h"
+#include "towers/monkeysub/MonkeySub.h"
 
 TowerSpawner::TowerSpawner() {
     // Initialize tower templates
@@ -58,6 +63,11 @@ void TowerSpawner::init() {
     towerTemplates[TowerType::DartMonkey] = std::make_unique<DartMonkey>();
     towerTemplates[TowerType::BombShooter] = std::make_unique<BombShooter>();
     towerTemplates[TowerType::NinjaMonkey] = std::make_unique<NinjaMonkey>();
+    towerTemplates[TowerType::SniperMonkey] = std::make_unique<SniperMonkey>();
+    towerTemplates[TowerType::TackShooter] = std::make_unique<TackShooter>();
+    towerTemplates[TowerType::BoomerangMonkey] = std::make_unique<BoomerangMonkey>();
+    towerTemplates[TowerType::IceMonkey] = std::make_unique<IceMonkey>();
+    towerTemplates[TowerType::MonkeySub] = std::make_unique<MonkeySub>();
 };  
 
 void TowerSpawner::init(TowerModifies modifies) {
@@ -70,6 +80,22 @@ void TowerSpawner::init(TowerModifies modifies) {
 
     towerTemplates[TowerType::NinjaMonkey] = std::make_unique<NinjaMonkey>();
     towerTemplates[TowerType::NinjaMonkey]->setModifies(modifies); // Set modifies for the Ninja Monkey tower
+
+    towerTemplates[TowerType::SniperMonkey] = std::make_unique<SniperMonkey>();
+    towerTemplates[TowerType::SniperMonkey]->setModifies(modifies); // Set modifies for the Sniper Monkey tower
+
+    towerTemplates[TowerType::TackShooter] = std::make_unique<TackShooter>();
+    towerTemplates[TowerType::TackShooter]->setModifies(modifies); // Set modifies for the Tack Shooter tower
+
+    towerTemplates[TowerType::BoomerangMonkey] = std::make_unique<BoomerangMonkey>();
+    towerTemplates[TowerType::BoomerangMonkey]->setModifies(modifies); // Set modifies for the Boomerang Monkey tower
+
+    towerTemplates[TowerType::IceMonkey] = std::make_unique<IceMonkey>();
+    towerTemplates[TowerType::IceMonkey]->setModifies(modifies); // Set modifies for the Ice Monkey tower
+
+    towerTemplates[TowerType::MonkeySub] = std::make_unique<MonkeySub>();
+    towerTemplates[TowerType::MonkeySub]->setModifies(modifies); // Set modifies for the Monkey Sub tower
+
 };
 
 std::unique_ptr<Tower> TowerSpawner::getTower(TowerType type, Vector2 position, int towerID, const TowerModifies& modifies) {

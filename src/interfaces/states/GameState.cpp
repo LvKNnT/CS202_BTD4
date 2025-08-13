@@ -54,14 +54,17 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
 
     towerBoxPos = {1000, 145};
     for(int i = 0; i < maxTowerTypes; i++) {
-        if(i <= 2) {
+        if(i <= 5) {
             auto infos = Game::Instance().getGameLogic().getInfoTower(getTowerType(i));
             towerCost[i] = std::make_shared<TextField>('$' + infos["cost"], Game::Instance().getFontManager().getFont("SmallBold"), WHITE, 20, 100, (Vector2) {towerBoxPos.x, towerBoxPos.y + 103 - 30});
             if(i == 0) chooseTowerButton[i] = std::make_shared<ChooseDartMonkeyTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
             if(i == 1) chooseTowerButton[i] = std::make_shared<ChooseBombShooterTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
             if(i == 2) chooseTowerButton[i] = std::make_shared<ChooseNinjaMonkeyTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
+            if(i == 3) chooseTowerButton[i] = std::make_shared<ChooseSniperMonkeyTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
+            if(i == 4) chooseTowerButton[i] = std::make_shared<ChooseBoomerangMonkeyTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
+            if(i == 5) chooseTowerButton[i] = std::make_shared<ChooseTackShooterTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
         }
-        if(i > 2) {
+        if(i > 5) {
             chooseTowerButton[i] = std::make_shared<ChooseBombShooterTower>(Game::Instance().getTextureManager().getTexture("Bomb Shooter Icon"), 1, 103, 100, towerBoxPos);
             towerCost[i] = std::make_shared<TextField>("$6969", Game::Instance().getFontManager().getFont("SmallBold"), WHITE, 20, 100, (Vector2) {towerBoxPos.x, towerBoxPos.y + 103 - 30});
         }
@@ -219,6 +222,15 @@ void GameState::update(Event::Type event) {
             break;
         case Event::Type::ClickedChooseNinjaMonkey:
             clickedTowerType = TowerType::NinjaMonkey;
+            break;
+        case Event::Type::ClickedChooseSniperMonkey:
+            clickedTowerType = TowerType::SniperMonkey;
+            break;
+        case Event::Type::ClickedChooseBoomerangMonkey:
+            clickedTowerType = TowerType::BoomerangMonkey;
+            break;
+        case Event::Type::ClickedChooseTackShooter:
+            clickedTowerType = TowerType::TackShooter;
             break;
         case Event::Type::UpgradeTowerLeft:
             if(Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Top)) upgradeSound.start();
@@ -379,6 +391,12 @@ TowerType GameState::getTowerType(int i) const {
             return TowerType::BombShooter;
         case 2: 
             return TowerType::NinjaMonkey;
+        case 3:
+            return TowerType::SniperMonkey;
+        case 4:
+            return TowerType::BoomerangMonkey;
+        case 5:
+            return TowerType::TackShooter;
     }
     return TowerType::None;
 }
