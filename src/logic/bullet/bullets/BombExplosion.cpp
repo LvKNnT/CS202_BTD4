@@ -64,6 +64,8 @@ void BombExplosion::update(std::vector<std::shared_ptr<Enemy>>& enemyList) {
 }
 
 bool BombExplosion::hit(int damage) {
+    MySound hitSound("BombExplosion");
+    hitSound.start();
     pierce -= damage;
     
     return pierce <= 0; // Indicating that the hit was successful

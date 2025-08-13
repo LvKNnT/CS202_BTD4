@@ -1,13 +1,12 @@
 #include "CaltropsBullet.h"
 #include "../../../core/Game.h"
-
+#include "../../map/maps/MonkeyLane.h"
 #include "raymath.h"
 #include <fstream>
 
 CaltropsBullet::CaltropsBullet()
     : Bullet(BulletType::Caltrops) {
     tag = "CaltropsBullet";
-    isActiveFlag = true;
 }
 
 std::unique_ptr<Bullet> CaltropsBullet::clone() const {
@@ -60,8 +59,8 @@ int CaltropsBullet::run() {
     return 0;
 }
 
+
 void CaltropsBullet::update(std::vector<std::shared_ptr<Enemy>>& enemyList) {
-    // no special update
 }
 
 bool CaltropsBullet::hit(int damage) {

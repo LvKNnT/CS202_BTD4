@@ -20,14 +20,17 @@ private:
     int numFrames;
     float frameTime;
     float elapsedTime;
-    std::vector<Texture2D> frames;
+
 public:
     Animation() = default;
+    // The name is the name of animation textures we want to play 
     Animation(const std::string &name, Vector2 position, int heght, int width, int numFrames, float frameTime, bool isLooped = false);
+    Animation(const std::string &name, int heght, int width, int numFrames, float frameTime, bool isLooped = false);
     ~Animation();
 
     void setPosition(Vector2 newPosition);
     void setRotation(float newRotation);
+    bool isAnimationPlaying() const;
     void update();
     void draw() const;
     void start();

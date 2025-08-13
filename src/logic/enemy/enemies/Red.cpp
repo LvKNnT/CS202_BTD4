@@ -32,13 +32,15 @@ void Red::loadTexture() {
 }
 
 bool Red::hit(int damage) {
-    MySound popSound("NormalBloon");
-    popSound.start();
-
+    if(!std::dynamic_pointer_cast<AudioManager>(Game::Instance().getAudioManager())->isAudioPlaying(AudioType::SFXSound, "BombExplosion")) {
+        MySound popSound("NormalBloon");
+        popSound.start();
+    }
     health -= damage;
     health -= debuff.bonusOnHitDamage; // Apply bonus damage from debuffs
     
     if (health <= 0) {
+        drawDeadEffect();
         std::fstream flog("../logs/log.txt", std::ios::out | std::ios::app);
         flog << "Red bloon popped!" << std::endl;
         flog.close();
@@ -71,7 +73,8 @@ void Red::draw() const {
         roundf(position.y - size.y / 2.0f)
     };    
 
-    DrawTextureV(Game::Instance().getTextureManager().getTexture(tag), draw_position, WHITE); // Draw the bloon texture at its position
+    DrawTextureV(Game::Instance().getTextureManager().getTexture(tag), draw_position, effects.colorTint); // Draw the bloon texture at its position
+    drawEffect();
 }
 
 Rectangle Red::getBoundingBox() const {

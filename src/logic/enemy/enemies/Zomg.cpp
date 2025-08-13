@@ -35,15 +35,15 @@ void Zomg::loadTexture() {
 }
 
 bool Zomg::hit(int damage) {
-    MySound popSound("MOABBloon");
-    popSound.start();
-
+    if(!std::dynamic_pointer_cast<AudioManager>(Game::Instance().getAudioManager())->isAudioPlaying(AudioType::SFXSound, "BombExplosion")) {
+        MySound popSound("MOABBloon");
+        popSound.start();
+    }
     health -= damage;
     health -= debuff.bonusOnHitDamage; // Apply bonus damage from debuffs
 
     if (health <= 0) {
-        MySound destroyingSound("DestroyingMOABBloon");
-        destroyingSound.start();
+        drawDeadEffect();
         std::fstream flog("../logs/log.txt", std::ios::out | std::ios::app);
         flog << "Zomg bloon popped!" << std::endl;
         flog.close();
@@ -80,7 +80,8 @@ void Zomg::draw() const {
                    {draw_position.x, draw_position.y, size.x, size.y},
                    {size.x / 2.0f, size.y / 2.0f},
                    rotation,
-                   WHITE); // Draw the Zomg bloon texture with the specified position and rotation
+                   effects.colorTint); // Draw the Zomg bloon texture with the specified position and rotation
+    drawEffect();
 }
 
 Rectangle Zomg::getBoundingBox() const {

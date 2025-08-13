@@ -23,6 +23,7 @@ public:
     virtual void stop(std::string name) = 0;
     virtual void increaseVolume();
     virtual void decreaseVolume();
+    virtual bool isAudioPlaying(std::string name) = 0;
     virtual void mute() = 0;
     virtual void unmute();
     virtual void unload() = 0;
@@ -35,7 +36,8 @@ private:
 public:
     SoundChannel();
     void setVolume(float _volume) override;
-    void mute();
+    void mute() override;
+    bool isAudioPlaying(std::string name) override;
     void load(std::string name, std::string path, int maxSounds = 1);
     void unload() override;
     void play(std::string name) override;
@@ -49,7 +51,8 @@ private:
 public:
     MusicChannel();
     void setVolume(float _volume) override;
-    void mute();
+    void mute() override;
+    bool isAudioPlaying(std::string name) override;
     void load(std::string name, std::string path);
     void unload() override;
     void update();

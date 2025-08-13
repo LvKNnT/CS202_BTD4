@@ -70,7 +70,9 @@ public:
     static BulletProperties magic() {
         return BulletProperties{false, true, true, false, false, false, false};
     }
-    
+    static BulletProperties shuriken() {
+        return BulletProperties{false, true, true, false, true, true, false};
+    }
 
     BulletProperties() = default;
     BulletProperties(bool canLead, bool canBlack, bool canWhite, bool canFrozen, bool canCamo, bool canPurple, bool canStripCamo = false)

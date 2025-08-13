@@ -43,7 +43,7 @@ void EliteDefenderPassiveSkill::activateSkill(std::shared_ptr<Tower> tower, std:
     auto enemy = enemies.begin();
     float distanceToTrackEnd = mapManager.getCurrentMap().
         distanceToEndPoint(SkillFriendAccess::getEnemyPosition(*(*enemy)), 
-                           SkillFriendAccess::getTtrackIndex(*(*enemy)), 
+                           SkillFriendAccess::getTrackIndex(*(*enemy)), 
                         SkillFriendAccess::getPathIndex(*(*enemy)));
     float totalDistance = mapManager.getCurrentMap().getTotalDistance();
 

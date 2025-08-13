@@ -33,7 +33,7 @@ int main() {
         game.update(deltaTime);
         BeginDrawing();
         ClearBackground(RAYWHITE);
-            game.render();
+        game.render();
         EndDrawing();
     }
 
