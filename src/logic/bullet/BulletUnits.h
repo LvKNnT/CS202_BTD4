@@ -29,7 +29,10 @@ enum class BulletType {
     BombExplosion,
     BombFragment,
     TracingShuriken,
-    Caltrops
+    Caltrops,
+    FlashBomb,
+    FlashBombExplosion, 
+    StickyBomb,
 };
 
 class BulletProperties {

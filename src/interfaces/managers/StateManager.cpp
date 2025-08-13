@@ -119,7 +119,7 @@ void StateManager::update(Event::Type event) {
             else secretVictorySound.start(); 
             break;
         case Event::Type::Replay:
-            std::cerr<<"Yes\n";
+            stateStack.popState();
             Game::Instance().getGameLogic().replay();
             break;
         case Event::Type::StartRound:

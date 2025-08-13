@@ -9,7 +9,8 @@ BloonSabotageSkill::BloonSabotageSkill()
     : Skill(60.0f, "Bloon Sabotage") {
     // Instant cooldown
     duration = 15.0f;
-    timer = cooldown;
+    timer = 0;
+    isSkillActivating = true;
 }
 
 std::unique_ptr<Skill> BloonSabotageSkill::clone() const {
@@ -23,17 +24,24 @@ void BloonSabotageSkill::loadTexture() {
 
 void BloonSabotageSkill::update() {
     // Update the skill timer
-    if (timer < cooldown || timer < duration) {
-        timer += GetFrameTime();
-    }
-    if(timer > duration) {
+    timer += GetFrameTime();
+    if(isSkillActivating && timer >= duration) {
         inActivateSkill(); // Deactivate the skill if the duration has passed
+        timer = 0;
+        isSkillActivating = false;
+    } 
+    if(!isSkillActivating && timer >= cooldown) {
+        timer = 0;
+        isSkillActivating = true;
     }
+    
 }
 
 bool BloonSabotageSkill::canActivateSkill() const {
     // Check if the skill is ready to be activated
-    return timer >= cooldown && timer >= duration;
+    if(isSkillActivating && timer < duration) return true;
+    if(!isSkillActivating && timer >= cooldown) return true;
+    return false;
 }
 
 float BloonSabotageSkill::getCooldown() const {
@@ -46,57 +54,24 @@ void BloonSabotageSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector
 
     for(auto &enemy:enemies) {
         if(SkillFriendAccess::getEnemyType(*enemy) == BloonType::Bad) continue;
-        enemy->setDebuff(BloonDebuff().getISlow(0.5f, 15), BloonDebuff().getISlow(0.5f, 15));
+        enemy->setDebuff(BloonDebuff().getISlow(0.5f, duration - timer), BloonDebuff().getISlow(0.5f, duration - timer));
     }
 
-    Vector2 position = SkillFriendAccess::getTowerPosition(*tower);
-
-    // Find 10 towers closest to position
-    std::vector<std::pair<float, std::weak_ptr<Tower>>> towerDistances;
-    for (auto& t : towers) {
-        if(SkillFriendAccess::getTowerType(*t) != TowerType::NinjaMonkey) continue; // Only activate for Dart Monkeys
-
-        float dist = Vector2Distance(SkillFriendAccess::getTowerPosition(*t), position);
-        towerDistances.emplace_back(dist, std::weak_ptr<Tower>(t));
-    }
-
-    std::sort(towerDistances.begin(), towerDistances.end(),
-              [](const auto& a, const auto& b) { return a.first < b.first; });
-
-    for (size_t i = 0; i < std::min<size_t>(1, towerDistances.size()); ++i) {
-        if (auto towerPtr = towerDistances[i].second.lock()) {
-            closestTowers.push_back(towerPtr);
-        }
-    }
-
+    closestTower = tower;
     // Buff the closest towers
-    for (auto& t : closestTowers) {
-        if (auto towerPtr = t.lock()) {
-            SkillFriendAccess::getTag(*towerPtr) = "Bloon Sabotage Ninja"; // Change the tag to Bloon Sabotage Ninja
-            break;
-        }
-    }
+    SkillFriendAccess::getTag(*tower) = "Bloon Sabotage Ninja"; // Change the tag to Bloon Sabotage Ninja
 
-    // Reset the skill timer after activation
-    timer = 0.0f;
+    // Vector2 position = SkillFriendAccess::getTowerPosition(*tower);
+    // Animation skillSprite("sharingan", (Vector2) {position.x - 30, position.y - 30}, 60, 60, 4, 0.125f);
+    // skillSprite.start();
+    // Game::Instance().getAnimationManager().addAnimation(skillSprite);
 
-    std::cerr << "Activated Bloon Sabotage skill for " << closestTowers.size() << " towers." << std::endl;
+    if(timer == 0.0f) std::cerr << "Activated Bloon Sabotage skill for 1 towers." << std::endl;
 }
 
 void BloonSabotageSkill::inActivateSkill() {
     if(timer < duration) return; // Only deactivate if the skill is still active
-    if(closestTowers.empty()) return; // No towers to deactivate
-
-    
     // Reset the attack buffs of the closest towers
-    for (auto& t : closestTowers) {
-        if (auto towerPtr = t.lock()) {
-            SkillFriendAccess::getTag(*towerPtr) = "NinjaMonkey"; // Reset the tag to Ninja Monkey
-            break;
-        }
-    }
-
-    closestTowers.clear(); // Clear the list of closest towers
-
+    SkillFriendAccess::getTag(*closestTower) = "NinjaMonkey"; // Reset the tag to Ninja Monkey
     std::cerr << "Deactivated Bloon Sabotage skill." << std::endl;
 }

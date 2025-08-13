@@ -244,7 +244,7 @@ public:
         if(knockbackDuration <= 0.0f) return 0;
         int roll = Utils::rand(1, 100);
         if(roll <= knockbackChance) {
-            return -knockbackSpeed;
+            return -speed * knockbackSpeed;
         }
         knockbackDuration = 0.0f;
         return 0;

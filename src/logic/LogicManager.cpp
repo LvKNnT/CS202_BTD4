@@ -491,9 +491,9 @@ void LogicManager::updateTowers(TowerManager& towerManager, EnemyManager& enemyM
     for(auto& tower : towerManager.towerList) {
         if(tower->isActive()) {
             // vector of enemies that are in range of the attack
-            std::vector<std::shared_ptr<Enemy> > enemiesInRange;
-
+            
             for(auto& attack : tower->attacks) {
+                std::vector<std::shared_ptr<Enemy> > enemiesInRange;
                 for(auto& enemy : enemyManager.enemyList) {
                     if(!enemy->isActiveFlag) continue;
 

@@ -26,7 +26,18 @@ void Distraction::loadTexture() {
 }
 
 void Distraction::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
-    attackBuff.extraNormalDebuff += BloonDebuff().getIKnockBack(1.0f, 2.0f, 15); // Distance Unit 120
+    for(auto &attack:attacks) {
+        if(attack->getTag() == "ShurikenAttack") {
+            attack->getNormalDebuff() += BloonDebuff().getIKnockBack(1.0f, 2.0f, 15);
+        } else if(attack->getTag() == "CaltropsAttack") {
+            attack->getNormalDebuff() += BloonDebuff().getIKnockBack(1.0f, 2.0f, 10);
+        } else if(attack->getTag() == "FlashBombAttack") {
+            attack->getNormalDebuff() += BloonDebuff().getIKnockBack(1.0f, 2.0f, 30);
+        } else if(attack->getTag() == "StickyBombAttack") {
+            attack->getNormalDebuff() += BloonDebuff().getIKnockBack(1.0f, 2.0f, 15);
+        }
+    }
+    // Distance Unit 120
 }
 
 std::unique_ptr<Upgrade> Distraction::buy() {

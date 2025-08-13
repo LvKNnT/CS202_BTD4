@@ -21,6 +21,9 @@
 #include "bullets/Shuriken.h"
 #include "bullets/TracingShuriken.h"
 #include "bullets/CaltropsBullet.h"
+#include "bullets/FlashBombBullet.h"
+#include "bullets/FlashBombExplosionBullet.h"
+#include "bullets/StickyBombBullet.h"
 // #include "bullets/Tack.h"
 // #include "bullets/Ice.h"
 // #include "bullets/MagicBall.h"
@@ -84,6 +87,9 @@ void BulletSpawner::init() {
     bulletTemplates[BulletType::Shuriken] = std::make_unique<Shuriken>();
     bulletTemplates[BulletType::TracingShuriken] = std::make_unique<TracingShuriken>();
     bulletTemplates[BulletType::Caltrops] = std::make_unique<CaltropsBullet>();
+    bulletTemplates[BulletType::FlashBomb] = std::make_unique<FlashBombBullet>();
+    bulletTemplates[BulletType::FlashBombExplosion] = std::make_unique<FlashBombExplosionBullet>();
+    bulletTemplates[BulletType::StickyBomb] = std::make_unique<StickyBombBullet>();
     // bulletTemplates[BulletType::Tack] = std::make_unique<Tack>();
     // bulletTemplates[BulletType::Ice] = std::make_unique<Ice>();
     // bulletTemplates[BulletType::MagicBall] = std::make_unique<MagicBall>();

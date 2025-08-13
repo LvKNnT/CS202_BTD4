@@ -28,7 +28,7 @@ void ShinobiTactics::loadTexture() {
 void ShinobiTactics::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
     for(auto& attack : attacks) {
         // Increases attack speed of itself and other Ninjas in range by +8% multiplicatively and pierce by +8% additively. Stacks up to 20 times.
-
+        // Done in somewhere else :)))) (Ninja Monkey)
     }
 }
 

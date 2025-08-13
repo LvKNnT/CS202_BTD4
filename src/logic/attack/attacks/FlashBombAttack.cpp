@@ -1,21 +1,22 @@
-#include "ShurikenAttack.h"
+#include "FlashBombAttack.h"
 
-#include "../../bullet/bullets/Shuriken.h"
+#include "../../bullet/bullets/FlashBombBullet.h"
 
 #include <cmath>
+#include "FlashBombAttack.h"
 
-ShurikenAttack::ShurikenAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff)
+FlashBombAttack::FlashBombAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff)
     : Attack(range, cooldown, position, towerId, damage, speed, pierce, lifeSpan, properties, normalDebuff, moabDebuff) {
     // Constructor implementation can be extended if needed
-    tag = "ShurikenAttack"; 
+    tag = "FlashBombAttack"; 
 }
 
-std::unique_ptr<Attack> ShurikenAttack::clone() const {
-    // Create a new ShurikenAttack instance with the same properties
-    return std::make_unique<ShurikenAttack>(*this);
+std::unique_ptr<Attack> FlashBombAttack::clone() const {
+    // Create a new FlashBombAttack instance with the same properties
+    return std::make_unique<FlashBombAttack>(*this);
 }
 
-bool ShurikenAttack::isInRange(const Rectangle& rec, const float rotation, bool isCamo, AttackBuff& attackBuff) const {
+bool FlashBombAttack::isInRange(const Rectangle& rec, const float rotation, bool isCamo, AttackBuff& attackBuff) const {
     // Check if the attack can hit camo targets
     if (isCamo && !(properties.canCamo || attackBuff.properties.canCamo)) return false;
 
@@ -43,26 +44,21 @@ bool ShurikenAttack::isInRange(const Rectangle& rec, const float rotation, bool 
     return distanceSq <= buffedRange * buffedRange;
 }
 
-void ShurikenAttack::update() {
+void FlashBombAttack::update() {
     if (timer > 0.0f) {
         timer -= GetFrameTime(); 
     }
 }
 
-void ShurikenAttack::update(BulletManager& bulletManager, std::shared_ptr<Enemy>& enemy, AttackBuff& attackBuff) {
-    // Update the attack logic, e.g., spawn a Shuriken if the cooldown is over
+void FlashBombAttack::update(BulletManager& bulletManager, std::shared_ptr<Enemy>& enemy, AttackBuff& attackBuff) {
+    // Update the attack logic, e.g., spawn a FlashBombAttack if the cooldown is over
     if (timer <= 0.0f) {
         // Calculate the rotation towards the target position
         Vector2 targetPosition = enemy->getPosition();
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
 
-        if(properties.canTrace) {
-            properties.targetEnemy = enemy; // Set the target enemy for tracing
-            // std::cerr << "ShurikenAttack: Tracing enabled for enemy ID: " << enemy->getId() << std::endl;
-        }
-        
-        attackPattern->execute(bulletManager, BulletType::Shuriken, position, {15.0f, 15.0f}, angle, 
+        attackPattern->execute(bulletManager, BulletType::FlashBomb, position, {45.0f, 45.0f}, angle, 
             damage + attackBuff.damage, 
             speed * attackBuff.speedRatio,
             (pierce + attackBuff.pierce) * (attackBuff.pierceRatio + 1.0),

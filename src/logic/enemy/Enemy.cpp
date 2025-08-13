@@ -11,6 +11,10 @@ int Enemy::getId() const {
     return enemyId;
 }
 
+int Enemy::getSpeed() const {
+    return speed;
+}
+
 Vector2 Enemy::getPosition() const {
     return position;
 }

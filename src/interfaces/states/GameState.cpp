@@ -86,6 +86,8 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
     
     upgradeInfoTextbox = std::make_shared<MovableTextbox>("", Game::Instance().getFontManager().getFont("Small"), WHITE, 20, 150);
     towerInfoTextbox = std::make_shared<MovableTextbox>("", Game::Instance().getFontManager().getFont("Small"), WHITE, 20, 150);
+    towerInfoTextbox->setAvailable(false);
+    upgradeInfoTextbox->setAvailable(false);
     panel->addPanelElement(upgradeInfoTextbox);
     panel->addPanelElement(towerInfoTextbox);
     

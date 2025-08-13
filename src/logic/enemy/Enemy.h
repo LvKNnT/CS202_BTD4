@@ -35,6 +35,7 @@ public:
     virtual void setProperties(const BloonProperties& properties) = 0; // Pure virtual function for setting bloon properties
 
     int getId() const;
+    int getSpeed() const;
     Vector2 getPosition() const;
     
     virtual void updateEffect();

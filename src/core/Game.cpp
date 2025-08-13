@@ -145,6 +145,7 @@ void Game::loadAnimationTexture() {
     animationManager.loadAllAnimationTextures("stun", "../assets/effect/stun", 4);
     animationManager.loadAllAnimationTextures("freeze", "../assets/effect/freeze", 10);
     animationManager.loadAllAnimationTextures("starburst", "../assets/effect/starburst", 4);
+    animationManager.loadAllAnimationTextures("sharingan", "../assets/effect/sharingan", 4);
 }
 
 void Game::drawLoadingScren() {
