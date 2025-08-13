@@ -38,6 +38,7 @@ public:
     void unLoad();
     
     // Get the type of points
+    float getTotalDistance(int pathIdx = 0) const; // For enemies
     float distanceToEndPoint(Vector2 position, int index, int pathIdx = 0) const; // For enemies
     virtual Point::Type getPointType(int index, int pathIdx = 0) const; // For enemies
     virtual Point::Type getTowerPointType(Vector2 position) const; // For Tower

@@ -40,6 +40,7 @@ bool Bfb::hit(int damage) {
         popSound.start();
     }
     health -= damage;
+    health -= debuff.bonusOnHitDamage; // Apply bonus damage from debuffs
 
     if (health <= 0) {
         drawDeadEffect();
@@ -90,7 +91,7 @@ Rectangle Bfb::getBoundingBox() const {
 
 bool Bfb::isActive() const {
     // Check if the bloon is still active (not popped)
-    return health > 0;
+    return isActiveFlag;
 }
 
 void Bfb::setActive(bool active) {

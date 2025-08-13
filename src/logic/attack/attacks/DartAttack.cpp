@@ -58,6 +58,11 @@ void DartAttack::update(BulletManager& bulletManager, std::shared_ptr<Enemy>& en
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
         
+        if(properties.canTrace) {
+            properties.targetEnemy = enemy; // Set the target enemy for tracing
+            // std::cerr << "Dart bullet is tracing enemy with ID: " << enemy->getId() << std::endl;
+        }
+        
         attackPattern->execute(bulletManager, BulletType::Dart, position, 
             Vector2Add({20.0f, 20.0f}, attackBuff.size),
             angle, 

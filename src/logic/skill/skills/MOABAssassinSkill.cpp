@@ -36,7 +36,7 @@ float MOABAssassinSkill::getCooldown() const {
     return cooldown;
 }
 
-void MOABAssassinSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector<std::shared_ptr<Enemy>>& enemies, std::vector<std::shared_ptr<Tower>>& towers, BulletManager& bulletManager) {
+void MOABAssassinSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector<std::shared_ptr<Enemy>>& enemies, std::vector<std::shared_ptr<Tower>>& towers, BulletManager& bulletManager, ResourceManager& resourceManager, MapManager& mapManager) {
     if (!tower) return;
     if (!canActivateSkill()) return;
 

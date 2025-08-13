@@ -10,10 +10,10 @@ BulletProperties& BulletProperties::operator+= (const BulletProperties& other) {
     canPurple = canPurple || other.canPurple;
     canStripCamo = canStripCamo || other.canStripCamo;
 
-    if(other.canTrace && !other.targetEnemy.expired()) {
-        targetEnemy = other.targetEnemy; // Update the target enemy for tracing
+    if(other.canTrace && range < other.range) {
         canTrace = true;
         range = other.range; // Use the range from the other properties
+        isFocus = other.isFocus; // Use the focus state from the other properties
         targetPriority = other.targetPriority; // Use the target priority from the other properties
     }
     
@@ -36,17 +36,27 @@ BulletProperties& BulletProperties::operator= (const BulletProperties& other) {
         canPurple = other.canPurple;
         canStripCamo = other.canStripCamo;
         canTrace = other.canTrace;
+        isFocus = other.isFocus;
         targetEnemy = other.targetEnemy; 
         range = other.range; 
     }
     return *this;
 }
 
-BulletProperties& BulletProperties::getITracing(float range, TargetPriority targetPriority) {
+BulletProperties& BulletProperties::getITracing(float range, TargetPriority targetPriority, bool isFocus) {
     this->range = range;
     canTrace = true;
     targetEnemy.reset(); // Reset target enemy for tracing
     this->targetPriority = targetPriority; // Set the target priority for tracing
+    this->isFocus = isFocus; // Set focus state
+    return *this;
+}
+
+BulletProperties& BulletProperties::removeITracing() {
+    canTrace = false;
+    targetEnemy.reset(); // Reset target enemy for tracing
+    range = 0.0f; // Reset range
+    isFocus = false; // Reset focus state
     return *this;
 }
 
@@ -65,12 +75,16 @@ BulletProperties& BulletProperties::getITracing(std::shared_ptr<Enemy> enemy) {
 float BulletProperties::getRotation(float rotation, Vector2 position) {
     if (canTrace && !targetEnemy.expired()) {
         auto target = targetEnemy.lock();
-        if (target) {
-            Vector2 targetPosition = target->getPosition();
-            float deltaX = targetPosition.x - position.x;
-            float deltaY = targetPosition.y - position.y;
-            return atan2f(deltaY, deltaX) * (180.0f / PI); // Convert radians to degrees
+        // if enemy is inactive, also skip
+        if(!target || !target->isActive()) {
+            // canTrace = false;
+            return rotation; 
         }
+
+        Vector2 targetPosition = target->getPosition();
+        float deltaX = targetPosition.x - position.x;
+        float deltaY = targetPosition.y - position.y;
+        return atan2f(deltaY, deltaX) * (180.0f / PI); // Convert radians to degrees
     }
     return rotation; // Return the original rotation if tracing is not applicable
 }

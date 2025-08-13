@@ -27,7 +27,7 @@ void RecursiveCluster::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Boom_Shooter/RecursiveClusterUpgradeIcon.png");
 }
 
-void RecursiveCluster::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {    
+void RecursiveCluster::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::vector<std::unique_ptr<Skill> >& passiveSkills, MapManager& mapManager, ResourceManager& resourceManager) {    
     bool hasBombAttack = false;
     for (auto& attack : attacks) {
         if (attack->getTag() == "ClusterBombsAttack") {

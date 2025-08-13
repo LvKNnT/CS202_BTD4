@@ -26,7 +26,7 @@ void DoubleShot::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/DoubleShotUpgradeIcon.png");
 }
 
-void DoubleShot::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, MapManager& mapManager, ResourceManager& resourceManager) {
+void DoubleShot::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::vector<std::unique_ptr<Skill> >& passiveSkills, MapManager& mapManager, ResourceManager& resourceManager) {
     for(auto& attack : attacks) {
         if(attack->getTag() == "ShurikenAttack") {
             std::unique_ptr<AttackPattern> attackPattern = std::move(attack->getAttackPattern());

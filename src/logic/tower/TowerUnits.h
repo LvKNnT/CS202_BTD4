@@ -23,12 +23,9 @@ enum class TowerType {
     SniperMonkey = 3,
     BoomerangMonkey = 4,
     NinjaMonkey = 5,
-    WizardMonkey = 6,
-    SuperMonkey = 7,
-    MonkeyAce = 8,
-    HeliPilot = 9,
-    MortarMonkey = 10,
-    BombShooter = 11
+    BombShooter = 6,
+    IceMonkey = 7,
+    MonkeySub = 8,
 };
 
 enum class TargetPriority {

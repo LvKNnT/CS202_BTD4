@@ -33,6 +33,7 @@ NinjaMonkey::NinjaMonkey(Vector2 position)
     attacks.push_back(std::make_unique<ShurikenAttack>(120.0f, 0.62f, position, towerId, 1, 750, 2, 0.25f, BulletProperties::shuriken(), BloonDebuff(), BloonDebuff())); 
     attacks.back()->setAttackPattern(std::make_unique<NormalAttack>()); // Set the attack pattern to NormalAttack
     skill = nullptr;
+    passiveSkills.clear(); // Clear any existing passive skills
 
     // Upgrade Path
     upgradeTop = std::make_unique<NinjaDiscipline>();
@@ -132,9 +133,12 @@ void NinjaMonkey::draw() const {
 
 void NinjaMonkey::drawRange() const {
     // Draw the range of attacks
+    float maxRange = 0.0f;
     for(const auto& attack : attacks) {
-        DrawCircleV(position, attack->getRange() * attackBuff.rangeRatio + attackBuff.range, Fade(GRAY, 0.5f)); // Draw the attack range
+        maxRange = std::max(maxRange, attack->getRange() * attackBuff.rangeRatio + attackBuff.range);
     }
+
+    DrawCircleV(position, maxRange, Fade(GRAY, 0.5f)); // Draw the attack range
 }
 
 void NinjaMonkey::drawPut() const {
