@@ -25,7 +25,7 @@ void GrandmasterNinja::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ninja_Monkey/GrandmasterNinjaUpgradeIcon.png");
 }
 
-void GrandmasterNinja::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::unique_ptr<Skill>& passiveSkill, MapManager& mapManager, ResourceManager& resourceManager) {
+void GrandmasterNinja::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::vector<std::unique_ptr<Skill> >& passiveSkills, MapManager& mapManager, ResourceManager& resourceManager) {
     attackBuff.damage += 1;
     attackBuff.cooldownRatio *= 0.31f;
     attackBuff.range += 10;

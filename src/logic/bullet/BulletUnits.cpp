@@ -10,8 +10,7 @@ BulletProperties& BulletProperties::operator+= (const BulletProperties& other) {
     canPurple = canPurple || other.canPurple;
     canStripCamo = canStripCamo || other.canStripCamo;
 
-    if(other.canTrace && !other.targetEnemy.expired()) {
-        targetEnemy = other.targetEnemy; // Update the target enemy for tracing
+    if(other.canTrace && range < other.range) {
         canTrace = true;
         range = other.range; // Use the range from the other properties
         isFocus = other.isFocus; // Use the focus state from the other properties
@@ -50,6 +49,14 @@ BulletProperties& BulletProperties::getITracing(float range, TargetPriority targ
     targetEnemy.reset(); // Reset target enemy for tracing
     this->targetPriority = targetPriority; // Set the target priority for tracing
     this->isFocus = isFocus; // Set focus state
+    return *this;
+}
+
+BulletProperties& BulletProperties::removeITracing() {
+    canTrace = false;
+    targetEnemy.reset(); // Reset target enemy for tracing
+    range = 0.0f; // Reset range
+    isFocus = false; // Reset focus state
     return *this;
 }
 

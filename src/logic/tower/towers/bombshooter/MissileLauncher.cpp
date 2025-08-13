@@ -25,7 +25,7 @@ void MissileLauncher::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Boom_Shooter/MissileLauncherUpgradeIcon.png");
 }
 
-void MissileLauncher::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::unique_ptr<Skill>& passiveSkill, MapManager& mapManager, ResourceManager& resourceManager) {
+void MissileLauncher::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::vector<std::unique_ptr<Skill> >& passiveSkills, MapManager& mapManager, ResourceManager& resourceManager) {
     attackBuff.speedRatio *= 1.5f; // Increase speed by 50%
     attackBuff.rangeRatio *= 1.1f; // Increase range by 10%
     attackBuff.lifeSpanRatio *= 1.1f; // Increase lifespan by 10%

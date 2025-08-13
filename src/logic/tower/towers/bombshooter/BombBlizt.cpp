@@ -26,7 +26,7 @@ void BombBlizt::loadTexture() {
     Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Boom_Shooter/BombBlitzUpgradeIcon.png");
 }
 
-void BombBlizt::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::unique_ptr<Skill>& passiveSkill, MapManager& mapManager, ResourceManager& resourceManager) {    
+void BombBlizt::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::vector<std::unique_ptr<Skill> >& passiveSkills, MapManager& mapManager, ResourceManager& resourceManager) {    
     bool hasBombAttack = false;
     for (auto& attack : attacks) {
         if (attack->getTag() == "RecursiveClusterAttack") {
@@ -50,7 +50,7 @@ void BombBlizt::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuf
         }
     }
 
-    passiveSkill = std::make_unique<BombBliztSkill>(resourceManager);
+    passiveSkills.push_back(std::make_unique<BombBliztSkill>(resourceManager));
 }
 
 std::unique_ptr<Upgrade> BombBlizt::buy() {

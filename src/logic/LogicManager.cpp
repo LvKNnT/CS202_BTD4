@@ -107,7 +107,7 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
 
     // Move jingly jingly
     // Sinusoidal "jiggle" movement perpendicular to the path direction
-    float jiggleAmplitude = 0.4f; // Adjust for more/less jiggle
+    float jiggleAmplitude = 0.3f; // Adjust for more/less jiggle
     float jiggleFrequency = 1.0f; // Adjust for faster/slower jiggle
     float jiggle = jiggleAmplitude * sinf(GetTime() * jiggleFrequency + enemy.enemyId);
     Vector2 normal = { -direction.y / distance, direction.x / distance };
@@ -505,10 +505,10 @@ void LogicManager::updateTracingBullets(BulletManager& bulletManager, EnemyManag
 void LogicManager::updateTowers(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager) {
     for(auto& tower : towerManager.towerList) {
         if(tower->isActive()) {
-            // vector of enemies that are in range of the attack
-            std::vector<std::shared_ptr<Enemy> > enemiesInRange;
-
             for(auto& attack : tower->attacks) {
+                // vector of enemies that are in range of the attack
+                std::vector<std::shared_ptr<Enemy> > enemiesInRange;
+                
                 for(auto& enemy : enemyManager.enemyList) {
                     if(!enemy->isActiveFlag) continue;
 
@@ -699,7 +699,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
     switch (upgradeUnits) {
         case UpgradeUnits::Top:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Top)) {
-                towerPtr->upgradeTop->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->skill, towerPtr->passiveSkill, mapManager, resourceManager);
+                towerPtr->upgradeTop->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->skill, towerPtr->passiveSkills, mapManager, resourceManager);
                 towerPtr->info["nameTop"] = towerPtr->upgradeTop->getName();
                 towerPtr->info["descriptionTop"] = towerPtr->upgradeTop->getDescription();
                 towerPtr->cost += static_cast<int>(towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost);
@@ -718,7 +718,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
             break;
         case UpgradeUnits::Middle:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Middle)) {
-                towerPtr->upgradeMiddle->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->skill, towerPtr->passiveSkill, mapManager, resourceManager);
+                towerPtr->upgradeMiddle->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->skill, towerPtr->passiveSkills, mapManager, resourceManager);
                 towerPtr->info["nameMiddle"] = towerPtr->upgradeMiddle->getName();
                 towerPtr->info["descriptionMiddle"] = towerPtr->upgradeMiddle->getDescription();
                 towerPtr->cost += static_cast<int>(towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost);
@@ -737,7 +737,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
             break;
         case UpgradeUnits::Bottom:
             if (isUpgradeTower(resourceManager, towerManager, UpgradeUnits::Bottom)) {
-                towerPtr->upgradeBottom->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->skill, towerPtr->passiveSkill, mapManager, resourceManager);
+                towerPtr->upgradeBottom->update(towerPtr->attacks, towerPtr->attackBuff, towerPtr->skill, towerPtr->passiveSkills, mapManager, resourceManager);
                 towerPtr->info["nameBottom"] = towerPtr->upgradeBottom->getName();
                 towerPtr->info["descriptionBottom"] = towerPtr->upgradeBottom->getDescription();
                 towerPtr->cost += static_cast<int>(towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost);
@@ -761,14 +761,14 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
     return false;
 }
 
-bool LogicManager::activateSkillTower(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager, ResourceManager& resourceManager) {
+bool LogicManager::activateSkillTower(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager, ResourceManager& resourceManager, MapManager& mapManager) {
     std::weak_ptr<Tower> tower = towerManager.lastPickedTower;
     auto towerPtr = tower.lock();
     if(!towerPtr) return false; // No tower selected for skill activation
 
     if(towerPtr->skill && towerPtr->skill->canActivateSkill()) {
         // Activate the skill
-        towerPtr->skill->activateSkill(towerPtr, enemyManager.enemyList, towerManager.towerList, bulletManager, resourceManager);
+        towerPtr->skill->activateSkill(towerPtr, enemyManager.enemyList, towerManager.towerList, bulletManager, resourceManager, mapManager);
         // std::cerr << "Activated skill: " << tower->skill->name << std::endl;
         return true;
     }
@@ -776,16 +776,19 @@ bool LogicManager::activateSkillTower(TowerManager& towerManager, EnemyManager& 
     return false;
 }
 
-bool LogicManager::activatePassiveSkillTower(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager, ResourceManager& resourceManager) {
+bool LogicManager::activatePassiveSkillTower(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager, ResourceManager& resourceManager, MapManager& mapManager) {
     std::weak_ptr<Tower> tower = towerManager.lastPickedTower;
     auto towerPtr = tower.lock();
     if(!towerPtr) return false; // No tower selected for passive skill activation
+    if(towerPtr->passiveSkills.empty()) return false; // No passive skills available
 
-    if(towerPtr->passiveSkill && towerPtr->passiveSkill->canActivateSkill()) {
-        // Activate the passive skill
-        towerPtr->passiveSkill->activateSkill(towerPtr, enemyManager.enemyList, towerManager.towerList, bulletManager, resourceManager);
-        // std::cerr << "Activated passive skill: " << tower->passiveSkill->name << std::endl;
-        return true;
+    for(auto& passiveSkill : towerPtr->passiveSkills) {
+        if(passiveSkill && passiveSkill->canActivateSkill()) {
+            // Activate the passive skill
+            passiveSkill->activateSkill(towerPtr, enemyManager.enemyList, towerManager.towerList, bulletManager, resourceManager, mapManager);
+            // std::cerr << "Activated passive skill: " << passiveSkill->name << std::endl;
+            return true;
+        }
     }
 
     return false;

@@ -5,6 +5,11 @@
 #include "../../../attack/attacks/DartAttack.h"
 #include "../../../attack/patterns/NormalAttack.h"
 #include "../../../skill/Skill.h"
+
+#include "FullMetalJacket.h"
+#include "NightVisionGoggles.h"
+#include "FastFiring.h"
+
 SniperMonkey::SniperMonkey(Vector2 position)
     : Tower(position, {0.0f, 0.0f}, 0.0f, TowerType::SniperMonkey, 350) {
     /**
@@ -27,12 +32,12 @@ SniperMonkey::SniperMonkey(Vector2 position)
     attacks.push_back(std::make_unique<DartAttack>(2000.0f, 1.59f, position, towerId, 2, 2000, 1, 256000.0f, BulletProperties::normal().getITracing(0.0f, TargetPriority::First, true), BloonDebuff(), BloonDebuff()));
     attacks.back()->setAttackPattern(std::make_unique<NormalAttack>()); // Set the attack pattern to NormalAttack 
     skill = nullptr;
-    passiveSkill = nullptr;
+    passiveSkills.clear(); // Clear any existing passive skills
 
     // Upgrade Path
-    upgradeTop = std::make_unique<Upgrade>();
-    upgradeMiddle = std::make_unique<Upgrade>();
-    upgradeBottom = std::make_unique<Upgrade>();
+    upgradeTop = std::make_unique<FullMetalJacket>();
+    upgradeMiddle = std::make_unique<NightVisionGoggles>();
+    upgradeBottom = std::make_unique<FastFiring>();
 
     // Info section
     info["name"] = "Sniper Monkey";

@@ -34,3 +34,9 @@ BloonType& SkillFriendAccess::getType(Enemy& enemy) {
 int& SkillFriendAccess::getLivesLost(Enemy& enemy) {
     return enemy.livesLost; // Access the lives lost by the enemy
 }
+int& SkillFriendAccess::getTtrackIndex(Enemy& enemy) {
+    return enemy.trackIndex; // Access the track index of the enemy
+}
+int& SkillFriendAccess::getPathIndex(Enemy& enemy) {
+    return enemy.pathIndex; // Access the path index of the enemy
+}

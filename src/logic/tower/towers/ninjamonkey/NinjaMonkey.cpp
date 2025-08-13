@@ -32,7 +32,7 @@ NinjaMonkey::NinjaMonkey(Vector2 position)
     attacks.push_back(std::make_unique<ShurikenAttack>(120.0f, 0.62f, position, towerId, 1, 750, 2, 0.25f, BulletProperties::normal(), BloonDebuff(), BloonDebuff())); 
     attacks.back()->setAttackPattern(std::make_unique<NormalAttack>()); // Set the attack pattern to NormalAttack
     skill = std::make_unique<SuperMonkeyFanClubSkill>();
-    passiveSkill = nullptr; 
+    passiveSkills.clear(); // Clear any existing passive skills
 
     // Upgrade Path
     upgradeTop = std::make_unique<NinjaDiscipline>();

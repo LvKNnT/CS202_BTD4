@@ -27,7 +27,7 @@ IceMonkey::IceMonkey(Vector2 position)
     attacks.push_back(std::make_unique<DartAttack>(40.0f, 2.4f, position, towerId, 1, 2000, 40, 0.1f, BulletProperties::ice(), BloonDebuff().getIFreeze(1.5f), BloonDebuff()));
     attacks.back()->setAttackPattern(std::make_unique<NormalAttack>()); // Set the attack pattern to NormalAttack 
     skill = nullptr;
-    passiveSkill = nullptr;
+    passiveSkills.clear(); // Clear any existing passive skills
 
     // Upgrade Path
     upgradeTop = std::make_unique<Upgrade>();

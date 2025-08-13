@@ -29,7 +29,9 @@ enum class BulletType {
     BombExplosion,
     BombFragment,
     TracingShuriken,
-    Caltrops
+    Caltrops,
+    Shrapnel,
+    ShrapnelShot
 };
 
 class BulletProperties {
@@ -82,6 +84,7 @@ public:
     BulletProperties& operator= (const BulletProperties& other);
 
     BulletProperties& getITracing(float range, TargetPriority targetPriority, bool isFocus = false);
+    BulletProperties& removeITracing();
     BulletProperties& getITracing(std::shared_ptr<Enemy> enemy);
     float getRotation(float rotation, Vector2 position);
 };
