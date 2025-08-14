@@ -94,11 +94,12 @@ public:
     int bonusLeadDamage = 0; // Bonus damage for lead bloon
     int bonusCamoDamage = 0; // Bonus damage for camo bloon
     int bonusOnHitDamage = 0; // Bonus damage on hit
+    int bonusCeramicDamage = 0; // Bonus damge for ceramic bloon
 
-    BloonDebuff(float slowRatio = 0.0f, float slowDuration = 0.0f, float stunDuration = 0.0f, float freezeDuration = 0.0f, float knockbackDuration = 0.0f, float knockbackSpeed = 1.0f, int bonusDamage = 0, int bonusFortifiedDamage = 0, int bonusLeadDamage = 0, int bonusCamoDamage = 0, int bonusOnHitDamage = 0, int knockbackChance = 100)
-        : slowRatio(slowRatio), slowDuration(slowDuration), stunDuration(stunDuration), freezeDuration(freezeDuration), knockbackDuration(knockbackDuration), knockbackSpeed(knockbackSpeed), bonusDamage(bonusDamage), bonusFortifiedDamage(bonusFortifiedDamage), bonusLeadDamage(bonusLeadDamage), bonusCamoDamage(bonusCamoDamage), bonusOnHitDamage(bonusOnHitDamage), knockbackChance(knockbackChance) {}
+    BloonDebuff(float slowRatio = 0.0f, float slowDuration = 0.0f, float stunDuration = 0.0f, float freezeDuration = 0.0f, float knockbackDuration = 0.0f, float knockbackSpeed = 1.0f, int bonusDamage = 0, int bonusFortifiedDamage = 0, int bonusLeadDamage = 0, int bonusCamoDamage = 0, int bonusOnHitDamage = 0, int bonusCeramicDamage = 0, int knockbackChance = 100)
+        : slowRatio(slowRatio), slowDuration(slowDuration), stunDuration(stunDuration), freezeDuration(freezeDuration), knockbackDuration(knockbackDuration), knockbackSpeed(knockbackSpeed), bonusDamage(bonusDamage), bonusFortifiedDamage(bonusFortifiedDamage), bonusLeadDamage(bonusLeadDamage), bonusCamoDamage(bonusCamoDamage), bonusOnHitDamage(bonusOnHitDamage), bonusCeramicDamage(bonusCeramicDamage), knockbackChance(knockbackChance) {}
     BloonDebuff(const BloonDebuff& other)
-        : slowRatio(other.slowRatio), slowDuration(other.slowDuration), stunDuration(other.stunDuration), freezeDuration(other.freezeDuration), knockbackDuration(other.knockbackDuration), knockbackSpeed(other.knockbackSpeed), bonusDamage(other.bonusDamage), bonusFortifiedDamage(other.bonusFortifiedDamage), bonusLeadDamage(other.bonusFortifiedDamage), bonusCamoDamage(bonusCamoDamage), bonusOnHitDamage(other.bonusOnHitDamage) {}
+        : slowRatio(other.slowRatio), slowDuration(other.slowDuration), stunDuration(other.stunDuration), freezeDuration(other.freezeDuration), knockbackDuration(other.knockbackDuration), knockbackSpeed(other.knockbackSpeed), bonusDamage(other.bonusDamage), bonusFortifiedDamage(other.bonusFortifiedDamage), bonusLeadDamage(other.bonusFortifiedDamage), bonusCamoDamage(bonusCamoDamage), bonusOnHitDamage(other.bonusOnHitDamage), bonusCeramicDamage(other.bonusCeramicDamage) {}
     ~BloonDebuff() = default;
 
     BloonDebuff& operator=(const BloonDebuff& other) {
@@ -114,6 +115,7 @@ public:
             bonusLeadDamage = other.bonusLeadDamage;
             bonusCamoDamage = other.bonusCamoDamage;
             bonusOnHitDamage = other.bonusOnHitDamage;
+            bonusCeramicDamage = other.bonusCeramicDamage;
             knockbackChance = other.knockbackChance;
         }
         return *this;
@@ -132,6 +134,7 @@ public:
             bonusLeadDamage + other.bonusLeadDamage,
             bonusCamoDamage + other.bonusCamoDamage,
             bonusOnHitDamage + other.bonusOnHitDamage,
+            bonusCeramicDamage + other.bonusCeramicDamage,
             (knockbackChance > other.knockbackChance) ? other.knockbackChance : knockbackChance
         );
     }
@@ -148,6 +151,7 @@ public:
         bonusLeadDamage += other.bonusLeadDamage;
         bonusCamoDamage += other.bonusCamoDamage;
         bonusOnHitDamage += other.bonusOnHitDamage;
+        bonusCeramicDamage += other.bonusCeramicDamage;
         knockbackChance = (knockbackChance > other.knockbackChance) ? other.knockbackChance : knockbackChance;
         return *this;
     }
@@ -165,6 +169,7 @@ public:
             0, // bonusLeadDamage
             0, // bonusCamoDamage
             0, // bonusOnHitDamage
+            0, // bonusCeramicDamage
             100 // knockbackChance
         };  
     }
@@ -182,6 +187,7 @@ public:
             0, // bonusLeadDamage
             0, // bonusCamoDamage
             0, // bonusOnHitDamage
+            0, // bonusCeramicDamage
             100 // knockbackChance
         };
     }
@@ -199,6 +205,7 @@ public:
             0, // bonusLeadDamage
             0, // bonusCamoDamage
             0, // bonusOnHitDamage
+            0, // bonusCeramicDamage
             100 // knockbackChance
         };
     }
@@ -216,11 +223,12 @@ public:
             0, // bonusLeadDamage
             0, // bonusCamoDamage
             0, // bonusOnHitDamage
+            0, // bonusCeramicDamage
             knockbackChance,
         };
     }
 
-    BloonDebuff getIBonusDamage(int bonusDamage, int bonusFortifiedDamage, int bonusLeadDamage, int bonusCamoDamage) const {
+    BloonDebuff getIBonusDamage(int bonusDamage, int bonusFortifiedDamage, int bonusLeadDamage, int bonusCamoDamage, int bonusCeramicDamage = 0) const {
         return *this + BloonDebuff{
             0.0f, // slowRatio
             0.0f, // slowDuration
@@ -232,6 +240,7 @@ public:
             bonusFortifiedDamage, // bonusFortifiedDamage
             bonusLeadDamage, // bonusLeadDamage
             bonusCamoDamage, // bonusCamoDamage
+            bonusCeramicDamage, // bonusCeramicDamage
             0, // bonusOnHitDamage
             100 // knockbackChance
         };

@@ -1,24 +1,28 @@
-#include "FlashBombAttack.h"
+#include "MasterBomberAttack.h"
 
-#include "../../bullet/bullets/FlashBombBullet.h"
+#include "../../bullet/bullets/MasterBomberBullet.h"
 
 #include <cmath>
-#include "FlashBombAttack.h"
+#include "raymath.h"
 
-FlashBombAttack::FlashBombAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff)
+MasterBomberAttack::MasterBomberAttack(float range, float cooldown, Vector2 position, int towerId, int damage, int speed, int pierce, float lifeSpan, BulletProperties properties, BloonDebuff normalDebuff, BloonDebuff moabDebuff)
     : Attack(range, cooldown, position, towerId, damage, speed, pierce, lifeSpan, properties, normalDebuff, moabDebuff) {
     // Constructor implementation can be extended if needed
-    tag = "FlashBombAttack"; 
+    tag = "MasterBomberAttack"; 
 }
 
-std::unique_ptr<Attack> FlashBombAttack::clone() const {
-    // Create a new FlashBombAttack instance with the same properties
-    return std::make_unique<FlashBombAttack>(*this);
+std::unique_ptr<Attack> MasterBomberAttack::clone() const {
+    // Create a new BombAttack instance with the same properties
+    return std::make_unique<MasterBomberAttack>(*this);
 }
 
-bool FlashBombAttack::isInRange(const Rectangle& rec, const float rotation, AttackBuff& attackBuff, const Enemy &enemy) const {
+bool MasterBomberAttack::isInRange(const Rectangle& rec, const float rotation, AttackBuff& attackBuff, const Enemy &enemy) const {
     // Check if the attack can hit camo targets
     if (enemy.getProperties().isCamo && !(properties.canCamo || attackBuff.properties.canCamo)) return false;
+
+    // Check if enemy is Moab class
+    if (enemy.getType() < BloonType::Moab) return false;
+
 
     // Check if the rotated rectangle (rec, rotation) collides with the circle (position, range)
     // First, get the center of the rectangle
@@ -44,25 +48,27 @@ bool FlashBombAttack::isInRange(const Rectangle& rec, const float rotation, Atta
     return distanceSq <= buffedRange * buffedRange;
 }
 
-void FlashBombAttack::update() {
+void MasterBomberAttack::update() {
     if (timer > 0.0f) {
         timer -= GetFrameTime(); 
     }
 }
 
-void FlashBombAttack::update(BulletManager& bulletManager, std::shared_ptr<Enemy>& enemy, AttackBuff& attackBuff) {
-    // Update the attack logic, e.g., spawn a FlashBombAttack if the cooldown is over
+void MasterBomberAttack::update(BulletManager& bulletManager, std::shared_ptr<Enemy>& enemy, AttackBuff& attackBuff) {
+    // Update the attack logic, e.g., spawn a bomb if the cooldown is over
     if (timer <= 0.0f) {
         // Calculate the rotation towards the target position
         Vector2 targetPosition = enemy->getPosition();
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
-
-        attackPattern->execute(bulletManager, BulletType::FlashBomb, position, {45.0f, 45.0f}, angle, 
-            damage + attackBuff.damage, 
-            speed * attackBuff.speedRatio,
-            (pierce + attackBuff.pierce) * (attackBuff.pierceRatio + 1.0),
-            lifeSpan * attackBuff.lifeSpanRatio, 
+        
+        attackPattern->execute(bulletManager, BulletType::MasterBomber, position, 
+            (Vector2) {45.0f, 45.0f},
+            angle, 
+            damage,
+            speed,
+            pierce,
+            lifeSpan, 
             properties + attackBuff.properties, 
             normalDebuff + attackBuff.extraNormalDebuff,
             moabDebuff + attackBuff.extraMoabDebuff,

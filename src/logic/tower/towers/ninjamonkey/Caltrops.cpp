@@ -29,6 +29,7 @@ void Caltrops::loadTexture() {
 }
 
 void Caltrops::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::vector<std::unique_ptr<Skill> >& passiveSkills, MapManager& mapManager, ResourceManager& resourceManager) {
+    attackBuff.properties.canCamo = true;
     attacks.push_back(std::make_unique<CaltropsAttack>(attacks[0]->getRange(), 3.9f, attacks[0]->getPosition(), attacks[0]->getTowerId(), 1, 0, 6, 35, BulletProperties::normal(), attackBuff.extraNormalDebuff, attackBuff.extraMoabDebuff));
     attacks.back()->setAttackPattern(std::make_unique<CaltropsAttackPattern>(&mapManager, attacks.back()->getPosition(), attacks.back()->getRange()));
     if(attacks[0]->getNormalDebuff().knockbackChance == 15) {

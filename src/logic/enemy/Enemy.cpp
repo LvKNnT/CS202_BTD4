@@ -19,6 +19,14 @@ Vector2 Enemy::getPosition() const {
     return position;
 }
 
+BloonProperties Enemy::getProperties() const {
+    return properties;
+}
+
+BloonType Enemy::getType() const {
+    return type;
+}
+
 void Enemy::updateEffect() {
     if(tag.empty()) return;    
     // Stun effect

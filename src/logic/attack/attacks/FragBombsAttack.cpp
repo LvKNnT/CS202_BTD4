@@ -16,10 +16,10 @@ std::unique_ptr<Attack> FragBombsAttack::clone() const {
     return std::make_unique<FragBombsAttack>(*this);
 }
 
-bool FragBombsAttack::isInRange(const Rectangle& rec, const float rotation, bool isCamo, AttackBuff& attackBuff) const {
+bool FragBombsAttack::isInRange(const Rectangle& rec, const float rotation, AttackBuff& attackBuff, const Enemy &enemy) const {
     // Check if the attack can hit camo targets
-    if (isCamo && !(properties.canCamo || attackBuff.properties.canCamo)) return false;
-
+    if (enemy.getProperties().isCamo && !(properties.canCamo || attackBuff.properties.canCamo)) return false;
+    
     // Check if the rotated rectangle (rec, rotation) collides with the circle (position, range)
     Vector2 rectCenter = { rec.x + rec.width / 2.0f, rec.y + rec.height / 2.0f };
 

@@ -15,9 +15,9 @@ std::unique_ptr<Attack> ShurikenAttack::clone() const {
     return std::make_unique<ShurikenAttack>(*this);
 }
 
-bool ShurikenAttack::isInRange(const Rectangle& rec, const float rotation, bool isCamo, AttackBuff& attackBuff) const {
+bool ShurikenAttack::isInRange(const Rectangle& rec, const float rotation, AttackBuff& attackBuff, const Enemy &enemy) const {
     // Check if the attack can hit camo targets
-    if (isCamo && !(properties.canCamo || attackBuff.properties.canCamo)) return false;
+    if (enemy.getProperties().isCamo && !(properties.canCamo || attackBuff.properties.canCamo)) return false;
 
     // Check if the rotated rectangle (rec, rotation) collides with the circle (position, range)
     // First, get the center of the rectangle

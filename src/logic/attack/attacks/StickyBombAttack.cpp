@@ -16,9 +16,13 @@ std::unique_ptr<Attack> StickyBombAttack::clone() const {
     return std::make_unique<StickyBombAttack>(*this);
 }
 
-bool StickyBombAttack::isInRange(const Rectangle& rec, const float rotation, bool isCamo, AttackBuff& attackBuff) const {
+bool StickyBombAttack::isInRange(const Rectangle& rec, const float rotation, AttackBuff& attackBuff, const Enemy &enemy) const {
     // Check if the attack can hit camo targets
-    if (isCamo && !(properties.canCamo || attackBuff.properties.canCamo)) return false;
+    if (enemy.getProperties().isCamo && !(properties.canCamo || attackBuff.properties.canCamo)) return false;
+
+    // Check if enemy is Moab class
+    if (enemy.getType() < BloonType::Moab) return false;
+
 
     // Check if the rotated rectangle (rec, rotation) collides with the circle (position, range)
     // First, get the center of the rectangle
@@ -57,14 +61,14 @@ void StickyBombAttack::update(BulletManager& bulletManager, std::shared_ptr<Enem
         Vector2 targetPosition = enemy->getPosition();
         float angle = atan2f(targetPosition.y - position.y, targetPosition.x - position.x);
         angle = angle * (180.0f / PI); // Convert radians to degrees
-    
+        
         attackPattern->execute(bulletManager, BulletType::StickyBomb, position, 
             (Vector2) {45.0f, 45.0f},
             angle, 
-            damage + attackBuff.damage,
-            (*enemy).getSpeed(),
-            pierce * attackBuff.pierceRatio + attackBuff.pierce,
-            lifeSpan * attackBuff.lifeSpanRatio, 
+            damage,
+            speed,
+            pierce,
+            lifeSpan, 
             properties + attackBuff.properties, 
             normalDebuff + attackBuff.extraNormalDebuff,
             moabDebuff + attackBuff.extraMoabDebuff,

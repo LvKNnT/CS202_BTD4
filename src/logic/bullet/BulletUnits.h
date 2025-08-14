@@ -33,6 +33,7 @@ enum class BulletType {
     FlashBomb,
     FlashBombExplosion, 
     StickyBomb,
+    MasterBomber,
     Shrapnel,
     ShrapnelShot
 };
@@ -89,7 +90,7 @@ public:
 
     BulletProperties& operator= (const BulletProperties& other);
 
-    BulletProperties& getITracing(float range, TargetPriority targetPriority, bool isOnlyFollowing = false);
+    BulletProperties& getITracing(float range, TargetPriority targetPriority, bool isOnlyFollowing = false, bool isFocus = false);
     BulletProperties& removeITracing();
     BulletProperties& getITracing(std::shared_ptr<Enemy> enemy);
     float getRotation(float rotation, Vector2 position);

@@ -9,6 +9,7 @@ BulletProperties& BulletProperties::operator+= (const BulletProperties& other) {
     canCamo = canCamo || other.canCamo;
     canPurple = canPurple || other.canPurple;
     canStripCamo = canStripCamo || other.canStripCamo;
+    isOnlyFollowing = isOnlyFollowing || other.isOnlyFollowing;
 
     if(other.canTrace && range < other.range) {
         canTrace = true;
@@ -44,7 +45,7 @@ BulletProperties& BulletProperties::operator= (const BulletProperties& other) {
     return *this;
 }
 
-BulletProperties& BulletProperties::getITracing(float range, TargetPriority targetPriority, bool isOnlyFollowing) {
+BulletProperties& BulletProperties::getITracing(float range, TargetPriority targetPriority, bool isOnlyFollowing, bool isFocus) {
     this->range = range;
     canTrace = true;
     this->isOnlyFollowing = isOnlyFollowing;

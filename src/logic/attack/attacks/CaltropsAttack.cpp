@@ -15,7 +15,7 @@ std::unique_ptr<Attack> CaltropsAttack::clone() const {
     return std::make_unique<CaltropsAttack>(*this);
 }
 
-bool CaltropsAttack::isInRange(const Rectangle& rec, const float rotation, bool isCamo, AttackBuff& attackBuff) const {
+bool CaltropsAttack::isInRange(const Rectangle& rec, const float rotation, AttackBuff& attackBuff, const Enemy &enemy) const {
     // Always attacking
     return true;
 }

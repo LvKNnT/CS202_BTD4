@@ -1,13 +1,13 @@
-#ifndef STICKY_BOMB_BULLET_H
-#define STICKY_BOMB_BULLET_H
+#ifndef MASTER_BOMBER_BULLET_H
+#define MASTER_BOMBER_BULLET_H
 
 #include "../Bullet.h"
 
-class StickyBombBullet : public Bullet {
+class MasterBomberBullet : public Bullet {
 public:
-    StickyBombBullet();
+    MasterBomberBullet();
     std::unique_ptr<Bullet> clone() const override;
-    ~StickyBombBullet() override = default;
+    ~MasterBomberBullet() override = default;
 
     // Override all methods from Bullet
     void loadTexture() override;
@@ -29,4 +29,4 @@ public:
     void setRotation(float rotation) override;
 };
 
-#endif // STICKY_BOMB_BULLET_H
+#endif // MASTER_BOMBER_BULLET_H
