@@ -34,6 +34,17 @@ AutoNextRound::AutoNextRound(const Texture &_texture, int _fontSize, int _height
     untickEvent = Event::Type::UnAutoNextRound;
 }
 
+void AutoNextRound::handleInput() {
+    std::string mode = std::dynamic_pointer_cast<StateManager>(Game::Instance().getStateManager())->getMode();
+    if(mode.find("Apopalyse") != std::string::npos) {
+        isTick = true;
+        notify(tickEvent);
+        texture = Game::Instance().getTextureManager().getTexture("Untick");
+        return;
+    }
+    Tick::handleInput();
+}
+
 MuteSound::MuteSound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
     : Tick(_texture, _fontSize, _height, _width, _position) {
     isTick = true;

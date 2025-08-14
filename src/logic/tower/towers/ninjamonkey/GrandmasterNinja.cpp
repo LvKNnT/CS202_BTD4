@@ -27,14 +27,12 @@ void GrandmasterNinja::loadTexture() {
 
 void GrandmasterNinja::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::vector<std::unique_ptr<Skill> >& passiveSkills, MapManager& mapManager, ResourceManager& resourceManager) {
     attackBuff.damage += 1;
-    attackBuff.cooldownRatio *= 0.31f;
+    attackBuff.cooldownRatio *= 0.5f;
     attackBuff.range += 10;
 
     for(auto& attack : attacks) {
         if(attack->getTag() == "ShurikenAttack") {
-            std::unique_ptr<AttackPattern> attackPattern = std::move(attack->getAttackPattern());
             attack->setAttackPattern(std::make_unique<OctupleAttack>());
-            attack->setAttackPattern(std::move(attackPattern));
         }
     }
 }

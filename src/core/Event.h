@@ -50,10 +50,17 @@ public:
         HoveringChooseDartMonkey,
         HoveringChooseBomb,
         HoveringChooseNinjaMonkey,
+        HoveringChooseSniperMonkey,
+        HoveringChooseBoomerangMonkey,
+        HoveringChooseTackShooter,
+        
         //Clicked
         ClickedChooseBomb, // player begins to place Tower, we should know the valid points on the map
         ClickedChooseDartMonkey, 
         ClickedChooseNinjaMonkey,
+        ClickedChooseSniperMonkey,
+        ClickedChooseBoomerangMonkey,
+        ClickedChooseTackShooter,
         
 /*----------------------------------------------------------------------LOGIC------------------------------------------------------------------*/
         // Options (later)

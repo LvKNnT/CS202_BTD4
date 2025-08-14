@@ -15,9 +15,9 @@ std::unique_ptr<Attack> ShurikenAttack::clone() const {
     return std::make_unique<ShurikenAttack>(*this);
 }
 
-bool ShurikenAttack::isInRange(const Rectangle& rec, const float rotation, bool isCamo, AttackBuff& attackBuff) const {
+bool ShurikenAttack::isInRange(const Rectangle& rec, const float rotation, AttackBuff& attackBuff, const Enemy &enemy) const {
     // Check if the attack can hit camo targets
-    if (isCamo && !(properties.canCamo || attackBuff.properties.canCamo)) return false;
+    if (enemy.getProperties().isCamo && !(properties.canCamo || attackBuff.properties.canCamo)) return false;
 
     // Check if the rotated rectangle (rec, rotation) collides with the circle (position, range)
     // First, get the center of the rectangle
@@ -62,7 +62,7 @@ void ShurikenAttack::update(BulletManager& bulletManager, std::shared_ptr<Enemy>
             // std::cerr << "ShurikenAttack: Tracing enabled for enemy ID: " << enemy->getId() << std::endl;
         }
         
-        attackPattern->execute(bulletManager, BulletType::Shuriken, position, {30.0f, 30.0f}, angle, 
+        attackPattern->execute(bulletManager, BulletType::Shuriken, position, {15.0f, 15.0f}, angle, 
             damage + attackBuff.damage, 
             speed * attackBuff.speedRatio,
             (pierce + attackBuff.pierce) * (attackBuff.pierceRatio + 1.0),

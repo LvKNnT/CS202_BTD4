@@ -21,6 +21,7 @@ public:
     static BloonDebuff& getDebuff(Enemy& enemy);
     static BloonType& getType(Enemy& enemy);
     static int& getLivesLost(Enemy& enemy);
+    static int getEnemyId(Enemy& enemy);
     static int& getTrackIndex(Enemy& enemy);
     static int& getPathIndex(Enemy& enemy);
 

@@ -133,11 +133,14 @@ void Game::loadTowerTexture() {
     textureManager.loadTextureDraw("Dart Monkey Icon", "../assets/tower/Dart_Monkey_Mobile.png");
     textureManager.loadTextureDraw("Bomb Shooter Icon", "../assets/tower/Boom_Shooter/Bomb_Shooter.png");
     textureManager.loadTextureDraw("Ninja Monkey Icon", "../assets/tower/Ninja_Monkey/Ninja_Monkey.png");
-    textureManager.loadTextureDraw("Dart Monkey Info", "../assets/tower/Dart_Monkey/000-DartMonkey.png");
+    textureManager.loadTextureDraw("Sniper Monkey Icon", "../assets/tower/Sniper_Monkey/Sniper_Monkey_Flash.png");
+    textureManager.loadTextureDraw("Boomerang Monkey Icon", "../assets/tower/Boomerang_Monkey/BoomerangMonkey.png");
+    textureManager.loadTextureDraw("Tack Shooter Icon", "../assets/tower/Tack_Shooter/TackShooter.png");
     textureManager.loadTextureDraw("Bomb Shooter Info", "../assets/tower/Boom_Shooter/Bomb_Shooter_Icon.png");
     textureManager.loadTextureDraw("Ninja Monkey Info", "../assets/tower/Ninja_Monkey/BTD6_Ninja_Monkey.png");
-    textureManager.loadTextureDraw("CrossbowMasterUpgradeIcon", "../assets/tower/Dart_Monkey/CrossbowMasterUpgradeIcon.png");
-    textureManager.loadTextureDraw("Sharp Shots Upgrade Icon", "../assets/tower/Dart_Monkey/SharpShotsUpgradeIcon.png");
+    textureManager.loadTextureDraw("Sniper Monkey Info", "../assets/tower/Sniper_Monkey/BTD6_Sniper_Monkey.png");
+    textureManager.loadTextureDraw("Boomerang Monkey Info", "../assets/tower/Boomerang_Monkey/BTD6_Boomerang_Monkey.png");
+    textureManager.loadTextureDraw("Tack Shooter Info", "../assets/tower/Tack_Shooter/BTD6_Tack_Shooter.png");
 }
 
 void Game::loadAnimationTexture() {
@@ -145,6 +148,7 @@ void Game::loadAnimationTexture() {
     animationManager.loadAllAnimationTextures("stun", "../assets/effect/stun", 4);
     animationManager.loadAllAnimationTextures("freeze", "../assets/effect/freeze", 10);
     animationManager.loadAllAnimationTextures("starburst", "../assets/effect/starburst", 4);
+    animationManager.loadAllAnimationTextures("sharingan", "../assets/effect/sharingan", 4);
 }
 
 void Game::drawLoadingScren() {

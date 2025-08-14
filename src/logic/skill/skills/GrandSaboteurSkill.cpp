@@ -9,7 +9,8 @@ GrandSaboteurSkill::GrandSaboteurSkill()
     : Skill(60.0f, "Grand Saboteur") {
     // Instant cooldown
     duration = 30.0f;
-    timer = cooldown;
+    timer = 0;
+    isSkillActivating = true;
 }
 
 std::unique_ptr<Skill> GrandSaboteurSkill::clone() const {
@@ -23,17 +24,23 @@ void GrandSaboteurSkill::loadTexture() {
 
 void GrandSaboteurSkill::update() {
     // Update the skill timer
-    if (timer < cooldown || timer < duration) {
-        timer += GetFrameTime();
-    }
-    if(timer > duration) {
+    timer += GetFrameTime();
+    if(isSkillActivating && timer >= duration) {
         inActivateSkill(); // Deactivate the skill if the duration has passed
+        timer = 0;
+        isSkillActivating = false;
+    } 
+    if(!isSkillActivating && timer >= cooldown) {
+        timer = 0;
+        isSkillActivating = true;
     }
 }
 
 bool GrandSaboteurSkill::canActivateSkill() const {
     // Check if the skill is ready to be activated
-    return timer >= cooldown && timer >= duration;
+    if(isSkillActivating && timer < duration) return true;
+    if(!isSkillActivating && timer >= cooldown) return true;
+    return false;
 }
 
 float GrandSaboteurSkill::getCooldown() const {
@@ -46,65 +53,36 @@ void GrandSaboteurSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector
 
     for(auto &enemy:enemies) {
         // MOAB class
-        if(SkillFriendAccess::getEnemyType(*enemy) == BloonType::Moab 
-        || SkillFriendAccess::getEnemyType(*enemy) == BloonType::Bfb 
-        || SkillFriendAccess::getEnemyType(*enemy) == BloonType::Zomg
-        || SkillFriendAccess::getEnemyType(*enemy) == BloonType::Ddt
-        || SkillFriendAccess::getEnemyType(*enemy) == BloonType::Bad) {
+        if(SkillFriendAccess::getEnemyType(*enemy) >= BloonType::Moab && !affectedEnemies[SkillFriendAccess::getEnemyId(*enemy)]) {
             SkillFriendAccess::getEnemyHealth(*enemy) *= 0.75;
+            affectedEnemies[SkillFriendAccess::getEnemyId(*enemy)] = 1;
         }
-        enemy->setDebuff(BloonDebuff().getISlow(0.5f, 30), BloonDebuff().getISlow(0.5f, 30));
+        enemy->setDebuff(BloonDebuff().getISlow(0.5f, duration - timer), BloonDebuff().getISlow(0.5f, duration - timer));
     }
 
-    Vector2 position = SkillFriendAccess::getTowerPosition(*tower);
-
-    // Find 10 towers closest to position
-    std::vector<std::pair<float, std::weak_ptr<Tower>>> towerDistances;
-    for (auto& t : towers) {
-        if(SkillFriendAccess::getTowerType(*t) != TowerType::NinjaMonkey) continue; // Only activate for Dart Monkeys
-
-        float dist = Vector2Distance(SkillFriendAccess::getTowerPosition(*t), position);
-        towerDistances.emplace_back(dist, std::weak_ptr<Tower>(t));
+    // Buff all Ninja towers
+    for (auto& towerPtr : towers) {
+        if(SkillFriendAccess::getTowerType(*towerPtr) != TowerType::NinjaMonkey || affectedTowers.count(SkillFriendAccess::getTowerId(*towerPtr))) continue;
+        SkillFriendAccess::getAttackBuff(*towerPtr).range += 10; 
+        SkillFriendAccess::getAttackBuff(*towerPtr).extraMoabDebuff.bonusDamage += 2;
+        SkillFriendAccess::getTag(*towerPtr) = "Grand Saboteur Ninja"; // Change the tag to Grand Saboteur Ninja
+        affectedTowers[SkillFriendAccess::getTowerId(*towerPtr)] = towerPtr;
     }
 
-    std::sort(towerDistances.begin(), towerDistances.end(),
-              [](const auto& a, const auto& b) { return a.first < b.first; });
-
-    for (size_t i = 0; i < towerDistances.size(); ++i) {
-        if (auto towerPtr = towerDistances[i].second.lock()) {
-            closestTowers.push_back(towerPtr);
-        }
-    }
-
-    // Buff the closest towers
-    for (auto& t : closestTowers) {
-        if (auto towerPtr = t.lock()) {
-            SkillFriendAccess::getAttackBuff(*towerPtr).range += 10; 
-            SkillFriendAccess::getAttackBuff(*towerPtr).extraMoabDebuff.bonusDamage += 2;
-            SkillFriendAccess::getTag(*towerPtr) = "Grand Saboteur Ninja"; // Change the tag to Super Monkey Fan Club Dart
-        }
-    }
-
-    // Reset the skill timer after activation
-    timer = 0.0f;
-
-    std::cerr << "Activated Grand Saboteur skill for " << closestTowers.size() << " towers." << std::endl;
+    if(timer == 0.0f) std::cerr << "Activated Grand Saboteur skill for " << affectedTowers.size() << " towers. (maybe more if they are added)" << std::endl;
 }
 
 void GrandSaboteurSkill::inActivateSkill() {
     if(timer < duration) return; // Only deactivate if the skill is still active
-    if(closestTowers.empty()) return; // No towers to deactivate
 
     // Reset the attack buffs of the closest towers
-    for (auto& t : closestTowers) {
-        if (auto towerPtr = t.lock()) {
-            SkillFriendAccess::getAttackBuff(*towerPtr).range -= 10;
-            SkillFriendAccess::getAttackBuff(*towerPtr).extraMoabDebuff.bonusDamage -= 2;
-            SkillFriendAccess::getTag(*towerPtr) = "NinjaMonkey"; // Reset the tag to Ninja Monkey
-        }
+    for (auto& [id, towerPtr] : affectedTowers) {
+        SkillFriendAccess::getAttackBuff(*towerPtr).range -= 10;
+        SkillFriendAccess::getAttackBuff(*towerPtr).extraMoabDebuff.bonusDamage -= 2;
+        SkillFriendAccess::getTag(*towerPtr) = "NinjaMonkey"; // Reset the tag to Ninja Monkey
     }
 
-    closestTowers.clear(); // Clear the list of closest towers
-
     std::cerr << "Deactivated Grand Saboteur skill." << std::endl;
+    affectedEnemies.clear();
+    affectedTowers.clear();
 }

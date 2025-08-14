@@ -3,11 +3,14 @@
 
 #include "../Skill.h"
 
+#include <unordered_map>
+#include <map>
 class GrandSaboteurSkill : public Skill {
 private:
     float duration;
-    std::vector<std::weak_ptr<Tower>> closestTowers;
-
+    bool isSkillActivating;
+    std::unordered_map<int, bool> affectedEnemies;
+    std::map<int, std::shared_ptr<Tower>> affectedTowers;
 public:
     GrandSaboteurSkill();
     ~GrandSaboteurSkill() override = default;
