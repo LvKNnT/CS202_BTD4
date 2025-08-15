@@ -98,12 +98,14 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
 
     // Move jingly jingly
     // Sinusoidal "jiggle" movement perpendicular to the path direction
-    float jiggleAmplitude = 0.3f; // Adjust for more/less jiggle
-    float jiggleFrequency = 1.0f; // Adjust for faster/slower jiggle
-    float jiggle = jiggleAmplitude * sinf(GetTime() * jiggleFrequency + enemy.enemyId);
-    Vector2 normal = { -direction.y / distance, direction.x / distance };
-    position.x += normal.x * jiggle;
-    position.y += normal.y * jiggle;
+    if(enemy.type < BloonType::Moab) {
+        float jiggleAmplitude = 0.3f; // Adjust for more/less jiggle
+        float jiggleFrequency = 1.0f; // Adjust for faster/slower jiggle
+        float jiggle = jiggleAmplitude * sinf(GetTime() * jiggleFrequency + enemy.enemyId);
+        Vector2 normal = { -direction.y / distance, direction.x / distance };
+        position.x += normal.x * jiggle;
+        position.y += normal.y * jiggle;
+    }
 
     // Before returning, update the enemy's position and track index
     enemy.position = position; 

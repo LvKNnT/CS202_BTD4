@@ -56,10 +56,10 @@ void GameLogic::init(Difficulty difficulty) {
     
     // for testing only
     resourceManager.getResource().cash = 999999;
-    // resourceManager.getResource().currentRound = 49;
+    resourceManager.getResource().currentRound = 40;
     
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
-towerManager = TowerManager(resourceManager.getTowerModifies());
+    towerManager = TowerManager(resourceManager.getTowerModifies());
     bulletManager = BulletManager();
 }
 
