@@ -3,6 +3,7 @@
 ReverseMonkeyLane::ReverseMonkeyLane() {
     // Reverse path
     mapType = MapType::ReverseMonkeyLane;
+    MAXPATHS = 1;
     enemyPath[0].push_back(Point(200, 770, Point::Type::SpawnEnenmy)); // enemy goes from there
     enemyPath[0].push_back(Point(200, 510));
     enemyPath[0].push_back(Point(230, 510, Point::Type::Invisible));
@@ -24,20 +25,36 @@ ReverseMonkeyLane::ReverseMonkeyLane() {
     enemyPath[0].push_back(Point(203, 275));
     enemyPath[0].push_back(Point(203, 390));
     enemyPath[0].push_back(Point(-100, 390, Point::Type::Exit));
+    enterEffects.push_back(Animation("movingTriangle", (Vector2) {177, 700 - 40}, 0.0f, 64, 40, 8, 0.25f));
+    enterEffects.back().start();
 }
 
 std::unique_ptr<Map> ReverseMonkeyLane::clone() const {
     return std::make_unique<ReverseMonkeyLane>(*this);
 }
 
+Point::Type ReverseMonkeyLane::getPointType(Vector2 position) const {
+    if(!Utils::isPositionInMap(position)) return Point::Type::None;
+    int tolerance = 10;
+    Color pixelColor = GetImageColor(mapImage, static_cast<int>(position.x), static_cast<int>(position.y));
+
+    // check obstacle 
+    Color obstacleColor = GetImageColor(mapImage, 610, 435); // 610 435 - an invisible point
+    bool isObstacle = Utils::isColorDiffByTolerance(obstacleColor, pixelColor, tolerance);
+    if(isObstacle) return Point::Type::Obstacle;
+
+    // check for path
+    Color pathColor = GetImageColor(mapImage, 203, 390); // 203 390 - an enemy path point
+    bool isPath = Utils::isColorDiffByTolerance(pathColor, pixelColor, tolerance);
+    if(isPath) return Point::Type::Enemy;
+
+    return Point::Type::None; // can place tower here
+}
+
 void ReverseMonkeyLane::loadTexture() {
     texture = Game::Instance().getTextureManager().getTexture("MonkeyLaneThumb");
     mapImage = LoadImage("../assets/map/Monkey_lane_path_mask.png"); // MUST BE LOADED
     pathImage = LoadImage("../assets/map/Monkey_lane_thumb.png"); // Path image for collision detection
-}
-
-void ReverseMonkeyLane::update() {
-    // This map has no dynamic elements to update
 }
 
 std::pair<Vector2, int> ReverseMonkeyLane::getPositionAndPathIdx(BloonType type) {

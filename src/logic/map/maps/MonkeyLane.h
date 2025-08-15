@@ -10,12 +10,10 @@ public:
     std::unique_ptr<Map> clone() const override;
     ~MonkeyLane() override = default;
 
-    Point::Type getEnemyPointType(Vector2 position) const override;
-    Point::Type getTowerPointType(Vector2 position) const override; // For Tower
+    Point::Type getPointType(Vector2 position) const override; // For Tower
 
     void loadTexture() override;
-    void update() override;
-
+    
     std::pair<Vector2, int> getPositionAndPathIdx(BloonType type) override;
 };
 

@@ -34,6 +34,7 @@ private:
     std::shared_ptr<State> loadingState;
 
     bool canResume;
+    std::string map;
     std::string mode;
     std::string modeInfo;
     bool isNewGame;
@@ -47,6 +48,8 @@ public:
     void handleInput();
     void update(Event::Type event) override;
     
+    void setMap(std::string _map);
+    std::string getMap() const;
     void setMode(std::string _mode);
     std::string getMode() const;
     void setModeInfo(std::string _modeInfo);

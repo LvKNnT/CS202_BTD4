@@ -2,23 +2,21 @@
 #include "../../core/Game.h"
 #include "raymath.h"
 
-Map::Map() 
-    : enemyPath(MAXPATHS) { 
+Map::Map() { 
 
 }
 
 void Map::draw() const {
     DrawTextureEx(texture, {0, 0}, 0.0f, 1.0f, WHITE);
+    for(auto &animation:enterEffects) {
+        animation.draw();
+    }
+}
 
-    // Purely for testing hitbox
-    // const float width = 50.0f;
-    // for(const auto& path : enemyPath) {
-    //     for(const auto& point : path) {
-    //         // Draw a square size 5.0f centered at each point
-    //         Vector2 topLeft = { point.position.x - width / 2, point.position.y - width / 2};
-    //         DrawRectangleV(topLeft, {width, width}, (Color) {0, 255, 0, 128}); // Draw the point in green with some transparency
-    //     }
-    // }
+void Map::update() {
+    for(auto &animation:enterEffects) {
+        animation.update();
+    }
 }
 
 void Map::unLoad() {
@@ -26,19 +24,7 @@ void Map::unLoad() {
     UnloadImage(mapImage);
 }
 
-Point::Type Map::getTowerPointType(Vector2 position) const {
-    if(!Utils::isPositionInMap(position)) return Point::Type::None;
-    Color pixelColor = GetImageColor(mapImage, static_cast<int>(position.x), static_cast<int>(position.y));
-    Color pathColor = GetImageColor(mapImage, static_cast<int>(enemyPath[0][1].position.x), static_cast<int>(enemyPath[0][1].position.y));
-    //Color pathColor = GetImageColor(pathImage, static_cast<int>(position.x), static_cast<int>(position.y));
-    int tolerance = 10;
-    bool isPath = Utils::isColorDiffByTolerance(pathColor, pixelColor, tolerance);
-    if(isPath) return Point::Type::Enemy;
-
-    return Point::Type::None; // can place tower here
-}
-
-Point::Type Map::getEnemyPointType(Vector2 position) const {
+Point::Type Map::getPointType(Vector2 position) const {
     if(!Utils::isPositionInMap(position)) return Point::Type::None;
     Color pixelColor = GetImageColor(mapImage, static_cast<int>(position.x), static_cast<int>(position.y));
     Color pathColor = GetImageColor(mapImage, static_cast<int>(enemyPath[0][1].position.x), static_cast<int>(enemyPath[0][1].position.y));

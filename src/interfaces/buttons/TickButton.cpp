@@ -7,8 +7,8 @@ Tick::Tick(const Texture &_texture, int _fontSize, int _height, int _width, Vect
     hoveringEvent = Event::Type::None;
 }
      
-void Tick::handleInput() {
-    Button::handleInput();
+void Tick::update() {
+    Button::update();
     if(!isAvailable) return;
     if(state != Button::State::None) {
         notify(hoveringEvent);
@@ -34,7 +34,7 @@ AutoNextRound::AutoNextRound(const Texture &_texture, int _fontSize, int _height
     untickEvent = Event::Type::UnAutoNextRound;
 }
 
-void AutoNextRound::handleInput() {
+void AutoNextRound::update() {
     std::string mode = std::dynamic_pointer_cast<StateManager>(Game::Instance().getStateManager())->getMode();
     if(mode.find("Apopalyse") != std::string::npos) {
         isTick = true;
@@ -42,7 +42,7 @@ void AutoNextRound::handleInput() {
         texture = Game::Instance().getTextureManager().getTexture("Untick");
         return;
     }
-    Tick::handleInput();
+    Tick::update();
 }
 
 MuteSound::MuteSound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)

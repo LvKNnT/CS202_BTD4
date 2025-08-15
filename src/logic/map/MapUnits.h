@@ -6,7 +6,13 @@ enum class MapType{
     MonkeyLane,
     ReverseMonkeyLane,
     Jungle,
-    ReverseJungle
+    ReverseJungle,
+    RinkRevenge,
+    ReverseRinkRevenge,
+    DuneSea,
+    ReverseDuneSea,
+    AttackOnBloon,
+    ReverseAttackOnBloon
 };
 
 #endif // MAPUNITS_H

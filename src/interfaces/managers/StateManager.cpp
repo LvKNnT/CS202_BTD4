@@ -59,13 +59,36 @@ void StateManager::update(Event::Type event) {
             stateStack.pushState(difficultySelectionState);
             stateStack.setdrawPreviousStates(true);
             mapType = MapType::MonkeyLane;
-            Game::Instance().getGameLogic().init(MapType::MonkeyLane);
+            Game::Instance().getGameLogic().init(mapType);
+            setMap("Monkey Lane");
             break;
         case Event::Type::ToJungleLane:
             stateStack.pushState(difficultySelectionState);
             stateStack.setdrawPreviousStates(true);
             mapType = MapType::Jungle;
-            Game::Instance().getGameLogic().init(MapType::Jungle);
+            Game::Instance().getGameLogic().init(mapType);
+            setMap("Jungle");
+            break;
+        case Event::Type::ToRinkRevenge:
+            stateStack.pushState(difficultySelectionState);
+            stateStack.setdrawPreviousStates(true);
+            mapType = MapType::RinkRevenge;
+            Game::Instance().getGameLogic().init(mapType);
+            setMap("Rink Revenge");
+            break;
+        case Event::Type::ToDuneSea:
+            stateStack.pushState(difficultySelectionState);
+            stateStack.setdrawPreviousStates(true);
+            mapType = MapType::DuneSea;
+            Game::Instance().getGameLogic().init(mapType);
+            setMap("Dune Sea");
+            break;
+        case Event::Type::ToAttackOnBloon:
+            stateStack.pushState(difficultySelectionState);
+            stateStack.setdrawPreviousStates(true);
+            mapType = MapType::AttackOnBloon;
+            Game::Instance().getGameLogic().init(mapType);
+            setMap("Attack On Bloon");
             break;
         case Event::Type::ToAreYouSure:
             stateStack.pushState(areYouSureState);
@@ -152,6 +175,14 @@ void StateManager::update(Event::Type event) {
     }
 }
 
+void StateManager::setMap(std::string _map) {
+    map = _map;
+}
+
+std::string StateManager::getMap() const {
+    return map;
+}
+
 void StateManager::setMode(std::string _mode){ 
     mode = _mode;
 }
@@ -167,3 +198,13 @@ void StateManager::setModeInfo(std::string _modeInfo) {
 std::string StateManager::getModeInfo() const {
     return modeInfo;
 }
+
+// void StateManager::startEnterEffects() {
+//     switch(mapType) {
+//         case MapType::MonkeyLane:
+//             enterEffects[0].setPosition((Vector2) {70, 377});
+//             enterEffects[0].setRotation(90.0f);
+//             enterEffects[0].start();
+//             break;
+//     }
+// }

@@ -7,8 +7,8 @@ TickHoveringButton::TickHoveringButton(const Texture &_texture, int _fontSize, i
     attach(Game::Instance().getStateManager());
 }
 
-void TickHoveringButton::handleInput() {
-    Button::handleInput();
+void TickHoveringButton::update() {
+    Button::update();
     if(!isAvailable || state != Button::State::Clicked) return;
     isTick = !isTick;
     if(isTick) notify(tickEvent);
@@ -43,8 +43,8 @@ StartRoundButton::StartRoundButton(const Texture &_texture, int _fontSize, int _
     untickEvent = Event::Type::None;
 }
 
-void StartRoundButton::handleInput() {
-    Button::handleInput();
+void StartRoundButton::update() {
+    Button::update();
     if(Game::Instance().getGameLogic().isRoundRun()) {
         isTick = 1;
     } else isTick = 0;

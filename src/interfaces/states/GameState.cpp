@@ -96,7 +96,8 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
     
     // Round Info 
     roundPanel = std::make_unique<Panel>();
-    roundTitle = std::make_shared<TextField>("Hello World!", Game::Instance().getFontManager().getFont("Medium"), YELLOW, 25, 0, (Vector2) {5, 725});
+    std::string mapName = std::dynamic_pointer_cast<StateManager>(Game::Instance().getStateManager())->getMap();
+    roundTitle = std::make_shared<TextField>(mapName, Game::Instance().getFontManager().getFont("Medium"), YELLOW, 25, 0, (Vector2) {5, 725});
     roundInfo = std::make_shared<TextField>(std::static_pointer_cast<StateManager>(Game::Instance().getStateManager())->getModeInfo(), Game::Instance().getFontManager().getFont("Medium"), WHITE, 25, 900, (Vector2) {5, 725 + 25 + 10});
     roundPanel->addPanelElement(roundTitle);
     roundPanel->addPanelElement(roundInfo);
@@ -260,8 +261,7 @@ void GameState::handleInput() {
 
     auto preTowerType = clickedTowerType;
     State::handleInput();
-    towerPanel->handleInput();
-    if(preTowerType == TowerType::None && clickedTowerType != TowerType::None) return;
+    towerPanel->update();
     
     // Live Infos
     auto liveInfos = Game::Instance().getGameLogic().getInfoResource();
@@ -269,6 +269,18 @@ void GameState::handleInput() {
     std::dynamic_pointer_cast<TextField>(cash)->setText(liveInfos["cash"]);
     std::dynamic_pointer_cast<TextField>(round)->setText("Round: " + liveInfos["currentRound"] + '/' + liveInfos["maxRound"]);
     
+    // Escape Input
+    if(IsKeyPressed(KEY_ESCAPE)) {
+        if(clickedTowerType != TowerType::None) {
+            clickedTowerType = TowerType::None;
+            Game::Instance().getGameLogic().unPutTower();
+        } 
+        unpickTower();
+        return;
+    }    
+
+    if(preTowerType == TowerType::None && clickedTowerType != TowerType::None) return;
+
     // Place towers
     if(clickedTowerType != TowerType::None) {
         Game::Instance().getGameLogic().putTower(clickedTowerType, GetMousePosition());
@@ -283,16 +295,6 @@ void GameState::handleInput() {
             return;
         }
     }
-    
-    // Escape Input
-    if(IsKeyPressed(KEY_ESCAPE)) {
-        if(clickedTowerType != TowerType::None) {
-            clickedTowerType = TowerType::None;
-            Game::Instance().getGameLogic().unPutTower();
-        } 
-        unpickTower();
-        return;
-    }    
     
     // Draw current Tower Object Infos
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && Utils::isMouseInMap()) {

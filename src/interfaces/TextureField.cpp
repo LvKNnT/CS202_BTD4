@@ -36,6 +36,6 @@ void TextureField::draw(int idx, float rotation) const {
     textureList[idx].draw(height, width, rotation);
 }
 
-void TextureField::handleInput() {
+void TextureField::update() {
     if(!isAvailable) return;
 }

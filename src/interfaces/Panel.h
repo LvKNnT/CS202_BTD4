@@ -28,7 +28,6 @@ public:
     bool getIsAvailable() const;
     void draw() const override;
     void update();
-    void handleInput();
 
 };
 

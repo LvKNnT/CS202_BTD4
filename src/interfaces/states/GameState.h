@@ -63,7 +63,6 @@ private:
     std::shared_ptr<PanelElement> skillInfoTextbox;
     std::shared_ptr<PanelElement> towerInfoTextbox;
     std::shared_ptr<PanelElement> upgradeInfoTextbox;
-
     // Functions
     void pickTower();
     void unpickTower();

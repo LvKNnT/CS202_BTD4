@@ -6,8 +6,8 @@ SkillButton::SkillButton(const Texture &_texture, int _fontSize, int _height, in
     attach(Game::Instance().getStateManager());
 }
 
-void SkillButton::handleInput() {
-    Button::handleInput();
+void SkillButton::update() {
+    Button::update();
     if(!isAvailable || state != Button::State::Clicked) return;
 
 }

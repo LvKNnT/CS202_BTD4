@@ -33,8 +33,8 @@ public:
         LogicInfo info;
 
         info["cash"] = std::to_string(cash);
-        info["lives"] = std::to_string(lives);
-        info["currentRound"] = std::to_string(currentRound);
+        info["lives"] = std::to_string(std::max(0, lives));
+        info["currentRound"] = std::to_string(std::min(maxRound, currentRound));
         info["initialRound"] = std::to_string(initialRound);
         info["maxRound"] = std::to_string(maxRound);
 

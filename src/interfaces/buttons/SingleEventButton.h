@@ -7,7 +7,7 @@
 class SingleEventButton : public Button {
 public:
     SingleEventButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
+    void update() override;
 
 protected:
     Event::Type event;
@@ -36,6 +36,21 @@ public:
 class ChooseJungle : public SingleEventButton {
 public: 
     ChooseJungle(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class ChooseRinkRevenge : public SingleEventButton {
+public: 
+    ChooseRinkRevenge(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class ChooseDuneSea : public SingleEventButton {
+public: 
+    ChooseDuneSea(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class ChooseAttackOnBloon : public SingleEventButton {
+public: 
+    ChooseAttackOnBloon(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
 class Options : public SingleEventButton {

@@ -74,6 +74,9 @@ void Game::loadTexture() {
     // Load maps
     textureManager.loadTextureDraw("MonkeyLaneThumb", "../assets/map/Monkey_lane_thumb.png");
     textureManager.loadTextureDraw("JungleThumb", "../assets/map/Jungle_thumb.png");
+    textureManager.loadTextureDraw("RinkRevengeThumb", "../assets/map/Rink_revenge_thumb.png");
+    textureManager.loadTextureDraw("DuneSeaThumb", "../assets/map/Dune_sea_thumb.png");
+    textureManager.loadTextureDraw("AttackOnBloonThumb", "../assets/map/Attack_on_bloon_thumb.png");
     textureManager.loadTextureDraw("CommingSoon", "../assets/map/CommingSoon.png");
     textureManager.loadTextureDraw("CommingSoon2", "../assets/map/CommingSoon2.png");
     textureManager.loadTextureDraw("GameStateBackground", "../assets/states/GameStateBackground.png");
@@ -123,6 +126,7 @@ void Game::loadSound() {
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("BombExplosion", "../assets/sounds/sfx/BombExplosion.wav", 30); 
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("CannonFire", "../assets/sounds/sfx/CannonFire.wav", 20); 
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("LaserFire", "../assets/sounds/sfx/LaserFire.wav", 3); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("ActivateSkill", "../assets/sounds/sfx/ActivateSkill.wav", 5); 
     
     // Music
     drawLoadingScren();
@@ -136,6 +140,7 @@ void Game::loadTowerTexture() {
     textureManager.loadTextureDraw("Sniper Monkey Icon", "../assets/tower/Sniper_Monkey/Sniper_Monkey_Flash.png");
     textureManager.loadTextureDraw("Boomerang Monkey Icon", "../assets/tower/Boomerang_Monkey/BoomerangMonkey.png");
     textureManager.loadTextureDraw("Tack Shooter Icon", "../assets/tower/Tack_Shooter/TackShooter.png");
+    textureManager.loadTextureDraw("Dart Monkey Info", "../assets/tower/Dart_Monkey/000-DartMonkey.png");
     textureManager.loadTextureDraw("Bomb Shooter Info", "../assets/tower/Boom_Shooter/Bomb_Shooter_Icon.png");
     textureManager.loadTextureDraw("Ninja Monkey Info", "../assets/tower/Ninja_Monkey/BTD6_Ninja_Monkey.png");
     textureManager.loadTextureDraw("Sniper Monkey Info", "../assets/tower/Sniper_Monkey/BTD6_Sniper_Monkey.png");
@@ -149,6 +154,7 @@ void Game::loadAnimationTexture() {
     animationManager.loadAllAnimationTextures("freeze", "../assets/effect/freeze", 10);
     animationManager.loadAllAnimationTextures("starburst", "../assets/effect/starburst", 4);
     animationManager.loadAllAnimationTextures("sharingan", "../assets/effect/sharingan", 4);
+    animationManager.loadAllAnimationTextures("movingTriangle", "../assets/effect/movingTriangle", 8);
 }
 
 void Game::drawLoadingScren() {

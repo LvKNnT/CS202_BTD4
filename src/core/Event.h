@@ -92,6 +92,9 @@ public:
         // Map - choose maps
         ToMonkeyLane,
         ToJungleLane, 
+        ToRinkRevenge,
+        ToDuneSea,
+        ToAttackOnBloon,
         
         // Settings
         AutoNextRound, // We should auto next round

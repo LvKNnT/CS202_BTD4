@@ -17,7 +17,7 @@ public:
     void setText(const std::string& newText);
     void setTextAndPos(const std::string &newText, Vector2 newPosition);
     void draw() const override;
-    void handleInput() override; 
+    void update() override; 
 };
 
 class MovableTextbox : public TextField {

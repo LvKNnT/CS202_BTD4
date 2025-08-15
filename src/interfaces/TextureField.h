@@ -18,7 +18,7 @@ public:
     void removeTexture(const MyTexture &mTexture);
     void draw() const override;
     void draw(int idx, float rotation) const;
-    void handleInput() override; 
+    void update() override; 
     void setTexture(const Texture &newTexture, int idx = 0);
 };
 

@@ -6,8 +6,8 @@ SingleEventButton::SingleEventButton(const Texture &_texture, int _fontSize, int
     event = Event::Type::None;
 }
 
-void SingleEventButton::handleInput() {
-    Button::handleInput();
+void SingleEventButton::update() {
+    Button::update();
     if(!isAvailable || state != Button::State::Clicked) return;
     notify(event);
 }
@@ -54,6 +54,24 @@ ChooseJungle::ChooseJungle(const Texture &_texture, int _fontSize, int _height, 
     : SingleEventButton(_texture, _fontSize, _height, _width, _position) {
     attach(Game::Instance().getStateManager());
     event = Event::Type::ToJungleLane;
+}
+
+ChooseRinkRevenge::ChooseRinkRevenge(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+    : SingleEventButton(_texture, _fontSize, _height, _width, _position) {
+    attach(Game::Instance().getStateManager());
+    event = Event::Type::ToRinkRevenge;
+}
+
+ChooseDuneSea::ChooseDuneSea(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+    : SingleEventButton(_texture, _fontSize, _height, _width, _position) {
+    attach(Game::Instance().getStateManager());
+    event = Event::Type::ToDuneSea;
+}
+
+ChooseAttackOnBloon::ChooseAttackOnBloon(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+    : SingleEventButton(_texture, _fontSize, _height, _width, _position) {
+    attach(Game::Instance().getStateManager());
+    event = Event::Type::ToAttackOnBloon;
 }
 
 GameOptions::GameOptions(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 

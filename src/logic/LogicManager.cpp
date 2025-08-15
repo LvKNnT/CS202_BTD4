@@ -592,7 +592,7 @@ bool LogicManager::isSpawnTower(const ResourceManager& resourceManager, const To
     for(int x = towerBoundingBox.x; x <= towerBoundingBox.x + towerBoundingBox.width; ++x) {
         for(int y = towerBoundingBox.y; y <= towerBoundingBox.y + towerBoundingBox.height; ++y) {
             Vector2 point = {static_cast<float>(x), static_cast<float>(y)};
-            if(mapManager.getCurrentMap().getTowerPointType(point) != Point::Type::None) {
+            if(mapManager.getCurrentMap().getPointType(point) != Point::Type::None) {
                 std::cerr << "Cannot put tower due to path" << std::endl;
                 towerManager.putTower->setActive(false);
                 return false; // Collision with the path
@@ -838,7 +838,8 @@ bool LogicManager::playRound(ResourceManager& resourceManager, ModeManager& mode
         isSave = (reward != 0);
 
         // auto play next round
-        if(autoPlayRound) {
+        if(autoPlayRound 
+        || (resourceManager.currentResource.currentRound == resourceManager.currentResource.maxRound && enemyManager.enemyList.empty())) {
             playNextRound(modeManager, enemyManager, bulletManager, resourceManager);
             return true;
         }
