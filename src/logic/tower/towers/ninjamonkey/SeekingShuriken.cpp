@@ -28,11 +28,7 @@ void SeekingShuriken::loadTexture() {
 
 void SeekingShuriken::update(std::vector<std::unique_ptr<Attack> >& attacks, AttackBuff& attackBuff, std::unique_ptr<Skill>& skill, std::vector<std::unique_ptr<Skill> >& passiveSkills, MapManager& mapManager, ResourceManager& resourceManager) {
     attackBuff.range += 7;
-    
-    
-    for(auto& attack : attacks) {
-        if(attack->getTag() == "Grandmaster Ninja") continue;
-        
+    for(auto& attack : attacks) {        
         if(attack->getTag() == "ShurikenAttack") {
             attack->getProperties().getITracing(200.0f, TargetPriority::First);
         }

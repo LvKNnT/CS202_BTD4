@@ -3,10 +3,14 @@
 
 #include "../Skill.h"
 
+#include <unordered_map>
+
 class BloonSabotageSkill : public Skill {
 private:
     float duration;
-    std::vector<std::weak_ptr<Tower>> closestTowers;
+    bool isSkillActivating;
+    std::shared_ptr<Tower> closestTower;
+    //std::unordered_map<int, bool> affectedEnemies;
 
 public:
     BloonSabotageSkill();

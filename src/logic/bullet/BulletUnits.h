@@ -30,6 +30,10 @@ enum class BulletType {
     BombFragment,
     TracingShuriken,
     Caltrops,
+    FlashBomb,
+    FlashBombExplosion, 
+    StickyBomb,
+    MasterBomber,
     Shrapnel,
     ShrapnelShot
 };
@@ -50,6 +54,7 @@ public:
 
     // for tracing bullets
     bool canTrace = false;
+    bool isOnlyFollowing = false;
     std::weak_ptr<Enemy> targetEnemy; 
     float range = 0.0f;
     bool isFocus = false;
@@ -85,7 +90,7 @@ public:
 
     BulletProperties& operator= (const BulletProperties& other);
 
-    BulletProperties& getITracing(float range, TargetPriority targetPriority, bool isFocus = false);
+    BulletProperties& getITracing(float range, TargetPriority targetPriority, bool isOnlyFollowing = false, bool isFocus = false);
     BulletProperties& removeITracing();
     BulletProperties& getITracing(std::shared_ptr<Enemy> enemy);
     float getRotation(float rotation, Vector2 position);

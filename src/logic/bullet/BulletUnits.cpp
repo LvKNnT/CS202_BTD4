@@ -9,6 +9,7 @@ BulletProperties& BulletProperties::operator+= (const BulletProperties& other) {
     canCamo = canCamo || other.canCamo;
     canPurple = canPurple || other.canPurple;
     canStripCamo = canStripCamo || other.canStripCamo;
+    isOnlyFollowing = isOnlyFollowing || other.isOnlyFollowing;
 
     if(other.canTrace && range < other.range) {
         canTrace = true;
@@ -37,15 +38,17 @@ BulletProperties& BulletProperties::operator= (const BulletProperties& other) {
         canStripCamo = other.canStripCamo;
         canTrace = other.canTrace;
         isFocus = other.isFocus;
+        isOnlyFollowing = other.isOnlyFollowing;
         targetEnemy = other.targetEnemy; 
         range = other.range; 
     }
     return *this;
 }
 
-BulletProperties& BulletProperties::getITracing(float range, TargetPriority targetPriority, bool isFocus) {
+BulletProperties& BulletProperties::getITracing(float range, TargetPriority targetPriority, bool isOnlyFollowing, bool isFocus) {
     this->range = range;
     canTrace = true;
+    this->isOnlyFollowing = isOnlyFollowing;
     targetEnemy.reset(); // Reset target enemy for tracing
     this->targetPriority = targetPriority; // Set the target priority for tracing
     this->isFocus = isFocus; // Set focus state
@@ -61,6 +64,7 @@ BulletProperties& BulletProperties::removeITracing() {
 }
 
 BulletProperties& BulletProperties::getITracing(std::shared_ptr<Enemy> enemy) {
+    // should not use
     if (enemy) {
         targetEnemy = enemy;
         canTrace = true;

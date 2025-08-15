@@ -14,7 +14,7 @@ void LogicManager::updateEnemies(EnemyManager& enemyManager, MapManager& mapMana
         int result = runEnemy(**it, mapManager.getCurrentMap());
         if (result == -1) {
             // Enemy reached the end — remove and destroy it
-            resourceManager.currentResource.lives -= (*it)->livesLost; // Update lives lost
+            //resourceManager.currentResource.lives -= (*it)->livesLost; // Update lives lost
             it = enemyManager.enemyList.erase(it);  // erase returns the next iterator
             continue;  // Skip the increment, already moved to next
         }
@@ -367,6 +367,11 @@ bool LogicManager::checkCollision(const Bullet& bullet, const Enemy& enemy) cons
         return false; // Bullet is tracing but the target enemy is no longer valid
     }
 
+    if(bullet.properties.isOnlyFollowing) {
+        // only following but no hit
+        return false;
+    }
+
     // check focus
     if(bullet.properties.isFocus && !bullet.properties.targetEnemy.expired()) {
         auto targetEnemy = bullet.properties.targetEnemy.lock();
@@ -493,6 +498,7 @@ void LogicManager::updateTracingBullets(BulletManager& bulletManager, EnemyManag
                             [&](const std::shared_ptr<Enemy>& a, const std::shared_ptr<Enemy>& b) {
                                 return a->livesLost < b->livesLost; // Compare health
                             });
+
                         break;
                 }
 
@@ -517,7 +523,7 @@ void LogicManager::updateTowers(TowerManager& towerManager, EnemyManager& enemyM
                     if(!enemy->isActiveFlag) continue;
 
                     // std::cerr << "enemy position: " << enemy->position.x << ", " << enemy->position.y << std::endl;
-                    if(attack->isInRange(enemy->getBoundingBox(), enemy->rotation, enemy->properties.isCamo, tower->attackBuff)) {
+                    if(attack->isInRange(enemy->getBoundingBox(), enemy->rotation, tower->attackBuff, *enemy)) {
                         enemiesInRange.push_back(enemy);
                     }
                 }

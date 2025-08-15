@@ -60,9 +60,9 @@ std::unique_ptr<TowerSpawner> TowerSpawner::clone() const {
 
 void TowerSpawner::init() {
     // Initialize tower templates
-    towerTemplates[TowerType::DartMonkey] = std::make_unique<SniperMonkey>();
-    towerTemplates[TowerType::BombShooter] = std::make_unique<TackShooter>();
-    towerTemplates[TowerType::NinjaMonkey] = std::make_unique<BoomerangMonkey>();
+    towerTemplates[TowerType::DartMonkey] = std::make_unique<DartMonkey>();
+    towerTemplates[TowerType::BombShooter] = std::make_unique<BombShooter>();
+    towerTemplates[TowerType::NinjaMonkey] = std::make_unique<NinjaMonkey>();
     towerTemplates[TowerType::SniperMonkey] = std::make_unique<SniperMonkey>();
     towerTemplates[TowerType::TackShooter] = std::make_unique<TackShooter>();
     towerTemplates[TowerType::BoomerangMonkey] = std::make_unique<BoomerangMonkey>();

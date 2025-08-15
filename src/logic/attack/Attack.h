@@ -4,6 +4,7 @@
 #include "../bullet/BulletManager.h"
 #include "AttackUnits.h"
 #include "AttackPattern.h"
+#include "../Enemy/Enemy.h"
 #include "../../interfaces/audio/MyAudio.h"
 #include <memory>
 #include <string>
@@ -42,7 +43,7 @@ public:
 
     virtual std::unique_ptr<Attack> clone() const = 0; // Pure virtual function for cloning the attack
 
-    virtual bool isInRange(const Rectangle& rec, const float rotation, bool isCamo, AttackBuff& attackBuff) const = 0; // Pure virtual function to check if the target is in range
+    virtual bool isInRange(const Rectangle& rec, const float rotation, AttackBuff& attackBuff, const Enemy &enemy) const = 0; // Pure virtual function to check if the target is in range
     virtual void update() = 0; // for tower update
     virtual void update(BulletManager& bulletManager, std::shared_ptr<Enemy>& enemy, AttackBuff& attackBuff) = 0; // Pure virtual function for executing the attack
 

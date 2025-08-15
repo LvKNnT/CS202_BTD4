@@ -54,7 +54,7 @@ void CaltropsAttackPattern::execute(BulletManager& bulletManager, BulletType typ
     // Spawn a Caltrops bullet at the specified position
 
     int roll = Utils::rand(0, static_cast<int>(caltropsPositions.size()) - 1);
-    Vector2 caltropPosition = caltropsPositions[roll - 1];
+    Vector2 caltropPosition = caltropsPositions[roll];
 
     rotation = atan2f(position.y - caltropPosition.y, position.x - caltropPosition.x);
     rotation = rotation * (180.0f / PI); 
