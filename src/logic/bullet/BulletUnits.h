@@ -47,6 +47,8 @@ public:
     bool canCamo = false;
     bool canPurple = false;
     bool canStripCamo = false;
+    bool canStripRegrow = false;
+    bool canEmbrittle = false; // can remove lead immunity and make bloons brittle
 
     // hit specific bloon types
     bool canNormal = true;
@@ -82,6 +84,7 @@ public:
     BulletProperties() = default;
     BulletProperties(bool canLead, bool canBlack, bool canWhite, bool canFrozen, bool canCamo, bool canPurple, bool canStripCamo = false)
         : canLead(canLead), canBlack(canBlack), canWhite(canWhite), canFrozen(canFrozen), canCamo(canCamo), canPurple(canPurple), canStripCamo(canStripCamo) {}
+    BulletProperties(const BulletProperties& other) = default;
     ~BulletProperties() = default;
 
     BulletProperties& operator+= (const BulletProperties& other);

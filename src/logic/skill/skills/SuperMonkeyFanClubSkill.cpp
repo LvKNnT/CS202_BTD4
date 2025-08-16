@@ -80,7 +80,6 @@ void SuperMonkeyFanClubSkill::activateSkill(std::shared_ptr<Tower> tower, std::v
 }
 
 void SuperMonkeyFanClubSkill::inActivateSkill() {
-    if(timer < duration) return; // Only deactivate if the skill is still active
     if(closestTowers.empty()) return; // No towers to deactivate
 
     // Reset the attack buffs of the closest towers
