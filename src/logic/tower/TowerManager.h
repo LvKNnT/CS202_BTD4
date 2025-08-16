@@ -12,7 +12,7 @@ class TowerManager {
     friend LogicInfo;
 
 public:
-    TowerManager(TowerModifies modifies = TowerModifies());
+    TowerManager(TowerModifies modifies = TowerModifies(), HeroType heroType);
     TowerManager(const TowerManager& other); 
     ~TowerManager() = default;
 

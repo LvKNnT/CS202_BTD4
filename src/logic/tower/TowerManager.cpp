@@ -7,10 +7,16 @@
 #include "../../interfaces/audio/MyAudio.h"
 #include "towers/ninjamonkey/NinjaMonkey.h"
 
-TowerManager::TowerManager(TowerModifies modifies)
+// hero includes
+#include "../hero/heroes/Quincy.h"
+#include "../hero/heroes/Benjamin.h"
+#include "../hero/heroes/Rosalia.h"
+#include "../hero/heroes/Etienne.h"
+
+TowerManager::TowerManager(TowerModifies modifies, HeroType heroType)
     : currentModifies(modifies), towerIDCounter(0) {
     // Initialize unique_ptr
-    towerSpawner = std::make_unique<TowerSpawner>(currentModifies);
+    towerSpawner = std::make_unique<TowerSpawner>(currentModifies, heroType);
 }
 
 TowerManager::TowerManager(const TowerManager& other) {

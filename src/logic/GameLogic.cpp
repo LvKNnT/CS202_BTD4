@@ -15,12 +15,15 @@ void GameLogic::init() {
     const Difficulty difficulty = Difficulty::Hard; // Default difficulty for testing
     const MapType mapType = MapType::MonkeyLane; // Default map type for testing
     const ModeType modeType = ModeType::Classic; // Default mode type for testing
+    const HeroType heroType = HeroType::Quincy; // Default hero type for testing
 
     // stimulate what will happen in the game
     // init(difficulty, mapType, modeType); // same same but different
     init(mapType);
     init(difficulty);
     init(modeType);
+    init(heroType); // hero type is not used in this case, but should be initialized
+
 
     //putTower(TowerType::DartMonkey, {200.0f, 230.0f}); // draging tower
     putTower(TowerType::DartMonkey, {125.0f, 230.0f}); // draging tower
@@ -37,14 +40,14 @@ void GameLogic::init() {
     }
 }
 
-void GameLogic::init(Difficulty difficulty, MapType mapType, ModeType modeType) {
+void GameLogic::init(Difficulty difficulty, MapType mapType, ModeType modeType, HeroType heroType) {
     resourceManager.initResource(difficulty);
     
     mapManager.loadMap(mapType); 
     modeManager.setMode(modeType); 
     
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
-    towerManager = TowerManager(resourceManager.getTowerModifies());
+    towerManager = TowerManager(resourceManager.getTowerModifies(), heroType);
 }
 
 void GameLogic::init(MapType mapType) {
@@ -59,13 +62,16 @@ void GameLogic::init(Difficulty difficulty) {
     // resourceManager.getResource().currentRound = 40;
     
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
-    towerManager = TowerManager(resourceManager.getTowerModifies());
     bulletManager = BulletManager();
 }
 
 void GameLogic::init(ModeType modeType) {
     modeManager.setMode(modeType);
     isStarted = false;
+}
+
+void GameLogic::init(HeroType heroType) {
+    towerManager = TowerManager(resourceManager.getTowerModifies());
 
     // Resetting log file
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::trunc);  

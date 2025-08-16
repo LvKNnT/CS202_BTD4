@@ -14,19 +14,48 @@
 #include "towers/icemonkey/IceMonkey.h"
 #include "towers/monkeysub/MonkeySub.h"
 
+// headers of heroes
+#include "../hero/heroes/Quincy.h"
+#include "../hero/heroes/Benjamin.h"
+#include "../hero/heroes/Rosalia.h"
+#include "../hero/heroes/Etienne.h"
+
 TowerSpawner::TowerSpawner() {
     // Initialize tower templates
     init();
 }
 
-TowerSpawner::TowerSpawner(TowerModifies modifies)
+TowerSpawner::TowerSpawner(TowerModifies modifies, HeroType heroType)
     : currentModifies(modifies) {
     // Initialize tower templates
     init();
+
+    // hero
+    switch (heroType) {
+        case HeroType::Quincy:
+            hero = std::make_unique<Quincy>();
+            break;
+        case HeroType::Benjamin:
+            hero = std::make_unique<Benjamin>();
+            break;
+        case HeroType::Rosalia:
+            hero = std::make_unique<Rosalia>();
+            break;
+        case HeroType::Etienne:
+            hero = std::make_unique<Etienne>();
+            break;
+        // Add other heroes as needed
+        default:
+            std::cerr << "Unknown hero type: " << static_cast<int>(heroType) << std::endl;
+            hero = nullptr; // No hero selected
+    }
 }
 
 TowerSpawner::TowerSpawner(const TowerSpawner& other) {
     if (this != &other) {
+        currentModifies = other.currentModifies; // Copy the current modifies
+        hero = other.hero ? other.hero->clone() : nullptr; // Clone the hero if
+
         // Clear current tower templates
         towerTemplates.clear();
 
@@ -41,6 +70,9 @@ TowerSpawner::TowerSpawner(const TowerSpawner& other) {
 
 TowerSpawner& TowerSpawner::operator=(const TowerSpawner& other) {
     if (this != &other) {
+        currentModifies = other.currentModifies; // Copy the current modifies
+        hero = other.hero ? other.hero->clone() : nullptr; // Clone the hero if it exists
+
         // Clear current tower templates
         towerTemplates.clear();
 
@@ -113,7 +145,14 @@ std::unique_ptr<Tower> TowerSpawner::getTower(TowerType type, Vector2 position, 
             attack->towerId = towerID; 
             attack->position = position; 
         }
-        tower->setModifies(modifies); 
+
+        if(hero) {
+            tower->setModifies(hero->getModifies(modifies)); // Set modifies based on the hero
+            tower->attackBuff = hero->getAttackBuff(); // Set attack buff based on the hero
+        }
+        else {    
+            tower->setModifies(modifies); 
+        }
 
         return tower;
     } else {
@@ -136,7 +175,14 @@ std::unique_ptr<Tower> TowerSpawner::getPutTower(TowerType type, Vector2 positio
         for(auto& attack : tower->attacks) {
             attack->position = position; 
         }
-        tower->setModifies(modifies);
+        
+        if(hero) {
+            tower->setModifies(hero->getModifies(modifies)); // Set modifies based on the hero
+            tower->attackBuff = hero->getAttackBuff(); // Set attack buff based on the hero
+        }
+        else {    
+            tower->setModifies(modifies); 
+        }
 
         return tower;
     } else {
@@ -162,7 +208,14 @@ std::unique_ptr<Tower> TowerSpawner::getTower(TowerType type, Vector2 position, 
             attack->towerId = towerID; 
             attack->position = position; 
         }
-        tower->setModifies(modifies); 
+
+        if(hero) {
+            tower->setModifies(hero->getModifies(modifies)); // Set modifies based on the hero
+            tower->attackBuff = hero->getAttackBuff(); // Set attack buff based on the hero
+        }
+        else {    
+            tower->setModifies(modifies); 
+        }
 
         return tower;
     } else {
