@@ -30,7 +30,7 @@ public:
     LogicInfo getInfo() const;
 
     // save/load
-    void save(const std::string& filePath) const;
+    void save(const std::string& filePath, bool isRoundEnd) const;
     void load(const std::string& filePath);
 };
 

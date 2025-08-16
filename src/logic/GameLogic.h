@@ -36,7 +36,7 @@ public:
     // condition
     int isEndGame() const;
     void runNextRound();
-    bool isRoundRun();
+    bool isRoundRun() const;
     bool isStartedFirstRound();
 
     // Supplyment methos for Game

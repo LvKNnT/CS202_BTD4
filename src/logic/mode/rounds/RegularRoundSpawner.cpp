@@ -494,6 +494,9 @@ void RegularRoundSpawner::init() {
     roundTemplates[100] = Round(1534, {
         {BloonType::Bad, {0, 0, 0}, 1, 0.05f, 0.05f}
     });
+    roundTemplates[101] = Round(0, {
+        {BloonType::Bad, {0, 0, 0}, 1, 10000000.00f, 10000000.00f} // Placeholder for future rounds
+    });
     // fortified camo regrow
 }
 

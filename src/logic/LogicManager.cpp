@@ -821,7 +821,7 @@ void LogicManager::sellTower(ResourceManager& resourceManager, TowerManager& tow
     }
 }
 
-bool LogicManager::isPlayingRound(ModeManager& modeManager, EnemyManager& enemyManager) const {
+bool LogicManager::isPlayingRound(const ModeManager& modeManager, const EnemyManager& enemyManager) const {
     // Check if the game is in a state where a round can be played
     return !modeManager.canPlayNextRound(enemyManager.enemyList.empty());
 }

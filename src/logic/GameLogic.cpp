@@ -129,6 +129,7 @@ void GameLogic::update() {
 
         if(resourceManager.isEndGame() == 0 && isStarted && logicManager.playRound(resourceManager, modeManager, enemyManager, bulletManager, mapManager)) {
             autoSave(); 
+            saveGame();
         }
 
         logicManager.updateEnemies(enemyManager, mapManager, resourceManager);
@@ -163,7 +164,7 @@ int GameLogic::isEndGame() const {
     return resourceManager.isEndGame();
 }
 
-bool GameLogic::isRoundRun() {
+bool GameLogic::isRoundRun() const {
     return logicManager.isPlayingRound(modeManager, enemyManager);
 }
 
@@ -282,7 +283,7 @@ void GameLogic::autoSave() const {
     }
 
     mapManager.save(saveFilePath);
-    resourceManager.save(saveFilePath);
+    resourceManager.save(saveFilePath, true);
     modeManager.save(saveFilePath);
     towerManager.save(saveFilePath);
 }
@@ -307,6 +308,13 @@ void GameLogic::saveGame() const {
     std::cerr << "Saving game to: " << saveFilePath << std::endl;
 
     // reset save file
+    // Check if the directory exists, if not, create it
+    std::filesystem::path saveDir = std::filesystem::path(saveFilePath).parent_path();
+    if (!std::filesystem::exists(saveDir)) {
+        std::filesystem::create_directories(saveDir);
+    }
+
+    // Create the file if it does not exist, or reset it
     std::fstream saveFile(saveFilePath, std::ios::out | std::ios::trunc);
     if (saveFile.is_open()) {
         saveFile.close();
@@ -315,7 +323,7 @@ void GameLogic::saveGame() const {
     }
 
     mapManager.save(saveFilePath);
-    resourceManager.save(saveFilePath);
+    resourceManager.save(saveFilePath, !isRoundRun());
     modeManager.save(saveFilePath);
     towerManager.save(saveFilePath);
 }

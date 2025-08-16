@@ -72,7 +72,7 @@ public:
         return BulletProperties{true, false, true, true, false, true, false};
     }
     static BulletProperties ice() {
-        return BulletProperties{false, true, false, false, false, false, true};
+        return BulletProperties{false, true, false, false, false, true, false};
     }
     static BulletProperties magic() {
         return BulletProperties{false, true, true, false, false, false, false};
