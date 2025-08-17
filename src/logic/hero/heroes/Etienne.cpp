@@ -7,6 +7,10 @@ Etienne::Etienne() {
     info["type"] = "Hero";
 }
 
+std::unique_ptr<Hero> Etienne::clone() const {
+    return std::make_unique<Etienne>(*this);
+}
+
 HeroType Etienne::getType() const {
     return HeroType::Etienne;
 }

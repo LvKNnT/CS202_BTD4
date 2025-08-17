@@ -13,8 +13,13 @@
 #include "../hero/heroes/Rosalia.h"
 #include "../hero/heroes/Etienne.h"
 
-TowerManager::TowerManager(TowerModifies modifies, HeroType heroType)
+TowerManager::TowerManager(TowerModifies modifies)
     : currentModifies(modifies), towerIDCounter(0) {
+    towerSpawner = nullptr;
+}
+
+TowerManager::TowerManager(HeroType heroType, TowerModifies modifies)
+    : currentHeroType(heroType), currentModifies(modifies), towerIDCounter(0) {
     // Initialize unique_ptr
     towerSpawner = std::make_unique<TowerSpawner>(currentModifies, heroType);
 }
@@ -308,6 +313,8 @@ void TowerManager::save(const std::string& filePath) const {
         return;
     } 
 
+    file << static_cast<int>(currentHeroType) << std::endl; // Save hero type
+
     // file << "towers\n"; 
     file << towerList.size() << std::endl; // Save the number of towers
     
@@ -334,6 +341,11 @@ void TowerManager::load(const std::string& filePath) {
     std::getline(file, line);
     std::getline(file, line);
     std::getline(file, line);
+
+    int currentHeroTypeInt;
+    file >> currentHeroTypeInt; // Load hero type
+    currentHeroType = static_cast<HeroType>(currentHeroTypeInt);
+    towerSpawner = std::make_unique<TowerSpawner>(currentModifies, currentHeroType);
 
     int towerCount;
     file >> towerCount; // Read the number of towers

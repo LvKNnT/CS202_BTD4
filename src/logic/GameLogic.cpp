@@ -47,7 +47,7 @@ void GameLogic::init(Difficulty difficulty, MapType mapType, ModeType modeType, 
     modeManager.setMode(modeType); 
     
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
-    towerManager = TowerManager(resourceManager.getTowerModifies(), heroType);
+    towerManager = TowerManager(heroType, resourceManager.getTowerModifies());
 }
 
 void GameLogic::init(MapType mapType) {
@@ -71,7 +71,7 @@ void GameLogic::init(ModeType modeType) {
 }
 
 void GameLogic::init(HeroType heroType) {
-    towerManager = TowerManager(resourceManager.getTowerModifies());
+    towerManager = TowerManager(heroType, resourceManager.getTowerModifies());
 
     // Resetting log file
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::trunc);  

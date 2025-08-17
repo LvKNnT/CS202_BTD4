@@ -7,6 +7,10 @@ Quincy::Quincy() {
     info["type"] = "Hero";
 }
 
+std::unique_ptr<Hero> Quincy::clone() const {
+    return std::make_unique<Quincy>(*this);
+}
+
 HeroType Quincy::getType() const {
     return HeroType::Quincy;
 }

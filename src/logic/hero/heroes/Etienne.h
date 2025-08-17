@@ -6,7 +6,6 @@
 class Etienne : public Hero {
 public:
     Etienne();
-    Etienne(const Etienne& other);
     ~Etienne() override = default;
 
     std::unique_ptr<Hero> clone() const override;

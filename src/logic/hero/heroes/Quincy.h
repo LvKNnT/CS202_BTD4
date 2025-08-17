@@ -6,7 +6,6 @@
 class Quincy : public Hero {
 public:
     Quincy();
-    Quincy(const Quincy& other);
     ~Quincy() override = default;
 
     std::unique_ptr<Hero> clone() const override;

@@ -7,6 +7,10 @@ Benjamin::Benjamin() {
     info["type"] = "Hero";
 }
 
+std::unique_ptr<Hero> Benjamin::clone() const {
+    return std::make_unique<Benjamin>(*this);
+}
+
 HeroType Benjamin::getType() const {
     return HeroType::Benjamin;
 }

@@ -7,6 +7,10 @@ Rosalia::Rosalia() {
     info["type"] = "Hero";
 }
 
+std::unique_ptr<Hero> Rosalia::clone() const {
+    return std::make_unique<Rosalia>(*this);
+}
+
 HeroType Rosalia::getType() const {
     return HeroType::Rosalia;
 }
