@@ -41,9 +41,9 @@ void GameLogic::init() {
 }
 
 void GameLogic::init(Difficulty difficulty, MapType mapType, ModeType modeType, HeroType heroType) {
-    resourceManager.initResource(difficulty);
-    
     mapManager.loadMap(mapType); 
+    
+    resourceManager.initResource(difficulty);
     modeManager.setMode(modeType); 
     
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
@@ -59,7 +59,7 @@ void GameLogic::init(Difficulty difficulty) {
     
     // for testing only
     resourceManager.getResource().cash = 999999;
-    resourceManager.getResource().currentRound = 75;
+    // resourceManager.getResource().currentRound = 75;
     
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
     bulletManager = BulletManager();
@@ -70,11 +70,13 @@ void GameLogic::init(ModeType modeType) {
     isStarted = false;
 
     //temporary
-    init(HeroType::Benjamin); // Initialize with a default hero type
+    init(HeroType::Quincy); // Initialize with a default hero type
 }
 
 void GameLogic::init(HeroType heroType) {
     towerManager = TowerManager(heroType, resourceManager.getTowerModifies());
+
+    std::cerr << "Hero initialized: " << static_cast<int>(heroType) << std::endl;
 
     // Resetting log file
     std::fstream flog("../logs/log.txt", std::ios::out | std::ios::trunc);  
@@ -313,11 +315,25 @@ void GameLogic::loadAutoSave() {
         std::cerr << "Autosave file does not exist: " << saveFilePath << std::endl;
         return;
     }
+    std::ifstream infile(saveFilePath, std::ios::ate);
+    if (infile.tellg() == 0) {
+        std::cerr << "Autosave file is empty: " << saveFilePath << std::endl;
+        infile.close();
+        return;
+    }
+    infile.close();
 
     mapManager.load(saveFilePath);
+
     resourceManager.load(saveFilePath);
-    modeManager.load(saveFilePath);
+    enemyManager = EnemyManager(resourceManager.getEnemyModifies());
+    towerManager = TowerManager(resourceManager.getTowerModifies());
     towerManager.load(saveFilePath);
+
+    modeManager.load(saveFilePath);
+
+    // Load saved Towers upgrades
+    logicManager.loadSavedTowers(towerManager);
 }
 
 void GameLogic::saveGame() const {
@@ -353,6 +369,13 @@ void GameLogic::loadGame(MapType type) {
         std::cerr << "Save file does not exist: " << saveFilePath << std::endl;
         return;
     }
+    std::ifstream infile(saveFilePath, std::ios::ate);
+    if (infile.tellg() == 0) {
+        std::cerr << "Save file is empty: " << saveFilePath << std::endl;
+        infile.close();
+        return;
+    }
+    infile.close();
 
     mapManager.load(saveFilePath);
 

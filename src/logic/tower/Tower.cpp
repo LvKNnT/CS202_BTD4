@@ -9,7 +9,7 @@ Tower::Tower(Vector2 position, Vector2 size, float rotation, TowerType type, int
 }
 
 Tower::Tower(const Tower& other)
-    : GameObject(other), type(other.type), cost(other.cost), upgradeCost(other.upgradeCost), targetPriority(other.targetPriority), towerId(other.towerId), popCount(other.popCount), info(other.info), attackBuff(other.attackBuff) {
+    : GameObject(other), type(other.type), cost(other.cost), upgradeCost(other.upgradeCost), targetPriority(other.targetPriority), towerId(other.towerId), popCount(other.popCount), info(other.info), savedInfo(other.savedInfo), attackBuff(other.attackBuff), upgradeTextureHandler(other.upgradeTextureHandler) {
     // Copy the attacks
     attacks.clear(); 
     for(const auto& attack : other.attacks) {

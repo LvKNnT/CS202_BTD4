@@ -197,6 +197,11 @@ Rectangle BoomerangMonkey::getBoundingBox() const {
     return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y};
 }
 
+bool BoomerangMonkey::isPlaceable(Point::Type pointType) const {
+    // Check if the tower can be placed based on the point type
+    return pointType == Point::Type::None; // Boomerang Monkey can only be placed on land
+}
+
 bool BoomerangMonkey::isActive() const {
     return isActiveFlag;
 }

@@ -12,6 +12,7 @@
 #include "UpgradeTextureHandler.h"
 #include "../level/TowerModifies.h"
 #include "../LogicInfo.h"
+#include "../map/Point.h"
 
 // Some pre-declarations
 class Skill;
@@ -45,6 +46,7 @@ public:
     virtual void setRotation(float rotation) = 0; 
     virtual void setModifies(const TowerModifies& modifies) = 0; 
     virtual LogicInfo getInfo() = 0; // Pure virtual function for UI info
+    virtual bool isPlaceable(Point::Type pointType) const = 0; // Check if the tower can be placed at the current position
 
 protected:
     std::vector<std::unique_ptr<Attack>> attacks; // List of attacks the tower can perform

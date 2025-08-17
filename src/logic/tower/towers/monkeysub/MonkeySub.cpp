@@ -192,6 +192,14 @@ LogicInfo MonkeySub::getInfo() {
     return this->info;
 }
 
+bool MonkeySub::isPlaceable(Point::Type pointType) const {
+    // Check if the tower can be placed based on the point type
+
+    return pointType == Point::Type::None; // Temporary
+    
+    return pointType == Point::Type::Water; // Monkey Sub can only be placed on water
+}
+
 Rectangle MonkeySub::getBoundingBox() const {
     // Provide the bounding box for collision detection
     return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y};
