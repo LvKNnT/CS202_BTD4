@@ -70,7 +70,7 @@ MovableTextbox::MovableTextbox(const std::string& _text, const Font& _font, cons
 void MovableTextbox::draw() const {
     if(!isAvailable) return;
     Vector2 mousePos = GetMousePosition();
-    float rectHeight = height + 5.0;
+    float rectHeight = height + 10.0;
     for(auto ch:text) {
         if(ch == '\n') {
             rectHeight += height;

@@ -30,7 +30,7 @@ void ModeButton::update() {
 
     if(state != Button::State::Clicked) return;
     notify(clickedEvent);
-    notify(Event::Type::ToGameState);
+    notify(Event::Type::ToHeroSelection);
 }
 
 StandardModeButton::StandardModeButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
@@ -55,6 +55,47 @@ ApopalyseModeButton::ApopalyseModeButton(const Texture &_texture, int _fontSize,
     : ModeButton(_texture, _fontSize, _height, _width, _position) {
     clickedEvent = Event::Type::ApopalyseMode;
     hoveringEvent = Event::Type::HoveringApopalyseMode;
+}
+
+HeroButton::HeroButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+    : CanHoveringButton(_texture, _fontSize, _height, _width, _position) {
+    attach(Game::Instance().getStateManager());
+}
+
+void HeroButton::update() {
+    Button::update();
+    if(!isAvailable) return;
+    if(state != Button::State::None) {
+        notify(hoveringEvent);
+    } else notify(Event::Type::None);
+
+    if(state != Button::State::Clicked) return;
+    notify(clickedEvent);
+    notify(Event::Type::ToGameState);
+}
+
+QuincyButton::QuincyButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
+    : HeroButton(_texture, _fontSize, _height, _width, _position) {
+    clickedEvent = Event::Type::ClickedQuincy;
+    hoveringEvent = Event::Type::HoveringQuincy;
+}
+
+BenjaminButton::BenjaminButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
+    : HeroButton(_texture, _fontSize, _height, _width, _position) {
+    clickedEvent = Event::Type::ClickedBenjamin;
+    hoveringEvent = Event::Type::HoveringBenjamin;
+}
+
+RosaliaButton::RosaliaButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
+    : HeroButton(_texture, _fontSize, _height, _width, _position) {
+    clickedEvent = Event::Type::ClickedRosalia;
+    hoveringEvent = Event::Type::HoveringRosalia;
+}
+
+EtienneButton::EtienneButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
+    : HeroButton(_texture, _fontSize, _height, _width, _position) {
+    clickedEvent = Event::Type::ClickedEtienne;
+    hoveringEvent = Event::Type::HoveringEtienne;
 }
 
 Info::Info(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
@@ -105,4 +146,3 @@ ChooseTackShooterTower::ChooseTackShooterTower(const Texture &_texture, int _fon
     hoveringEvent = Event::Type::HoveringChooseTackShooter;
     clickedEvent = Event::Type::ClickedChooseTackShooter;
 }
-

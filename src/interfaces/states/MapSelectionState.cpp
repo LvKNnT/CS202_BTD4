@@ -41,6 +41,13 @@ MapSelectionState::MapSelectionState() : State(754, 1022, Game::Instance().getTe
 
     saveGameTexture = std::make_shared<TextureField>(Game::Instance().getTextureManager().getTexture("SaveGame"), 56, 50, (Vector2) {tablePos.x + (width - 600) / 2 + 600 - 25, tablePos.y + (height - 432) / 2 - 25});
     panel->addPanelElement(saveGameTexture);
+
+    infoButton = std::make_shared<Info>(Game::Instance().getTextureManager().getTexture("Info"), 1, 50, 50, (Vector2) {tablePos.x + (width - 600) / 2, tablePos.y + (height - 432) / 2});
+    panel->addPanelElement(infoButton);
+
+    infoTextbox = std::make_shared<MovableTextbox>("", Game::Instance().getFontManager().getFont("Small"), WHITE, 20, 300);
+    panel->addPanelElement(infoTextbox);
+    infoTextbox->setAvailable(false);
 }
 
 void MapSelectionState::draw() const {
@@ -51,6 +58,10 @@ void MapSelectionState::draw() const {
 void MapSelectionState::handleInput() {
     State::handleInput();
     saveGameTexture->setAvailable(std::dynamic_pointer_cast<StateManager>(Game::Instance().getStateManager())->canLoadGame(static_cast<MapType>(curMap * 2)));
+    infoButton->setAvailable(curMap < maxMap - 1);
+    if(std::dynamic_pointer_cast<Button>(infoButton)->getState() == Button::State::None) {
+        infoTextbox->setAvailable(false);
+    }
 }
 
 void MapSelectionState::update(Event::Type event) {
@@ -66,6 +77,10 @@ void MapSelectionState::update(Event::Type event) {
             mapName[curMap]->setAvailable(false);
             ChooseMapButton[--curMap]->setAvailable(true);
             mapName[curMap]->setAvailable(true);
+            break;
+        case Event::Type::HoveringInfo:
+            infoTextbox->setAvailable(true);
+            std::dynamic_pointer_cast<TextField>(infoTextbox)->setText(MapInfo::Instance().getMapInfo(static_cast<MapType>(curMap * 2))["description"]);
             break;
     }
     previousMapButton->setAvailable(curMap > 0);

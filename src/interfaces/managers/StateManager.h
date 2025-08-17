@@ -15,6 +15,7 @@
 #include "../states/GameOverState.h"
 #include "../states/VictoryState.h"
 #include "../states/LoadingState.h"
+#include "../states/HeroSelectionState.h"
 #include "../../logic/Map/MapUnits.h"
 #include "../../logic/mode/ModeUnits.h"
 #include "../../logic/level/DifficultyUnits.h"
@@ -34,6 +35,7 @@ private:
     std::shared_ptr<State> gameOverState;
     std::shared_ptr<State> victoryState;
     std::shared_ptr<State> loadingState;
+    std::shared_ptr<State> heroSelectionState;
 
     ModeType modeType;
     Difficulty difficultyType;

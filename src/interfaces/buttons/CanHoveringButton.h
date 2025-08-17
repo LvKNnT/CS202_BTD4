@@ -25,7 +25,6 @@ public:
     void update() override;
 };
 
-
 class StandardModeButton : public ModeButton {
 public:
     StandardModeButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
@@ -46,8 +45,34 @@ public:
     ApopalyseModeButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
-// Tower buttons
+// Hero buttons 
+class HeroButton : public CanHoveringButton {
+public: 
+    HeroButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+    void update() override;
+};
 
+class QuincyButton : public HeroButton {
+public:
+    QuincyButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class BenjaminButton : public HeroButton {
+public:
+    BenjaminButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class RosaliaButton : public HeroButton {
+public:
+    RosaliaButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class EtienneButton : public HeroButton {
+public:
+    EtienneButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+// Tower buttons
 class ChooseBombShooterTower : public CanHoveringButton {
 public:
     ChooseBombShooterTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);

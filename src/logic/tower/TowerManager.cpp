@@ -15,7 +15,8 @@
 
 TowerManager::TowerManager(TowerModifies modifies)
     : currentModifies(modifies), towerIDCounter(0) {
-    towerSpawner = nullptr;
+    //towerSpawner = nullptr;
+    towerSpawner = std::make_unique<TowerSpawner>(currentModifies);
 }
 
 TowerManager::TowerManager(HeroType heroType, TowerModifies modifies)

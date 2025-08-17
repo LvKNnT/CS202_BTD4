@@ -25,6 +25,12 @@ TowerSpawner::TowerSpawner() {
     init();
 }
 
+TowerSpawner::TowerSpawner(TowerModifies modifies)
+    : currentModifies(modifies) {
+    // Initialize tower templates
+    init();
+}
+
 TowerSpawner::TowerSpawner(TowerModifies modifies, HeroType heroType)
     : currentModifies(modifies) {
     // Initialize tower templates

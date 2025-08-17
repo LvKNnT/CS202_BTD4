@@ -28,7 +28,8 @@ public:
         ToSpecificModeSelection, 
         ToGameOver,
         ToVictory, 
-        
+        ToHeroSelection,
+
         // Game State
         UpgradeTowerLeft,
         UpgradeTowerMiddle,
@@ -102,8 +103,15 @@ public:
         TickFastForward, // We should FastForward the game
         UntickFastForward, // We should Stop FastForward the game
         
-        // Tower - handle tower placing
-        // Clicked the button
+        // Heros
+        HoveringQuincy,
+        ClickedQuincy,
+        HoveringBenjamin,
+        ClickedBenjamin,
+        HoveringRosalia,
+        ClickedRosalia,
+        HoveringEtienne,
+        ClickedEtienne,
     };
 
 };

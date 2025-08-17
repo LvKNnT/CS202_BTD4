@@ -67,6 +67,7 @@ private:
     void loadFont();
     void loadSound();
     void loadTowerTexture();
+    void loadHeroTexture();
     void loadAnimationTexture();
     void drawLoadingScren();
 };

@@ -19,6 +19,7 @@ void Game::LoadContent()
 {
     loadTexture();
     loadTowerTexture();
+    loadHeroTexture();
     loadFont();
     loadSound();
     loadAnimationTexture();
@@ -26,7 +27,7 @@ void Game::LoadContent()
 }
 
 void Game::loadSettings() {
-    const std::string filePath = "../save/settings/settings.txt";
+    const std::string filePath = "../save/settings.txt";
     if (!std::filesystem::exists(filePath) || std::filesystem::is_empty(filePath)) {
         std::cerr<<"Settings file does not exits or it is empty\n";
         return;
@@ -55,7 +56,8 @@ void Game::loadSettings() {
 }
 
 void Game::saveSettings() {
-    const std::string filePath = "../save/settings/settings.txt";
+    
+    const std::string filePath = "../save/settings.txt";
     std::ofstream fout(filePath);
     if(!fout) {
         std::cerr<<"Failed to save settings\n";
@@ -192,6 +194,13 @@ void Game::loadTowerTexture() {
     textureManager.loadTextureDraw("Sniper Monkey Info", "../assets/tower/Sniper_Monkey/BTD6_Sniper_Monkey.png");
     textureManager.loadTextureDraw("Boomerang Monkey Info", "../assets/tower/Boomerang_Monkey/BTD6_Boomerang_Monkey.png");
     textureManager.loadTextureDraw("Tack Shooter Info", "../assets/tower/Tack_Shooter/BTD6_Tack_Shooter.png");
+}
+
+void Game::loadHeroTexture() {
+    textureManager.loadTextureDraw("Quincy", "../assets/heroes/Quincy/QuincyPortrait.png");
+    textureManager.loadTextureDraw("Benjamin", "../assets/heroes/Benjamin/BenjaminPortrait.png");
+    textureManager.loadTextureDraw("Rosalia", "../assets/heroes/Rosalia/RosaliaPortrait.png");
+    textureManager.loadTextureDraw("Etienne", "../assets/heroes/Etienne/Etienne.png");
 }
 
 void Game::loadAnimationTexture() {
