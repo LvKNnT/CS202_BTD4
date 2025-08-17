@@ -5,8 +5,8 @@ CanHoveringButton::CanHoveringButton(const Texture &_texture, int _fontSize, int
     : Button(_texture, _fontSize, _height, _width, _position) {
 }
 
-void CanHoveringButton::handleInput() {
-    Button::handleInput();
+void CanHoveringButton::update() {
+    Button::update();
     if(!isAvailable) return;
     if(state != Button::State::None) {
         notify(hoveringEvent);
@@ -21,8 +21,8 @@ ModeButton::ModeButton(const Texture &_texture, int _fontSize, int _height, int 
     attach(Game::Instance().getStateManager());
 }
 
-void ModeButton::handleInput() {
-    Button::handleInput();
+void ModeButton::update() {
+    Button::update();
     if(!isAvailable) return;
     if(state != Button::State::None) {
         notify(hoveringEvent);

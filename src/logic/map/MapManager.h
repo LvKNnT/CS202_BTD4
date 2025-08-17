@@ -27,7 +27,7 @@ public:
     void unLoad();
 
     // save/load
-    void save(std::string filePath) const;
+    void save(std::string filePath, bool isReverse) const;
     void load(std::string filePath);
 
     // Get the current map

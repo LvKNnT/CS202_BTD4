@@ -7,7 +7,7 @@
 class CanHoveringButton : public Button {
 public: 
     CanHoveringButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
+    void update() override;
 
 protected:
     Event::Type clickedEvent;
@@ -22,7 +22,7 @@ public:
 class ModeButton : public CanHoveringButton {
 public: 
     ModeButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
+    void update() override;
 };
 
 

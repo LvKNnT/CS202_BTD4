@@ -6,6 +6,7 @@
 
 #include "State.h"
 #include "../../logic/tower/TowerUnits.h"
+#include "../../logic/Map/MapUnits.h"
 #include "../../logic/LogicInfo.h"
 
 class GameState : public State, public ISubject {
@@ -63,7 +64,6 @@ private:
     std::shared_ptr<PanelElement> skillInfoTextbox;
     std::shared_ptr<PanelElement> towerInfoTextbox;
     std::shared_ptr<PanelElement> upgradeInfoTextbox;
-
     // Functions
     void pickTower();
     void unpickTower();

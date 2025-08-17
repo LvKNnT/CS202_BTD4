@@ -58,7 +58,7 @@ void TextField::draw() const {
     DrawTextEx(font, text.c_str(), (Vector2) {position.x + isOneLine * (width - textWidth) / 2, position.y}, height, 0, color);
 }
 
-void TextField::handleInput() {
+void TextField::update() {
     if(!isAvailable) return;
 }
 

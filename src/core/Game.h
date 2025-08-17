@@ -2,8 +2,8 @@
 #define GAME_H
 
 #include <memory>
-#include <atomic>
-
+#include <fstream>
+#include <filesystem>
 // UI/UX
 #include "../interfaces/managers/StateManager.h"
 #include "../interfaces/managers/TextureManager.h"
@@ -24,9 +24,6 @@ class Game {
 public:
     static Game& Instance();
 
-    Game();
-    ~Game();
-
     void loadLoadingStateContent();
     void LoadContent();
     void UnloadContent();
@@ -46,6 +43,10 @@ public:
 
     GameLogic &getGameLogic();
 private:
+    Game();
+    Game(const Game&) = delete; // prevent copy-constructor
+    Game& operator= (const Game&) = delete; // prevent =    
+    
     bool exit; // for exit 
     bool loadingDone = false;
 
@@ -59,6 +60,9 @@ private:
 
     GameLogic gameLogic;
 
+    void loadSettings();
+    void saveSettings();
+    
     void loadTexture();
     void loadFont();
     void loadSound();

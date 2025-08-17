@@ -4,7 +4,7 @@
 #include "../enemy/Enemy.h"
 
 Skill::Skill(float cooldown, const std::string& name)
-    : cooldown(cooldown), timer(0.0f), name(name) {
+    : cooldown(cooldown), timer(0.0f), name(name), isSkillActivating(false) {
 }
 Skill::~Skill() {
     // Destructor implementation can be extended if needed
@@ -21,3 +21,16 @@ float Skill::getCooldownTime() const {
 float Skill::getTimer() const {
     return timer; // Return the current timer of the skill
 }
+
+bool Skill::getISkillsActivating() const {
+    return isSkillActivating;
+}
+
+void Skill::setTimer(float newTimer){
+    timer = newTimer;
+}
+
+void Skill::setIsSkillActivating(float newIsSkillActivating) {
+    isSkillActivating = newIsSkillActivating;
+}
+

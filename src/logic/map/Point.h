@@ -14,7 +14,8 @@ public:
         Exit,
         Invisible,
         Water, 
-        Enemy
+        Enemy,
+        Obstacle
     };
 
 private:

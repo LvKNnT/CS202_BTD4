@@ -5,6 +5,12 @@
 #include "maps/ReverseMonkeyLane.h"
 #include "maps/Jungle.h"
 #include "maps/ReverseJungle.h"
+#include "maps/RinkRevenge.h"
+#include "maps/ReverseRinkRevenge.h"
+#include "maps/DuneSea.h"
+#include "maps/ReverseDuneSea.h"
+#include "maps/AttackOnBloon.h"
+#include "maps/ReverseAttackOnBloon.h"
 
 MapSpawner::MapSpawner() {
     /**
@@ -58,6 +64,12 @@ void MapSpawner::init() {
     mapTemplates[MapType::ReverseMonkeyLane] = std::make_unique<ReverseMonkeyLane>();
     mapTemplates[MapType::Jungle] = std::make_unique<Jungle>();
     mapTemplates[MapType::ReverseJungle] = std::make_unique<ReverseJungle>();
+    mapTemplates[MapType::RinkRevenge] = std::make_unique<RinkRevenge>();
+    mapTemplates[MapType::ReverseRinkRevenge] = std::make_unique<ReverseRinkRevenge>();
+    mapTemplates[MapType::DuneSea] = std::make_unique<DuneSea>();
+    mapTemplates[MapType::ReverseDuneSea] = std::make_unique<ReverseDuneSea>();
+    mapTemplates[MapType::AttackOnBloon] = std::make_unique<AttackOnBloon>();
+    mapTemplates[MapType::ReverseAttackOnBloon] = std::make_unique<ReverseAttackOnBloon>();
 }
 
 std::unique_ptr<Map> MapSpawner::getMap(MapType type) {

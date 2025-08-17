@@ -59,7 +59,3 @@ int ClassicModePlayer::getRoundReward() {
     currentRound.extraCash = 0; 
     return reward;
 }
-
-bool ClassicModePlayer::setAutoPlay(bool autoPlay) {
-    return autoPlay;
-}

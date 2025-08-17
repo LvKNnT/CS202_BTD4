@@ -2,7 +2,7 @@
 
 ReverseJungle::ReverseJungle() {
     mapType = MapType::ReverseJungle; 
-
+    MAXPATHS = 2;
     //path 0
     enemyPath[0].push_back(Point(-50, 188, Point::Type::SpawnEnenmy));
     enemyPath[0].push_back(Point(504, 190));
@@ -38,6 +38,8 @@ ReverseJungle::ReverseJungle() {
     enemyPath[0].push_back(Point(470, 81));
     enemyPath[0].push_back(Point(0, 86));
     enemyPath[0].push_back(Point(-100, 86, Point::Type::Exit));
+    enterEffects.push_back(Animation("movingTriangle", (Vector2) {70, 170}, 90.0f, 64, 40, 8, 0.25f));
+    enterEffects.back().start();
 
     //path 1
     enemyPath[1].push_back(Point(1050, 651, Point::Type::SpawnEnenmy));
@@ -65,7 +67,9 @@ ReverseJungle::ReverseJungle() {
     enemyPath[1].push_back(Point(466, 533));
     enemyPath[1].push_back(Point(481, 537));
     enemyPath[1].push_back(Point(980, 549));
-    enemyPath[1].push_back(Point(1050, 545, Point::Type::Exit));
+    enemyPath[1].push_back(Point(1100, 545, Point::Type::Exit));
+    enterEffects.push_back(Animation("movingTriangle", (Vector2) {930, 672}, -90.0f, 64, 40, 8, 0.25f));
+    enterEffects.back().start();
 }
 
 std::unique_ptr<Map> ReverseJungle::clone() const {
@@ -78,10 +82,7 @@ void ReverseJungle::loadTexture() {
     pathImage = LoadImage("../assets/map/Jungle_thumb.png"); // Path image for collision detection
 }
 
-void ReverseJungle::update() {
-    // This map has no dynamic elements to update
-}
-
 std::pair<Vector2, int> ReverseJungle::getPositionAndPathIdx(BloonType type) {
-    return {getCurrentPoint(0, 0), 0}; // Default position and path index for this map
+    pathIdxCount = (pathIdxCount + 1) % MAXPATHS;
+    return {getCurrentPoint(0, pathIdxCount), pathIdxCount}; // Default position and path index for this map
 }

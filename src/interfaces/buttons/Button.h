@@ -30,7 +30,7 @@ public:
     bool isClicked() const override;
     void onClick() override;
     void getBoundingBox(float& x, float& y, float& width, float& height) const override;
-    virtual void handleInput();
+    virtual void update();
     State getState() const;
     
     void attach(std::shared_ptr<IObserver> observer) override;
@@ -42,49 +42,49 @@ public:
 class NewGame : public Button {
 public: 
     NewGame(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
+    void update() override;
 };
 
 class Exit : public Button {
 public: 
     Exit(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
+    void update() override;
 };
 
 class CommingSoon : public Button {
 public: 
     CommingSoon(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
+    void update() override;
 };
 
 class HigherSound : public Button {
 public:
     HigherSound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
+    void update() override;
 };
 
 class LowerSound : public Button {
 public:
     LowerSound(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
+    void update() override;
 };
 
 class HigherMusic : public Button {
 public:
     HigherMusic(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
+    void update() override;
 };
 
 class LowerMusic : public Button {
 public:
     LowerMusic(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
+    void update() override;
 };
 
 class Continue : public Button {
 public:
     Continue(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-    void handleInput() override;
+    void update() override;
 };
 
 // deal hover effect(show infor, texture) 
@@ -96,6 +96,6 @@ public:
 //     // cancel select by clicking out of range, or press esc key
 // public:
 //     Tower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
-//     void handleInput() override;
+//     void update() override;
 // };
 #endif // BUTTON_H

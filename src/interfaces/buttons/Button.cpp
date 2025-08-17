@@ -48,7 +48,7 @@ void Button::notify(Event::Type event) {
     for(auto observer:observers) observer->update(event);
 }
 
-void Button::handleInput() {    
+void Button::update() {    
     if(CheckCollisionPointRec(GetMousePosition(), {position.x, position.y, (float) width, (float) height})) {
         state = Button::State::Hovering;
         if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) state = Button::State::Clicked;
@@ -67,8 +67,8 @@ NewGame::NewGame(const Texture &_texture, int _fontSize, int _height, int _width
     attach(Game::Instance().getStateManager());
 }
 
-void NewGame::handleInput() {
-    Button::handleInput();
+void NewGame::update() {
+    Button::update();
     if(!isAvailable || state != Button::State::Clicked) return;
     notify(Event::Type::NewGame);
     notify(Event::Type::ToMapSelection);
@@ -79,8 +79,8 @@ Exit::Exit(const Texture &_texture, int _fontSize, int _height, int _width, Vect
     title = "Exit";
 }
 
-void Exit::handleInput() {
-    Button::handleInput();
+void Exit::update() {
+    Button::update();
     if(!isAvailable || state != Button::State::Clicked) return;
     Game::Instance().requestExit();
     notify(Event::Type::Exit);
@@ -91,8 +91,8 @@ CommingSoon::CommingSoon(const Texture &_texture, int _fontSize, int _height, in
     attach(Game::Instance().getStateManager());
 }
 
-void CommingSoon::handleInput() {
-    Button::handleInput();
+void CommingSoon::update() {
+    Button::update();
     if(!isAvailable || state != Button::State::Clicked) return;
 }
 
@@ -102,8 +102,8 @@ HigherSound::HigherSound(const Texture &_texture, int _fontSize, int _height, in
     attach(Game::Instance().getStateManager());
 }
 
-void HigherSound::handleInput() {
-    Button::handleInput();
+void HigherSound::update() {
+    Button::update();
     if(!isAvailable || state != Button::State::Clicked) {
         notify(Event::Type::None);
         return;
@@ -117,8 +117,8 @@ LowerSound::LowerSound(const Texture &_texture, int _fontSize, int _height, int 
     attach(Game::Instance().getStateManager());
 }
 
-void LowerSound::handleInput() {
-    Button::handleInput();
+void LowerSound::update() {
+    Button::update();
     if(!isAvailable || state != Button::State::Clicked) {
         notify(Event::Type::None);
         return;
@@ -132,8 +132,8 @@ HigherMusic::HigherMusic(const Texture &_texture, int _fontSize, int _height, in
     attach(Game::Instance().getStateManager());
 }
 
-void HigherMusic::handleInput() {
-    Button::handleInput();
+void HigherMusic::update() {
+    Button::update();
     if(!isAvailable || state != Button::State::Clicked) {
         notify(Event::Type::None);
         return;
@@ -147,8 +147,8 @@ LowerMusic::LowerMusic(const Texture &_texture, int _fontSize, int _height, int 
     attach(Game::Instance().getStateManager());
 }
 
-void LowerMusic::handleInput() {
-    Button::handleInput();
+void LowerMusic::update() {
+    Button::update();
     if(!isAvailable || state != Button::State::Clicked) {
         notify(Event::Type::None);
         return;
@@ -162,8 +162,8 @@ Continue::Continue(const Texture &_texture, int _fontSize, int _height, int _wid
     attach(Game::Instance().getStateManager());
 }
 
-void Continue::handleInput() {
-    Button::handleInput();
+void Continue::update() {
+    Button::update();
     if(!isAvailable || state != Button::State::Clicked) return;
     notify(Event::Type::Continue);
     notify(Event::Type::ToMapSelection);

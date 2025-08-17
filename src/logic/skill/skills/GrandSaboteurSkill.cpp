@@ -69,7 +69,11 @@ void GrandSaboteurSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector
         affectedTowers[SkillFriendAccess::getTowerId(*towerPtr)] = towerPtr;
     }
 
-    if(timer == 0.0f) std::cerr << "Activated Grand Saboteur skill for " << affectedTowers.size() << " towers. (maybe more if they are added)" << std::endl;
+    if(timer == 0.0f) {
+        MySound skillSound("ActivateSkill");
+        skillSound.start();
+        std::cerr << "Activated Grand Saboteur skill for " << affectedTowers.size() << " towers. (maybe more if they are added)" << std::endl;
+    }
 }
 
 void GrandSaboteurSkill::inActivateSkill() {

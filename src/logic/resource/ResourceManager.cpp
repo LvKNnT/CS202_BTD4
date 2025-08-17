@@ -34,7 +34,11 @@ LogicInfo ResourceManager::getInfo() const {
     return currentResource.getInfo();
 }
 
-void ResourceManager::save(const std::string& filePath) const {
+Difficulty ResourceManager::getDifficulty() const {
+    return currentDifficulty;
+}
+
+void ResourceManager::save(const std::string& filePath, bool isRoundEnd) const {
     std::fstream file(filePath, std::ios::out | std::ios::app);
     if (!file.is_open()) {
         std::cerr << "Error: Failed to open file for saving resources." << std::endl;
@@ -45,7 +49,7 @@ void ResourceManager::save(const std::string& filePath) const {
     file << static_cast<int>(currentDifficulty) << " ";
     file << currentResource.cash << " ";
     file << currentResource.lives << " ";
-    file << currentResource.currentRound << "\n";
+    file << currentResource.currentRound + isRoundEnd << "\n";
     file.close();
 }
 

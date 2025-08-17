@@ -2,6 +2,7 @@
 
 Jungle::Jungle() : pathIdxCount(0) {
     mapType = MapType::Jungle; 
+    MAXPATHS = 2;
     //path 0
     enemyPath[0].push_back(Point(-50, 86, Point::Type::SpawnEnenmy));
     enemyPath[0].push_back(Point(0, 86));
@@ -17,7 +18,6 @@ Jungle::Jungle() : pathIdxCount(0) {
     enemyPath[0].push_back(Point(714, 198));
     enemyPath[0].push_back(Point(726, 221));
     enemyPath[0].push_back(Point(741, 242));
-    //enemyPath[0].push_back(Point(745, 265));
     enemyPath[0].push_back(Point(751, 283));
     enemyPath[0].push_back(Point(754, 299));
     enemyPath[0].push_back(Point(760, 347));
@@ -41,6 +41,8 @@ Jungle::Jungle() : pathIdxCount(0) {
     enemyPath[0].push_back(Point(532, 197));
     enemyPath[0].push_back(Point(504, 190));
     enemyPath[0].push_back(Point(-100, 188, Point::Type::Exit));
+    enterEffects.push_back(Animation("movingTriangle", (Vector2) {70, 62}, 90.0f, 64, 40, 8, 0.25f));
+    enterEffects.back().start();
 
     //path 1
     enemyPath[1].push_back(Point(1050, 651, Point::Type::SpawnEnenmy));
@@ -68,7 +70,9 @@ Jungle::Jungle() : pathIdxCount(0) {
     enemyPath[1].push_back(Point(466, 533));
     enemyPath[1].push_back(Point(481, 537));
     enemyPath[1].push_back(Point(980, 549));
-    enemyPath[1].push_back(Point(1050, 545, Point::Type::Exit));
+    enemyPath[1].push_back(Point(1100, 545, Point::Type::Exit));
+    enterEffects.push_back(Animation("movingTriangle", (Vector2) {930, 675}, -90.0f, 64, 40, 8, 0.25f));
+    enterEffects.back().start();
 }
 
 std::unique_ptr<Map> Jungle::clone() const {
@@ -79,10 +83,6 @@ void Jungle::loadTexture() {
     texture = Game::Instance().getTextureManager().getTexture("JungleThumb");
     mapImage = LoadImage("../assets/map/Jungle_thumb_path_mask.png"); // MUST BE LOADED
     pathImage = LoadImage("../assets/map/Jungle_thumb.png"); // Path image for collision detection
-}
-
-void Jungle::update() {
-    // This map has no dynamic elements to update
 }
 
 std::pair<Vector2, int> Jungle::getPositionAndPathIdx(BloonType type) {

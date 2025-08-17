@@ -90,7 +90,7 @@ public:
 
     BulletProperties& operator= (const BulletProperties& other);
 
-    BulletProperties& getITracing(float range, TargetPriority targetPriority, bool isOnlyFollowing = false, bool isFocus = false);
+    BulletProperties& getITracing(float range, TargetPriority targetPriority, bool isFocus = false, bool isFollowing = false);
     BulletProperties& removeITracing();
     BulletProperties& getITracing(std::shared_ptr<Enemy> enemy);
     float getRotation(float rotation, Vector2 position);

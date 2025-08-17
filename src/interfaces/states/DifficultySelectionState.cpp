@@ -40,4 +40,19 @@ void DifficultySelectionState::draw() const {
 }
 
 void DifficultySelectionState::update(Event::Type event) {
+    auto stateManager = std::dynamic_pointer_cast<StateManager>(Game::Instance().getStateManager());
+    switch(event) {
+        case Event::Type::ToEasyModeSelection:
+            stateManager->setDifficulty(Difficulty::Easy);
+            break;
+        case Event::Type::ToMediumModeSelection:
+            stateManager->setDifficulty(Difficulty::Medium);
+            break;
+        case Event::Type::ToHardModeSelection:
+            stateManager->setDifficulty(Difficulty::Hard);
+            break;
+        case Event::Type::ToImpoppableModeSelection:
+            stateManager->setDifficulty(Difficulty::Impoppable);
+            break;
+    }
 }

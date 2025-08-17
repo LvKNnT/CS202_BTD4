@@ -27,10 +27,12 @@ public:
     void stop(AudioType audioType, std::string name);
     void increaseVolume(AudioType audioType);
     void decreaseVolume(AudioType audioType);
+    void setVolume(AudioType audioType, float _volume);
     void mute(AudioType audioType);
     void unmute(AudioType audioType);
     int getVolume(AudioType audioType) const;
     bool isAudioPlaying(AudioType audioType, std::string name);
+    bool isMuted(AudioType audioType) const;
 
     void update(Event::Type event) override;
     void updateMusic(); // for music 

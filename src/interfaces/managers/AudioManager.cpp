@@ -62,6 +62,10 @@ void AudioManager::decreaseVolume(AudioType audioType) {
     audioChannels[audioType]->decreaseVolume();
 }
 
+void AudioManager::setVolume(AudioType audioType, float _volume) {
+    audioChannels[audioType]->setVolume(_volume);
+}
+
 void AudioManager::mute(AudioType audioType) {
     audioChannels[audioType]->mute();
 }
@@ -76,6 +80,10 @@ int AudioManager::getVolume(AudioType audioType) const {
 
 bool AudioManager::isAudioPlaying(AudioType audioType, std::string name) {
     return audioChannels[audioType]->isAudioPlaying(name);
+}
+
+bool AudioManager::isMuted(AudioType audioType) const {
+    return audioChannels.at(audioType)->isAudioMuted();
 }
 
 void AudioManager::updateMusic() {

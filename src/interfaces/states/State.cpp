@@ -18,5 +18,5 @@ void State::update(Event::Type event) {
 }
 
 void State::handleInput() {
-    if(panel) panel->handleInput();
+    if(panel) panel->update();
 }

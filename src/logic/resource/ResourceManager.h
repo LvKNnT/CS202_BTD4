@@ -28,9 +28,10 @@ public:
 
     int isEndGame() const;
     LogicInfo getInfo() const;
+    Difficulty getDifficulty() const;
 
     // save/load
-    void save(const std::string& filePath) const;
+    void save(const std::string& filePath, bool isRoundEnd) const;
     void load(const std::string& filePath);
 };
 

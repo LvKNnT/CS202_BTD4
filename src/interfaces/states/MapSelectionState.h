@@ -6,13 +6,16 @@
 class MapSelectionState : public State {
 private:
     int curMap;
-    static const int maxMap = 3;
+    static const int maxMap = 6;
     std::shared_ptr<PanelElement> nextMapButton;
     std::shared_ptr<PanelElement> previousMapButton;
     std::shared_ptr<PanelElement> ChooseMapButton[maxMap];
+    std::shared_ptr<PanelElement> mapName[maxMap];
+    std::shared_ptr<PanelElement> saveGameTexture;
 public:
     MapSelectionState();
     void draw() const override;
+    void handleInput() override;
     void update(Event::Type event) override;
 };
 

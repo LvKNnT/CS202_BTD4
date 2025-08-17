@@ -1,7 +1,12 @@
 #include "PanelElement.h"
 
+PanelElement::PanelElement(int _height, int _width) 
+    : height(_height), width(_width) {
+}
+
 PanelElement::PanelElement(int _height, int _width, Vector2 _position)
-    : index(-1), height(_height), width(_width), position(_position), isAvailable(true) {
+    : index(-1), height(_height), width(_width), position(_position), isAvailable(true)
+{
 }
 
 void PanelElement::draw() const {

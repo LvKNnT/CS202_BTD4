@@ -5,6 +5,7 @@
 #include <cfloat>
 #include <algorithm>
 #include <fstream>
+#include <sstream>
 
 #include "skill/Skill.h"
 #include "../interfaces/audio/MyAudio.h"
@@ -592,7 +593,7 @@ bool LogicManager::isSpawnTower(const ResourceManager& resourceManager, const To
     for(int x = towerBoundingBox.x; x <= towerBoundingBox.x + towerBoundingBox.width; ++x) {
         for(int y = towerBoundingBox.y; y <= towerBoundingBox.y + towerBoundingBox.height; ++y) {
             Vector2 point = {static_cast<float>(x), static_cast<float>(y)};
-            if(mapManager.getCurrentMap().getTowerPointType(point) != Point::Type::None) {
+            if(mapManager.getCurrentMap().getPointType(point) != Point::Type::None) {
                 std::cerr << "Cannot put tower due to path" << std::endl;
                 towerManager.putTower->setActive(false);
                 return false; // Collision with the path
@@ -811,7 +812,7 @@ void LogicManager::sellTower(ResourceManager& resourceManager, TowerManager& tow
     }
 }
 
-bool LogicManager::isPlayingRound(ModeManager& modeManager, EnemyManager& enemyManager) const {
+bool LogicManager::isPlayingRound(const ModeManager& modeManager, const EnemyManager& enemyManager) const {
     // Check if the game is in a state where a round can be played
     return !modeManager.canPlayNextRound(enemyManager.enemyList.empty());
 }
@@ -838,7 +839,8 @@ bool LogicManager::playRound(ResourceManager& resourceManager, ModeManager& mode
         isSave = (reward != 0);
 
         // auto play next round
-        if(autoPlayRound) {
+        if(autoPlayRound 
+        || (resourceManager.currentResource.currentRound == resourceManager.currentResource.maxRound && enemyManager.enemyList.empty())) {
             playNextRound(modeManager, enemyManager, bulletManager, resourceManager);
             return true;
         }
@@ -857,5 +859,40 @@ void LogicManager::playNextRound(ModeManager& modeManager, EnemyManager& enemyMa
 }
 
 void LogicManager::setAutoPlay(ModeManager& modeManager, bool autoPlay) {
-    autoPlayRound = modeManager.setAutoPlay(autoPlay);
+    autoPlayRound = autoPlay || modeManager.isApopalyse();
+}
+
+bool LogicManager::getAutoPlay() const {
+    return autoPlayRound;
+}
+
+void LogicManager::loadSavedTowers(TowerManager &towerManager) {
+    for(auto &tower:towerManager.towerList) {
+        towerManager.lastPickedTower = tower;
+        // loop until they are matched
+        while(tower->info["upgradeNameTop"] != tower->savedInfo["nextUpgradeTop"]) {
+            Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Top);
+        }
+        while(tower->info["upgradeNameMiddle"] != tower->savedInfo["nextUpgradeMiddle"]) {
+            Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Middle);
+        }
+        while(tower->info["upgradeNameBottom"] != tower->savedInfo["nextUpgradeBottom"]) {
+             Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Bottom);
+        }
+
+        if(tower->skill) {
+            tower->skill->setTimer(std::stof(tower->savedInfo["skillTimer"]));
+            tower->skill->setIsSkillActivating(std::stof(tower->savedInfo["skillIsSkillActivating"]));
+        }
+
+        std::stringstream ss(tower->savedInfo["passiveSkills"]);
+        for(auto &skill:tower->passiveSkills) {
+            float skillTimer = 0.0f;
+            bool isSkillActivating = 0;
+            ss >> skillTimer >> isSkillActivating;
+            skill->setTimer(skillTimer);
+            skill->setIsSkillActivating(isSkillActivating);
+        }
+    }
+    towerManager.lastPickedTower.reset();
 }

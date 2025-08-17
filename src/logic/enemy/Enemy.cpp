@@ -63,7 +63,7 @@ void Enemy::drawEffect() const {
 
 void Enemy::drawDeadEffect() {
     Texture texture = Game::Instance().getTextureManager().getTexture(tag);
-    effects.deadEffect = Animation("starburst", (Vector2) {position.x - texture.width / 2, position.y - texture.height / 2},texture.height, texture.width, 4, 0.0125);
+    effects.deadEffect = Animation("starburst", (Vector2) {position.x - texture.width / 2, position.y - texture.height / 2}, 0.0f, texture.height, texture.width, 4, 0.0125);
     effects.deadEffect.start();
     Game::Instance().getAnimationManager().addAnimation(effects.deadEffect);
 }

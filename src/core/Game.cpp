@@ -9,10 +9,6 @@ Game::Game() : exit(false) {
     audioManager = std::make_unique<AudioManager>();
 }
 
-Game::~Game() {
-
-}
-
 void Game::loadLoadingStateContent() {
     textureManager.loadTexture("LoadingStateBackground", "../assets/states/LoadingScreen.png");
     fontManager.loadFont("LoadingStateFont", "../assets/font/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf", 30);
@@ -29,7 +25,56 @@ void Game::LoadContent()
     loadingDone = true;
 }
 
-void Game::loadTexture() {
+void Game::loadSettings() {
+    const std::string filePath = "../save/settings/settings.txt";
+    if (!std::filesystem::exists(filePath) || std::filesystem::is_empty(filePath)) {
+        std::cerr<<"Settings file does not exits or it is empty\n";
+        return;
+    }
+
+    std::ifstream fin(filePath);
+    if(!fin) {
+        std::cerr<<"Failed to load settings\n";
+        fin.close();
+        return;
+    }
+
+    int sfxVolume = 100, musicVolume = 100;
+    bool isMutedSfx = 0, isMutedMusic = 0, isAutoplay = 0;
+    fin>>sfxVolume>>isMutedSfx>>musicVolume>>isMutedMusic>>isAutoplay;
+    fin.close();
+
+    auto audioManager = std::dynamic_pointer_cast<AudioManager>(this->audioManager);
+    audioManager->setVolume(AudioType::SFXSound, static_cast<float>(sfxVolume) / 100.0f);
+    if(isMutedSfx) audioManager->mute(AudioType::SFXSound);
+
+    audioManager->setVolume(AudioType::MusicSound, static_cast<float>(musicVolume) / 100.0f);
+    if(isMutedMusic) audioManager->mute(AudioType::MusicSound);
+
+    Game::Instance().getGameLogic().setAutoPlay(isAutoplay);
+}
+
+void Game::saveSettings() {
+    const std::string filePath = "../save/settings/settings.txt";
+    std::ofstream fout(filePath);
+    if(!fout) {
+        std::cerr<<"Failed to save settings\n";
+        fout.close();
+        return;
+    }
+
+    // Save settings data
+    auto audioManager = std::dynamic_pointer_cast<AudioManager>(this->audioManager);
+    fout<<audioManager->getVolume(AudioType::SFXSound)<<"\n"; // SFX Volume
+    fout<<audioManager->isMuted(AudioType::SFXSound)<<"\n"; // IsMutedSfx
+    fout<<audioManager->getVolume(AudioType::MusicSound)<<"\n"; // MusicVolume
+    fout<<audioManager->isMuted(AudioType::MusicSound)<<"\n"; // IsMutedMusic
+    fout<<gameLogic.getAutoPlay()<<"\n"; // IsAutoplay
+    fout.close();
+}
+
+void Game::loadTexture()
+{
     // Load UI
     textureManager.loadTextureDraw("MainMenu", "../assets/states/MainMenu.png");
     textureManager.loadTextureDraw("MainMenuButton", "../assets/UI/MainMenuButton.png");
@@ -61,6 +106,7 @@ void Game::loadTexture() {
     textureManager.loadTextureDraw("Info", "../assets/UI/Info.png");
     textureManager.loadTextureDraw("Victory", "../assets/UI/Victory.png");
     textureManager.loadTextureDraw("GameOver", "../assets/UI/GameOver.png");
+    textureManager.loadTextureDraw("SaveGame", "../assets/UI/SaveGame.png");
     
     
     //Sound
@@ -74,6 +120,9 @@ void Game::loadTexture() {
     // Load maps
     textureManager.loadTextureDraw("MonkeyLaneThumb", "../assets/map/Monkey_lane_thumb.png");
     textureManager.loadTextureDraw("JungleThumb", "../assets/map/Jungle_thumb.png");
+    textureManager.loadTextureDraw("RinkRevengeThumb", "../assets/map/Rink_revenge_thumb.png");
+    textureManager.loadTextureDraw("DuneSeaThumb", "../assets/map/Dune_sea_thumb.png");
+    textureManager.loadTextureDraw("AttackOnBloonThumb", "../assets/map/Attack_on_bloon_thumb.png");
     textureManager.loadTextureDraw("CommingSoon", "../assets/map/CommingSoon.png");
     textureManager.loadTextureDraw("CommingSoon2", "../assets/map/CommingSoon2.png");
     textureManager.loadTextureDraw("GameStateBackground", "../assets/states/GameStateBackground.png");
@@ -123,6 +172,7 @@ void Game::loadSound() {
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("BombExplosion", "../assets/sounds/sfx/BombExplosion.wav", 30); 
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("CannonFire", "../assets/sounds/sfx/CannonFire.wav", 20); 
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("LaserFire", "../assets/sounds/sfx/LaserFire.wav", 3); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("ActivateSkill", "../assets/sounds/sfx/ActivateSkill.wav", 5); 
     
     // Music
     drawLoadingScren();
@@ -136,6 +186,7 @@ void Game::loadTowerTexture() {
     textureManager.loadTextureDraw("Sniper Monkey Icon", "../assets/tower/Sniper_Monkey/Sniper_Monkey_Flash.png");
     textureManager.loadTextureDraw("Boomerang Monkey Icon", "../assets/tower/Boomerang_Monkey/BoomerangMonkey.png");
     textureManager.loadTextureDraw("Tack Shooter Icon", "../assets/tower/Tack_Shooter/TackShooter.png");
+    textureManager.loadTextureDraw("Dart Monkey Info", "../assets/tower/Dart_Monkey/000-DartMonkey.png");
     textureManager.loadTextureDraw("Bomb Shooter Info", "../assets/tower/Boom_Shooter/Bomb_Shooter_Icon.png");
     textureManager.loadTextureDraw("Ninja Monkey Info", "../assets/tower/Ninja_Monkey/BTD6_Ninja_Monkey.png");
     textureManager.loadTextureDraw("Sniper Monkey Info", "../assets/tower/Sniper_Monkey/BTD6_Sniper_Monkey.png");
@@ -149,6 +200,7 @@ void Game::loadAnimationTexture() {
     animationManager.loadAllAnimationTextures("freeze", "../assets/effect/freeze", 10);
     animationManager.loadAllAnimationTextures("starburst", "../assets/effect/starburst", 4);
     animationManager.loadAllAnimationTextures("sharingan", "../assets/effect/sharingan", 4);
+    animationManager.loadAllAnimationTextures("movingTriangle", "../assets/effect/movingTriangle", 8);
 }
 
 void Game::drawLoadingScren() {
@@ -158,10 +210,12 @@ void Game::drawLoadingScren() {
 }
 
 void Game::UnloadContent() {
+    saveSettings();
     textureManager.unloadContent();
     fontManager.unloadContent();
     std::static_pointer_cast<AudioManager>(audioManager)->unload();
     gameLogic.unLoad();
+    
 }
 
 void Game::initialize() {
@@ -170,6 +224,7 @@ void Game::initialize() {
     std::static_pointer_cast<AudioManager>(audioManager)->initialize();
     MyMusic gameTheme("BTD5Theme");
     gameTheme.start();
+    loadSettings();
 }
 
 void Game::render() {
