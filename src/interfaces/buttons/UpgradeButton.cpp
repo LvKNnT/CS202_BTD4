@@ -10,8 +10,8 @@ void UpgradeButton::setTexture(const Texture &newTexture) {
     texture = newTexture;
 }
 
-void UpgradeButton::handleInput() {
-    Button::handleInput();
+void UpgradeButton::update() {
+    Button::update();
     if(!isAvailable || state != Button::State::Clicked) return;
     notify(upgradeEvent);
 }

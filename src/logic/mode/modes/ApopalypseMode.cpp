@@ -58,7 +58,3 @@ int ApopalypseModePlayer::getRoundReward() {
     currentRound.extraCash = 0; 
     return reward;
 }
-
-bool ApopalypseModePlayer::setAutoPlay(bool autoPlay) {
-    return true;
-}

@@ -8,7 +8,6 @@
 class BloonSabotageSkill : public Skill {
 private:
     float duration;
-    bool isSkillActivating;
     std::shared_ptr<Tower> closestTower;
     //std::unordered_map<int, bool> affectedEnemies;
 

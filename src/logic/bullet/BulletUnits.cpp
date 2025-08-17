@@ -49,7 +49,7 @@ BulletProperties& BulletProperties::operator= (const BulletProperties& other) {
     return *this;
 }
 
-BulletProperties& BulletProperties::getITracing(float range, TargetPriority targetPriority, bool isOnlyFollowing, bool isFocus) {
+BulletProperties& BulletProperties::getITracing(float range, TargetPriority targetPriority, bool isFocus, bool isFollowing) {
     this->range = range;
     canTrace = true;
     this->isOnlyFollowing = isOnlyFollowing;

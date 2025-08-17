@@ -1,13 +1,13 @@
 #include "Animation.h"
 #include "../core/Game.h"
 
-Animation::Animation(const std::string& name, Vector2 position, int height, int width, int numFrames, float frameTime, bool isLooped)
-    : name(name), position(position), height(height), width(width), numFrames(numFrames), frameTime(frameTime), isLooped(isLooped),
-      currentFrame(0), elapsedTime(0.0f), rotation(0.0f), isPlaying(false) {
+Animation::Animation(const std::string& name, Vector2 position, float rotation, int height, int width, int numFrames, float frameTime, bool isLooped)
+    : PanelElement(height, width, position), name(name), numFrames(numFrames), frameTime(frameTime), isLooped(isLooped),
+      currentFrame(0), elapsedTime(0.0f), rotation(rotation), isPlaying(false) {
 }
 
 Animation::Animation(const std::string &name, int height, int width, int numFrames, float frameTime, bool isLooped)
-    : name(name), height(height), width(width), numFrames(numFrames), frameTime(frameTime), isLooped(isLooped),
+    : PanelElement(height, width), name(name), numFrames(numFrames), frameTime(frameTime), isLooped(isLooped),
       currentFrame(0), elapsedTime(0.0f), rotation(0.0f), isPlaying(false) {
 }
 
@@ -16,7 +16,7 @@ Animation::~Animation() {
 }
 
 void Animation::update() {
-    if(!isPlaying || numFrames == 0) return;
+    if(!isPlaying || numFrames == 0 || !isAvailable) return;
     elapsedTime += GetFrameTime();
     if(elapsedTime >= frameTime) {
         if(currentFrame == numFrames - 1 && !isLooped) {

@@ -321,7 +321,21 @@ void TowerManager::save(const std::string& filePath) const {
     for (const auto& tower : towerList) {
         if (tower) {
             file << static_cast<int>(tower->type) << " " << tower->position.x << " " << tower->position.y 
-                    << " " << tower->rotation << std::endl;
+                    << " " << tower->rotation << " " << static_cast<int>(tower->targetPriority) << " "
+                    << tower->upgradeTop->getName() << " : " << tower->upgradeMiddle->getName() << " : " << tower->upgradeBottom->getName() << " : ";
+            
+            if(tower->skill) {
+                file << tower->skill->getCooldown() << " " << tower->skill->getISkillsActivating() << " ";
+            } else file << "-1  -1 ";
+
+            if(tower->passiveSkills.empty()) {
+                file << std::endl;
+            }
+
+            for(const auto &skill:tower->passiveSkills) {
+                file << skill->getTimer() << " " << skill->getISkillsActivating() << std::endl;
+            }
+            
         } else {
             std::cerr << "Tower is null during save." << std::endl;
         }
@@ -356,15 +370,48 @@ void TowerManager::load(const std::string& filePath) {
         int typeInt;
         Vector2 position;
         float rotation;
+        int _targetPriority;
+        std::string _upgradeTop = "", _upgradeMiddle = "", _upgradeBottom = "";
+        std::string skillTimer = "", skillIsSkillActivating = "", _passiveSkills = "";
 
         file >> typeInt >> position.x >> position.y >> rotation;
+        file >> _targetPriority;
+        std::string tmp;
+        while(file >> tmp) {
+            if(tmp == ":") break;
+            _upgradeTop += (_upgradeTop.empty() ? "":" ") + tmp;
+        }
+
+        while(file >> tmp) {
+            if(tmp == ":") break;
+            _upgradeMiddle += (_upgradeMiddle.empty() ? "":" ") + tmp;
+        }
+
+        while(file >> tmp) {
+            if(tmp == ":") break;
+            _upgradeBottom += (_upgradeBottom.empty() ? "":" ") + tmp;
+        }
+
+        file >> skillTimer >> skillIsSkillActivating;
+        getline(file, _passiveSkills);
 
         std::cerr << "Loading tower type: " << typeInt << " at position: (" 
                     << position.x << ", " << position.y << ") with rotation: " 
-                    << rotation << std::endl;
+                    << rotation << " with TargePriority: " << _targetPriority 
+                    << " with upgrades: " << _upgradeTop << " : " << _upgradeMiddle << " : " << _upgradeBottom << std::endl; 
 
         TowerType type = static_cast<TowerType>(typeInt);
         spawnTower(type, position, rotation); 
+        
+        // Save the Target Priority
+        towerList.back()->targetPriority = static_cast<TargetPriority>(_targetPriority);
+        // Save upgrades to new tower
+        towerList.back()->savedInfo["nextUpgradeTop"] = _upgradeTop;
+        towerList.back()->savedInfo["nextUpgradeMiddle"] = _upgradeMiddle;
+        towerList.back()->savedInfo["nextUpgradeBottom"] = _upgradeBottom;
+        towerList.back()->savedInfo["skillTimer"] = skillTimer;
+        towerList.back()->savedInfo["skillIsSkillActivating"] = skillIsSkillActivating;
+        towerList.back()->savedInfo["passiveSkills"] = _passiveSkills;
     }
     file.close();
 }

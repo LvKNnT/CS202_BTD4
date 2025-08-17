@@ -36,7 +36,7 @@ CaltropsAttackPattern::CaltropsAttackPattern(MapManager* mapManager, Vector2 pos
         for (float dist = 0.0f; dist <= range; dist += 1.0f) {
             checkPos = position + dir * dist;
 
-            if (mapManager->getCurrentMap().getEnemyPointType(checkPos) == Point::Type::Enemy) {
+            if (mapManager->getCurrentMap().getPointType(checkPos) == Point::Type::Enemy) {
                 caltropsPositions.push_back(checkPos);
                 // break; // Found first enemy tile in this direction
             }

@@ -22,7 +22,6 @@ public:
     virtual std::vector<std::pair<BloonType, BloonProperties> > getEnemies(const RoundManager& roundManager) = 0;
     virtual int getRoundReward() = 0;
 
-    virtual bool setAutoPlay(bool autoPlay) = 0;
     virtual bool canPlayNextRound(bool isClear) const = 0;
 
 protected:

@@ -58,7 +58,3 @@ int ReverseModePlayer::getRoundReward() {
     currentRound.extraCash = 0; 
     return reward;
 }
-
-bool ReverseModePlayer::setAutoPlay(bool autoPlay) {
-    return autoPlay;
-}

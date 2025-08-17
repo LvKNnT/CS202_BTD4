@@ -14,9 +14,10 @@
 class AudioChannel {
 protected:
     float volume;
+    bool isMuted;
 
 public:
-    AudioChannel(): volume(1.0f) {}
+    AudioChannel(): volume(1.0f), isMuted(false) {}
     int getVolume() const;
     virtual void setVolume(float _volume) = 0;
     virtual void play(std::string name) = 0;
@@ -24,6 +25,7 @@ public:
     virtual void increaseVolume();
     virtual void decreaseVolume();
     virtual bool isAudioPlaying(std::string name) = 0;
+    virtual bool isAudioMuted() const;
     virtual void mute() = 0;
     virtual void unmute();
     virtual void unload() = 0;

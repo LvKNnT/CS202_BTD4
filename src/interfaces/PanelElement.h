@@ -15,11 +15,13 @@ protected:
     bool isAvailable;
 
 public:
+    PanelElement() = default;
+    PanelElement(int _height, int _width);
     PanelElement(int _height, int _width, Vector2 _position);
     void draw() const override;
     int getIndex() const;
     void setIndex(int _index);
-    virtual void handleInput() = 0;
+    virtual void update() = 0;
     void setAvailable(bool _isAvailable);
 };
 

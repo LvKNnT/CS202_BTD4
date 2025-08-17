@@ -25,12 +25,8 @@ void Panel::draw() const {
 
 void Panel::update() {
     if(!isAvailable) return;
-}
-
-void Panel::handleInput() {
-    if(!isAvailable) return;
     for(auto &element:elements) {
-        if(element) element->handleInput();
+        if(element) element->update();
     }
 }
 

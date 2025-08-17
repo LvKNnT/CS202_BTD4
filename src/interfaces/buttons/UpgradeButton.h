@@ -7,7 +7,7 @@ class UpgradeButton : public Button {
 public:
     UpgradeButton(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
     void setTexture(const Texture &newTexture);
-    void handleInput() override;
+    void update() override;
     void draw() const override;
 
 protected:

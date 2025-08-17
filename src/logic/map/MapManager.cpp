@@ -85,7 +85,7 @@ MapType MapManager::getMapType() const {
     return currentMap->mapType; 
 }
 
-void MapManager::save(std::string filePath) const {
+void MapManager::save(std::string filePath, bool isReverse) const {
     if(!currentMap) {
         // should not be here
         std::cerr << "Current map is not loaded. Please load a map before saving." << std::endl;

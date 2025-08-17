@@ -19,7 +19,6 @@ public:
     std::vector<std::pair<BloonType, BloonProperties>> getEnemies(const RoundManager& roundManager) override;
     int getRoundReward() override;
 
-    bool setAutoPlay(bool autoPlay) override;
     bool canPlayNextRound(bool isClear) const override;
 };
 

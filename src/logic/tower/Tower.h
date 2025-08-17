@@ -66,6 +66,7 @@ protected:
     int towerId; 
     int popCount; 
     LogicInfo info;
+    LogicInfo savedInfo;
 };
 
 #endif // TOWER_H

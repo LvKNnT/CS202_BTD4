@@ -59,7 +59,7 @@ void GameLogic::init(Difficulty difficulty) {
     
     // for testing only
     resourceManager.getResource().cash = 999999;
-    // resourceManager.getResource().currentRound = 40;
+    resourceManager.getResource().currentRound = 75;
     
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
     bulletManager = BulletManager();
@@ -126,7 +126,7 @@ void GameLogic::replay() {
 }
 
 void GameLogic::update() {
-    for(int i = 0; i < (isTickFast ? 10 : 1); ++i) {
+    for(int i = 0; i < (isTickFast ? 3 : 1); ++i) {
         // Update game result
         if(resourceManager.isEndGame() != 0) {
             // std::cerr << "Game Over! Result: " << resourceManager.isEndGame() << std::endl;
@@ -266,6 +266,10 @@ void GameLogic::unactiveAutoPlay() {
     setAutoPlay(false);
 }
 
+bool GameLogic::getAutoPlay() const {
+    return logicManager.getAutoPlay();
+}
+
 // same same but different
 void GameLogic::setTickFast(bool isTickFast) {
     this->isTickFast = isTickFast;
@@ -295,7 +299,7 @@ void GameLogic::autoSave() const {
         std::cerr << "Error: Failed to open autosave file for resetting." << std::endl;
     }
 
-    mapManager.save(saveFilePath);
+    mapManager.save(saveFilePath, modeManager.isReverse());
     resourceManager.save(saveFilePath, true);
     modeManager.save(saveFilePath);
     towerManager.save(saveFilePath);
@@ -317,7 +321,7 @@ void GameLogic::loadAutoSave() {
 }
 
 void GameLogic::saveGame() const {
-    std::string saveFilePath = savePath + "save" + std::to_string(static_cast<int>(mapManager.getMapType())) + ".txt";
+    std::string saveFilePath = savePath + "save" + std::to_string(static_cast<int>(mapManager.getMapType()) - modeManager.isReverse()) + ".txt";
     std::cerr << "Saving game to: " << saveFilePath << std::endl;
 
     // reset save file
@@ -335,7 +339,7 @@ void GameLogic::saveGame() const {
         std::cerr << "Error: Failed to open save file for resetting." << std::endl;
     }
 
-    mapManager.save(saveFilePath);
+    mapManager.save(saveFilePath, modeManager.isReverse());
     resourceManager.save(saveFilePath, !isRoundRun());
     modeManager.save(saveFilePath);
     towerManager.save(saveFilePath);
@@ -358,4 +362,25 @@ void GameLogic::loadGame(MapType type) {
     towerManager.load(saveFilePath);
 
     modeManager.load(saveFilePath);
+
+    // Load saved Towers upgrades
+    logicManager.loadSavedTowers(towerManager);
+}
+
+bool GameLogic::canLoadGame(MapType type) const {
+    std::string saveFilePath = savePath + "save" + std::to_string(static_cast<int>(type)) + ".txt";
+    return std::filesystem::exists(saveFilePath);
+}
+
+MapType GameLogic::getMapType() const {
+    auto mapType = static_cast<int>(mapManager.getMapType()) - modeManager.isReverse(); // if mapType is odd, it will be reverse, so minus 
+    return static_cast<MapType>(mapType);
+}
+
+Difficulty GameLogic::getDifficulty() const {
+    return resourceManager.getDifficulty();
+}
+
+ModeType GameLogic::getModeType() const {
+    return modeManager.getCurrentModeType();
 }

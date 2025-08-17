@@ -61,12 +61,16 @@ void BloonSabotageSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector
     // Buff the closest towers
     SkillFriendAccess::getTag(*tower) = "Bloon Sabotage Ninja"; // Change the tag to Bloon Sabotage Ninja
 
-    // Vector2 position = SkillFriendAccess::getTowerPosition(*tower);
-    // Animation skillSprite("sharingan", (Vector2) {position.x - 30, position.y - 30}, 60, 60, 4, 0.125f);
-    // skillSprite.start();
-    // Game::Instance().getAnimationManager().addAnimation(skillSprite);
 
-    if(timer == 0.0f) std::cerr << "Activated Bloon Sabotage skill for 1 towers." << std::endl;
+    if(timer == 0.0f) {
+        MySound skillSound("ActivateSkill");
+        skillSound.start();
+        // Vector2 position = SkillFriendAccess::getTowerPosition(*tower);
+        // Animation skillSprite("sharingan", (Vector2) {position.x - 30, position.y - 30}, 60, 60, 4, 0.25f);
+        // skillSprite.start();
+        // Game::Instance().getAnimationManager().addAnimation(skillSprite);
+        std::cerr << "Activated Bloon Sabotage skill for 1 towers." << std::endl;
+    }
 }
 
 void BloonSabotageSkill::inActivateSkill() {
