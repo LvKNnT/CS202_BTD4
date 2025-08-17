@@ -2,7 +2,7 @@
 #include "../../../../core/Game.h"
 
 IcicleImpale::IcicleImpale() 
-    : Upgrade("Icile Impale", 150, "Larger freeze area.") {
+    : Upgrade("Icile Impale", 30000, "Shoots huge icicle spikes that do huge damage to MOAB-Class Bloons and freezes them.") {
     // Constructor implementation can be extended if needed
     nextUpgrade = std::make_unique<Upgrade>(); // Temporary lmao
     tag = "Icile Impale";

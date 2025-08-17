@@ -68,6 +68,9 @@ void GameLogic::init(Difficulty difficulty) {
 void GameLogic::init(ModeType modeType) {
     modeManager.setMode(modeType);
     isStarted = false;
+
+    //temporary
+    init(HeroType::Benjamin); // Initialize with a default hero type
 }
 
 void GameLogic::init(HeroType heroType) {

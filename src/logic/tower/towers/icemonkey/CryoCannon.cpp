@@ -4,7 +4,7 @@
 #include "Icicles.h"
 
 CryoCannon::CryoCannon() 
-    : Upgrade("Cryo Cannon", 150, "Larger freeze area.") {
+    : Upgrade("Cryo Cannon", 1900, "Rapidly shoots smaller ice bombs over longer range.") {
     // Constructor implementation can be extended if needed
     nextUpgrade = std::make_unique<Icicles>(); // Temporary lmao
     tag = "Cryo Cannon";

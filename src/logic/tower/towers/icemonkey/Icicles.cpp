@@ -4,7 +4,7 @@
 #include "IcicleImpale.h"
 
 Icicles::Icicles() 
-    : Upgrade("Icicles", 150, "Larger freeze area.") {
+    : Upgrade("Icicles", 2750, "Does bonus damage to MOAB-Class Bloons.") {
     // Constructor implementation can be extended if needed
     nextUpgrade = std::make_unique<IcicleImpale>(); // Temporary lmao
     tag = "Icicles";

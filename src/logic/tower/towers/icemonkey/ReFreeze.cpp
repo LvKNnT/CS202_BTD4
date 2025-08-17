@@ -4,7 +4,7 @@
 #include "CryoCannon.h"
 
 ReFreeze::ReFreeze() 
-    : Upgrade("Re-Freeze", 150, "Larger freeze area.") {
+    : Upgrade("Re-Freeze", 200, "Can re-freeze Bloons that are already frozen.") {
     // Constructor implementation can be extended if needed
     nextUpgrade = std::make_unique<CryoCannon>(); // Temporary lmao
     tag = "Re-Freeze";

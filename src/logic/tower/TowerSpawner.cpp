@@ -247,7 +247,7 @@ LogicInfo TowerSpawner::getInfoTower(TowerType type, const TowerModifies& modifi
     // Find the tower template for the given type
     auto it = towerTemplates.find(type);
     if (it != towerTemplates.end()) {
-        it->second->setModifies(modifies); 
+        it->second->setModifies(hero ? hero->getModifies(modifies) : modifies); // Set modifies based on the hero or default modifies
         return it->second->getInfo(); // Return the info of the tower
     }
     
