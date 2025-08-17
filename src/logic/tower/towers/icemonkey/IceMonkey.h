@@ -21,6 +21,7 @@ public:
     void setRotation(float rotation) override;
     void setModifies(const TowerModifies& modifies) override;
     LogicInfo getInfo() override;
+    bool isPlaceable(Point::Type pointType) const override; 
 
     Rectangle getBoundingBox() const override;
     bool isActive() const override;

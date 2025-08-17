@@ -192,6 +192,11 @@ LogicInfo TackShooter::getInfo() {
     return this->info;
 }
 
+bool TackShooter::isPlaceable(Point::Type pointType) const {
+    // Check if the tower can be placed based on the point type
+    return pointType == Point::Type::None; // Tack Shooter can only be placed on land
+}
+
 Rectangle TackShooter::getBoundingBox() const {
     // Provide the bounding box for collision detection
     return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y};

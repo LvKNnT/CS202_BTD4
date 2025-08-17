@@ -201,6 +201,11 @@ LogicInfo NinjaMonkey::getInfo() {
     return this->info;
 }
 
+bool NinjaMonkey::isPlaceable(Point::Type pointType) const {
+    // Check if the tower can be placed based on the point type
+    return pointType == Point::Type::None; // Ninja Monkey can only be placed on land
+}
+
 Rectangle NinjaMonkey::getBoundingBox() const {
     // Provide the bounding box for collision detection
     return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y};

@@ -27,7 +27,8 @@ TowerManager::TowerManager(HeroType heroType, TowerModifies modifies)
 TowerManager::TowerManager(const TowerManager& other) {
     if (this != &other) {
         currentModifies = other.currentModifies; // Copy the current modifies
-        towerSpawner = other.towerSpawner->clone();
+        currentHeroType = other.currentHeroType; // Copy the current hero type
+        towerSpawner = other.towerSpawner ? other.towerSpawner->clone() : nullptr; // Clone the tower spawner if it exists
         towerIDCounter = other.towerIDCounter; // Copy the tower ID counter
 
         towerList.clear();
@@ -47,7 +48,8 @@ TowerManager::TowerManager(const TowerManager& other) {
 TowerManager& TowerManager::operator=(const TowerManager& other) {
     if (this != &other) {
         currentModifies = other.currentModifies; 
-        towerSpawner = other.towerSpawner->clone();
+        currentHeroType = other.currentHeroType; // Copy the current hero type
+        towerSpawner = other.towerSpawner ? other.towerSpawner->clone() : nullptr; // Clone the tower spawner if it exists
         towerIDCounter = other.towerIDCounter; // Copy the tower ID counter
 
         towerList.clear();
