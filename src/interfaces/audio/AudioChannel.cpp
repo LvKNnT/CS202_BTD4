@@ -13,6 +13,7 @@ void AudioChannel::decreaseVolume() {
 }
 
 void AudioChannel::unmute() {
+    isMuted = false;
     setVolume(volume);
 }
 
@@ -21,6 +22,7 @@ SoundChannel::SoundChannel() : AudioChannel() {
 
 void SoundChannel::setVolume(float _volume) {
     volume = _volume;
+    if(isMuted) return;
     for(auto &sound:soundList) {
         sound.second.setVolume(volume);
     }
@@ -28,6 +30,7 @@ void SoundChannel::setVolume(float _volume) {
 }
 
 void SoundChannel::mute() {
+    isMuted = true;
     for(auto &sound:soundList) {
         sound.second.setVolume(0.0);
     }
@@ -35,6 +38,10 @@ void SoundChannel::mute() {
 
 bool SoundChannel::isAudioPlaying(std::string name) {
     return soundList[name].isSoundPlaying();
+}
+
+bool AudioChannel::isAudioMuted() const {
+    return isMuted;
 }
 
 void SoundChannel::load(std::string name, std::string path, int maxSounds) {
@@ -75,12 +82,14 @@ MusicChannel::MusicChannel() : AudioChannel() {
 
 void MusicChannel::setVolume(float _volume) {
     volume = _volume;
+    if(isMuted) return;
     for(auto &music:musicList) {
         SetMusicVolume(music.second, volume);
     }
 }
 
 void MusicChannel::mute() {
+    isMuted = true;
     for(auto &music:musicList) {
         SetMusicVolume(music.second, 0.0);
     }

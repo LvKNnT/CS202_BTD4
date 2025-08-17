@@ -28,14 +28,18 @@ public:
     bool activatePassiveSkillTower(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager, ResourceManager& resourceManager, MapManager& mapManager);
     void sellTower(ResourceManager& resourceManager, TowerManager& towerManager);
 
-    bool isPlayingRound(ModeManager& modeManager, EnemyManager& enemyManager) const;
+    bool isPlayingRound(const ModeManager& modeManager, const EnemyManager& enemyManager) const;
     bool playRound(ResourceManager& resourceManager, ModeManager& modeManager, EnemyManager& enemyManager, BulletManager& bulletManager, MapManager& mapManager);
     void playNextRound(ModeManager& modeManager, EnemyManager& enemyManager, BulletManager& bulletManager, ResourceManager& resourceManager);
     void setAutoPlay(ModeManager& modeManager, bool autoPlay);
+    bool getAutoPlay() const;
 
     // Update methods for interactions between game objects
     void updateBulletsHitEnemies(BulletManager& bulletManager, EnemyManager& enemyManager, TowerManager& towerManager, MapManager& mapManager, ResourceManager& resourceManager);
     void updateTracingBullets(BulletManager& bulletManager, EnemyManager& enemyManager);
+
+    // Load saved Towers
+    void loadSavedTowers(TowerManager &towerManager);
 private:
     // Move should be used the same logic for all enemies
     /**

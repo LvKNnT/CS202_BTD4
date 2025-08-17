@@ -6,6 +6,7 @@
 
 #include "State.h"
 #include "../../logic/tower/TowerUnits.h"
+#include "../../logic/Map/MapUnits.h"
 #include "../../logic/LogicInfo.h"
 
 class GameState : public State, public ISubject {

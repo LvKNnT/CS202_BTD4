@@ -10,8 +10,10 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
     panel = std::make_unique<Panel>();
     Vector2 SGBPos = {1000, 720 - 59};    
     
+    std::string modeStr = DifficultyInfo::Instance().getDifficultyInfo(Game::Instance().getGameLogic().getDifficulty())["name"] + " - "
+                        + ModeInfo::Instance().getModeInfo(Game::Instance().getGameLogic().getModeType())["name"];
     round = std::make_shared<TextField>("Round:", Game::Instance().getFontManager().getFont("Medium"), ORANGE, 25, 0, (Vector2) {5, 875});
-    mode = std::make_shared<TextField>("Mode: " + std::static_pointer_cast<StateManager>(Game::Instance().getStateManager())->getMode(), Game::Instance().getFontManager().getFont("Medium"), ORANGE, 25, 0, (Vector2) {320, 875});
+    mode = std::make_shared<TextField>("Mode: " + modeStr, Game::Instance().getFontManager().getFont("Medium"), ORANGE, 25, 0, (Vector2) {320, 875});
     lives = std::make_shared<TextField>("200", Game::Instance().getFontManager().getFont("Medium"), RED, 30, 0, (Vector2) {1000 + 60, 10 + 5});
     cash = std::make_shared<TextField>("340", Game::Instance().getFontManager().getFont("Medium"), YELLOW, 30, 0, (Vector2) {1000 + 60, 10 + 40 + 10});
     panel->addPanelElement((round));
@@ -96,9 +98,9 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
     
     // Round Info 
     roundPanel = std::make_unique<Panel>();
-    std::string mapName = std::dynamic_pointer_cast<StateManager>(Game::Instance().getStateManager())->getMap();
+    std::string mapName = MapInfo::Instance().getMapInfo(Game::Instance().getGameLogic().getMapType())["name"];
     roundTitle = std::make_shared<TextField>(mapName, Game::Instance().getFontManager().getFont("Medium"), YELLOW, 25, 0, (Vector2) {5, 725});
-    roundInfo = std::make_shared<TextField>(std::static_pointer_cast<StateManager>(Game::Instance().getStateManager())->getModeInfo(), Game::Instance().getFontManager().getFont("Medium"), WHITE, 25, 900, (Vector2) {5, 725 + 25 + 10});
+    roundInfo = std::make_shared<TextField>(DifficultyInfo::Instance().getDifficultyInfo(Game::Instance().getGameLogic().getDifficulty())["description"], Game::Instance().getFontManager().getFont("Medium"), WHITE, 25, 900, (Vector2) {5, 725 + 25 + 10});
     roundPanel->addPanelElement(roundTitle);
     roundPanel->addPanelElement(roundInfo);
 
@@ -256,6 +258,7 @@ void GameState::update(Event::Type event) {
     
 void GameState::handleInput() {
     // update game logic
+    
     Game::Instance().getGameLogic().update();
     gameEnd();
 

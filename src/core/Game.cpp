@@ -9,10 +9,6 @@ Game::Game() : exit(false) {
     audioManager = std::make_unique<AudioManager>();
 }
 
-Game::~Game() {
-
-}
-
 void Game::loadLoadingStateContent() {
     textureManager.loadTexture("LoadingStateBackground", "../assets/states/LoadingScreen.png");
     fontManager.loadFont("LoadingStateFont", "../assets/font/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf", 30);
@@ -29,7 +25,56 @@ void Game::LoadContent()
     loadingDone = true;
 }
 
-void Game::loadTexture() {
+void Game::loadSettings() {
+    const std::string filePath = "../save/settings/settings.txt";
+    if (!std::filesystem::exists(filePath) || std::filesystem::is_empty(filePath)) {
+        std::cerr<<"Settings file does not exits or it is empty\n";
+        return;
+    }
+
+    std::ifstream fin(filePath);
+    if(!fin) {
+        std::cerr<<"Failed to load settings\n";
+        fin.close();
+        return;
+    }
+
+    int sfxVolume = 100, musicVolume = 100;
+    bool isMutedSfx = 0, isMutedMusic = 0, isAutoplay = 0;
+    fin>>sfxVolume>>isMutedSfx>>musicVolume>>isMutedMusic>>isAutoplay;
+    fin.close();
+
+    auto audioManager = std::dynamic_pointer_cast<AudioManager>(this->audioManager);
+    audioManager->setVolume(AudioType::SFXSound, static_cast<float>(sfxVolume) / 100.0f);
+    if(isMutedSfx) audioManager->mute(AudioType::SFXSound);
+
+    audioManager->setVolume(AudioType::MusicSound, static_cast<float>(musicVolume) / 100.0f);
+    if(isMutedMusic) audioManager->mute(AudioType::MusicSound);
+
+    Game::Instance().getGameLogic().setAutoPlay(isAutoplay);
+}
+
+void Game::saveSettings() {
+    const std::string filePath = "../save/settings/settings.txt";
+    std::ofstream fout(filePath);
+    if(!fout) {
+        std::cerr<<"Failed to save settings\n";
+        fout.close();
+        return;
+    }
+
+    // Save settings data
+    auto audioManager = std::dynamic_pointer_cast<AudioManager>(this->audioManager);
+    fout<<audioManager->getVolume(AudioType::SFXSound)<<"\n"; // SFX Volume
+    fout<<audioManager->isMuted(AudioType::SFXSound)<<"\n"; // IsMutedSfx
+    fout<<audioManager->getVolume(AudioType::MusicSound)<<"\n"; // MusicVolume
+    fout<<audioManager->isMuted(AudioType::MusicSound)<<"\n"; // IsMutedMusic
+    fout<<gameLogic.getAutoPlay()<<"\n"; // IsAutoplay
+    fout.close();
+}
+
+void Game::loadTexture()
+{
     // Load UI
     textureManager.loadTextureDraw("MainMenu", "../assets/states/MainMenu.png");
     textureManager.loadTextureDraw("MainMenuButton", "../assets/UI/MainMenuButton.png");
@@ -61,6 +106,7 @@ void Game::loadTexture() {
     textureManager.loadTextureDraw("Info", "../assets/UI/Info.png");
     textureManager.loadTextureDraw("Victory", "../assets/UI/Victory.png");
     textureManager.loadTextureDraw("GameOver", "../assets/UI/GameOver.png");
+    textureManager.loadTextureDraw("SaveGame", "../assets/UI/SaveGame.png");
     
     
     //Sound
@@ -164,10 +210,12 @@ void Game::drawLoadingScren() {
 }
 
 void Game::UnloadContent() {
+    saveSettings();
     textureManager.unloadContent();
     fontManager.unloadContent();
     std::static_pointer_cast<AudioManager>(audioManager)->unload();
     gameLogic.unLoad();
+    
 }
 
 void Game::initialize() {
@@ -176,6 +224,7 @@ void Game::initialize() {
     std::static_pointer_cast<AudioManager>(audioManager)->initialize();
     MyMusic gameTheme("BTD5Theme");
     gameTheme.start();
+    loadSettings();
 }
 
 void Game::render() {

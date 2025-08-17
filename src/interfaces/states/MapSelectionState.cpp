@@ -38,11 +38,19 @@ MapSelectionState::MapSelectionState() : State(754, 1022, Game::Instance().getTe
 
     curMap = 0;
     previousMapButton->setAvailable(false);
+
+    saveGameTexture = std::make_shared<TextureField>(Game::Instance().getTextureManager().getTexture("SaveGame"), 56, 50, (Vector2) {tablePos.x + (width - 600) / 2 + 600 - 25, tablePos.y + (height - 432) / 2 - 25});
+    panel->addPanelElement(saveGameTexture);
 }
 
 void MapSelectionState::draw() const {
     DrawTextureEx(background, {static_cast<float>((Properties::screenWidth - width) / 2), static_cast<float>((Properties::screenHeight - height) / 2)}, 0.0f, 2.0, WHITE);
     if(panel) panel->draw();
+}
+
+void MapSelectionState::handleInput() {
+    State::handleInput();
+    saveGameTexture->setAvailable(std::dynamic_pointer_cast<StateManager>(Game::Instance().getStateManager())->canLoadGame(static_cast<MapType>(curMap * 2)));
 }
 
 void MapSelectionState::update(Event::Type event) {
@@ -62,4 +70,5 @@ void MapSelectionState::update(Event::Type event) {
     }
     previousMapButton->setAvailable(curMap > 0);
     nextMapButton->setAvailable(curMap + 1 < maxMap);
+    saveGameTexture->setAvailable(std::dynamic_pointer_cast<StateManager>(Game::Instance().getStateManager())->canLoadGame(static_cast<MapType>(curMap * 2)));
 }

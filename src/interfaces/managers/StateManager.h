@@ -16,6 +16,8 @@
 #include "../states/VictoryState.h"
 #include "../states/LoadingState.h"
 #include "../../logic/Map/MapUnits.h"
+#include "../../logic/mode/ModeUnits.h"
+#include "../../logic/level/DifficultyUnits.h"
 #include "../../core/IObserver.h"
 #include "../../core/Event.h"
 
@@ -33,13 +35,14 @@ private:
     std::shared_ptr<State> victoryState;
     std::shared_ptr<State> loadingState;
 
-    bool canResume;
-    std::string map;
-    std::string mode;
-    std::string modeInfo;
-    bool isNewGame;
-    bool isLoadingDone;
+    ModeType modeType;
+    Difficulty difficultyType;
     MapType mapType;
+
+    bool canResume;
+    bool isNewGame;
+    bool isContinue;
+    bool isLoadingDone;
 
 public:
     StateManager();
@@ -48,12 +51,14 @@ public:
     void handleInput();
     void update(Event::Type event) override;
     
-    void setMap(std::string _map);
-    std::string getMap() const;
-    void setMode(std::string _mode);
-    std::string getMode() const;
-    void setModeInfo(std::string _modeInfo);
-    std::string getModeInfo() const;
+    void setMap(MapType _mapType);
+    MapType getMap() const;
+    void setDifficulty(Difficulty _difficultyType);
+    Difficulty getDifficulty() const;
+    void setMode(ModeType _modeType);
+    ModeType getMode() const;
+
+    bool canLoadGame(MapType mapType) const;
 };
 
 #endif // STATE_MANAGER_H

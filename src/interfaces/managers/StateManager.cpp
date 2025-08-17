@@ -56,39 +56,74 @@ void StateManager::update(Event::Type event) {
             stateStack.setdrawPreviousStates(true);
             break;
         case Event::Type::ToMonkeyLane:
-            stateStack.pushState(difficultySelectionState);
-            stateStack.setdrawPreviousStates(true);
-            mapType = MapType::MonkeyLane;
-            Game::Instance().getGameLogic().init(mapType);
-            setMap("Monkey Lane");
+            setMap(MapType::MonkeyLane);
+            if(isNewGame) {
+                stateStack.pushState(difficultySelectionState);
+                stateStack.setdrawPreviousStates(true);
+                Game::Instance().getGameLogic().init(mapType);
+            }
+            if(isContinue && Game::Instance().getGameLogic().canLoadGame(mapType)) {
+                canResume = true;
+                Game::Instance().getGameLogic().loadGame(mapType);
+                gameState = std::make_shared<GameState>();
+                stateStack.pushState(gameState);
+            }
             break;
         case Event::Type::ToJungleLane:
-            stateStack.pushState(difficultySelectionState);
-            stateStack.setdrawPreviousStates(true);
-            mapType = MapType::Jungle;
-            Game::Instance().getGameLogic().init(mapType);
-            setMap("Jungle");
+            setMap(MapType::Jungle);
+            if(isNewGame) {
+                stateStack.pushState(difficultySelectionState);
+                stateStack.setdrawPreviousStates(true);
+                Game::Instance().getGameLogic().init(mapType);
+            }
+            if(isContinue && Game::Instance().getGameLogic().canLoadGame(mapType)) {
+                canResume = true;
+                Game::Instance().getGameLogic().loadGame(mapType);
+                gameState = std::make_shared<GameState>();
+                stateStack.pushState(gameState);
+            }
             break;
         case Event::Type::ToRinkRevenge:
-            stateStack.pushState(difficultySelectionState);
-            stateStack.setdrawPreviousStates(true);
-            mapType = MapType::RinkRevenge;
-            Game::Instance().getGameLogic().init(mapType);
-            setMap("Rink Revenge");
+            setMap(MapType::RinkRevenge);
+            if(isNewGame) {
+                stateStack.pushState(difficultySelectionState);
+                stateStack.setdrawPreviousStates(true);
+                Game::Instance().getGameLogic().init(mapType);
+            }
+            if(isContinue && Game::Instance().getGameLogic().canLoadGame(mapType)) {
+                canResume = true;
+                Game::Instance().getGameLogic().loadGame(mapType);
+                gameState = std::make_shared<GameState>();
+                stateStack.pushState(gameState);
+            }
             break;
         case Event::Type::ToDuneSea:
-            stateStack.pushState(difficultySelectionState);
-            stateStack.setdrawPreviousStates(true);
-            mapType = MapType::DuneSea;
-            Game::Instance().getGameLogic().init(mapType);
-            setMap("Dune Sea");
+            setMap(MapType::DuneSea);
+            if(isNewGame) {
+                stateStack.pushState(difficultySelectionState);
+                stateStack.setdrawPreviousStates(true);
+                Game::Instance().getGameLogic().init(mapType);
+            }
+            if(isContinue && Game::Instance().getGameLogic().canLoadGame(mapType)) {
+                canResume = true;
+                Game::Instance().getGameLogic().loadGame(mapType);
+                gameState = std::make_shared<GameState>();
+                stateStack.pushState(gameState);
+            }
             break;
         case Event::Type::ToAttackOnBloon:
-            stateStack.pushState(difficultySelectionState);
-            stateStack.setdrawPreviousStates(true);
-            mapType = MapType::AttackOnBloon;
-            Game::Instance().getGameLogic().init(mapType);
-            setMap("Attack On Bloon");
+            setMap(MapType::AttackOnBloon);
+            if(isNewGame) {
+                stateStack.pushState(difficultySelectionState);
+                stateStack.setdrawPreviousStates(true);
+                Game::Instance().getGameLogic().init(mapType);
+            }
+            if(isContinue && Game::Instance().getGameLogic().canLoadGame(mapType)) {
+                canResume = true;
+                Game::Instance().getGameLogic().loadGame(mapType);
+                gameState = std::make_shared<GameState>();
+                stateStack.pushState(gameState);
+            }
             break;
         case Event::Type::ToAreYouSure:
             stateStack.pushState(areYouSureState);
@@ -109,23 +144,31 @@ void StateManager::update(Event::Type event) {
             break;
         case Event::Type::NewGame:
             isNewGame = true;
+            isContinue = false;
             break;
-        case Event::Type::Continue: 
+        case Event::Type::Continue:
+            isContinue = true;
+            isNewGame = false;
+            Game::Instance().getGameLogic().loadAutoSave();
             break;
         case Event::Type::Resume:
             if(canResume) stateStack.pushState(gameState);
             break;
         case Event::Type::StandardMode:
+            setMode(ModeType::Classic);
             Game::Instance().getGameLogic().init(ModeType::Classic);
             break;
         case Event::Type::AlternateBloonsMode:
+            setMode(ModeType::Alternative);
             Game::Instance().getGameLogic().init(ModeType::Alternative);
             break;
         case Event::Type::ReverseMode:
+            setMode(ModeType::Reverse);
             Game::Instance().getGameLogic().init(static_cast<MapType>(static_cast<int>(mapType) + 1));
             Game::Instance().getGameLogic().init(ModeType::Reverse);
             break;
         case Event::Type::ApopalyseMode:
+            setMode(ModeType::Apopalypse);
             Game::Instance().getGameLogic().init(ModeType::Apopalypse);
             break;
         case Event::Type::ToGameOver:
@@ -150,23 +193,10 @@ void StateManager::update(Event::Type event) {
             break;
         default:
             if(Event::Type::ToEasyModeSelection <= event && event <= Event::Type::ToImpoppableModeSelection) {
-                switch(event) {
-                    case Event::Type::ToEasyModeSelection:
-                        Game::Instance().getGameLogic().init(Difficulty::Easy);
-                        break;
-                    case Event::Type::ToMediumModeSelection:
-                        Game::Instance().getGameLogic().init(Difficulty::Medium);
-                        break;
-                    case Event::Type::ToHardModeSelection:
-                        Game::Instance().getGameLogic().init(Difficulty::Hard);
-                        break;
-                    case Event::Type::ToImpoppableModeSelection:
-                        Game::Instance().getGameLogic().init(Difficulty::Impoppable);
-                        break;
-                }
+                stateStack.update(event);
+                Game::Instance().getGameLogic().init(difficultyType);
                 specificModeSelectionState = std::make_shared<SpecificModeSelectionState>();
                 stateStack.pushState(specificModeSelectionState);
-                stateStack.update(event);
                 stateStack.setdrawPreviousStates(true);
                 break;
             }
@@ -175,36 +205,30 @@ void StateManager::update(Event::Type event) {
     }
 }
 
-void StateManager::setMap(std::string _map) {
-    map = _map;
+void StateManager::setMap(MapType _mapType) {
+    mapType = _mapType;
 }
 
-std::string StateManager::getMap() const {
-    return map;
+MapType StateManager::getMap() const {
+    return mapType;
 }
 
-void StateManager::setMode(std::string _mode){ 
-    mode = _mode;
+void StateManager::setDifficulty(Difficulty _difficultyType) {
+    difficultyType = _difficultyType;
 }
 
-std::string StateManager::getMode() const {
-    return mode;
+Difficulty StateManager::getDifficulty() const {
+    return difficultyType;
 }
 
-void StateManager::setModeInfo(std::string _modeInfo) {
-    modeInfo = _modeInfo;
+void StateManager::setMode(ModeType _modeType) {
+    modeType = _modeType;
 }
 
-std::string StateManager::getModeInfo() const {
-    return modeInfo;
+ModeType StateManager::getMode() const {
+    return modeType;
 }
 
-// void StateManager::startEnterEffects() {
-//     switch(mapType) {
-//         case MapType::MonkeyLane:
-//             enterEffects[0].setPosition((Vector2) {70, 377});
-//             enterEffects[0].setRotation(90.0f);
-//             enterEffects[0].start();
-//             break;
-//     }
-// }
+bool StateManager::canLoadGame(MapType mapType) const {
+    return isContinue && Game::Instance().getGameLogic().canLoadGame(mapType);
+}

@@ -8,7 +8,6 @@
 class GrandSaboteurSkill : public Skill {
 private:
     float duration;
-    bool isSkillActivating;
     std::unordered_map<int, bool> affectedEnemies;
     std::map<int, std::shared_ptr<Tower>> affectedTowers;
 public:

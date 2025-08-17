@@ -39,6 +39,7 @@ SpecificModeSelectionState::SpecificModeSelectionState(): State(754, 1022, Game:
     panel->addPanelElement(toAlternateBloonsModeText);
     panel->addPanelElement(toReverseModeText);
     panel->addPanelElement(toApopalyseModeText);
+
 }
 
 void SpecificModeSelectionState::draw() const {
@@ -48,98 +49,42 @@ void SpecificModeSelectionState::draw() const {
 }
 
 void SpecificModeSelectionState::update(Event::Type event) {
-    std::string modeInfo;
     auto stateManager = std::static_pointer_cast<StateManager>(Game::Instance().getStateManager());
+    auto diff = Game::Instance().getGameLogic().getDifficulty();
+    std::string diffInfo = "";
     switch(event) {
         case Event::Type::HoveringStandardMode:
-            stateManager->setMode(diffStr + "Standard");    
             break;
         case Event::Type::HoveringAlternateBloonsMode:
-            modeInfo = "Bloons come from the opposite side of the tracks, and the order of Bloon waves in each round are reversed";
-            std::dynamic_pointer_cast<TextField>(modeInfoText)->setText(modeInfo);
-            stateManager->setMode(diffStr + "Alternate Bloons");
+            std::dynamic_pointer_cast<TextField>(modeInfoText)->setText(ModeInfo::Instance().getModeInfo(ModeType::Alternative)["description"]);
             break;
         case Event::Type::HoveringReverseMode: 
-            modeInfo = "Bloons have an altered RBE, making it more tricky";
-            std::dynamic_pointer_cast<TextField>(modeInfoText)->setText(modeInfo);
-            stateManager->setMode(diffStr + "Reverse");
+            std::dynamic_pointer_cast<TextField>(modeInfoText)->setText(ModeInfo::Instance().getModeInfo(ModeType::Reverse)["description"]);
             break;
         case Event::Type::HoveringApopalyseMode:
-            modeInfo = "Bloon waves progress without stopping";
-            std::dynamic_pointer_cast<TextField>(modeInfoText)->setText(modeInfo);
-            stateManager->setMode(diffStr +  "Apopalyse");
-            break;
-        case Event::Type::ToEasyModeSelection:
-            diff = Difficulty::Easy;
-            setInfo();
-            diffStr = "Easy - ";
-            break;
-            case Event::Type::ToMediumModeSelection:
-            diff = Difficulty::Medium;
-            diffStr = "Medium - ";
-            setInfo();
-            break;
-            case Event::Type::ToHardModeSelection:
-            diff = Difficulty::Hard;
-            diffStr = "Hard - ";
-            setInfo();
-            break;
-        case Event::Type::ToImpoppableModeSelection:
-            diff = Difficulty::Impoppable;
-            diffStr = "Impoppable - ";
-            setInfo();
+            std::dynamic_pointer_cast<TextField>(modeInfoText)->setText(ModeInfo::Instance().getModeInfo(ModeType::Apopalypse)["description"]);
             break;
         default: 
             break;
-    }
-
-    stateManager->setModeInfo(getDifficultyInfo(diff));
+        }
 }
 
 void SpecificModeSelectionState::handleInput() {
     State::handleInput();
+    setInfo();
+    auto diff = Game::Instance().getGameLogic().getDifficulty();
 
     if(std::dynamic_pointer_cast<Button>(alternateBloonsButton)->getState() == Button::State::None 
     && std::dynamic_pointer_cast<Button>(reverseButton)->getState() == Button::State::None
     && std::dynamic_pointer_cast<Button>(apopalyseButton)->getState() == Button::State::None) {
-        std::dynamic_pointer_cast<TextField>(modeInfoText)->setText(getDifficultyInfo(diff));   
+        std::dynamic_pointer_cast<TextField>(modeInfoText)->setText(DifficultyInfo::Instance().getDifficultyInfo(diff)["description"]);   
     } 
 }
 
-std::string SpecificModeSelectionState::getDifficultyInfo(Difficulty type) const {
-    switch(type) {
-        case Difficulty::Easy:
-            return "Start with 200 lives, $650 starting cash, win Rounds 1-40, all towers and upgrades cost 15% less than normal, all bloons move the slowest, at about -9% Medium speed, and the Round 40 MOAB has 66% HP.";
-        case Difficulty::Medium:
-            return "Start with 150 lives, $650 starting cash, win Rounds 1-60, all towers and upgrades cost their normal prices, and all bloons move at standard speed (+10% faster than on Easy).";
-        case Difficulty::Hard:
-            return "Start with 100 lives, $650 starting cash, win Rounds 3-80, all towers and upgrades cost +8% more, and all bloons move about +13% faster than on Medium (+25% faster than on Easy).";
-        case Difficulty::Impoppable:
-            return "Start with 1 life only, $650 starting cash, win Rounds 6-100, all towers and upgrades cost +20% more, and all bloons move about +13% faster than on Medium (+25% faster than on Easy).";
-    }
-    return "";
-}
 
-void SpecificModeSelectionState::setInfo()
-{
+void SpecificModeSelectionState::setInfo() {
     Vector2 tablePos = {static_cast<float>((Properties::screenWidth - width) / 2), static_cast<float>((Properties::screenHeight - height) / 2)};
-    std::string titleText = "";
-    std::string diffInfo = getDifficultyInfo(diff);
-    switch(diff) {
-        case Difficulty::Easy:
-            titleText = "Easy Mode";
-            break;
-        case Difficulty::Medium:
-            titleText = "Medium Mode";
-            break;
-        case Difficulty::Hard:
-            titleText = "Hard Mode";
-            break;
-        case Difficulty::Impoppable:
-            titleText = "Impoppable Mode";
-            break;
-    }
-
+    auto diff = Game::Instance().getGameLogic().getDifficulty();
+    std::string titleText = DifficultyInfo::Instance().getDifficultyInfo(diff)["name"] + " Mode";
     std::dynamic_pointer_cast<TextField>(title)->setText(titleText);
-    std::dynamic_pointer_cast<TextField>(modeInfoText)->setText(getDifficultyInfo(diff));
 }

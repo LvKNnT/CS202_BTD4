@@ -18,8 +18,10 @@ public:
     void playRound(int roundNumber);
     std::vector<std::pair<BloonType, BloonProperties>> getEnemies();
     int getRoundReward();
-    bool setAutoPlay(bool autoPlay);
+    bool isApopalyse() const;
+    bool isReverse() const;
     bool canPlayNextRound(bool isClear) const;
+    ModeType getCurrentModeType() const;
 
     // save/load
     void save(const std::string& filePath) const;

@@ -36,7 +36,7 @@ public:
     // condition
     int isEndGame() const;
     void runNextRound();
-    bool isRoundRun();
+    bool isRoundRun() const;
     bool isStartedFirstRound();
 
     // Supplyment methos for Game
@@ -55,6 +55,7 @@ public:
     void setAutoPlay(bool autoPlay);
     void activeAutoPlay();
     void unactiveAutoPlay();
+    bool getAutoPlay() const;
     void replay(); // actually is a re-init with the same map and mode
     void setTickFast(bool isTickFast);
     void activeTickFast();
@@ -63,12 +64,17 @@ public:
     LogicInfo getInfoResource() const;
     LogicInfo getInfoTower() const;
     LogicInfo getInfoTower(TowerType type) const;
+    MapType getMapType() const;
+    Difficulty getDifficulty() const;
+    ModeType getModeType() const;
+    
 
     // save/load
     void autoSave() const;
     void loadAutoSave();
     void saveGame() const;
     void loadGame(MapType type);
+    bool canLoadGame(MapType type) const;
     
 private:
     // Heavy/important game logic

@@ -43,14 +43,12 @@ int ModeManager::getRoundReward() {
     return 0;
 }
 
-bool ModeManager::setAutoPlay(bool autoPlay) {
-    if (currentMode) {
-        return currentMode->setAutoPlay(autoPlay);
-    } 
+bool ModeManager::isApopalyse() const {
+    return currentModeType == ModeType::Apopalypse;
+}
 
-    // should not be here
-    std::cerr << "setAutoPlay: No current mode set\n";
-    return false;
+bool ModeManager::isReverse() const {
+    return currentModeType == ModeType::Reverse;
 }
 
 bool ModeManager::canPlayNextRound(bool isClear) const {
@@ -61,6 +59,10 @@ bool ModeManager::canPlayNextRound(bool isClear) const {
     // should not be here
     std::cerr << "canPlayNextRound: No current mode set\n";
     return false;
+}
+
+ModeType ModeManager::getCurrentModeType() const {
+    return currentModeType;
 }
 
 void ModeManager::save(const std::string& filePath) const {

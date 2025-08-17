@@ -13,6 +13,7 @@ protected:
     // Skill properties
     float cooldown; 
     float timer; 
+    bool isSkillActivating;
     std::string name; 
 
 public:
@@ -32,6 +33,9 @@ public:
     const std::string& getName() const;
     float getCooldownTime() const;
     float getTimer() const;
+    bool getISkillsActivating() const;
+    void setTimer(float newTimer);
+    void setIsSkillActivating(float newIsSkillActivating);
 };
 
 #endif // SKIL_H

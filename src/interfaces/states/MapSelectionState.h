@@ -11,9 +11,11 @@ private:
     std::shared_ptr<PanelElement> previousMapButton;
     std::shared_ptr<PanelElement> ChooseMapButton[maxMap];
     std::shared_ptr<PanelElement> mapName[maxMap];
+    std::shared_ptr<PanelElement> saveGameTexture;
 public:
     MapSelectionState();
     void draw() const override;
+    void handleInput() override;
     void update(Event::Type event) override;
 };
 

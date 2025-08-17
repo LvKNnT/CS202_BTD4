@@ -43,6 +43,8 @@ std::vector<std::pair<BloonType, BloonProperties>> ApopalypseModePlayer::getEnem
 }
 
 bool ApopalypseModePlayer::canPlayNextRound(bool isClear) const {
+    if(!isClear) return false;
+    
     for(const auto& wave : currentRound.bloonTypes) {
         if(wave.bloonCount < wave.count) {
             return false; // Not all bloons in the current round have been cleared
@@ -55,8 +57,4 @@ int ApopalypseModePlayer::getRoundReward() {
     int reward = currentRound.extraCash;
     currentRound.extraCash = 0; 
     return reward;
-}
-
-bool ApopalypseModePlayer::setAutoPlay(bool autoPlay) {
-    return true;
 }
