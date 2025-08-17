@@ -2,9 +2,14 @@
 
 #include "../../../../core/Game.h"
 
-#include "../../../attack/attacks/DartAttack.h"
+#include "../../../attack/attacks/IceAttack.h"
 #include "../../../attack/patterns/NormalAttack.h"
 #include "../../../skill/Skill.h"
+
+#include "PermaFrost.h"
+#include "EnhancedFreeze.h"
+#include "LargerRadius.h"
+
 IceMonkey::IceMonkey(Vector2 position)
     : Tower(position, {0.0f, 0.0f}, 0.0f, TowerType::IceMonkey, 500) {
     /**
@@ -24,15 +29,15 @@ IceMonkey::IceMonkey(Vector2 position)
      * * * lifeSpan = 0.1f
      * * * properties = BulletProperties::normal()
      */
-    attacks.push_back(std::make_unique<DartAttack>(40.0f, 2.4f, position, towerId, 1, 2000, 40, 0.1f, BulletProperties::ice(), BloonDebuff().getIFreeze(1.5f), BloonDebuff()));
+    attacks.push_back(std::make_unique<IceAttack>(40.0f, 2.4f, position, towerId, 1, 2000, 40, 0.1f, BulletProperties::ice(), BloonDebuff().getIFreeze(1.5f), BloonDebuff()));
     attacks.back()->setAttackPattern(std::make_unique<NormalAttack>()); // Set the attack pattern to NormalAttack 
     skill = nullptr;
     passiveSkills.clear(); // Clear any existing passive skills
 
     // Upgrade Path
-    upgradeTop = std::make_unique<Upgrade>();
-    upgradeMiddle = std::make_unique<Upgrade>();
-    upgradeBottom = std::make_unique<Upgrade>();
+    upgradeTop = std::make_unique<PermaFrost>();
+    upgradeMiddle = std::make_unique<EnhancedFreeze>();
+    upgradeBottom = std::make_unique<LargerRadius>();
 
     // Info section
     info["name"] = "Ice Monkey";
@@ -70,13 +75,13 @@ std::unique_ptr<Tower> IceMonkey::clone() const {
 
 void IceMonkey::loadTexture() {
     // Load the texture for the Ice Monkey tower
-    Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ice_Monkey/IceMonkey.png");
+    Game::Instance().getTextureManager().loadTexture(tag, "../assets/tower/Ice_Monkey/Ice_Tower.png");
     Game::Instance().getTextureManager().loadTexture("NoUpgrade", "../assets/tower/NoUpgradeIcon.png");
     
     // Update size based on the loaded texture
     size.x = Game::Instance().getTextureManager().getTexture(tag).width;
     size.y = Game::Instance().getTextureManager().getTexture(tag).height;
-    size = {60.0f, 60.0f}; // Set the size of the Ice Monkey tower
+    size = {60.0f, 65.0f}; // Set the size of the Ice Monkey tower
 
     // Get texture for the upgrade
     upgradeTop->loadTexture();
@@ -95,7 +100,7 @@ void IceMonkey::update() {
 }
 
 void IceMonkey::setRotation(float rotation) {
-    this->rotation = rotation;
+    // this tower has no rotation
 }
 
 void IceMonkey::draw() const {
@@ -126,9 +131,13 @@ void IceMonkey::draw() const {
 }
 
 void IceMonkey::drawRange() const {
-    // Use dummy range
-    float range = 40.0f;
-    DrawCircleV(position, range * attackBuff.rangeRatio + attackBuff.range, Fade(GRAY, 0.5f)); // Draw the attack range
+    // Draw the range of attacks
+    float maxRange = 0.0f;
+    for(const auto& attack : attacks) {
+        maxRange = std::max(maxRange, attack->getRange() * attackBuff.rangeRatio + attackBuff.range);
+    }
+
+    DrawCircleV(position, maxRange, Fade(GRAY, 0.5f)); // Draw the attack range
 }
 
 void IceMonkey::drawPut() const {

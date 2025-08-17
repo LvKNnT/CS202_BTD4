@@ -14,7 +14,7 @@ std::unique_ptr<Skill> EliteDefenderPassiveSkill::clone() const {
 
 void EliteDefenderPassiveSkill::loadTexture() {
     // Load the texture for the Elite Defender Passive skill
-    Game::Instance().getTextureManager().loadTexture(name, "../assets/tower/Sniper_Monkey/EliteDefenderPassiveUpgradeIcon.png");
+    // Game::Instance().getTextureManager().loadTexture(name, "../assets/tower/Sniper_Monkey/EliteDefenderPassiveUpgradeIcon.png");
 }
 
 void EliteDefenderPassiveSkill::update() {

@@ -38,11 +38,11 @@ public:
     bool isStun = false;
     bool isFrozen = false;
     bool isKnockback = false;
+    bool isBrittle = false; // for ice monkey embrittlement
 
     BloonProperties(bool fortified = false, bool camo = false, bool regrow = false)
         : isFortified(fortified), isCamo(camo), isRegrow(regrow) {}
-    BloonProperties(const BloonProperties& other)
-        : isFortified(other.isFortified), isCamo(other.isCamo), isRegrow(other.isRegrow) {}
+    BloonProperties(const BloonProperties& other) = default;
     ~BloonProperties() = default;
 
     BloonProperties& operator=(const BloonProperties& other) {
@@ -50,6 +50,11 @@ public:
             isFortified = other.isFortified;
             isCamo = other.isCamo;
             isRegrow = other.isRegrow;
+            isGlue = other.isGlue;
+            isStun = other.isStun;
+            isFrozen = other.isFrozen;
+            isKnockback = other.isKnockback;
+            isBrittle = other.isBrittle;
         }
         return *this;
     }
@@ -286,7 +291,8 @@ public:
     int calSpeed(int speed) const {
         if(freezeDuration > 0.0f
         || stunDuration > 0.0f) return 0;
-        return static_cast<int>(speed * (1.0f - slowRatio));
+
+        return static_cast<int>(speed * (1.0f - std::min(slowRatio, 1.0f)));
     }
 
     int calKnockbackSpeed(int speed, int knockbackChance) {

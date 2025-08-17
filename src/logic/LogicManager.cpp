@@ -15,7 +15,7 @@ void LogicManager::updateEnemies(EnemyManager& enemyManager, MapManager& mapMana
         int result = runEnemy(**it, mapManager.getCurrentMap());
         if (result == -1) {
             // Enemy reached the end — remove and destroy it
-            //resourceManager.currentResource.lives -= (*it)->livesLost; // Update lives lost
+            resourceManager.currentResource.lives -= (*it)->livesLost; // Update lives lost
             it = enemyManager.enemyList.erase(it);  // erase returns the next iterator
             continue;  // Skip the increment, already moved to next
         }
@@ -38,7 +38,7 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
     Vector2 position = enemy.position;
     int trackIndex = enemy.trackIndex;
     int pathIndex = enemy.pathIndex; 
-    int speed= enemy.debuff.calSpeed(enemy.speed) + enemy.debuff.calKnockbackSpeed(enemy.speed, enemy.debuff.knockbackChance);
+    int speed = enemy.debuff.calSpeed(enemy.speed) + enemy.debuff.calKnockbackSpeed(enemy.speed, enemy.debuff.knockbackChance);
 
     Vector2 nextPoint = map.getNextPoint(trackIndex, pathIndex);
     Vector2 direction = {nextPoint.x - position.x, nextPoint.y - position.y};
@@ -99,12 +99,14 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
 
     // Move jingly jingly
     // Sinusoidal "jiggle" movement perpendicular to the path direction
-    // float jiggleAmplitude = 0.3f; // Adjust for more/less jiggle
-    // float jiggleFrequency = 1.0f; // Adjust for faster/slower jiggle
-    // float jiggle = jiggleAmplitude * sinf(GetTime() * jiggleFrequency + enemy.enemyId);
-    // Vector2 normal = { -direction.y / distance, direction.x / distance };
-    // position.x += normal.x * jiggle;
-    // position.y += normal.y * jiggle;
+    if(enemy.type < BloonType::Moab) {
+        float jiggleAmplitude = 0.3f; // Adjust for more/less jiggle
+        float jiggleFrequency = 1.0f; // Adjust for faster/slower jiggle
+        float jiggle = jiggleAmplitude * sinf(GetTime() * jiggleFrequency + enemy.enemyId);
+        Vector2 normal = { -direction.y / distance, direction.x / distance };
+        position.x += normal.x * jiggle;
+        position.y += normal.y * jiggle;
+    }
 
     // Before returning, update the enemy's position and track index
     enemy.position = position; 
@@ -289,14 +291,10 @@ bool LogicManager::canBulletDestroyEnemy(const Bullet& bullet, Enemy& enemy) {
         return false;
     }
 
-    if(enemy.properties.isCamo && bullet.attackBuff.properties.canStripCamo) {
-        enemy.properties.isCamo = false;
-        return false;
-    }
-
     // special properties
     if(bullet.properties.canLead == false
-    && (enemy.type == BloonType::Lead || enemy.type == BloonType::Ddt)) {
+    && (enemy.type == BloonType::Lead || enemy.type == BloonType::Ddt)
+    && !enemy.properties.isBrittle) {
         return false;
     }
     if(bullet.properties.canBlack == false
@@ -308,12 +306,24 @@ bool LogicManager::canBulletDestroyEnemy(const Bullet& bullet, Enemy& enemy) {
         return false;
     }
     if(bullet.properties.canFrozen == false
-    && (enemy.properties.isFrozen)) {
+    && (enemy.properties.isFrozen)
+    && !enemy.properties.isBrittle) {
         return false;
     }
     if(bullet.properties.canPurple == false
     && (enemy.type == BloonType::Purple)) {
         return false;
+    }
+
+    // update onhit effects
+    if(enemy.properties.isCamo && bullet.attackBuff.properties.canStripCamo) {
+        enemy.properties.isCamo = false;
+    }
+    if(enemy.properties.isRegrow && bullet.attackBuff.properties.canStripRegrow) {
+        enemy.properties.isRegrow = false;
+    }
+    if(bullet.attackBuff.properties.canEmbrittle) {
+        enemy.properties.isBrittle = true; // Make bloon brittle
     }
 
     return true;
@@ -325,7 +335,7 @@ std::vector<std::unique_ptr<Enemy>> LogicManager::getChildrenEnemies(EnemyManage
     flog.close();
     
     if(enemy.hit(damage)) {
-        popCount += damage;
+        popCount += damage + enemy.debuff.bonusOnHitDamage;
         return {};
     }
 
@@ -335,7 +345,7 @@ std::vector<std::unique_ptr<Enemy>> LogicManager::getChildrenEnemies(EnemyManage
     childrenEnemies = enemyManager.spawnChildrenEnemies(&enemy, resourceManager.currentResource.currentRound);
     
     int remainingHealth = -enemy.health; // Get the remaining health after damage
-    int finalPopCount = damage - remainingHealth; // Calculate the pop count`
+    int finalPopCount = damage + enemy.debuff.bonusOnHitDamage - remainingHealth; // Calculate the pop count`
     popCount += finalPopCount;
     std::vector<std::unique_ptr<Enemy> > finalChildrenEnemies;
 

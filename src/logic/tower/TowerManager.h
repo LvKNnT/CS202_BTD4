@@ -13,6 +13,7 @@ class TowerManager {
 
 public:
     TowerManager(TowerModifies modifies = TowerModifies());
+    TowerManager(HeroType heroType, TowerModifies modifies = TowerModifies());
     TowerManager(const TowerManager& other); 
     ~TowerManager() = default;
 
@@ -28,6 +29,7 @@ public:
     LogicInfo getInfo() const;
     LogicInfo getInfoTower(TowerType type) const;
     LogicInfo getInfoTower(Vector2 position) const;
+    LogicInfo getHeroInfo() const;
     void chooseNextPriority();
     void chooseNextPriority(Vector2 position);
     void choosePreviousPriority();
@@ -45,6 +47,7 @@ public:
 
 private:
     TowerModifies currentModifies; // Current tower modifies
+    HeroType currentHeroType; // Current hero type
     
     std::vector<std::shared_ptr<Tower>> towerList; // Collection to hold all active towers
     std::weak_ptr<Tower> lastPickedTower;

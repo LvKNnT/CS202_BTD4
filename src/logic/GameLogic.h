@@ -17,12 +17,13 @@ public:
     
     // Initialize the game logic
     void init(); // only for testing, should not be called in production
-    void init(Difficulty difficulty, MapType mapType, ModeType modeType); // For loading new game
+    void init(Difficulty difficulty, MapType mapType, ModeType modeType, HeroType heroType); // For loading new game
     
     // Inidividual init
     void init(MapType mapType);
     void init(Difficulty difficulty);
     void init(ModeType modeType);
+    void init(HeroType heroType); 
 
     // Update the game logic
     void update();
@@ -64,10 +65,10 @@ public:
     LogicInfo getInfoResource() const;
     LogicInfo getInfoTower() const;
     LogicInfo getInfoTower(TowerType type) const;
+    LogicInfo getHeroInfo() const; // Get hero info
     MapType getMapType() const;
     Difficulty getDifficulty() const;
     ModeType getModeType() const;
-    
 
     // save/load
     void autoSave() const;

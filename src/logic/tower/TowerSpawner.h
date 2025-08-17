@@ -4,9 +4,12 @@
 #include "Tower.h"
 #include "../level/TowerModifies.h"
 #include "../LogicInfo.h"
+#include "../hero/Hero.h"
 
 // We use design pattern Factory Method Pattern to create towers
 class TowerSpawner {
+    friend class TowerManager; // Allow TowerManager to access private members
+    
 private:
     struct TowerTypeCompare {
         bool operator()(const TowerType& a, const TowerType& b) const {
@@ -18,9 +21,10 @@ private:
     std::map<TowerType, std::unique_ptr<Tower>, TowerTypeCompare> towerTemplates;
 
     TowerModifies currentModifies; 
+    std::unique_ptr<Hero> hero; // Current hero
 public:
     TowerSpawner();
-    TowerSpawner(TowerModifies modifies);
+    TowerSpawner(TowerModifies modifies, HeroType heroType);
     TowerSpawner(const TowerSpawner& other);
     ~TowerSpawner() = default;
 

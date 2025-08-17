@@ -39,6 +39,7 @@ bool Bad::hit(int damage) {
         MySound popSound("MOABBloon");
         popSound.start();
     }
+
     health -= damage;
     health -= debuff.bonusOnHitDamage; // Apply bonus damage from debuffs
 

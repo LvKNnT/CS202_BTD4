@@ -83,7 +83,6 @@ void PlasmaMonkeyFanClubSkill::activateSkill(std::shared_ptr<Tower> tower, std::
 }
 
 void PlasmaMonkeyFanClubSkill::inActivateSkill() {
-    if(timer < duration) return;
     if (closestTowers.empty()) return; 
 
     // Deactivate the skill for all activated towers

@@ -6,6 +6,9 @@ Vector2& SkillFriendAccess::getTowerPosition(Tower& tower) {
 float& SkillFriendAccess::getTowerRotation(Tower& tower) {
     return tower.rotation; // Access the rotation of the tower
 }
+std::vector<std::unique_ptr<Attack>>& SkillFriendAccess::getAttacks(Tower& tower) {
+    return tower.attacks; // Access the attacks of the tower
+}
 TowerType& SkillFriendAccess::getTowerType(Tower& tower) {
     return tower.type; // Access the TowerType of the tower
 }

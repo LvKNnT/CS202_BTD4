@@ -11,6 +11,7 @@ class SkillFriendAccess {
 public:
     static Vector2& getTowerPosition(Tower& tower);
     static float& getTowerRotation(Tower& tower);
+    static std::vector<std::unique_ptr<Attack>>& getAttacks(Tower& tower);
     static TowerType& getTowerType(Tower& tower);
     static TargetPriority& getTargetPriority(Tower& tower);
     static AttackBuff& getAttackBuff(Tower& tower);

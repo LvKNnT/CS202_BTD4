@@ -9,6 +9,8 @@ BulletProperties& BulletProperties::operator+= (const BulletProperties& other) {
     canCamo = canCamo || other.canCamo;
     canPurple = canPurple || other.canPurple;
     canStripCamo = canStripCamo || other.canStripCamo;
+    canStripRegrow = canStripRegrow || other.canStripRegrow;
+    canEmbrittle = canEmbrittle || other.canEmbrittle;
     isOnlyFollowing = isOnlyFollowing || other.isOnlyFollowing;
 
     if(other.canTrace && range < other.range) {
@@ -36,6 +38,8 @@ BulletProperties& BulletProperties::operator= (const BulletProperties& other) {
         canCamo = other.canCamo;
         canPurple = other.canPurple;
         canStripCamo = other.canStripCamo;
+        canStripRegrow = other.canStripRegrow;
+        canEmbrittle = other.canEmbrittle;
         canTrace = other.canTrace;
         isFocus = other.isFocus;
         isOnlyFollowing = other.isOnlyFollowing;

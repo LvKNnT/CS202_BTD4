@@ -7,10 +7,21 @@
 #include "../../interfaces/audio/MyAudio.h"
 #include "towers/ninjamonkey/NinjaMonkey.h"
 
+// hero includes
+#include "../hero/heroes/Quincy.h"
+#include "../hero/heroes/Benjamin.h"
+#include "../hero/heroes/Rosalia.h"
+#include "../hero/heroes/Etienne.h"
+
 TowerManager::TowerManager(TowerModifies modifies)
     : currentModifies(modifies), towerIDCounter(0) {
+    towerSpawner = nullptr;
+}
+
+TowerManager::TowerManager(HeroType heroType, TowerModifies modifies)
+    : currentHeroType(heroType), currentModifies(modifies), towerIDCounter(0) {
     // Initialize unique_ptr
-    towerSpawner = std::make_unique<TowerSpawner>(currentModifies);
+    towerSpawner = std::make_unique<TowerSpawner>(currentModifies, heroType);
 }
 
 TowerManager::TowerManager(const TowerManager& other) {
@@ -130,6 +141,13 @@ LogicInfo TowerManager::getInfoTower(Vector2 position) const {
 
     std::cerr << "No tower found at position: " << position.x << ", " << position.y << std::endl;
     return LogicInfo(); // Return an empty LogicInfo if no tower is found
+}
+
+LogicInfo TowerManager::getHeroInfo() const {
+    if (towerSpawner && towerSpawner->hero) {
+        return towerSpawner->hero->getInfo();
+    }
+    return LogicInfo(); // Return an empty LogicInfo if no hero is set
 }
 
 void TowerManager::drawTowers() const {
@@ -295,6 +313,8 @@ void TowerManager::save(const std::string& filePath) const {
         return;
     } 
 
+    file << static_cast<int>(currentHeroType) << std::endl; // Save hero type
+
     // file << "towers\n"; 
     file << towerList.size() << std::endl; // Save the number of towers
     
@@ -335,6 +355,11 @@ void TowerManager::load(const std::string& filePath) {
     std::getline(file, line);
     std::getline(file, line);
     std::getline(file, line);
+
+    int currentHeroTypeInt;
+    file >> currentHeroTypeInt; // Load hero type
+    currentHeroType = static_cast<HeroType>(currentHeroTypeInt);
+    towerSpawner = std::make_unique<TowerSpawner>(currentModifies, currentHeroType);
 
     int towerCount;
     file >> towerCount; // Read the number of towers
