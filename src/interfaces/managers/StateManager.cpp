@@ -20,6 +20,7 @@ void StateManager::initialize()
     difficultySelectionState = std::make_shared<DifficultySelectionState>();
     gameOverState = std::make_shared<GameOverState>();
     victoryState = std::make_shared<VictoryState>();
+    heroSelectionState = std::make_shared<HeroSelectionState>();
     stateStack.pushState(mainMenuState);
 }
 
@@ -170,6 +171,18 @@ void StateManager::update(Event::Type event) {
         case Event::Type::ApopalyseMode:
             setMode(ModeType::Apopalypse);
             Game::Instance().getGameLogic().init(ModeType::Apopalypse);
+            break;
+        case Event::Type::ToHeroSelection:
+            stateStack.pushState(heroSelectionState);
+            stateStack.setdrawPreviousStates(true);
+            break;
+        case Event::Type::ClickedQuincy:
+            break;
+        case Event::Type::ClickedBenjamin:
+            break;
+        case Event::Type::ClickedRosalia:
+            break;
+        case Event::Type::ClickedEtienne:
             break;
         case Event::Type::ToGameOver:
             canResume = false;

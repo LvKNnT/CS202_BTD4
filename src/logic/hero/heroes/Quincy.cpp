@@ -3,7 +3,7 @@
 Quincy::Quincy() {
     // Initialize Quincy hero properties
     info["name"] = "Quincy";
-    info["description"] = "Your towers will shoot faster.";
+    info["description"] = "Your towers will shoot faster (+10% attack speed).";
     info["type"] = "Hero";
 }
 

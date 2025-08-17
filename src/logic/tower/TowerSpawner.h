@@ -24,6 +24,7 @@ private:
     std::unique_ptr<Hero> hero; // Current hero
 public:
     TowerSpawner();
+    TowerSpawner(TowerModifies modifies);
     TowerSpawner(TowerModifies modifies, HeroType heroType);
     TowerSpawner(const TowerSpawner& other);
     ~TowerSpawner() = default;
