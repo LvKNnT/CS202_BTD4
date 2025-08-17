@@ -8,6 +8,8 @@
 
 // We use design pattern Factory Method Pattern to create towers
 class TowerSpawner {
+    friend class TowerManager; // Allow TowerManager to access private members
+    
 private:
     struct TowerTypeCompare {
         bool operator()(const TowerType& a, const TowerType& b) const {

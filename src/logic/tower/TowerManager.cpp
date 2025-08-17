@@ -138,6 +138,13 @@ LogicInfo TowerManager::getInfoTower(Vector2 position) const {
     return LogicInfo(); // Return an empty LogicInfo if no tower is found
 }
 
+LogicInfo TowerManager::getHeroInfo() const {
+    if (towerSpawner && towerSpawner->hero) {
+        return towerSpawner->hero->getInfo();
+    }
+    return LogicInfo(); // Return an empty LogicInfo if no hero is set
+}
+
 void TowerManager::drawTowers() const {
     for (const auto& tower : towerList) {
         if (tower) {

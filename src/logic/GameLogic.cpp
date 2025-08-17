@@ -228,6 +228,10 @@ LogicInfo GameLogic::getInfoTower(TowerType type) const {
     return towerManager.getInfoTower(type);
 }
 
+LogicInfo GameLogic::getHeroInfo() const {
+    return towerManager.getHeroInfo();
+}
+
 void GameLogic::chooseNextPriority() {
     towerManager.chooseNextPriority();
 }

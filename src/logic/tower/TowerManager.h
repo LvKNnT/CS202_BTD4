@@ -28,6 +28,7 @@ public:
     LogicInfo getInfo() const;
     LogicInfo getInfoTower(TowerType type) const;
     LogicInfo getInfoTower(Vector2 position) const;
+    LogicInfo getHeroInfo() const;
     void chooseNextPriority();
     void chooseNextPriority(Vector2 position);
     void choosePreviousPriority();

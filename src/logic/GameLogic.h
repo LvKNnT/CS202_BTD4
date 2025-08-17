@@ -64,6 +64,7 @@ public:
     LogicInfo getInfoResource() const;
     LogicInfo getInfoTower() const;
     LogicInfo getInfoTower(TowerType type) const;
+    LogicInfo getHeroInfo() const; // Get hero info
 
     // save/load
     void autoSave() const;
