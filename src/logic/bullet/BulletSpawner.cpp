@@ -28,6 +28,11 @@
 #include "bullets/Shrapnel.h"
 #include "bullets/ShrapnelShotBullet.h"
 #include "bullets/Ice.h"
+#include "bullets/Sub.h"
+#include "bullets/Airburst.h"
+#include "bullets/ArmourPiercing.h"
+#include "bullets/Submerge.h"
+#include "bullets/Ballistic.h"
 // #include "bullets/Tack.h"
 // #include "bullets/MagicBall.h"
 // #include "bullets/Shuriken.h"
@@ -97,6 +102,11 @@ void BulletSpawner::init() {
     bulletTemplates[BulletType::Shrapnel] = std::make_unique<Shrapnel>();
     bulletTemplates[BulletType::ShrapnelShot] = std::make_unique<ShrapnelShotBullet>();
     bulletTemplates[BulletType::Ice] = std::make_unique<Ice>();
+    bulletTemplates[BulletType::Sub] = std::make_unique<Sub>();
+    bulletTemplates[BulletType::Airburst] = std::make_unique<Airburst>();
+    bulletTemplates[BulletType::ArmourPiercing] = std::make_unique<ArmourPiercing>();
+    bulletTemplates[BulletType::Submerge] = std::make_unique<Submerge>();
+    bulletTemplates[BulletType::Ballistic] = std::make_unique<Ballistic>();
     // bulletTemplates[BulletType::Tack] = std::make_unique<Tack>();
     // bulletTemplates[BulletType::MagicBall] = std::make_unique<MagicBall>();
     // bulletTemplates[BulletType::Shuriken] = std::make_unique<Shuriken>();

@@ -2,9 +2,14 @@
 
 #include "../../../../core/Game.h"
 
-#include "../../../attack/attacks/DartAttack.h"
+#include "../../../attack/attacks/SubAttack.h"
 #include "../../../attack/patterns/NormalAttack.h"
 #include "../../../skill/Skill.h"
+
+#include "LongerRange.h"
+#include "BarbedDarts.h"
+#include "TwinGuns.h"
+
 MonkeySub::MonkeySub(Vector2 position)
     : Tower(position, {0.0f, 0.0f}, 0.0f, TowerType::MonkeySub, 350) {
     /**
@@ -16,23 +21,23 @@ MonkeySub::MonkeySub(Vector2 position)
 
     // Basic attack
     /**
-     * * range = full map
-     * * cooldown = 1.59f
-     * * * damage = 2
-     * * * speed = 2000
-     * * * pierce = 1
-     * * * lifeSpan = 0.1f
+     * * range = 84.0f
+     * * cooldown = 0.75f
+     * * * damage = 1
+     * * * speed = 340
+     * * * pierce = 2
+     * * * lifeSpan = 10.0f
      * * * properties = BulletProperties::normal()
      */
-    attacks.push_back(std::make_unique<DartAttack>(2000.0f, 1.59f, position, towerId, 2, 2000, 1, 0.1f, BulletProperties::normal().getITracing(0.0f, TargetPriority::First, true), BloonDebuff(), BloonDebuff()));
+    attacks.push_back(std::make_unique<SubAttack>(84.0f, 1.59f, position, towerId, 1, 340, 2, 10.0f, BulletProperties::normal().getITracing(104.0f, TargetPriority::First), BloonDebuff(), BloonDebuff()));
     attacks.back()->setAttackPattern(std::make_unique<NormalAttack>()); // Set the attack pattern to NormalAttack 
     skill = nullptr;
     passiveSkills.clear(); // Clear any existing passive skills
 
     // Upgrade Path
-    upgradeTop = std::make_unique<Upgrade>();
-    upgradeMiddle = std::make_unique<Upgrade>();
-    upgradeBottom = std::make_unique<Upgrade>();
+    upgradeTop = std::make_unique<LongerRange>();
+    upgradeMiddle = std::make_unique<BarbedDarts>();
+    upgradeBottom = std::make_unique<TwinGuns>();
 
     // Info section
     info["name"] = "Monkey Sub";
@@ -76,7 +81,7 @@ void MonkeySub::loadTexture() {
     // Update size based on the loaded texture
     size.x = Game::Instance().getTextureManager().getTexture(tag).width;
     size.y = Game::Instance().getTextureManager().getTexture(tag).height;
-    size = {60.0f, 60.0f}; // Set the size of the Monkey Sub tower
+    size = {60.0f, 80.0f}; // Set the size of the Monkey Sub tower
 
     // Get texture for the upgrade
     upgradeTop->loadTexture();
@@ -126,9 +131,13 @@ void MonkeySub::draw() const {
 }
 
 void MonkeySub::drawRange() const {
-    // Use dummy range
-    float range = 40.0f;
-    DrawCircleV(position, range * attackBuff.rangeRatio + attackBuff.range, Fade(GRAY, 0.5f)); // Draw the attack range
+    // Draw the range of attacks
+    float maxRange = 0.0f;
+    for(const auto& attack : attacks) {
+        maxRange = std::max(maxRange, attack->getRange() * attackBuff.rangeRatio + attackBuff.range);
+    }
+
+    DrawCircleV(position, maxRange, Fade(GRAY, 0.5f)); // Draw the attack range
 }
 
 void MonkeySub::drawPut() const {

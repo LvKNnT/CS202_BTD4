@@ -34,6 +34,7 @@ public:
     float getCooldownTime() const;
     float getTimer() const;
     bool getISkillsActivating() const;
+    void setCooldown(float newCooldown);
     void setTimer(float newTimer);
     void setIsSkillActivating(float newIsSkillActivating);
 };

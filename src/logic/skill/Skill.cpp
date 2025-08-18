@@ -26,6 +26,10 @@ bool Skill::getISkillsActivating() const {
     return isSkillActivating;
 }
 
+void Skill::setCooldown(float newCooldown) {
+    cooldown = newCooldown;
+}
+
 void Skill::setTimer(float newTimer){
     timer = newTimer;
 }
