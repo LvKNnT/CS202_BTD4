@@ -146,3 +146,17 @@ ChooseTackShooterTower::ChooseTackShooterTower(const Texture &_texture, int _fon
     hoveringEvent = Event::Type::HoveringChooseTackShooter;
     clickedEvent = Event::Type::ClickedChooseTackShooter;
 }
+
+ChooseIceMonkeyTower::ChooseIceMonkeyTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+    : CanHoveringButton(_texture, _fontSize, _height, _width, _position){
+    attach(Game::Instance().getStateManager());
+    hoveringEvent = Event::Type::HoveringChooseIceMonkey;
+    clickedEvent = Event::Type::ClickedChooseIceMonkey;
+}
+
+ChooseMonkeySubTower::ChooseMonkeySubTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+    : CanHoveringButton(_texture, _fontSize, _height, _width, _position) {
+    attach(Game::Instance().getStateManager());
+    hoveringEvent = Event::Type::HoveringChooseMonkeySub;
+    clickedEvent = Event::Type::ClickedChooseMonkeySub;
+}

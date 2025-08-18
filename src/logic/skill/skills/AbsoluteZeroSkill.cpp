@@ -5,7 +5,7 @@
 #include "../../../core/Game.h"
 
 AbsoluteZeroSkill::AbsoluteZeroSkill()
-    : Skill(20.0f, "Absolute Zero Skill") {
+    : Skill(20.0f, "Absolute Zero Skill"), iceSkill("Freeze") {
     // Instant cooldown
     duration = 10.0f;
     timer = cooldown;
@@ -61,6 +61,7 @@ void AbsoluteZeroSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector<
     std::cerr << "Absolute Zero Skill activated for " << duration << " seconds." << std::endl;
 
     // Reset the timer after activation
+    iceSkill.start();
     timer = 0.0f;
 }
 
@@ -72,9 +73,9 @@ void AbsoluteZeroSkill::inActivateSkill() {
             SkillFriendAccess::getAttackBuff(*towerPtr).cooldownRatio /= 0.5f; // Reset the attack speed
         }
     }
+    iceSkill.stop();
 
     affectedTowers.clear(); // Clear the affected towers
-
     std::cerr << "Absolute Zero Skill deactivated." << std::endl;
 }
 

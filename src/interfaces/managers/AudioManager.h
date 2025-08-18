@@ -6,8 +6,8 @@
 #include <memory>
 
 #include "../audio/AudioChannel.h"
-#include "../../core/IObserver.h"
-#include "../../core/Event.h"
+#include "../IObserver.h"
+#include "../Event.h"
 
 enum class AudioType {
     MusicSound, 

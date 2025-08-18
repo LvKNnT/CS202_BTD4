@@ -7,8 +7,8 @@
 
 #include "../Clickable.h"
 #include "../PanelElement.h"
-#include "../../core/ISubject.h"
-#include "../../core/Event.h"
+#include "../ISubject.h"
+#include "../Event.h"
 
 class Button : public Clickable, public PanelElement, public ISubject {
 public: 

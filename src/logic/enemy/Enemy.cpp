@@ -43,7 +43,7 @@ void Enemy::updateEffect() {
     if(debuff.freezeDuration > 0.0f) {
         Texture texture = Game::Instance().getTextureManager().getTexture(tag);
         if(effects.freezeEffect.isAnimationPlaying() == false) {
-            effects.freezeEffect = Animation("freeze", texture.height, texture.width, 10, debuff.freezeDuration / 10.0f, true);
+            effects.freezeEffect = Animation("freeze", texture.height, texture.width, 1, debuff.freezeDuration, false);
             effects.freezeEffect.start();
         }
         effects.freezeEffect.setPosition((Vector2) {position.x - texture.width / 2.0f, position.y - texture.height / 2.0f});

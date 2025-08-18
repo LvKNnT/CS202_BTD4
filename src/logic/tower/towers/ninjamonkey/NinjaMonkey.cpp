@@ -30,7 +30,7 @@ NinjaMonkey::NinjaMonkey(Vector2 position)
      * * * lifeSpan = 0.25f
      * * * properties = BulletProperties::normal()
      */
-    attacks.push_back(std::make_unique<ShurikenAttack>(120.0f, 0.62f, position, towerId, 1, 750, 2, 0.25f, BulletProperties::shuriken(), BloonDebuff(), BloonDebuff())); 
+    attacks.push_back(std::make_unique<ShurikenAttack>(120.0f, 0.62f, position, towerId, 1, 750, 2, 20.5f, BulletProperties::shuriken(), BloonDebuff(), BloonDebuff())); 
     attacks.back()->setAttackPattern(std::make_unique<NormalAttack>()); // Set the attack pattern to NormalAttack
     skill = nullptr;
     passiveSkills.clear(); // Clear any existing passive skills

@@ -2,11 +2,13 @@
 #define ABSOLUTE_ZERO_SKILL_H
 
 #include "../Skill.h"
+#include "../../../interfaces/audio/MyAudio.h"
 
 class AbsoluteZeroSkill : public Skill {
 private:
     std::vector<std::weak_ptr<Tower>> affectedTowers; // Towers affected by the skill
     float duration;
+    MySound iceSkill;
 
 public:
     AbsoluteZeroSkill();

@@ -17,6 +17,7 @@ public:
 
 class MySound : public MyAudio {
 public:
+    MySound() = default;
     MySound(std::string _name) : MyAudio(_name) {}
     void start() override;
     void stop() override;

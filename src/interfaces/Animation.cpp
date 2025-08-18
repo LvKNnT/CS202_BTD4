@@ -30,7 +30,7 @@ void Animation::update() {
 }
 
 void Animation::draw() const{
-    if(!isPlaying || numFrames == 0) return;
+    if(!isPlaying || numFrames == 0 || !isAvailable) return;
     Texture frame = Game::Instance().getTextureManager().getTexture(name + std::to_string(currentFrame));
     float scale = std::min((static_cast<float>(width) / frame.width), (static_cast<float>(height) / frame.height));
     DrawTextureEx(frame, position, rotation, scale, WHITE);

@@ -33,6 +33,8 @@ public:
     void playNextRound(ModeManager& modeManager, EnemyManager& enemyManager, BulletManager& bulletManager, ResourceManager& resourceManager);
     void setAutoPlay(ModeManager& modeManager, bool autoPlay);
     bool getAutoPlay() const;
+    void setJiggle(bool _jiggle);
+    bool getJiggle() const;
 
     // Update methods for interactions between game objects
     void updateBulletsHitEnemies(BulletManager& bulletManager, EnemyManager& enemyManager, TowerManager& towerManager, MapManager& mapManager, ResourceManager& resourceManager);
@@ -55,6 +57,7 @@ private:
     // sub-methods
     float distancePointLine(Vector2 point, Vector2 lineStart, Vector2 lineEnd) const;
     bool autoPlayRound = false;
+    bool jiggle = false;
 };
 
 #endif // LOGICMANAGER_H

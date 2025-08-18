@@ -15,7 +15,7 @@
 #include "../TextField.h"
 #include "../TextureField.h"
 #include "../Panel.h"
-#include "../../core/Event.h"
+#include "../Event.h"
 #include "../../utils/Properties.h"
 #include "../../utils/Utils.h"
 

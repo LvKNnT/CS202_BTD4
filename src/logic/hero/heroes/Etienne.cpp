@@ -3,7 +3,7 @@
 Etienne::Etienne() {
     // Initialize Etienne hero properties
     info["name"] = "Etienne";
-    info["description"] = "Your towers have bigger range(+10% range).";
+    info["description"] = "Your towers have bigger range (+10% range).";
     info["type"] = "Hero";
 }
 

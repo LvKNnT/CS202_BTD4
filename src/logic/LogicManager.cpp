@@ -99,13 +99,15 @@ int LogicManager::runEnemy(Enemy& enemy, const Map& map) {
 
     // Move jingly jingly
     // Sinusoidal "jiggle" movement perpendicular to the path direction
-    if(enemy.type < BloonType::Moab) {
-        float jiggleAmplitude = 0.3f; // Adjust for more/less jiggle
-        float jiggleFrequency = 1.0f; // Adjust for faster/slower jiggle
-        float jiggle = jiggleAmplitude * sinf(GetTime() * jiggleFrequency + enemy.enemyId);
-        Vector2 normal = { -direction.y / distance, direction.x / distance };
-        position.x += normal.x * jiggle;
-        position.y += normal.y * jiggle;
+    if(jiggle) {
+        if(enemy.type < BloonType::Moab) {
+            float jiggleAmplitude = 0.3f; // Adjust for more/less jiggle
+            float jiggleFrequency = 1.0f; // Adjust for faster/slower jiggle
+            float jiggle = jiggleAmplitude * sinf(GetTime() * jiggleFrequency + enemy.enemyId);
+            Vector2 normal = { -direction.y / distance, direction.x / distance };
+            position.x += normal.x * jiggle;
+            position.y += normal.y * jiggle;
+        }
     }
 
     // Before returning, update the enemy's position and track index
@@ -857,6 +859,14 @@ void LogicManager::playNextRound(ModeManager& modeManager, EnemyManager& enemyMa
 
 void LogicManager::setAutoPlay(ModeManager& modeManager, bool autoPlay) {
     autoPlayRound = autoPlay || modeManager.isApopalyse();
+}
+
+void LogicManager::setJiggle(bool _jiggle) {
+    jiggle = _jiggle;
+}
+
+bool LogicManager::getJiggle() const {
+    return jiggle;
 }
 
 bool LogicManager::getAutoPlay() const {
