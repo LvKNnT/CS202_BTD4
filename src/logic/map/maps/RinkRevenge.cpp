@@ -35,7 +35,7 @@ std::unique_ptr<Map> RinkRevenge::clone() const {
 
 Point::Type RinkRevenge::getPointType(Vector2 position) const {
     if(!Utils::isPositionInMap(position)) return Point::Type::None;
-    int tolerance = 10;
+    int tolerance = 50;
     Color pixelColor = GetImageColor(mapImage, static_cast<int>(position.x), static_cast<int>(position.y));
 
     // check Water 750 130
@@ -47,6 +47,10 @@ Point::Type RinkRevenge::getPointType(Vector2 position) const {
     Color obstacleColor = GetImageColor(mapImage, 940, 629);  
     bool isObstacle = Utils::isColorDiffByTolerance(obstacleColor, pixelColor, tolerance);
     if(isObstacle) return Point::Type::Obstacle;
+
+    Color betweenWaterAndLaneColor = GetImageColor(mapImage, 213, 548);
+    bool isBetween = Utils::isColorDiffByTolerance(betweenWaterAndLaneColor, pixelColor, tolerance);
+    if(isBetween) return Point::Type::BetweenWaterAndLane;
 
     // check for path
     Color pathColor = GetImageColor(mapImage, 339, 614); // 339 614 - an enemy path point

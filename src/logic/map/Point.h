@@ -15,7 +15,8 @@ public:
         Invisible,
         Water, 
         Enemy,
-        Obstacle
+        Obstacle,
+        BetweenWaterAndLane
     };
 
 private:

@@ -163,7 +163,7 @@ void TowerManager::drawTowers() const {
                 Rectangle towerSize = tower->getBoundingBox();
                 Vector2 towerPosition = {towerSize.x, towerSize.y};
 
-                if (tower->skill->getCooldown() > 0) {
+                if (tower->skill->getCooldown() > 0 && !tower->skill->canActivateSkill()) {
                     float cooldown = tower->skill->getTimer();
                     float maxCooldown = tower->skill->getCooldown();
                     float percent = cooldown / maxCooldown;
