@@ -58,8 +58,8 @@ void GameLogic::init(Difficulty difficulty) {
     resourceManager.initResource(difficulty);
     
     // for testing only
-    resourceManager.getResource().cash = 999999;
-    resourceManager.getResource().currentRound = 98;
+    //resourceManager.getResource().cash = 999999;
+    //resourceManager.getResource().currentRound = 98;
     
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
     bulletManager = BulletManager();
