@@ -78,7 +78,7 @@ void BulletManager::drawBullets() const {
             float rotation = bullet->rotation;
             boundingBox.x += bullet->size.x / 2.0f; // Adjust bounding box position
             boundingBox.y += bullet->size.y / 2.0f; // Adjust bounding
-            DrawRectanglePro(boundingBox, {boundingBox.width / 2.0f, boundingBox.height / 2.0f}, rotation, RED);
+            //DrawRectanglePro(boundingBox, {boundingBox.width / 2.0f, boundingBox.height / 2.0f}, rotation, RED);
             
             bullet->draw();
         } else {
@@ -92,10 +92,10 @@ void BulletManager::drawBullets() const {
 
         // draw dummy range
         if(putBullet->towerId == -1) {
-            DrawCircleV(putBullet->position, 20.0f, Fade(GRAY, 0.5f)); // Draw the range of the put bullet
+            //DrawCircleV(putBullet->position, 20.0f, Fade(GRAY, 0.5f)); // Draw the range of the put bullet
         } 
         else {
-            DrawCircleV(putBullet->position, 20.0f, Fade(RED, 0.5f)); // Draw the range of the put bullet
+            //DrawCircleV(putBullet->position, 20.0f, Fade(RED, 0.5f)); // Draw the range of the put bullet
         }
     } 
 }

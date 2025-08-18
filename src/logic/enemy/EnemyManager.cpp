@@ -79,7 +79,7 @@ void EnemyManager::drawEnemies() const {
             float rotation = enemy->rotation;
             boundingBox.x += enemy->size.x / 2.0f; // Adjust bounding box position
             boundingBox.y += enemy->size.y / 2.0f; // Adjust bounding
-            DrawRectanglePro(boundingBox, { boundingBox.width / 2.0f, boundingBox.height / 2.0f }, rotation, RED);
+            //DrawRectanglePro(boundingBox, { boundingBox.width / 2.0f, boundingBox.height / 2.0f }, rotation, RED);
             
             enemy->draw();
         }
