@@ -59,7 +59,7 @@ void GameLogic::init(Difficulty difficulty) {
     
     // for testing only
     resourceManager.getResource().cash = 999999;
-    // resourceManager.getResource().currentRound = 75;
+    resourceManager.getResource().currentRound = 10;
     
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
     bulletManager = BulletManager();
@@ -161,8 +161,8 @@ void GameLogic::update() {
 void GameLogic::draw() const {
     // Draw by the managers
     mapManager.drawMap();
-    enemyManager.drawEnemies();
     bulletManager.drawBullets();
+    enemyManager.drawEnemies();
     towerManager.drawTowers();
 }
 
@@ -284,6 +284,22 @@ void GameLogic::unactiveAutoPlay() {
 
 bool GameLogic::getAutoPlay() const {
     return logicManager.getAutoPlay();
+}
+
+void GameLogic::activeJiggle() {
+    setJiggle(true);
+}
+
+void GameLogic::unactiveJiggle() {
+    setJiggle(false);
+}
+    
+void GameLogic::setJiggle(bool _jiggle) {
+    logicManager.setJiggle(_jiggle);
+}
+
+bool GameLogic::getJiggle() const {
+    return logicManager.getJiggle();
 }
 
 // same same but different

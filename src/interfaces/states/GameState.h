@@ -22,7 +22,7 @@ public:
     void notify(Event::Type event) override;
 private:
     TowerType clickedTowerType = TowerType::None;
-    static const int maxTowerTypes = 12;
+    static const int maxTowerTypes = 6;
     int curTowerType;
     std::shared_ptr<PanelElement> chooseTowerButton[maxTowerTypes];
     std::shared_ptr<PanelElement> towerCost[maxTowerTypes];
@@ -33,6 +33,7 @@ private:
     // Text
     std::shared_ptr<PanelElement> round;
     std::shared_ptr<PanelElement> mode;
+    std::shared_ptr<PanelElement> hero;
     std::shared_ptr<PanelElement> cash;
     std::shared_ptr<PanelElement> lives;
     std::shared_ptr<PanelElement> maxRound;
@@ -60,8 +61,6 @@ private:
     std::shared_ptr<PanelElement> nextUpgradeInfoButton[3];
 
     std::shared_ptr<PanelElement> sellPrice;
-    std::shared_ptr<PanelElement> skillButton;
-    std::shared_ptr<PanelElement> skillInfoTextbox;
     std::shared_ptr<PanelElement> towerInfoTextbox;
     std::shared_ptr<PanelElement> upgradeInfoTextbox;
     // Functions

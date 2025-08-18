@@ -177,12 +177,16 @@ void StateManager::update(Event::Type event) {
             stateStack.setdrawPreviousStates(true);
             break;
         case Event::Type::ClickedQuincy:
+            Game::Instance().getGameLogic().init(HeroType::Quincy);
             break;
         case Event::Type::ClickedBenjamin:
+            Game::Instance().getGameLogic().init(HeroType::Benjamin);
             break;
         case Event::Type::ClickedRosalia:
+            Game::Instance().getGameLogic().init(HeroType::Rosalia);
             break;
         case Event::Type::ClickedEtienne:
+            Game::Instance().getGameLogic().init(HeroType::Etienne);
             break;
         case Event::Type::ToGameOver:
             canResume = false;

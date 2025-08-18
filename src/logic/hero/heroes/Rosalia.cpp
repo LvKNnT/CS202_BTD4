@@ -3,7 +3,7 @@
 Rosalia::Rosalia() {
     // Initialize Rosalia hero properties
     info["name"] = "Rosalia";
-    info["description"] = "Your towers deal more damager(+1 damage).";
+    info["description"] = "Your towers deal more damager (+1 damage).";
     info["type"] = "Hero";
 }
 

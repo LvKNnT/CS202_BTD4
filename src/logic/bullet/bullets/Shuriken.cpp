@@ -65,7 +65,6 @@ void Shuriken::update(std::vector<std::shared_ptr<Enemy>>& enemyList) {
 
 bool Shuriken::hit(int damage) {
     pierce -= damage;
-    
     return pierce <= 0; // Indicating that the hit was successful
 }
 

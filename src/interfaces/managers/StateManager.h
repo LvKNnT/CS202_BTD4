@@ -19,8 +19,8 @@
 #include "../../logic/Map/MapUnits.h"
 #include "../../logic/mode/ModeUnits.h"
 #include "../../logic/level/DifficultyUnits.h"
-#include "../../core/IObserver.h"
-#include "../../core/Event.h"
+#include "../IObserver.h"
+#include "../Event.h"
 
 class StateManager : public IObserver {
 private:

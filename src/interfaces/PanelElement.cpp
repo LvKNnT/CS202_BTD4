@@ -1,7 +1,7 @@
 #include "PanelElement.h"
 
 PanelElement::PanelElement(int _height, int _width) 
-    : height(_height), width(_width) {
+    : height(_height), width(_width), isAvailable(true) {
 }
 
 PanelElement::PanelElement(int _height, int _width, Vector2 _position)

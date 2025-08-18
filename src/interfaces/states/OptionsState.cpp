@@ -19,6 +19,7 @@ OptionsState::OptionsState() : State(754, 1022, Game::Instance().getTextureManag
     std::shared_ptr<PanelElement> higherMusicButton = std::make_shared<HigherMusic>(Game::Instance().getTextureManager().getTexture("NextButton"), 0, 50, 44, (Vector2) {tablePos.x + width - 70 - 431 - 10 - 44, tablePos.y + 70 + titleFontSize + 30 + 54 + 50});
     std::shared_ptr<PanelElement> lowerMusicButton = std::make_shared<LowerMusic>(Game::Instance().getTextureManager().getTexture("PreviousButton"), 0, 50, 42, (Vector2) {tablePos.x + width - 70 - 431 - 10 - 2 * 44, tablePos.y + 70 + titleFontSize + 30 + 54 + 50});
     std::shared_ptr<PanelElement> autoNextRoundButton = std::make_shared<AutoNextRound>(Game::Instance().getTextureManager().getTexture("Tick"), 0, 54, 52, (Vector2) {tablePos.x + width - 70 - 52, tablePos.y + 70 + titleFontSize + 30 + 54 * 2 + 50 * 2});
+    std::shared_ptr<PanelElement> jiggleButton = std::make_shared<Jiggle>(Game::Instance().getTextureManager().getTexture("Tick"), 0, 54, 52, (Vector2) {tablePos.x + width - 70 - 52, tablePos.y + 70 + titleFontSize + 30 + 54 * 3 + 50 * 3});
     std::shared_ptr<PanelElement> muteSoundButton = std::make_shared<MuteSound>(Game::Instance().getTextureManager().getTexture("Untick"), 0, 54, 52, (Vector2) {tablePos.x + 200, tablePos.y + 70 + titleFontSize + 30});
     std::shared_ptr<PanelElement> muteMusicButton = std::make_shared<MuteMusic>(Game::Instance().getTextureManager().getTexture("Untick"), 0, 54, 52, (Vector2) {tablePos.x + 200, tablePos.y + 70 + titleFontSize + 30 + 54 + 50});
     panel->addPanelElement((cancelOptionsStateButton));
@@ -29,14 +30,17 @@ OptionsState::OptionsState() : State(754, 1022, Game::Instance().getTextureManag
     panel->addPanelElement((lowerMusicButton));
     panel->addPanelElement(muteSoundButton);
     panel->addPanelElement(muteMusicButton);
+    panel->addPanelElement(jiggleButton);
     
     Font textFont = Game::Instance().getFontManager().getFont("Medium-Big");
     std::shared_ptr<PanelElement> soundText = std::make_shared<TextField>("Sounds", textFont, WHITE, 45, 0, (Vector2) {tablePos.x + 80, tablePos.y + 70 + titleFontSize + 30});
     std::shared_ptr<PanelElement> musicText = std::make_shared<TextField>("Music", textFont, WHITE, 45, 0, (Vector2) {tablePos.x + 80, tablePos.y + 70 + titleFontSize + 30 + 54 + 50});
     std::shared_ptr<PanelElement> autoNextRoundText = std::make_shared<TextField>("Auto Next Round", textFont, WHITE, 45, 0, (Vector2) {tablePos.x + 80, tablePos.y + 70 + titleFontSize + 30 + 54 * 2 + 50 * 2});
+    std::shared_ptr<PanelElement> jiggleText = std::make_shared<TextField>("Jiggle", textFont, WHITE, 45, 0, (Vector2) {tablePos.x + 80, tablePos.y + 70 + titleFontSize + 30 + 54 * 3 + 50 * 3});
     panel->addPanelElement((soundText));
     panel->addPanelElement((musicText));
     panel->addPanelElement((autoNextRoundText));
+    panel->addPanelElement((jiggleText));
 
     for(int i = 0; i < 6; i++) {
         soundTexture[i] = std::make_shared<TextureField>(Game::Instance().getTextureManager().getTexture("Volume" + std::to_string(i * 20)), 54, 431, (Vector2) {tablePos.x + width - 70 - 431, tablePos.y + 70 + titleFontSize + 30});
@@ -72,6 +76,12 @@ void OptionsState::update(Event::Type event) {
             break;
         case Event::Type::UnAutoNextRound:
             Game::Instance().getGameLogic().unactiveAutoPlay();
+            break;
+        case Event::Type::TickJiggle:
+            Game::Instance().getGameLogic().activeJiggle();
+            break;
+        case Event::Type::UntickJiggle:
+            Game::Instance().getGameLogic().unactiveJiggle();
             break;
         case Event::Type::None:
             resetMusicTextures();

@@ -64,3 +64,11 @@ MuteMusic::MuteMusic(const Texture &_texture, int _fontSize, int _height, int _w
     tickEvent = Event::Type::UnmuteMusic;
     attach(Game::Instance().getAudioManager());
 }
+
+Jiggle::Jiggle(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position) 
+     : Tick(_texture, _fontSize, _height, _width, _position) {
+    isTick = Game::Instance().getGameLogic().getJiggle();
+    texture = Game::Instance().getTextureManager().getTexture(!isTick ? "Tick":"Untick");
+    tickEvent = Event::Type::TickJiggle;
+    untickEvent = Event::Type::UntickJiggle;
+}

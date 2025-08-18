@@ -41,8 +41,8 @@ void Game::loadSettings() {
     }
 
     int sfxVolume = 100, musicVolume = 100;
-    bool isMutedSfx = 0, isMutedMusic = 0, isAutoplay = 0;
-    fin>>sfxVolume>>isMutedSfx>>musicVolume>>isMutedMusic>>isAutoplay;
+    bool isMutedSfx = 0, isMutedMusic = 0, isAutoplay = 0, isJiggle = 0;
+    fin>>sfxVolume>>isMutedSfx>>musicVolume>>isMutedMusic>>isAutoplay>>isJiggle;
     fin.close();
 
     auto audioManager = std::dynamic_pointer_cast<AudioManager>(this->audioManager);
@@ -52,6 +52,8 @@ void Game::loadSettings() {
     audioManager->setVolume(AudioType::MusicSound, static_cast<float>(musicVolume) / 100.0f);
     if(isMutedMusic) audioManager->mute(AudioType::MusicSound);
 
+    gameLogic.setJiggle(isJiggle);
+    
     Game::Instance().getGameLogic().setAutoPlay(isAutoplay);
 }
 
@@ -72,6 +74,7 @@ void Game::saveSettings() {
     fout<<audioManager->getVolume(AudioType::MusicSound)<<"\n"; // MusicVolume
     fout<<audioManager->isMuted(AudioType::MusicSound)<<"\n"; // IsMutedMusic
     fout<<gameLogic.getAutoPlay()<<"\n"; // IsAutoplay
+    fout<<gameLogic.getJiggle()<<"\n"; // IsJiggle
     fout.close();
 }
 
@@ -175,6 +178,7 @@ void Game::loadSound() {
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("CannonFire", "../assets/sounds/sfx/CannonFire.wav", 20); 
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("LaserFire", "../assets/sounds/sfx/LaserFire.wav", 3); 
     std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("ActivateSkill", "../assets/sounds/sfx/ActivateSkill.wav", 5); 
+    std::dynamic_pointer_cast<AudioManager>(audioManager)->loadSound("Freeze", "../assets/sounds/sfx/Freeze.wav", 1); 
     
     // Music
     drawLoadingScren();
@@ -187,13 +191,15 @@ void Game::loadTowerTexture() {
     textureManager.loadTextureDraw("Ninja Monkey Icon", "../assets/tower/Ninja_Monkey/Ninja_Monkey.png");
     textureManager.loadTextureDraw("Sniper Monkey Icon", "../assets/tower/Sniper_Monkey/Sniper_Monkey_Flash.png");
     textureManager.loadTextureDraw("Boomerang Monkey Icon", "../assets/tower/Boomerang_Monkey/BoomerangMonkey.png");
-    textureManager.loadTextureDraw("Tack Shooter Icon", "../assets/tower/Tack_Shooter/TackShooter.png");
+    textureManager.loadTextureDraw("Ice Monkey Icon", "../assets/tower/Ice_Monkey/Ice_Tower.png");
+    textureManager.loadTextureDraw("Monkey Sub Icon", "../assets/tower/Monkey_Sub/MonkeySub.png");
     textureManager.loadTextureDraw("Dart Monkey Info", "../assets/tower/Dart_Monkey/000-DartMonkey.png");
     textureManager.loadTextureDraw("Bomb Shooter Info", "../assets/tower/Boom_Shooter/Bomb_Shooter_Icon.png");
     textureManager.loadTextureDraw("Ninja Monkey Info", "../assets/tower/Ninja_Monkey/BTD6_Ninja_Monkey.png");
     textureManager.loadTextureDraw("Sniper Monkey Info", "../assets/tower/Sniper_Monkey/BTD6_Sniper_Monkey.png");
     textureManager.loadTextureDraw("Boomerang Monkey Info", "../assets/tower/Boomerang_Monkey/BTD6_Boomerang_Monkey.png");
-    textureManager.loadTextureDraw("Tack Shooter Info", "../assets/tower/Tack_Shooter/BTD6_Tack_Shooter.png");
+    textureManager.loadTextureDraw("Ice Monkey Info", "../assets/tower/Ice_Monkey/Ice_Monkey.png");
+    textureManager.loadTextureDraw("Monkey Sub Info", "../assets/tower/Monkey_Sub/BTD6_Monkey_Sub.png");
 }
 
 void Game::loadHeroTexture() {
@@ -206,7 +212,7 @@ void Game::loadHeroTexture() {
 void Game::loadAnimationTexture() {
     // Load all animation textures
     animationManager.loadAllAnimationTextures("stun", "../assets/effect/stun", 4);
-    animationManager.loadAllAnimationTextures("freeze", "../assets/effect/freeze", 10);
+    animationManager.loadAllAnimationTextures("freeze", "../assets/effect/freeze", 1);
     animationManager.loadAllAnimationTextures("starburst", "../assets/effect/starburst", 4);
     animationManager.loadAllAnimationTextures("sharingan", "../assets/effect/sharingan", 4);
     animationManager.loadAllAnimationTextures("movingTriangle", "../assets/effect/movingTriangle", 8);

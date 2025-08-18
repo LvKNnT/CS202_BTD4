@@ -102,4 +102,15 @@ class ChooseTackShooterTower : public CanHoveringButton {
 public:
     ChooseTackShooterTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
+
+class ChooseIceMonkeyTower : public CanHoveringButton {
+public:
+    ChooseIceMonkeyTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
+class ChooseMonkeySubTower : public CanHoveringButton {
+public:
+    ChooseMonkeySubTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
+
 #endif // CAN_HOVERING_BUTTON_H

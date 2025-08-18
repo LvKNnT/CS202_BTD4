@@ -18,6 +18,8 @@ public:
         UnmuteSound, 
         MuteMusic,
         UnmuteMusic,
+        TickJiggle,
+        UntickJiggle,
         
         // State
         ToOptions, 
@@ -54,7 +56,9 @@ public:
         HoveringChooseSniperMonkey,
         HoveringChooseBoomerangMonkey,
         HoveringChooseTackShooter,
-        
+        HoveringChooseIceMonkey,
+        HoveringChooseMonkeySub,
+
         //Clicked
         ClickedChooseBomb, // player begins to place Tower, we should know the valid points on the map
         ClickedChooseDartMonkey, 
@@ -62,8 +66,10 @@ public:
         ClickedChooseSniperMonkey,
         ClickedChooseBoomerangMonkey,
         ClickedChooseTackShooter,
-        
-/*----------------------------------------------------------------------LOGIC------------------------------------------------------------------*/
+        ClickedChooseIceMonkey,
+        ClickedChooseMonkeySub,
+
+//----------------------------------------------------------------------LOGIC------------------------------------------------------------------
         // Options (later)
         NewGame, // Begin a new game without save
         Continue, // Continue save game

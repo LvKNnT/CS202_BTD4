@@ -3,7 +3,7 @@
 Benjamin::Benjamin() {
     // Initialize Benjamin hero properties
     info["name"] = "Benjamin";
-    info["description"] = "Your towers cost less (10% base cost/upgrade cost).";
+    info["description"] = "Your towers cost less (-10% base cost/upgrade cost).";
     info["type"] = "Hero";
 }
 

@@ -64,8 +64,6 @@ void Ice::update(std::vector<std::shared_ptr<Enemy>>& enemyList) {
 }
 
 bool Ice::hit(int damage) {
-    MySound hitSound("Ice");
-    hitSound.start();
     pierce -= damage;
     
     return pierce <= 0; // Indicating that the hit was successful

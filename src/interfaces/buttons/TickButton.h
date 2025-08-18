@@ -31,4 +31,8 @@ public:
     MuteMusic(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
+class Jiggle : public Tick {
+public:
+    Jiggle(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+};
 #endif // TICK_BUTTON_H

@@ -15,7 +15,7 @@
 #include "../interfaces/states/LoadingState.h"
 #include "../interfaces/audio/MyAudio.h"
 
-#include "IObserver.h"
+#include "../interfaces/IObserver.h"
 
 // Logic
 #include "../logic/GameLogic.h"

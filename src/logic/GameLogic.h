@@ -61,6 +61,10 @@ public:
     void activeAutoPlay();
     void unactiveAutoPlay();
     bool getAutoPlay() const;
+    void activeJiggle();
+    void unactiveJiggle();
+    void setJiggle(bool _jiggle);
+    bool getJiggle() const;
     void replay(); // actually is a re-init with the same map and mode
     void setTickFast(bool isTickFast);
     void activeTickFast();

@@ -1,6 +1,7 @@
 #include "GameState.h"
 #include "../../core/Game.h"
 #include "../../interfaces/audio/MyAudio.h"
+#include "../../logic/mode/RoundInfo.h"
 
 #include <fstream>
 
@@ -14,10 +15,12 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
                         + ModeInfo::Instance().getModeInfo(Game::Instance().getGameLogic().getModeType())["name"];
     round = std::make_shared<TextField>("Round:", Game::Instance().getFontManager().getFont("Medium"), ORANGE, 25, 0, (Vector2) {5, 875});
     mode = std::make_shared<TextField>("Mode: " + modeStr, Game::Instance().getFontManager().getFont("Medium"), ORANGE, 25, 0, (Vector2) {320, 875});
+    hero = std::make_shared<TextField>("Hero: " + Game::Instance().getGameLogic().getHeroInfo()["name"], Game::Instance().getFontManager().getFont("Medium"), ORANGE, 25, 0, (Vector2) {320 + 380, 875});
     lives = std::make_shared<TextField>("200", Game::Instance().getFontManager().getFont("Medium"), RED, 30, 0, (Vector2) {1000 + 60, 10 + 5});
     cash = std::make_shared<TextField>("340", Game::Instance().getFontManager().getFont("Medium"), YELLOW, 30, 0, (Vector2) {1000 + 60, 10 + 40 + 10});
     panel->addPanelElement((round));
     panel->addPanelElement((mode));
+    panel->addPanelElement((hero));
     panel->addPanelElement((lives));
     panel->addPanelElement((cash));
     
@@ -47,6 +50,7 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
     std::shared_ptr<PanelElement> fastForwardButton = std::make_shared<FastForward>(Game::Instance().getTextureManager().getTexture("FastForward"), 0, 88, 88, (Vector2) {1000, 720 + 88 + 4});
     std::shared_ptr<PanelElement> homeButton = std::make_shared<ToAreYouSure>(Game::Instance().getTextureManager().getTexture("Home"), 0, 88, 88, (Vector2) {1000 + 88 + 5, 720 + 88 + 4});
     previousTowerButton->setAvailable(false);
+    nextTowerButton->setAvailable(false);
     panel->addPanelElement(startRoundButton);
     panel->addPanelElement(gameOptionsButton);
     panel->addPanelElement(previousTowerButton);    
@@ -56,26 +60,26 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
 
     towerBoxPos = {1000, 145};
     for(int i = 0; i < maxTowerTypes; i++) {
-        if(i <= 5) {
+        if(i <= 7) {
             auto infos = Game::Instance().getGameLogic().getInfoTower(getTowerType(i));
-            towerCost[i] = std::make_shared<TextField>('$' + infos["cost"], Game::Instance().getFontManager().getFont("SmallBold"), WHITE, 20, 100, (Vector2) {towerBoxPos.x, towerBoxPos.y + 103 - 30});
+            towerCost[i] = std::make_shared<TextField>('$' + infos["cost"], Game::Instance().getFontManager().getFont("SmallBold"), YELLOW, 20, 100, (Vector2) {towerBoxPos.x, towerBoxPos.y + 103 - 30});
             if(i == 0) chooseTowerButton[i] = std::make_shared<ChooseDartMonkeyTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
             if(i == 1) chooseTowerButton[i] = std::make_shared<ChooseBombShooterTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
             if(i == 2) chooseTowerButton[i] = std::make_shared<ChooseNinjaMonkeyTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
             if(i == 3) chooseTowerButton[i] = std::make_shared<ChooseSniperMonkeyTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
-            if(i == 4) chooseTowerButton[i] = std::make_shared<ChooseBoomerangMonkeyTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
-            if(i == 5) chooseTowerButton[i] = std::make_shared<ChooseTackShooterTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
+            if(i == 4) chooseTowerButton[i] = std::make_shared<ChooseIceMonkeyTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
+            if(i == 5) chooseTowerButton[i] = std::make_shared<ChooseMonkeySubTower>(Game::Instance().getTextureManager().getTexture(infos["name"] + " Icon"), 1, 103, 100, towerBoxPos);
         }
-        if(i > 5) {
-            chooseTowerButton[i] = std::make_shared<ChooseBombShooterTower>(Game::Instance().getTextureManager().getTexture("Bomb Shooter Icon"), 1, 103, 100, towerBoxPos);
-            towerCost[i] = std::make_shared<TextField>("$6969", Game::Instance().getFontManager().getFont("SmallBold"), WHITE, 20, 100, (Vector2) {towerBoxPos.x, towerBoxPos.y + 103 - 30});
-        }
+        // if(i > 5) {
+        //     chooseTowerButton[i] = std::make_shared<ChooseBombShooterTower>(Game::Instance().getTextureManager().getTexture("Bomb Shooter Icon"), 1, 103, 100, towerBoxPos);
+        //     towerCost[i] = std::make_shared<TextField>("$6969", Game::Instance().getFontManager().getFont("SmallBold"), WHITE, 20, 100, (Vector2) {towerBoxPos.x, towerBoxPos.y + 103 - 30});
+        // }
         towerInfoButton[i] = std::make_shared<Info>(Game::Instance().getTextureManager().getTexture("Info"), 1, 25, 25, (Vector2) {towerBoxPos.x + 100 - 25, towerBoxPos.y});
-        if(i >= 10) {
-            chooseTowerButton[i]->setAvailable(false);
-            towerCost[i]->setAvailable(false);
-            towerInfoButton[i]->setAvailable(false);
-        }
+        // if(i >= 10) {
+        //     chooseTowerButton[i]->setAvailable(false);
+        //     towerCost[i]->setAvailable(false);
+        //     towerInfoButton[i]->setAvailable(false);
+        // }
         panel->addPanelElement(chooseTowerButton[i]);
         panel->addPanelElement(towerCost[i]);
         panel->addPanelElement(towerInfoButton[i]);
@@ -109,9 +113,7 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
     towerName = std::make_shared<TextField>("Name", Game::Instance().getFontManager().getFont("Medium"), YELLOW, 25, 0, (Vector2) {5, 725});
     towerPopCount = std::make_shared<TextField>("Pop Count: 0", Game::Instance().getFontManager().getFont("Medium"), YELLOW, 25, 0, (Vector2) {5 + 550, 725});
     sellPrice = std::make_shared<TextField>("", Game::Instance().getFontManager().getFont("Medium"), YELLOW, 25, 0, (Vector2) {5 + 300, 725});
-    skillButton = std::make_shared<SkillButton>(Game::Instance().getTextureManager().getTexture("Dart Monkey Info"), 1, 80, 80, (Vector2) {10, Properties::mapHeight - 90});
-    std::dynamic_pointer_cast<SkillButton>(skillButton)->setCooldown(70.0);
-    std::shared_ptr<PanelElement> sellTowerButton = std::make_shared<SellButton>(Game::Instance().getTextureManager().getTexture("GameStateButton"), 20, 25, 84, (Vector2) {5 + 380, 725});
+    std::shared_ptr<PanelElement> sellTowerButton = std::make_shared<SellButton>(Game::Instance().getTextureManager().getTexture("GameStateButton"), 20, 25, 84, (Vector2) {5 + 360, 725});
     std::shared_ptr<PanelElement> priorityContainer = std::make_shared<TextureField>(Game::Instance().getTextureManager().getTexture("PurpleRect"), 115, 195, (Vector2) {5, 725 + 25 + 5});
     Font smallFont = Game::Instance().getFontManager().getFont("SmallBold");
     priorityTitle = std::make_shared<TextField>("", smallFont, WHITE, 20, 195, (Vector2) {5, 875 - 5 - 15 - 20});
@@ -123,7 +125,6 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
     towerPanel->addPanelElement(priorityTitle);
     towerPanel->addPanelElement(sellPrice);
     towerPanel->addPanelElement(sellTowerButton);
-    towerPanel->addPanelElement(skillButton);
 
 
     std::shared_ptr<PanelElement> nextPriorityButton = std::make_shared<NextPriority>(Game::Instance().getTextureManager().getTexture("RightWhiteTriangle"), 1, 50, 23, (Vector2) {5 + 195 - 23 - 25, 875 - 5 - 50});
@@ -135,7 +136,7 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
     for(int i = 0; i < 3; i++) {
         upgradeContainer[i] = std::make_shared<TextureField>(Game::Instance().getTextureManager().getTexture("GreyRect"), 115, 125, (Vector2) {5 + 195 + 15.f * (i + 1) + 250.f * i, 725 + 25 + 5});
         upgradeButton[i] = std::make_shared<NoUpgradeButton>(Game::Instance().getTextureManager().getTexture(""), 0, 115, 125, (Vector2) {5 + 195 + 15.f * (i + 1) + 250.f * i, 725 + 25 + 5});
-        upgradeTitle[i] = std::make_shared<TextField>("Not Upgraded", Game::Instance().getFontManager().getFont("SupperSmallBold"), WHITE, 20, 90, (Vector2) {5 + 195 + 15.f * (i + 1) + 250.f * i + 2, 725 + 25 + 5});
+        upgradeTitle[i] = std::make_shared<TextField>("", Game::Instance().getFontManager().getFont("SupperSmallBold"), WHITE, 20, 90, (Vector2) {5 + 195 + 15.f * (i + 1) + 250.f * i + 2, 725 + 25 + 5});
         upgradeInfoButton[i] = std::make_shared<Info>(Game::Instance().getTextureManager().getTexture("Info"), 1, 25, 25, (Vector2) {5 + 195 + 15.f * (i + 1) + 250.f * i + 125 - 25, 725 + 25 + 5});
         towerPanel->addPanelElement(upgradeContainer[i]);
         towerPanel->addPanelElement(upgradeButton[i]);
@@ -147,7 +148,7 @@ GameState::GameState() : State(Properties::screenHeight, Properties::screenWidth
         if(i == 0) nextUpgradeButton[i] = std::make_shared<UpgradeLeftButton>(Game::Instance().getTextureManager().getTexture("CrossbowMasterUpgradeIcon"), 1, 115, 125, (Vector2) {5 + 195 + 15.f * (i + 1) + 250.f * i + 125, 725 + 25 + 5});
         if(i == 1) nextUpgradeButton[i] = std::make_shared<UpgradeMiddleButton>(Game::Instance().getTextureManager().getTexture("CrossbowMasterUpgradeIcon"), 1, 115, 125, (Vector2) {5 + 195 + 15.f * (i + 1) + 250.f * i + 125, 725 + 25 + 5});
         if(i == 2) nextUpgradeButton[i] = std::make_shared<UpgradeRightButton>(Game::Instance().getTextureManager().getTexture("CrossbowMasterUpgradeIcon"), 1, 115, 125, (Vector2) {5 + 195 + 15.f * (i + 1) + 250.f * i + 125, 725 + 25 + 5});
-        nextUpgradeTitle[i] = std::make_shared<TextField>("Crossbow Master", Game::Instance().getFontManager().getFont("SupperSmallBold"), WHITE, 20, 90, (Vector2) {5 + 195 + 15.f * (i + 1) + 250.f * i + 125 + 2, 725 + 25 + 5});
+        nextUpgradeTitle[i] = std::make_shared<TextField>("", Game::Instance().getFontManager().getFont("SupperSmallBold"), WHITE, 20, 90, (Vector2) {5 + 195 + 15.f * (i + 1) + 250.f * i + 125 + 2, 725 + 25 + 5});
         nextUpgradeCost[i] = std::make_shared<TextField>("Cost: $1000", Game::Instance().getFontManager().getFont("SupperSmallBold"), YELLOW, 20, /*120*/0, (Vector2) {5 + 195 + 15.f * (i + 1) + 250.f * i + 125 + 2, 725 + 25 + 5 + 115 - 20});
         nextUpgradeInfoButton[i] = std::make_shared<Info>(Game::Instance().getTextureManager().getTexture("Info"), 1, 25, 25, (Vector2) {5 + 195 + 15.f * (i + 1) + 250.f * i + 125 + 125 - 25 , 725 + 25 + 5});
         towerPanel->addPanelElement(nextUpgradeContainer[i]);
@@ -235,6 +236,12 @@ void GameState::update(Event::Type event) {
         case Event::Type::ClickedChooseTackShooter:
             clickedTowerType = TowerType::TackShooter;
             break;
+        case Event::Type::ClickedChooseIceMonkey:
+            clickedTowerType = TowerType::IceMonkey;
+            break;
+        case Event::Type::ClickedChooseMonkeySub:
+            clickedTowerType = TowerType::MonkeySub;
+            break;
         case Event::Type::UpgradeTowerLeft:
             if(Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Top)) upgradeSound.start();
             break;
@@ -271,7 +278,10 @@ void GameState::handleInput() {
     std::dynamic_pointer_cast<TextField>(lives)->setText(liveInfos["lives"]);
     std::dynamic_pointer_cast<TextField>(cash)->setText(liveInfos["cash"]);
     std::dynamic_pointer_cast<TextField>(round)->setText("Round: " + liveInfos["currentRound"] + '/' + liveInfos["maxRound"]);
-    
+    // add game tip
+    std::string roundInfoStr = RoundInfo::Instance().getRoundInfo(std::stoi(liveInfos["currentRound"]))["detail"];
+    std::dynamic_pointer_cast<TextField>(roundInfo)->setText(roundInfoStr.empty() ? DifficultyInfo::Instance().getDifficultyInfo(Game::Instance().getGameLogic().getDifficulty())["description"] : roundInfoStr);
+
     // Escape Input
     if(IsKeyPressed(KEY_ESCAPE)) {
         if(clickedTowerType != TowerType::None) {
@@ -291,10 +301,10 @@ void GameState::handleInput() {
             if(Game::Instance().getGameLogic().spawnTower()) {
                 MySound placingSound("Placing");
                 placingSound.start();
+                Game::Instance().getGameLogic().unPutTower();
+                pickTower();
+                clickedTowerType = TowerType::None;
             }
-            Game::Instance().getGameLogic().unPutTower();
-            pickTower();
-            clickedTowerType = TowerType::None;
             return;
         }
     }
@@ -399,9 +409,9 @@ TowerType GameState::getTowerType(int i) const {
         case 3:
             return TowerType::SniperMonkey;
         case 4:
-            return TowerType::BoomerangMonkey;
+            return TowerType::IceMonkey;
         case 5:
-            return TowerType::TackShooter;
+            return TowerType::MonkeySub;
     }
     return TowerType::None;
 }

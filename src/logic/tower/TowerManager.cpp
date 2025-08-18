@@ -15,8 +15,7 @@
 
 TowerManager::TowerManager(TowerModifies modifies)
     : currentModifies(modifies), towerIDCounter(0) {
-    //towerSpawner = nullptr;
-    towerSpawner = std::make_unique<TowerSpawner>(currentModifies);
+    towerSpawner = nullptr;
 }
 
 TowerManager::TowerManager(HeroType heroType, TowerModifies modifies)
@@ -346,7 +345,7 @@ void TowerManager::save(const std::string& filePath) const {
     for (const auto& tower : towerList) {
         if (tower) {
             file << static_cast<int>(tower->type) << " " << tower->position.x << " " << tower->position.y 
-                    << " " << tower->rotation << " " << static_cast<int>(tower->targetPriority) << " "
+                    << " " << tower->rotation << " " << static_cast<int>(tower->targetPriority) << " " << tower->popCount << " "
                     << tower->upgradeTop->getName() << " : " << tower->upgradeMiddle->getName() << " : " << tower->upgradeBottom->getName() << " : ";
             
             if(tower->skill) {
@@ -383,6 +382,7 @@ void TowerManager::load(const std::string& filePath) {
 
     int currentHeroTypeInt;
     file >> currentHeroTypeInt; // Load hero type
+    std::cerr << "Loaded hero type: " << currentHeroTypeInt << std::endl;
     currentHeroType = static_cast<HeroType>(currentHeroTypeInt);
     towerSpawner = std::make_unique<TowerSpawner>(currentModifies, currentHeroType);
 
@@ -395,12 +395,12 @@ void TowerManager::load(const std::string& filePath) {
         int typeInt;
         Vector2 position;
         float rotation;
-        int _targetPriority;
+        int _targetPriority, _popCount;
         std::string _upgradeTop = "", _upgradeMiddle = "", _upgradeBottom = "";
         std::string skillTimer = "", skillIsSkillActivating = "", _passiveSkills = "";
 
         file >> typeInt >> position.x >> position.y >> rotation;
-        file >> _targetPriority;
+        file >> _targetPriority >> _popCount;
         std::string tmp;
         while(file >> tmp) {
             if(tmp == ":") break;
@@ -428,8 +428,9 @@ void TowerManager::load(const std::string& filePath) {
         TowerType type = static_cast<TowerType>(typeInt);
         spawnTower(type, position, rotation); 
         
-        // Save the Target Priority
+        // Save the Target Priority and popCount
         towerList.back()->targetPriority = static_cast<TargetPriority>(_targetPriority);
+        towerList.back()->popCount = _popCount;
         // Save upgrades to new tower
         towerList.back()->savedInfo["nextUpgradeTop"] = _upgradeTop;
         towerList.back()->savedInfo["nextUpgradeMiddle"] = _upgradeMiddle;
