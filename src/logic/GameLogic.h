@@ -52,6 +52,10 @@ public:
     void chooseNextPriority();
     void choosePreviousPriority();
 
+    void putBullet(BulletType type, Vector2 position);
+    void unPutBullet();
+    bool spawnBullet();
+
     void startPlayRound();
     void setAutoPlay(bool autoPlay);
     void activeAutoPlay();

@@ -28,9 +28,17 @@
 #include "bullets/Shrapnel.h"
 #include "bullets/ShrapnelShotBullet.h"
 #include "bullets/Ice.h"
+#include "bullets/Sub.h"
+#include "bullets/Airburst.h"
+#include "bullets/ArmourPiercing.h"
+#include "bullets/Submerge.h"
+#include "bullets/Ballistic.h"
 // #include "bullets/Tack.h"
 // #include "bullets/MagicBall.h"
 // #include "bullets/Shuriken.h"
+
+#include "bullets/Spike.h"
+#include "bullets/PineApple.h"
 
 BulletSpawner::BulletSpawner() {
     /**
@@ -49,6 +57,11 @@ BulletSpawner::BulletSpawner(const BulletSpawner& other) {
         for (const auto& pair : other.bulletTemplates) {
             bulletTemplates[pair.first] = pair.second->clone();
         }
+
+        putBulletTemplates.clear();
+        for (const auto& pair : other.putBulletTemplates) {
+            putBulletTemplates[pair.first] = pair.second->clone();
+        }
     } else {
         // should not be here
     }
@@ -59,6 +72,11 @@ BulletSpawner& BulletSpawner::operator=(const BulletSpawner& other) {
         bulletTemplates.clear();
         for (const auto& pair : other.bulletTemplates) {
             bulletTemplates[pair.first] = pair.second->clone();
+        }
+
+        putBulletTemplates.clear();
+        for (const auto& pair : other.putBulletTemplates) {
+            putBulletTemplates[pair.first] = pair.second->clone();
         }
     } else {
         // should not be here
@@ -97,9 +115,17 @@ void BulletSpawner::init() {
     bulletTemplates[BulletType::Shrapnel] = std::make_unique<Shrapnel>();
     bulletTemplates[BulletType::ShrapnelShot] = std::make_unique<ShrapnelShotBullet>();
     bulletTemplates[BulletType::Ice] = std::make_unique<Ice>();
+    bulletTemplates[BulletType::Sub] = std::make_unique<Sub>();
+    bulletTemplates[BulletType::Airburst] = std::make_unique<Airburst>();
+    bulletTemplates[BulletType::ArmourPiercing] = std::make_unique<ArmourPiercing>();
+    bulletTemplates[BulletType::Submerge] = std::make_unique<Submerge>();
+    bulletTemplates[BulletType::Ballistic] = std::make_unique<Ballistic>();
     // bulletTemplates[BulletType::Tack] = std::make_unique<Tack>();
     // bulletTemplates[BulletType::MagicBall] = std::make_unique<MagicBall>();
     // bulletTemplates[BulletType::Shuriken] = std::make_unique<Shuriken>();
+
+    putBulletTemplates[BulletType::Spike] = std::make_unique<Spike>();
+    putBulletTemplates[BulletType::PineApple] = std::make_unique<PineApple>();
 }
 
 std::unique_ptr<Bullet> BulletSpawner::getBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties& properties, BloonDebuff& normalDebuff, BloonDebuff& moabDebuff, AttackBuff& attackBuff, int towerId) {
@@ -115,4 +141,23 @@ std::unique_ptr<Bullet> BulletSpawner::getBullet(BulletType type, Vector2 positi
 
     std::cerr << "Bullet type not found: " << static_cast<int>(type) << std::endl;
     return nullptr; // Return nullptr if the bullet type is not found
+}
+
+std::unique_ptr<Bullet> BulletSpawner::getPutBullet(BulletType type, Vector2 position) {
+    auto it = putBulletTemplates.find(type);
+    if (it != putBulletTemplates.end()) {
+        it->second->loadTexture(); // Load texture for the put bullet
+        
+        std::unique_ptr<Bullet> bullet = it->second->clone();
+        BulletProperties properties = BulletProperties();
+        BloonDebuff normalDebuff = BloonDebuff();
+        BloonDebuff moabDebuff = BloonDebuff();
+        AttackBuff attackBuff = AttackBuff();
+        bullet->init(position, {40.0f, 40.0f}, 0.0f, 1, 0, 20, 1000000.0f, properties, normalDebuff, moabDebuff, attackBuff, -1);
+
+        return bullet;
+    }
+
+    std::cerr << "Put bullet type not found: " << static_cast<int>(type) << std::endl;
+    return nullptr; // Return nullptr if the put bullet type is not found
 }

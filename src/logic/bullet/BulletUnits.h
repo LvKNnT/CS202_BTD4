@@ -7,6 +7,7 @@
 #include "raylib.h"
 
 class Enemy;
+class Tower;
 
 enum class BulletType {
     Dart,
@@ -35,7 +36,14 @@ enum class BulletType {
     StickyBomb,
     MasterBomber,
     Shrapnel,
-    ShrapnelShot
+    ShrapnelShot,
+    Sub,
+    Airburst,
+    ArmourPiercing,
+    Submerge,
+    Ballistic,
+    Spike,
+    PineApple
 };
 
 class BulletProperties {

@@ -28,6 +28,9 @@ public:
     bool activatePassiveSkillTower(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager, ResourceManager& resourceManager, MapManager& mapManager);
     void sellTower(ResourceManager& resourceManager, TowerManager& towerManager);
 
+    bool isSpawnBullet(const ResourceManager& resourceManager, const BulletManager& bulletManager, const MapManager& mapManager) const;
+    bool spawnBullet(ResourceManager& resourceManager, BulletManager& bulletManager, const MapManager& mapManager);
+
     bool isPlayingRound(const ModeManager& modeManager, const EnemyManager& enemyManager) const;
     bool playRound(ResourceManager& resourceManager, ModeManager& modeManager, EnemyManager& enemyManager, BulletManager& bulletManager, MapManager& mapManager);
     void playNextRound(ModeManager& modeManager, EnemyManager& enemyManager, BulletManager& bulletManager, ResourceManager& resourceManager);

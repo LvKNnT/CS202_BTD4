@@ -158,8 +158,30 @@ void TowerManager::drawTowers() const {
         if (tower) {
             if(lastPickedTower.lock() && lastPickedTower.lock() == tower) {
                 tower->drawRange(); 
-            } 
-            tower->draw(); 
+            }
+
+            if(tower->skill != nullptr) {
+                Rectangle towerSize = tower->getBoundingBox();
+                Vector2 towerPosition = {towerSize.x, towerSize.y};
+
+                if (tower->skill->getCooldown() > 0) {
+                    float cooldown = tower->skill->getTimer();
+                    float maxCooldown = tower->skill->getCooldown();
+                    float percent = cooldown / maxCooldown;
+
+                    // Draw cooldown arc as a thick circle line (not filled)
+                    Vector2 center = { towerPosition.x + towerSize.width / 2.0f, towerPosition.y + towerSize.height / 2.0f };
+                    float startAngle = -90;
+                    float endAngle = -90 + 360 * percent;
+                    float thickness = 8.0f; // Adjust thickness as needed
+                    float radius = towerSize.width / 2.0f + thickness;
+
+                    // Draw thick arc (cooldown)
+                    DrawRing(center, radius - thickness / 2, radius + thickness / 2, startAngle, endAngle, 32, Fade(WHITE, 0.8f));
+                }
+            }
+
+            tower->draw();
         } else {
             std::cerr << "Tower is null." << std::endl;
         }
