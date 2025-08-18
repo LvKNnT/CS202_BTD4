@@ -199,7 +199,7 @@ LogicInfo DartMonkey::getInfo() {
 
 bool DartMonkey::isPlaceable(Point::Type pointType) const {
     // Check if the tower can be placed based on the point type
-    return pointType == Point::Type::None; // Dart Monkey can only be placed on land
+    return pointType == Point::Type::None || pointType == Point::Type::BetweenWaterAndLane; // Dart Monkey can only be placed on land
 }
 
 Rectangle DartMonkey::getBoundingBox() const {

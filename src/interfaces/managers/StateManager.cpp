@@ -64,6 +64,7 @@ void StateManager::update(Event::Type event) {
                 Game::Instance().getGameLogic().init(mapType);
             }
             if(isContinue && Game::Instance().getGameLogic().canLoadGame(mapType)) {
+                std::cerr<<"yes\n";
                 canResume = true;
                 Game::Instance().getGameLogic().loadGame(mapType);
                 gameState = std::make_shared<GameState>();

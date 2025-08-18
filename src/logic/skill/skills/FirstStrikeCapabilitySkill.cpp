@@ -104,8 +104,10 @@ void FirstStrikeCapabilitySkill::activateSkill(std::shared_ptr<Tower> tower, std
     }
 
     timer = 0.0f; // Reset the timer after activation
+    MySound skillSound("ActivateSkill");
+    skillSound.start();
 }
 
 void FirstStrikeCapabilitySkill::inActivateSkill() {
-    // do nothin
+    // do nothing
 }

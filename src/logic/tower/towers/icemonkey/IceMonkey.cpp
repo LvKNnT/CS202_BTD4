@@ -203,7 +203,7 @@ LogicInfo IceMonkey::getInfo() {
 
 bool IceMonkey::isPlaceable(Point::Type pointType) const {
     // Check if the tower can be placed based on the point type
-    return pointType == Point::Type::None || pointType == Point::Type::Water; // Ice Monkey can only be placed on land and water
+    return pointType == Point::Type::None || pointType == Point::Type::Water || pointType == Point::Type::BetweenWaterAndLane; // Ice Monkey can only be placed on land and water
 }
 
 Rectangle IceMonkey::getBoundingBox() const {

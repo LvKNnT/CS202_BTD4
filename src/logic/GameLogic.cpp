@@ -59,7 +59,7 @@ void GameLogic::init(Difficulty difficulty) {
     
     // for testing only
     resourceManager.getResource().cash = 999999;
-    resourceManager.getResource().currentRound = 10;
+    resourceManager.getResource().currentRound = 98;
     
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
     bulletManager = BulletManager();
@@ -354,14 +354,13 @@ void GameLogic::loadAutoSave() {
     infile.close();
 
     mapManager.load(saveFilePath);
-
     resourceManager.load(saveFilePath);
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
     towerManager = TowerManager(resourceManager.getTowerModifies());
     towerManager.load(saveFilePath);
-
+    
     modeManager.load(saveFilePath);
-
+    
     // Load saved Towers upgrades
     logicManager.loadSavedTowers(towerManager);
 }

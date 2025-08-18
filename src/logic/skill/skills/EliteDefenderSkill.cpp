@@ -53,6 +53,8 @@ void EliteDefenderSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector
 
     // Reset the timer after activation
     timer = 0.0f;
+    MySound skillSound("ActivateSkill");
+    skillSound.start();
 }
 
 void EliteDefenderSkill::inActivateSkill() {

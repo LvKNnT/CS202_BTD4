@@ -105,8 +105,10 @@ void MOABAssassinSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector<
     }
 
     timer = 0.0f; // Reset the timer after activation
+    MySound skillSound("ActivateSkill");
+    skillSound.start();
 }
 
 void MOABAssassinSkill::inActivateSkill() {
-    // do nothin
+    // do nothing
 }

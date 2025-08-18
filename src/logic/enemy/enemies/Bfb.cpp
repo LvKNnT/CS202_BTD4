@@ -35,14 +35,15 @@ void Bfb::loadTexture() {
 }
 
 bool Bfb::hit(int damage) {
-    if(!std::dynamic_pointer_cast<AudioManager>(Game::Instance().getAudioManager())->isAudioPlaying(AudioType::SFXSound, "BombExplosion")) {
-        MySound popSound("MOABBloon");
-        popSound.start();
-    }
+    
     health -= damage;
     health -= debuff.bonusOnHitDamage; // Apply bonus damage from debuffs
 
     if (health <= 0) {
+        if(!std::dynamic_pointer_cast<AudioManager>(Game::Instance().getAudioManager())->isAudioPlaying(AudioType::SFXSound, "BombExplosion")) {
+            MySound popSound("MOABBloon");
+            popSound.start();
+        }
         drawDeadEffect();
         std::fstream flog("../logs/log.txt", std::ios::out | std::ios::app);
         flog << "Bfb bloon popped!" << std::endl;

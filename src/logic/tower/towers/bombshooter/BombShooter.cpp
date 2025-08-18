@@ -204,7 +204,7 @@ LogicInfo BombShooter::getInfo() {
 
 bool BombShooter::isPlaceable(Point::Type pointType) const {
     // Check if the tower can be placed based on the point type
-    return pointType == Point::Type::None; // Bomb Shooter can only be placed on land
+    return pointType == Point::Type::None || pointType == Point::Type::BetweenWaterAndLane; // Bomb Shooter can only be placed on land
 }
 
 Rectangle BombShooter::getBoundingBox() const {

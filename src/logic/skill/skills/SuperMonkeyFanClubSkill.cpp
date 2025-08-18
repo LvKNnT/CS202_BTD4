@@ -75,7 +75,8 @@ void SuperMonkeyFanClubSkill::activateSkill(std::shared_ptr<Tower> tower, std::v
 
     // Reset the skill timer after activation
     timer = 0.0f;
-
+    MySound skillSound("ActivateSkill");
+    skillSound.start();
     std::cerr << "Activated Super Monkey Fan Club skill for " << closestTowers.size() << " towers." << std::endl;
 }
 

@@ -939,19 +939,25 @@ void LogicManager::loadSavedTowers(TowerManager &towerManager) {
     for(auto &tower:towerManager.towerList) {
         towerManager.lastPickedTower = tower;
         // loop until they are matched
-        while(tower->info["upgradeNameTop"] != tower->savedInfo["nextUpgradeTop"]) {
+        int cnt = 0;
+        while(tower->info["upgradeNameTop"] != tower->savedInfo["nextUpgradeTop"] && cnt < 5) {
             Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Top);
+            cnt++;
         }
-        while(tower->info["upgradeNameMiddle"] != tower->savedInfo["nextUpgradeMiddle"]) {
+        cnt = 0;
+        while(tower->info["upgradeNameMiddle"] != tower->savedInfo["nextUpgradeMiddle"] && cnt < 5) {
             Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Middle);
+            cnt++;
         }
-        while(tower->info["upgradeNameBottom"] != tower->savedInfo["nextUpgradeBottom"]) {
-             Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Bottom);
+        cnt = 0;
+        while(tower->info["upgradeNameBottom"] != tower->savedInfo["nextUpgradeBottom"] && cnt < 5) {
+            Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Bottom);
+            cnt++;
         }
 
         if(tower->skill) {
             tower->skill->setTimer(std::stof(tower->savedInfo["skillTimer"]));
-            tower->skill->setIsSkillActivating(std::stof(tower->savedInfo["skillIsSkillActivating"]));
+            tower->skill->setIsSkillActivating(std::stoi(tower->savedInfo["skillIsSkillActivating"]));
         }
 
         std::stringstream ss(tower->savedInfo["passiveSkills"]);

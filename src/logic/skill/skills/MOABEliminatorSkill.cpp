@@ -105,8 +105,10 @@ void MOABEliminatorSkill::activateSkill(std::shared_ptr<Tower> tower, std::vecto
     }
 
     timer = 0.0f; // Reset the timer after activation
+    MySound skillSound("ActivateSkill");
+    skillSound.start();
 }
 
 void MOABEliminatorSkill::inActivateSkill() {
-    // do nothin
+    // do nothing
 }

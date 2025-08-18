@@ -296,6 +296,9 @@ void GameState::handleInput() {
 
     // Place towers
     if(clickedTowerType != TowerType::None) {
+        Game::Instance().getGameLogic().unPickTower();
+        towerPanel->setAvailable(false);
+        roundPanel->setAvailable(true);
         Game::Instance().getGameLogic().putTower(clickedTowerType, GetMousePosition());
         if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
             if(Game::Instance().getGameLogic().spawnTower()) {

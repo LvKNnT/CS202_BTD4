@@ -81,7 +81,7 @@ void MonkeySub::loadTexture() {
     // Update size based on the loaded texture
     size.x = Game::Instance().getTextureManager().getTexture(tag).width;
     size.y = Game::Instance().getTextureManager().getTexture(tag).height;
-    size = {60.0f, 80.0f}; // Set the size of the Monkey Sub tower
+    size = {59.0f, 80.0f}; // Set the size of the Monkey Sub tower
 
     // Get texture for the upgrade
     upgradeTop->loadTexture();
@@ -108,6 +108,7 @@ void MonkeySub::draw() const {
     // DrawCircleV(position, 10, YELLOW); // Example drawing a yellow circle for the tower
 
     // Rounded draw position
+
     Vector2 draw_position = {
         roundf(position.x),
         roundf(position.y)
@@ -203,15 +204,13 @@ LogicInfo MonkeySub::getInfo() {
 
 bool MonkeySub::isPlaceable(Point::Type pointType) const {
     // Check if the tower can be placed based on the point type
-
-    return pointType == Point::Type::None; // Temporary
     
-    return pointType == Point::Type::Water; // Monkey Sub can only be placed on water
+    return pointType == Point::Type::Water || pointType == Point::Type::BetweenWaterAndLane; // Monkey Sub can only be placed on water
 }
 
 Rectangle MonkeySub::getBoundingBox() const {
     // Provide the bounding box for collision detection
-    return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x, size.y};
+    return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x - 10.0f, size.y - 20.0f};
 }
 
 bool MonkeySub::isActive() const {
