@@ -23,12 +23,17 @@ public:
     void spawnChildBullet(std::unique_ptr<Bullet> bullet);
     void drawBullets() const;
 
+    void spawnPutBullet(BulletType type, Vector2 position);
+    void getPutBullet();
+    void unPutBullet();
+
 private:
     // Instances
     std::unique_ptr<BulletSpawner> bulletSpawner; // Factory to create bullets based on type
 
     // Collection to hold all active bullets
     std::vector<std::unique_ptr<Bullet>> bulletList; 
+    std::unique_ptr<Bullet> putBullet; // Bullet that is currently being placed by the player
 };
 
 

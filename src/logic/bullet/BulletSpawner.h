@@ -16,6 +16,7 @@ private:
         }
     };
     std::map<BulletType, std::unique_ptr<Bullet>, BulletTypeCompare> bulletTemplates;
+    std::map<BulletType, std::unique_ptr<Bullet>, BulletTypeCompare> putBulletTemplates;
 
 public:
     BulletSpawner();
@@ -29,6 +30,7 @@ public:
 
     // Returns a unique_ptr to a new Bullet of the given type
     std::unique_ptr<Bullet> getBullet(BulletType type, Vector2 position, Vector2 size, float rotation, int damage, int speed, int pierce, float lifeSpan, BulletProperties& properties, BloonDebuff& normalDebuff, BloonDebuff& moabDebuff, AttackBuff& attackBuff, int towerId = -1);
+    std::unique_ptr<Bullet> getPutBullet(BulletType type, Vector2 position);
 };
 
 #endif // BULLETSPAWNER_H

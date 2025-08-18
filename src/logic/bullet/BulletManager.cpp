@@ -53,6 +53,23 @@ void BulletManager::spawnChildBullet(std::unique_ptr<Bullet> bullet) {
     }
 }
 
+void BulletManager::spawnPutBullet(BulletType type, Vector2 position) {
+    putBullet = bulletSpawner->getPutBullet(type, position);
+}
+
+void BulletManager::unPutBullet() {
+    if (putBullet) {
+        putBullet.reset(); // Clear the put bullet
+    }
+}
+
+void BulletManager::getPutBullet() {
+    if (putBullet) {
+        bulletList.push_back(std::move(putBullet));
+        putBullet.reset(); // Clear the put bullet after adding it to the bullet list
+    } 
+}
+
 void BulletManager::drawBullets() const {
     for (const auto& bullet : bulletList) {
         if(bullet) {
@@ -68,4 +85,17 @@ void BulletManager::drawBullets() const {
             std::cerr << "Bullet is null!" << std::endl;
         }
     }
+
+    if(putBullet) {
+        // Draw the put bullet if it exists
+        putBullet->draw();
+
+        // draw dummy range
+        if(putBullet->towerId == -1) {
+            DrawCircleV(putBullet->position, 20.0f, Fade(GRAY, 0.5f)); // Draw the range of the put bullet
+        } 
+        else {
+            DrawCircleV(putBullet->position, 20.0f, Fade(RED, 0.5f)); // Draw the range of the put bullet
+        }
+    } 
 }

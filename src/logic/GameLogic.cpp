@@ -245,6 +245,20 @@ void GameLogic::choosePreviousPriority() {
     towerManager.choosePreviousPriority();
 }
 
+void GameLogic::putBullet(BulletType type, Vector2 position) {
+    bulletManager.spawnPutBullet(type, position);
+    logicManager.isSpawnBullet(resourceManager, bulletManager, mapManager);
+}
+
+void GameLogic::unPutBullet() {
+    bulletManager.unPutBullet();
+}
+
+bool GameLogic::spawnBullet() {
+    // Check if the bullet can be placed at the given position
+    return logicManager.spawnBullet(resourceManager, bulletManager, mapManager);
+}
+
 void GameLogic::startPlayRound() {
     if(isStarted == false) {
         std::cerr << "Start playing round" << std::endl;

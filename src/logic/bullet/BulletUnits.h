@@ -41,7 +41,9 @@ enum class BulletType {
     Airburst,
     ArmourPiercing,
     Submerge,
-    Ballistic
+    Ballistic,
+    Spike,
+    PineApple
 };
 
 class BulletProperties {

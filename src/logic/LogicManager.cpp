@@ -809,6 +809,68 @@ void LogicManager::sellTower(ResourceManager& resourceManager, TowerManager& tow
     }
 }
 
+bool LogicManager::isSpawnBullet(const ResourceManager& resourceManager, const BulletManager& bulletManager, const MapManager& mapManager) const {
+    if(bulletManager.putBullet == nullptr) {
+        // std::cerr << "No bullet selected to spawn." << std::endl;
+
+        bulletManager.putBullet->towerId = -2;
+        return false; // No bullet selected to spawn
+    }
+
+    auto enemyPath = mapManager.currentMap->enemyPath;
+    Rectangle bulletBoundingBox = bulletManager.putBullet->getBoundingBox();
+    float pathWidth = 25.0f; // Considerable size
+
+    // Checking collision with the map boundaries
+    if(!Utils::isPositionInMap({bulletBoundingBox.x, bulletBoundingBox.y})
+    || !Utils::isPositionInMap({bulletBoundingBox.x + bulletBoundingBox.width, bulletBoundingBox.y + bulletBoundingBox.height})) {
+        // std::cerr << "Cannot put bullet outside of the map boundaries." << std::endl;
+        
+        return false; 
+    }
+
+    //Checking collision with the path
+    bool yes = false;
+    for(int x = bulletBoundingBox.x; x <= bulletBoundingBox.x + bulletBoundingBox.width && !yes; ++x) {
+        for(int y = bulletBoundingBox.y; y <= bulletBoundingBox.y + bulletBoundingBox.height && !yes; ++y) {
+            Vector2 point = {static_cast<float>(x), static_cast<float>(y)};
+            if(mapManager.currentMap->getPointType(point) == Point::Type::Enemy) {
+                yes = true;
+            }
+        }
+    }
+
+    if(!yes) {
+        // std::cerr << "Cannot put bullet due to path" << std::endl;
+        
+        bulletManager.putBullet->towerId = -2;
+        return false; // Collision with the path
+    }
+    
+    // Check if the player has enough resources to spawn the tower
+    int bulletCost = 100;
+    if(resourceManager.currentResource.cash < bulletCost) {
+        // std::cerr << "Current cash: " << resourceManager.currentResource.cash << ", Bullet cost: " << bulletCost << std::endl;
+        // std::cerr << "Not enough resources to spawn bullet." << std::endl;
+        
+        bulletManager.putBullet->towerId = -2;
+        return false; // Not enough resources
+    }
+
+    bulletManager.putBullet->towerId = -1;
+    return true;
+}
+
+bool LogicManager::spawnBullet(ResourceManager& resourceManager, BulletManager& bulletManager, const MapManager& mapManager) {
+    if(!isSpawnBullet(resourceManager, bulletManager, mapManager)) {
+        return false; // Cannot spawn bullet
+    }
+
+    // Spawn bullet
+    bulletManager.getPutBullet();
+    return true;
+}
+
 bool LogicManager::isPlayingRound(const ModeManager& modeManager, const EnemyManager& enemyManager) const {
     // Check if the game is in a state where a round can be played
     return !modeManager.canPlayNextRound(enemyManager.enemyList.empty());
