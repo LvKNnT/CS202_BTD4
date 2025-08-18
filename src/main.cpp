@@ -31,8 +31,6 @@ int main() {
         if(game.isExit()) break;
         float deltaTime = GetFrameTime();
         game.update(deltaTime);
-        auto mousePos = GetMousePosition();
-        std::cerr<<mousePos.x<<" "<<mousePos.y<<"\n";
         BeginDrawing();
         ClearBackground(RAYWHITE);
         game.render();

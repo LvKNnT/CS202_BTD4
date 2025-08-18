@@ -349,7 +349,7 @@ void TowerManager::save(const std::string& filePath) const {
                     << tower->upgradeTop->getName() << " : " << tower->upgradeMiddle->getName() << " : " << tower->upgradeBottom->getName() << " : ";
             
             if(tower->skill) {
-                file << tower->skill->getCooldown() << " " << tower->skill->getISkillsActivating() << " ";
+                file << tower->skill->getTimer() << " " << tower->skill->getISkillsActivating() << " ";
             } else file << "-1  -1 ";
 
             if(tower->passiveSkills.empty()) {
@@ -382,6 +382,7 @@ void TowerManager::load(const std::string& filePath) {
 
     int currentHeroTypeInt;
     file >> currentHeroTypeInt; // Load hero type
+    std::cerr<<currentHeroTypeInt<<"\n";
     std::cerr << "Loaded hero type: " << currentHeroTypeInt << std::endl;
     currentHeroType = static_cast<HeroType>(currentHeroTypeInt);
     towerSpawner = std::make_unique<TowerSpawner>(currentModifies, currentHeroType);

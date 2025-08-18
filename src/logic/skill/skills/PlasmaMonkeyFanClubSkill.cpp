@@ -78,6 +78,8 @@ void PlasmaMonkeyFanClubSkill::activateSkill(std::shared_ptr<Tower> tower, std::
 
     // Reset the timer after activation
     timer = 0.0f;
+    MySound skillSound("ActivateSkill");
+    skillSound.start();
 
     std::cerr << "Activated Plasma Monkey Fan Club skill for " << closestTowers.size() << " towers." << std::endl;
 }

@@ -65,8 +65,9 @@ void BombBliztSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector<std
 
     timer = 0.0f; // Reset the timer after activation
     currentHealth = resourceManager.getResource().lives; // Reset current health to the current lives
+    MySound skillSound("ActivateSkill");
+    skillSound.start();
 }
 
 void BombBliztSkill::inActivateSkill() {
-    // do nothin
 }

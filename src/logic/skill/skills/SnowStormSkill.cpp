@@ -61,9 +61,11 @@ void SnowstormSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector<std
 
     // Reset the timer after activation
     timer = 0.0f;
+    MySound skillSound("ActivateSkill");
+    skillSound.start();
 }
 
 void SnowstormSkill::inActivateSkill() {
-    // do nothin
+    // do nothing
 }
 

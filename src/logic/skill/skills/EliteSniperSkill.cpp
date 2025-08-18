@@ -45,6 +45,8 @@ void EliteSniperSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector<s
 
     // Reset the timer after activation
     timer = 0.0f;
+    MySound skillSound("ActivateSkill");
+    skillSound.start();
 }
 
 void EliteSniperSkill::inActivateSkill() {

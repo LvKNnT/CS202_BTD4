@@ -68,9 +68,11 @@ void SubCommanderSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector<
 
     // Reset the timer after activation
     timer = 0.0f;
+    MySound skillSound("ActivateSkill");
+    skillSound.start();
 }
 
 void SubCommanderSkill::inActivateSkill() {
-    // do nothin
+    // do nothing
 }
 

@@ -46,6 +46,8 @@ void SupplyDropSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector<st
 
     // Reset the timer after activation
     timer = 0.0f;
+    MySound skillSound("ActivateSkill");
+    skillSound.start();
 }
 
 void SupplyDropSkill::inActivateSkill() {

@@ -61,6 +61,5 @@ void ArcticWindSkill::activateSkill(std::shared_ptr<Tower> tower, std::vector<st
 }
 
 void ArcticWindSkill::inActivateSkill() {
-    // do nothin
 }
 

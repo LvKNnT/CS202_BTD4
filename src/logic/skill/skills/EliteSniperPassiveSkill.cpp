@@ -51,11 +51,14 @@ void EliteSniperPassiveSkill::activateSkill(std::shared_ptr<Tower> tower, std::v
 
     // Reset the timer after activation
     timer = 0.0f;
+    MySound skillSound("ActivateSkill");
+    skillSound.start();
 }
 
 void EliteSniperPassiveSkill::inActivateSkill() {
     // Reset the skill state if needed
     timer = cooldown; // Reset the timer to cooldown
     std::cout << "Elite Sniper Passive skill deactivated." << std::endl;
+
 }
 
