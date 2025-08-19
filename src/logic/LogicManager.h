@@ -23,7 +23,7 @@ public:
     bool isSpawnTower(const ResourceManager& resourceManager, const TowerManager& towerManager, const MapManager& mapManager) const; 
     bool spawnTower(ResourceManager& resourceManager, TowerManager& towerManager, const MapManager& mapManager);
     bool isUpgradeTower(const ResourceManager& resourceManager, const TowerManager& towerManager, UpgradeUnits upgradeUnits) const;
-    bool upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, UpgradeUnits upgradeUnits, MapManager& mapManager);
+    bool upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, UpgradeUnits upgradeUnits, MapManager& mapManager, bool isUpgradeSavedTowers = false);
     bool activateSkillTower(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager, ResourceManager& resourceManager, MapManager& mapManager);
     bool activatePassiveSkillTower(TowerManager& towerManager, EnemyManager& enemyManager, BulletManager& bulletManager, ResourceManager& resourceManager, MapManager& mapManager);
     void sellTower(ResourceManager& resourceManager, TowerManager& towerManager);

@@ -47,7 +47,7 @@ public:
     void unPutTower();
     bool spawnTower();
     bool isUpgradeTower(UpgradeUnits upgradeUnits) const;
-    bool upgradeTower(UpgradeUnits upgradeUnits);
+    bool upgradeTower(UpgradeUnits upgradeUnits, bool isUpgradeSavedTowers = false);
     void sellTower();
     void chooseNextPriority();
     void choosePreviousPriority();
@@ -100,6 +100,7 @@ private:
     // game state
     bool isTickFast = false;
     bool isStarted = false;
+    bool increasedLastSavedRound = 1;
 
     // save/load path
     std::string savePath = "../save/"; 

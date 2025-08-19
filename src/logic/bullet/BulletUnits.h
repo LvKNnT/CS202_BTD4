@@ -3,13 +3,18 @@
 
 // #include <../enemy/Enemy.h>
 #include <memory>
+#include <map>
 #include "../tower/TowerUnits.h"
 #include "raylib.h"
+#include "../LogicInfo.h"
+
+
 
 class Enemy;
 class Tower;
 
 enum class BulletType {
+    None,
     Dart,
     TracingDart,
     SpikeOPult,
@@ -44,6 +49,20 @@ enum class BulletType {
     Ballistic,
     Spike,
     PineApple
+};
+
+// Singleton
+class BulletInfo {
+private:
+    std::map<BulletType, LogicInfo> info;
+
+    BulletInfo();
+    BulletInfo(const BulletInfo&) = delete;
+    BulletInfo& operator=(const BulletInfo&) = delete;
+    
+public:
+    static BulletInfo& Instance();
+    LogicInfo getBulletInfo(BulletType bulletType);
 };
 
 class BulletProperties {

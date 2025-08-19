@@ -137,10 +137,18 @@ void GameLogic::update() {
         // Update by the managers
         mapManager.updateMap();
         enemyManager.updateEnemies();
+        
+        if(isRoundRun() == false) {
+            if(!increasedLastSavedRound && isStarted) {
+                autoSave(); 
+                saveGame();
+                increasedLastSavedRound = 1;
+            }
+        } else {
+            increasedLastSavedRound = 0;
+        }
 
         if(resourceManager.isEndGame() == 0 && isStarted && logicManager.playRound(resourceManager, modeManager, enemyManager, bulletManager, mapManager)) {
-            autoSave(); 
-            saveGame();
         }
 
         logicManager.updateEnemies(enemyManager, mapManager, resourceManager);
@@ -215,9 +223,9 @@ bool GameLogic::isUpgradeTower(UpgradeUnits upgradeUnits) const {
     return logicManager.isUpgradeTower(resourceManager, towerManager, upgradeUnits);
 }
 
-bool GameLogic::upgradeTower(UpgradeUnits upgradeUnits) {
+bool GameLogic::upgradeTower(UpgradeUnits upgradeUnits, bool isUpgradeSavedTowers) {
     // Upgrade the tower at the given position
-    return logicManager.upgradeTower(resourceManager, towerManager, upgradeUnits, mapManager);
+    return logicManager.upgradeTower(resourceManager, towerManager, upgradeUnits, mapManager, isUpgradeSavedTowers);
 }
 
 void GameLogic::sellTower() {
@@ -232,6 +240,7 @@ LogicInfo GameLogic::getInfoTower() const {
 LogicInfo GameLogic::getInfoTower(TowerType type) const {
     return towerManager.getInfoTower(type);
 }
+
 
 LogicInfo GameLogic::getHeroInfo() const {
     return towerManager.getHeroInfo();
@@ -332,7 +341,7 @@ void GameLogic::autoSave() const {
     }
 
     mapManager.save(saveFilePath, modeManager.isReverse());
-    resourceManager.save(saveFilePath, true);
+    resourceManager.save(saveFilePath, modeManager.getRoundReward());
     modeManager.save(saveFilePath);
     towerManager.save(saveFilePath);
 }
@@ -385,7 +394,7 @@ void GameLogic::saveGame() const {
     }
 
     mapManager.save(saveFilePath, modeManager.isReverse());
-    resourceManager.save(saveFilePath, !isRoundRun());
+    resourceManager.save(saveFilePath, modeManager.getRoundReward());
     modeManager.save(saveFilePath);
     towerManager.save(saveFilePath);
 }

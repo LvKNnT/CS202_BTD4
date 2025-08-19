@@ -19,6 +19,7 @@ void Game::LoadContent()
 {
     loadTexture();
     loadTowerTexture();
+    loadBulletTexture();
     loadHeroTexture();
     loadFont();
     loadSound();
@@ -200,6 +201,11 @@ void Game::loadTowerTexture() {
     textureManager.loadTextureDraw("Boomerang Monkey Info", "../assets/tower/Boomerang_Monkey/BTD6_Boomerang_Monkey.png");
     textureManager.loadTextureDraw("Ice Monkey Info", "../assets/tower/Ice_Monkey/Ice_Monkey.png");
     textureManager.loadTextureDraw("Monkey Sub Info", "../assets/tower/Monkey_Sub/BTD6_Monkey_Sub.png");
+}
+
+void Game::loadBulletTexture() {
+    textureManager.loadTextureDraw("Spike Icon", "../assets/bullet/Spike.png");
+    textureManager.loadTextureDraw("Pineapple Icon", "../assets/bullet/PineApple.png");
 }
 
 void Game::loadHeroTexture() {

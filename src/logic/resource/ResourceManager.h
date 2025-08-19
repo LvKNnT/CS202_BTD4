@@ -31,7 +31,7 @@ public:
     Difficulty getDifficulty() const;
 
     // save/load
-    void save(const std::string& filePath, bool isRoundEnd) const;
+    void save(const std::string& filePath, int reward) const;
     void load(const std::string& filePath);
 };
 

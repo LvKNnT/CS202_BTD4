@@ -698,7 +698,7 @@ bool LogicManager::isUpgradeTower(const ResourceManager& resourceManager, const 
     return false;
 }
 
-bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, UpgradeUnits upgradeUnits, MapManager& mapManager) {
+bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& towerManager, UpgradeUnits upgradeUnits, MapManager& mapManager, bool isUpgradeSavedTowers) {
     std::weak_ptr<Tower> tower = towerManager.lastPickedTower;
     auto towerPtr = tower.lock();
     if(!towerPtr) return false; // No tower selected for upgrade
@@ -711,7 +711,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 towerPtr->info["nameTop"] = towerPtr->upgradeTop->getName();
                 towerPtr->info["descriptionTop"] = towerPtr->upgradeTop->getDescription();
                 towerPtr->cost += static_cast<int>(towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost);
-                resourceManager.currentResource.cash -= static_cast<int>(towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost);
+                if(!isUpgradeSavedTowers) resourceManager.currentResource.cash -= static_cast<int>(towerPtr->upgradeTop->getCost() * towerPtr->upgradeCost);
 
                 towerPtr->upgradeTop = towerPtr->upgradeTop->buy();
                 towerPtr->upgradeTop->loadTexture();
@@ -730,7 +730,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 towerPtr->info["nameMiddle"] = towerPtr->upgradeMiddle->getName();
                 towerPtr->info["descriptionMiddle"] = towerPtr->upgradeMiddle->getDescription();
                 towerPtr->cost += static_cast<int>(towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost);
-                resourceManager.currentResource.cash -= static_cast<int>(towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost);
+                if(!isUpgradeSavedTowers) resourceManager.currentResource.cash -= static_cast<int>(towerPtr->upgradeMiddle->getCost() * towerPtr->upgradeCost);
 
                 towerPtr->upgradeMiddle = towerPtr->upgradeMiddle->buy();
                 towerPtr->upgradeMiddle->loadTexture();
@@ -749,7 +749,7 @@ bool LogicManager::upgradeTower(ResourceManager& resourceManager, TowerManager& 
                 towerPtr->info["nameBottom"] = towerPtr->upgradeBottom->getName();
                 towerPtr->info["descriptionBottom"] = towerPtr->upgradeBottom->getDescription();
                 towerPtr->cost += static_cast<int>(towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost);
-                resourceManager.currentResource.cash -= static_cast<int>(towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost);
+                if(!isUpgradeSavedTowers) resourceManager.currentResource.cash -= static_cast<int>(towerPtr->upgradeBottom->getCost() * towerPtr->upgradeCost);
 
                 towerPtr->upgradeBottom = towerPtr->upgradeBottom->buy();
                 towerPtr->upgradeBottom->loadTexture();
@@ -850,7 +850,7 @@ bool LogicManager::isSpawnBullet(const ResourceManager& resourceManager, const B
     }
     
     // Check if the player has enough resources to spawn the tower
-    int bulletCost = 100;
+    int bulletCost = 69;
     if(resourceManager.currentResource.cash < bulletCost) {
         // std::cerr << "Current cash: " << resourceManager.currentResource.cash << ", Bullet cost: " << bulletCost << std::endl;
         // std::cerr << "Not enough resources to spawn bullet." << std::endl;
@@ -870,6 +870,7 @@ bool LogicManager::spawnBullet(ResourceManager& resourceManager, BulletManager& 
 
     // Spawn bullet
     bulletManager.getPutBullet();
+    resourceManager.currentResource.cash -= 69; // Deduct bullet cost
     return true;
 }
 
@@ -941,17 +942,17 @@ void LogicManager::loadSavedTowers(TowerManager &towerManager) {
         // loop until they are matched
         int cnt = 0;
         while(tower->info["upgradeNameTop"] != tower->savedInfo["nextUpgradeTop"] && cnt < 5) {
-            Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Top);
+            Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Top, true);
             cnt++;
         }
         cnt = 0;
         while(tower->info["upgradeNameMiddle"] != tower->savedInfo["nextUpgradeMiddle"] && cnt < 5) {
-            Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Middle);
+            Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Middle, true);
             cnt++;
         }
         cnt = 0;
         while(tower->info["upgradeNameBottom"] != tower->savedInfo["nextUpgradeBottom"] && cnt < 5) {
-            Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Bottom);
+            Game::Instance().getGameLogic().upgradeTower(UpgradeUnits::Bottom, true);
             cnt++;
         }
 

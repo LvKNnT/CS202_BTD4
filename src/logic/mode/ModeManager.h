@@ -17,7 +17,7 @@ public:
     // Methods of current mode
     void playRound(int roundNumber);
     std::vector<std::pair<BloonType, BloonProperties>> getEnemies();
-    int getRoundReward();
+    int getRoundReward() const;
     bool isApopalyse() const;
     bool isReverse() const;
     bool canPlayNextRound(bool isClear) const;

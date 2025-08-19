@@ -25,7 +25,7 @@ enum class TowerType {
     NinjaMonkey = 5,
     BombShooter = 6,
     IceMonkey = 7,
-    MonkeySub = 8,
+    MonkeySub = 8
 };
 
 enum class TargetPriority {

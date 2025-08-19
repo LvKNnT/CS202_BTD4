@@ -96,3 +96,21 @@ float BulletProperties::getRotation(float rotation, Vector2 position) {
     }
     return rotation; // Return the original rotation if tracing is not applicable
 }
+
+BulletInfo::BulletInfo() {
+    info[BulletType::Spike]["name"] = "Spike";
+    info[BulletType::Spike]["cost"] = "69";
+    info[BulletType::Spike]["description"] = "A spiked projectile that pops multiple bloons on impact.";
+    info[BulletType::PineApple]["name"] = "Pineapple";
+    info[BulletType::PineApple]["cost"] = "69";
+    info[BulletType::PineApple]["description"] = "An explosive projectile that bursts on impact, dealing area damage to multiple bloons at once.";
+}
+
+BulletInfo& BulletInfo::Instance() {
+    static BulletInfo instance;
+    return instance;
+}
+
+LogicInfo BulletInfo::getBulletInfo(BulletType bulletType) {
+    return info[bulletType];
+}
