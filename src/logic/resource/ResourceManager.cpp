@@ -1,4 +1,5 @@
 #include "ResourceManager.h"
+#include "../../core/Game.h"
 #include <iostream>
 #include <fstream>
 
@@ -38,7 +39,7 @@ Difficulty ResourceManager::getDifficulty() const {
     return currentDifficulty;
 }
 
-void ResourceManager::save(const std::string& filePath, bool isRoundEnd) const {
+void ResourceManager::save(const std::string& filePath, int reward) const {
     std::fstream file(filePath, std::ios::out | std::ios::app);
     if (!file.is_open()) {
         std::cerr << "Error: Failed to open file for saving resources." << std::endl;
@@ -47,9 +48,9 @@ void ResourceManager::save(const std::string& filePath, bool isRoundEnd) const {
 
     // file << "resource\n";
     file << static_cast<int>(currentDifficulty) << " ";
-    file << currentResource.cash << " ";
+    file << currentResource.cash + reward <<" ";
     file << currentResource.lives << " ";
-    file << currentResource.currentRound + isRoundEnd << "\n";
+    file << currentResource.currentRound + 1 << "\n";
     file.close();
 }
 

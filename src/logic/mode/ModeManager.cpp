@@ -33,7 +33,7 @@ std::vector<std::pair<BloonType, BloonProperties>> ModeManager::getEnemies() {
     return {};
 }
 
-int ModeManager::getRoundReward() {
+int ModeManager::getRoundReward() const {
     if (currentMode) {
         return currentMode->getRoundReward();
     }

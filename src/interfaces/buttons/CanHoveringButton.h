@@ -93,14 +93,14 @@ public:
     ChooseSniperMonkeyTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
-class ChooseBoomerangMonkeyTower : public CanHoveringButton {
+class ChooseSpikeBullet : public CanHoveringButton {
 public:
-    ChooseBoomerangMonkeyTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+    ChooseSpikeBullet(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
-class ChooseTackShooterTower : public CanHoveringButton {
+class ChoosePineappleBullet : public CanHoveringButton {
 public:
-    ChooseTackShooterTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
+    ChoosePineappleBullet(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position);
 };
 
 class ChooseIceMonkeyTower : public CanHoveringButton {

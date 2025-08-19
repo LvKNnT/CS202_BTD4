@@ -133,18 +133,18 @@ ChooseSniperMonkeyTower::ChooseSniperMonkeyTower(const Texture &_texture, int _f
     clickedEvent = Event::Type::ClickedChooseSniperMonkey;
 }
 
-ChooseBoomerangMonkeyTower::ChooseBoomerangMonkeyTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+ChooseSpikeBullet::ChooseSpikeBullet(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
     : CanHoveringButton(_texture, _fontSize, _height, _width, _position){
     attach(Game::Instance().getStateManager());
-    hoveringEvent = Event::Type::HoveringChooseBoomerangMonkey;
-    clickedEvent = Event::Type::ClickedChooseBoomerangMonkey;
+    hoveringEvent = Event::Type::HoveringChooseSpike;
+    clickedEvent = Event::Type::ClickedChooseSpike;
 }
 
-ChooseTackShooterTower::ChooseTackShooterTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
+ChoosePineappleBullet::ChoosePineappleBullet(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
     : CanHoveringButton(_texture, _fontSize, _height, _width, _position){
     attach(Game::Instance().getStateManager());
-    hoveringEvent = Event::Type::HoveringChooseTackShooter;
-    clickedEvent = Event::Type::ClickedChooseTackShooter;
+    hoveringEvent = Event::Type::HoveringChoosePineapple;
+    clickedEvent = Event::Type::ClickedChoosePineapple;
 }
 
 ChooseIceMonkeyTower::ChooseIceMonkeyTower(const Texture &_texture, int _fontSize, int _height, int _width, Vector2 _position)
