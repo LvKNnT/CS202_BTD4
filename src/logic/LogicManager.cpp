@@ -870,6 +870,7 @@ bool LogicManager::spawnBullet(ResourceManager& resourceManager, BulletManager& 
 
     // Spawn bullet
     bulletManager.getPutBullet();
+    resourceManager.currentResource.cash -= 100; // Deduct bullet cost
     return true;
 }
 
