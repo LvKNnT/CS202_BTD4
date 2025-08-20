@@ -122,7 +122,13 @@ void MonkeySub::draw() const {
                    WHITE); // Draw the Monkey Sub texture with the specified position and rotation
 
     // Draw the upgrades
-    upgradeTextureHandler.draw(getBoundingBox());
+    Rectangle upgradeDrawBox = {
+        position.x - size.x / 2.0f,
+        position.y - size.y / 2.0f,
+        size.x,
+        size.y
+    };
+    upgradeTextureHandler.draw(upgradeDrawBox);
 
     // draw the hitbox
     // Rectangle hitbox = getBoundingBox();
@@ -210,7 +216,7 @@ bool MonkeySub::isPlaceable(Point::Type pointType) const {
 
 Rectangle MonkeySub::getBoundingBox() const {
     // Provide the bounding box for collision detection
-    return {position.x - size.x / 2.0f, position.y - size.y / 2.0f, size.x - 10.0f, size.y - 20.0f};
+    return {position.x - (size.x - 13.0f) / 2.0f, position.y - (size.y - 20.0f) / 2.0f, size.x - 13.0f, size.y - 20.0f};
 }
 
 bool MonkeySub::isActive() const {
