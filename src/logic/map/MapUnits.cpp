@@ -14,7 +14,7 @@ MapInfo::MapInfo() {
     info[MapType::DuneSea]["description"] = "A sandy track. There are 2 hidden paths that intersects at the beginning and the end of the track. They do sometimes a curve effect. You can build water towers on a juxtaposed sea. But of course, start popping the bloons! There is also a pink starfish near the bottom left corner of the sea.";
 
     info[MapType::AttackOnBloon]["name"] = "Attack On Bloon";
-    info[MapType::AttackOnBloon]["description"] = "This map is inspired from Attack on Titan, the path of the Bloons is hidden in this one, but they will fly from the sky. Towers can not be placed on the tall edges or on certain obstacles scattered along its width, but they can be placed on the flat surfaces. These obstacles act as natural barriers, forcing the player to carefully navigate tower placement and plan their defenses.";
+    info[MapType::AttackOnBloon]["description"] = "This map is inspired from Attack on Titan, the path of the Bloons is hidden in this one, but they will fly from the sky. Spike and Pineapple are not available in this map. Moreover, Towers can not be placed on the tall edges or on certain obstacles scattered along its width, but they can be placed on the flat surfaces. These obstacles act as natural barriers, forcing the player to carefully navigate tower placement and plan their defenses.";
 }
 
 MapInfo& MapInfo::Instance() {

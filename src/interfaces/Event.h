@@ -54,8 +54,6 @@ public:
         HoveringChooseBomb,
         HoveringChooseNinjaMonkey,
         HoveringChooseSniperMonkey,
-        HoveringChooseBoomerangMonkey,
-        HoveringChooseTackShooter,
         HoveringChooseIceMonkey,
         HoveringChooseMonkeySub,
 
@@ -64,10 +62,15 @@ public:
         ClickedChooseDartMonkey, 
         ClickedChooseNinjaMonkey,
         ClickedChooseSniperMonkey,
-        ClickedChooseBoomerangMonkey,
-        ClickedChooseTackShooter,
         ClickedChooseIceMonkey,
         ClickedChooseMonkeySub,
+
+        // Bullets idk
+        HoveringChooseSpike,
+        HoveringChoosePineapple,
+
+        ClickedChooseSpike,
+        ClickedChoosePineapple,
 
 //----------------------------------------------------------------------LOGIC------------------------------------------------------------------
         // Options (later)

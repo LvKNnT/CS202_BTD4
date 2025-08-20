@@ -8,6 +8,7 @@
 #include "../../logic/tower/TowerUnits.h"
 #include "../../logic/Map/MapUnits.h"
 #include "../../logic/LogicInfo.h"
+#include "../../logic/bullet/BulletUnits.h"
 
 class GameState : public State, public ISubject {
 public:
@@ -22,13 +23,20 @@ public:
     void notify(Event::Type event) override;
 private:
     TowerType clickedTowerType = TowerType::None;
+    BulletType clickedBulletType = BulletType::None;
     static const int maxTowerTypes = 6;
+    static const int maxBulletTypes = 2;
     int curTowerType;
     std::shared_ptr<PanelElement> chooseTowerButton[maxTowerTypes];
     std::shared_ptr<PanelElement> towerCost[maxTowerTypes];
     std::shared_ptr<PanelElement> towerInfoButton[maxTowerTypes];
     std::shared_ptr<PanelElement> nextTowerButton;
     std::shared_ptr<PanelElement> previousTowerButton;
+
+    std::shared_ptr<PanelElement> chooseBulletButton[maxBulletTypes];
+    std::shared_ptr<PanelElement> bulletCost[maxBulletTypes];
+    std::shared_ptr<PanelElement> bulletInfoButton[maxBulletTypes];
+
 
     // Text
     std::shared_ptr<PanelElement> round;
@@ -44,6 +52,7 @@ private:
     std::shared_ptr<PanelElement> roundTitle;
     // Tower 
     std::unique_ptr<Panel> towerPanel;
+    std::unique_ptr<Panel> bulletPanel;
     
     std::shared_ptr<PanelElement> towerName;
     std::shared_ptr<PanelElement> towerPopCount;
@@ -63,10 +72,12 @@ private:
     std::shared_ptr<PanelElement> sellPrice;
     std::shared_ptr<PanelElement> towerInfoTextbox;
     std::shared_ptr<PanelElement> upgradeInfoTextbox;
+    std::shared_ptr<PanelElement> bulletInfoTextbox;
     // Functions
     void pickTower();
     void unpickTower();
     TowerType getTowerType(int i) const;
+    BulletType getBulletType(int i) const;
     void gameEnd();
 };
 
