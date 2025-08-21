@@ -2,14 +2,8 @@
 
 #include "../../../utils/Utils.h"
 
-CaltropsAttackPattern::CaltropsAttackPattern(MapManager* mapManager)
-    : AttackPattern(mapManager), range(0.0f) {
-
-    // Constructor implementation can be extended if needed
-}
-
 CaltropsAttackPattern::CaltropsAttackPattern(MapManager* mapManager, Vector2 position, float range)
-    : AttackPattern(mapManager), position(position), range(range) {
+    : position(position), range(range) {
     // Initialize the caltrops positions based on the given position and range
     caltropsPositions.clear();
 

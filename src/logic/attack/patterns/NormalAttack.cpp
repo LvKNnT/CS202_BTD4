@@ -1,10 +1,5 @@
 #include "NormalAttack.h"
 
-NormalAttack::NormalAttack(MapManager* mapManager)
-    : AttackPattern(mapManager) {
-    // No use
-}
-
 std::unique_ptr<AttackPattern> NormalAttack::clone() const {
     // Create a new NormalAttack instance
     return std::make_unique<NormalAttack>(*this);

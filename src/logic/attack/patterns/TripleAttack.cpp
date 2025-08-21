@@ -1,10 +1,5 @@
 #include "TripleAttack.h"
 
-TripleAttack::TripleAttack(MapManager* mapManager)
-    : AttackPattern(mapManager) {
-    // No use
-}
-
 std::unique_ptr<AttackPattern> TripleAttack::clone() const {
     return std::make_unique<TripleAttack>(*this);
 }
