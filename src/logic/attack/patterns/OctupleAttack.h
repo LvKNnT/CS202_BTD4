@@ -6,7 +6,6 @@
 class OctupleAttack : public AttackPattern {
 public:
     OctupleAttack() = default;
-    OctupleAttack(MapManager* mapManager);
     ~OctupleAttack() override = default;
 
     std::unique_ptr<AttackPattern> clone() const override;

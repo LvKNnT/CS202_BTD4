@@ -1,10 +1,5 @@
 #include "QuintupleAttack.h"
 
-QuintupleAttack::QuintupleAttack(MapManager* mapManager)
-    : AttackPattern(mapManager) {
-    // No use
-}
-
 std::unique_ptr<AttackPattern> QuintupleAttack::clone() const {
     return std::make_unique<QuintupleAttack>(*this);
 }

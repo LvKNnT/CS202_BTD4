@@ -1,10 +1,5 @@
 #include "DoubleAttack.h"
 
-DoubleAttack::DoubleAttack(MapManager* mapManager)
-    : AttackPattern(mapManager) {
-    // No use
-}
-
 std::unique_ptr<AttackPattern> DoubleAttack::clone() const {
     return std::make_unique<DoubleAttack>(*this);
 }

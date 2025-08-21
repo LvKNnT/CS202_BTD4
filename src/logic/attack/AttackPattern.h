@@ -10,11 +10,9 @@
 
 class AttackPattern {
 private:
-    MapManager* mapManager; // Pointer to the MapManager for accessing map-related data
 
 public:
     AttackPattern() = default;
-    AttackPattern(MapManager* mapManager);
     virtual ~AttackPattern() = default;
 
     virtual std::unique_ptr<AttackPattern> clone() const = 0; 

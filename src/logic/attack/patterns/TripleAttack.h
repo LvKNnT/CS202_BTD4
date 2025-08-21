@@ -6,7 +6,6 @@
 class TripleAttack : public AttackPattern {
 public:
     TripleAttack() = default;
-    TripleAttack(MapManager* mapManager);
     ~TripleAttack() override = default;
 
     std::unique_ptr<AttackPattern> clone() const override;

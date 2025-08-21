@@ -1,10 +1,5 @@
 #include "OctupleAttack.h"
 
-OctupleAttack::OctupleAttack(MapManager* mapManager)
-    : AttackPattern(mapManager) {
-    // No use
-}
-
 std::unique_ptr<AttackPattern> OctupleAttack::clone() const {
     return std::make_unique<OctupleAttack>(*this);
 }

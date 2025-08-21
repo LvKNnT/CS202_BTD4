@@ -11,7 +11,6 @@ private:
     std::vector<Vector2> caltropsPositions; 
     
 public:
-    CaltropsAttackPattern(MapManager* mapManager);
     CaltropsAttackPattern(MapManager* mapManager, Vector2 position, float range);
     ~CaltropsAttackPattern() override = default;
 
