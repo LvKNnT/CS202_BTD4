@@ -155,7 +155,6 @@ void GameLogic::update() {
         logicManager.updateBullets(bulletManager);
         logicManager.updateBulletsHitEnemies(bulletManager, enemyManager, towerManager, mapManager, resourceManager);
         logicManager.updateTracingBullets(bulletManager, enemyManager);
-        logicManager.isSpawnTower(resourceManager, towerManager, mapManager);
         if(isRoundRun()) {
             // testing
             logicManager.activateSkillTower(towerManager, enemyManager, bulletManager, resourceManager, mapManager);
@@ -207,6 +206,7 @@ void GameLogic::unPickTower() {
 
 void GameLogic::putTower(TowerType type, Vector2 position) {
     towerManager.spawnPutTower(type, position);
+    logicManager.isSpawnTower(resourceManager, towerManager, mapManager);
 }
 
 void GameLogic::unPutTower() {
