@@ -10,7 +10,7 @@ void FontManager::loadFont(std::string name, std::string path, int fontSize) {
     fonts[name] = newFont;
 }
 
-Font &FontManager::getFont(std::string name) {
+const Font &FontManager::getFont(std::string name) const {
     auto it = fonts.find(name);
     if(it != fonts.end()) return it->second;
     static Font empty = {0};

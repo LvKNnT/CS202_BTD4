@@ -9,6 +9,7 @@
 #include <string>
 
 class AnimationManager {
+private:
     std::vector<Animation> animations;
 public:
     void loadAllAnimationTextures(std::string name, std::string path, int numFrames);

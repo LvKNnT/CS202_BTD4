@@ -42,33 +42,34 @@ ReverseJungle::ReverseJungle() {
     enterEffects.back().start();
 
     //path 1
-    enemyPath[1].push_back(Point(1050, 651, Point::Type::SpawnEnenmy));
-    enemyPath[1].push_back(Point(480, 653));
-    enemyPath[1].push_back(Point(369, 612));
-    enemyPath[1].push_back(Point(331, 587));
-    enemyPath[1].push_back(Point(301, 558));
-    enemyPath[1].push_back(Point(275, 521));
-    enemyPath[1].push_back(Point(252, 463));
-    enemyPath[1].push_back(Point(240, 431));
-    enemyPath[1].push_back(Point(240, 380));
-    enemyPath[1].push_back(Point(244, 340));
-    enemyPath[1].push_back(Point(254, 301));
-    enemyPath[1].push_back(Point(272, 270));
-    enemyPath[1].push_back(Point(293, 257));
-    enemyPath[1].push_back(Point(308, 253));
-    enemyPath[1].push_back(Point(338, 253));
-    enemyPath[1].push_back(Point(362, 267));
-    enemyPath[1].push_back(Point(383, 296));
-    enemyPath[1].push_back(Point(373, 363));
-    enemyPath[1].push_back(Point(370, 409));
-    enemyPath[1].push_back(Point(375, 443));
-    enemyPath[1].push_back(Point(392, 478));
-    enemyPath[1].push_back(Point(422, 518));
-    enemyPath[1].push_back(Point(466, 533));
-    enemyPath[1].push_back(Point(481, 537));
+    enemyPath[1].push_back(Point(1050, 545, Point::Type::SpawnEnenmy));
     enemyPath[1].push_back(Point(980, 549));
-    enemyPath[1].push_back(Point(1100, 545, Point::Type::Exit));
-    enterEffects.push_back(Animation("movingTriangle", (Vector2) {930, 672}, -90.0f, 64, 40, 8, 0.25f));
+    enemyPath[1].push_back(Point(481, 537));
+    enemyPath[1].push_back(Point(466, 533));
+    enemyPath[1].push_back(Point(422, 518));
+    enemyPath[1].push_back(Point(392, 478));
+    enemyPath[1].push_back(Point(375, 443));
+    enemyPath[1].push_back(Point(370, 409));
+    enemyPath[1].push_back(Point(373, 363));
+    enemyPath[1].push_back(Point(383, 296));
+    enemyPath[1].push_back(Point(362, 267));
+    enemyPath[1].push_back(Point(338, 253));
+    enemyPath[1].push_back(Point(308, 253));
+    enemyPath[1].push_back(Point(293, 257));
+    enemyPath[1].push_back(Point(272, 270));
+    enemyPath[1].push_back(Point(254, 301));
+    enemyPath[1].push_back(Point(244, 340));
+    enemyPath[1].push_back(Point(240, 380));
+    enemyPath[1].push_back(Point(240, 431));
+    enemyPath[1].push_back(Point(252, 463));
+    enemyPath[1].push_back(Point(275, 521));
+    enemyPath[1].push_back(Point(301, 558));
+    enemyPath[1].push_back(Point(331, 587));
+    enemyPath[1].push_back(Point(369, 612));
+    enemyPath[1].push_back(Point(480, 653));
+    enemyPath[1].push_back(Point(1100, 651, Point::Type::Exit));
+
+    enterEffects.push_back(Animation("movingTriangle", (Vector2) {930, 568}, -90.0f, 64, 40, 8, 0.25f));
     enterEffects.back().start();
 }
 
