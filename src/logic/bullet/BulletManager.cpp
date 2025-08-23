@@ -92,10 +92,10 @@ void BulletManager::drawBullets() const {
 
         // draw dummy range
         if(putBullet->towerId == -1) {
-            //DrawCircleV(putBullet->position, 20.0f, Fade(GRAY, 0.5f)); // Draw the range of the put bullet
+            DrawCircleV(putBullet->position, 20.0f, Fade(GRAY, 0.5f)); // Draw the range of the put bullet
         } 
         else {
-            //DrawCircleV(putBullet->position, 20.0f, Fade(RED, 0.5f)); // Draw the range of the put bullet
+            DrawCircleV(putBullet->position, 20.0f, Fade(RED, 0.5f)); // Draw the range of the put bullet
         }
     } 
 }

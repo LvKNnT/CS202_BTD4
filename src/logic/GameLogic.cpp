@@ -5,6 +5,7 @@
 #include "skill/Skill.h"
 #include "../interfaces/audio/MyAudio.h"
 #include "../utils/Properties.h"
+#include "../core/Game.h" // Add this include to resolve 'Game' class
 
 void GameLogic::init() {
     // testing, should be jajaja whenever enter a new game
@@ -58,8 +59,8 @@ void GameLogic::init(Difficulty difficulty) {
     resourceManager.initResource(difficulty);
     
     // for testing only
-    //resourceManager.getResource().cash = 999999;
-    //resourceManager.getResource().currentRound = 98;
+    //resourceManager.getResource().cash = 100000;
+    //resourceManager.getResource().currentRound = 75;
     
     enemyManager = EnemyManager(resourceManager.getEnemyModifies());
     bulletManager = BulletManager();
@@ -172,6 +173,7 @@ void GameLogic::draw() const {
     bulletManager.drawBullets();
     enemyManager.drawEnemies();
     towerManager.drawTowers();
+    Game::Instance().getAnimationManager().draw();
 }
 
 void GameLogic::unLoad() {

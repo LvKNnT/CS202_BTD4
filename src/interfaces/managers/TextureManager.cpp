@@ -23,7 +23,7 @@ void TextureManager::loadTextureDraw(std::string name, std::string path) {
     EndDrawing();
 }
 
-Texture &TextureManager::getTexture(std::string name) {
+const Texture &TextureManager::getTexture(std::string name) const {
     auto it = textures.find(name);
     if (it != textures.end()) return it->second;
     

@@ -119,7 +119,7 @@ void TowerManager::unPickTower() {
         lastPickedTower.reset(); // Clear the last picked tower
         std::cout << "Unpicked tower." << std::endl;
     } else {
-        std::cerr << "No tower was picked to unpick." << std::endl;
+        //std::cerr << "No tower was picked to unpick." << std::endl;
     }
 }
 

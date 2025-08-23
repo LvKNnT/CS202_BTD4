@@ -250,7 +250,7 @@ void Game::initialize() {
 
 void Game::render() {
     std::static_pointer_cast<StateManager>(stateManager)->draw();
-    animationManager.draw();
+    //animationManager.draw();
 }
 
 void Game::update(float deltaTime) {

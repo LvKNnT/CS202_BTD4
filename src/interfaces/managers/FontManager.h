@@ -13,7 +13,7 @@ private:
 
 public:
     void loadFont(std::string name, std::string path, int fontSize);
-    Font &getFont(std::string name);
+    const Font &getFont(std::string name) const;
     void unloadContent();
 };
 

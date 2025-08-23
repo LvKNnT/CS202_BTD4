@@ -17,6 +17,11 @@
 
 int main() {
     InitWindow(Properties::screenWidth, Properties::screenHeight, "BTD4");
+
+    Image icon = LoadImage("../assets/UI/Logo.png");
+    SetWindowIcon(icon);
+    UnloadImage(icon);
+
     SetTargetFPS(60);         
     SetExitKey(0);
     
