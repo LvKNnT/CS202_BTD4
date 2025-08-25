@@ -82,6 +82,10 @@ void MapSelectionState::update(Event::Type event) {
             infoTextbox->setAvailable(true);
             std::dynamic_pointer_cast<TextField>(infoTextbox)->setText(MapInfo::Instance().getMapInfo(static_cast<MapType>(curMap * 2))["description"]);
             break;
+        default:
+            if(Event::Type::ToMonkeyLane <= event && event <= Event::Type::ToAttackOnBloon) {
+                infoTextbox->setAvailable(false);
+            }
     }
     previousMapButton->setAvailable(curMap > 0);
     nextMapButton->setAvailable(curMap + 1 < maxMap);
