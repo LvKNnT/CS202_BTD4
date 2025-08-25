@@ -57,6 +57,7 @@ void StateManager::update(Event::Type event) {
             stateStack.setdrawPreviousStates(true);
             break;
         case Event::Type::ToMonkeyLane:
+            stateStack.update(event);
             setMap(MapType::MonkeyLane);
             if(isNewGame) {
                 stateStack.pushState(difficultySelectionState);
@@ -69,8 +70,10 @@ void StateManager::update(Event::Type event) {
                 gameState = std::make_shared<GameState>();
                 stateStack.pushState(gameState);
             }
+            
             break;
         case Event::Type::ToJungleLane:
+            stateStack.update(event);
             setMap(MapType::Jungle);
             if(isNewGame) {
                 stateStack.pushState(difficultySelectionState);
@@ -85,6 +88,7 @@ void StateManager::update(Event::Type event) {
             }
             break;
         case Event::Type::ToRinkRevenge:
+            stateStack.update(event);
             setMap(MapType::RinkRevenge);
             if(isNewGame) {
                 stateStack.pushState(difficultySelectionState);
@@ -99,6 +103,7 @@ void StateManager::update(Event::Type event) {
             }
             break;
         case Event::Type::ToDuneSea:
+            stateStack.update(event);
             setMap(MapType::DuneSea);
             if(isNewGame) {
                 stateStack.pushState(difficultySelectionState);
@@ -113,6 +118,7 @@ void StateManager::update(Event::Type event) {
             }
             break;
         case Event::Type::ToAttackOnBloon:
+            stateStack.update(event);
             setMap(MapType::AttackOnBloon);
             if(isNewGame) {
                 stateStack.pushState(difficultySelectionState);
